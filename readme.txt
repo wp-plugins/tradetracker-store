@@ -4,7 +4,7 @@ Donate link: none
 Tags: tradetracker, store, productfeed
 Requires at least: 2.0.2
 Tested up to: 3.0.1
-Stable tag: 0.1
+Stable tag: 0.2
 
 A plugin that lets you create a store from the tradetracker productfeed
 
@@ -39,6 +39,6 @@ If you have an idea i can always try to implement it.
 
 == Changelog ==
 
-= 0.1 =
+= 0.2 =
 First version
 `<?php code(); // goes in backticks ?>`

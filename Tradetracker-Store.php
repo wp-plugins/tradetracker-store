@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Tradetracker-Store
-Plugin URI: http://www.problogdesign.com/tag/wordpress/
-Version: 0.1
+Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
+Version: 0.2
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme.
 Author: Robert Braam
 */
