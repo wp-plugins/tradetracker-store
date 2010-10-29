@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 0.4
+Version: 0.5
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -234,6 +234,23 @@ if ($Tradetracker_xml == null) {
 
 function adminshow_items()
 {
+  if (!current_user_can('manage_options'))  {
+    wp_die( __('You do not have sufficient permissions to access this page.') );
+  }
+    if( isset($_POST['posted']) && $_POST['posted'] == 'Y' ) {
+        // Read their posted value
+
+        $Tradetracker_items = $_POST['item'];
+	$Tradetracker_items = implode(",", $Tradetracker_items);
+        // Save the posted value in the database
+
+
+ if ( get_option(Tradetracker_productid)  != $Tradetracker_items) {
+        update_option(Tradetracker_productid, $Tradetracker_items );
+  }
+echo "<div class=\"updated\"><p><strong>"._e('settings saved.', 'menu-test' )."</strong></p></div>";	
+}
+
 global $wpdb; 
 $table = PRO_TABLE_PREFIX."store";
 
@@ -248,10 +265,18 @@ echo "<b>Price</b>";
 echo "</td><td>";
 echo "<b>Currency</b>";
 echo "</td></tr>";
-
+echo "<form name=\"form2\" method=\"post\" action=\"\">";
+echo "<input type=\"hidden\" name=\"posted\" value=\"Y\">";
 foreach ($visits as $product){
-
 echo "<tr><td>";
+$productID = get_option( Tradetracker_productid );
+$productID = explode(",",$productID);
+if(in_array($product->productID, $productID, true))
+{
+echo "<input type=\"checkbox\" checked=\"yes\" name=\"item[]\" value=".$product->productID." />";
+} else {
+echo "<input type=\"checkbox\" name=\"item[]\" value=".$product->productID." />";
+}
 echo 		$product->productID;
 echo "</td><td>";
 echo 		$product->name;
@@ -263,6 +288,11 @@ echo "</td></tr>";
 
 }
 echo "</table>";
+echo "<p class=\"submit\">";
+echo "<input type=\"submit\" name=\"Submit\" class=\"button-primary\" value=\"Save Changes\" />";
+echo "</p>";
+
+echo "</form>";
 }
 
 add_action('admin_menu', 'my_plugin_menu');
