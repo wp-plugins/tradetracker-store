@@ -5,6 +5,7 @@
 	height:373px;
 	border:solid 1px #999999;
 	position:relative;
+	font-family:"Century Gothic", Times, serif;
 }
 .store-titel {
 	float:left;
@@ -17,6 +18,7 @@
 	font-weight:bold;
 	text-align:center;
 	background-color:#ececed;
+	font-family:"Century Gothic", Times, serif;
 }
 
 .store-image{
