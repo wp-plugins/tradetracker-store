@@ -19,9 +19,7 @@ that brings in money without the hassle of owning a store. All you need to do
 is choose a store connected on tradetracker and add it.
 
 Users of your blog will then see the products on your blog and when interested
-they will be sent to the store. When they buy an item you will get a percentage
-
-of that sale.
+they will be sent to the store. When they buy an item you will get a percentage of that sale.
 
 == Installation ==
 
