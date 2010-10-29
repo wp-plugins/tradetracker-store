@@ -70,9 +70,10 @@
 	height:38px;
 	background-image:url(images/productkaart-prijs-bg.gif);
 	color:#ffffff;
-	font-size:11px;
+	font-size:10px;
 	font-weight:bold;
 	text-align:center;
+	font-family:"Century Gothic", Times, serif;
 }
 .store-price table{
 	margin:7px 3px 0 0;
