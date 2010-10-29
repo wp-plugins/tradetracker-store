@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 0.3
+Version: 0.4
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -83,7 +83,7 @@ function store_items()
 {
 $Tradetracker_xml = get_option( Tradetracker_xml );
 if ($Tradetracker_xml == null) {
-	return "No store active yet";
+	return "No store activated yet";
 } else {
 	$cache_time = 3600*24; // 24 hours
 
@@ -349,16 +349,16 @@ function tradetracker_store_options() {
 <form name="form1" method="post" action="">
 <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 <table>
-<tr><td><label for="tradetrackerxml" title="Add the link to the XML file you got from tradetracker here." class="info"><?php _e("Tradetracker XML:", 'tradetracker-xml' ); ?> </label> 
+<tr><td><label for="tradetrackerxml" title="Add the link to the XML file you've recieved from tradetracker here." class="info"><?php _e("Tradetracker XML:", 'tradetracker-xml' ); ?> </label> 
 </td><td>
 <input type="text" name="<?php echo $Tradetracker_xml_field_name; ?>" value="<?php echo $Tradetracker_xml_val; ?>" size="50"> <a href="admin.php?page=tradetracker-shop-help" target="_blank">Installation Instructions</a>
 </td></tr>
-<tr><td><label for="tradetrackerproductid" title="If you want to show only certain items fill the productID here seperated by a comma (for instance: 298,300,500 ). This will ignore the limit you set below." class="info"><?php _e("Tradetracker productID:", 'tradetracker-xml' ); ?> </label> 
+<tr><td><label for="tradetrackerproductid" title="If you'd only like to show certain items fill in the productID here, seperated by a comma (for instance: 298,300,500 ). This will override the limit you've set below." class="info"><?php _e("Tradetracker productID:", 'tradetracker-xml' ); ?> </label> 
 </td><td>
 <input type="text" name="<?php echo $Tradetracker_productid_field_name; ?>" value="<?php echo $Tradetracker_productid_val; ?>" size="50"> <a href="admin.php?page=tradetracker-shop-items" target="_blank">Find productID</a>
 </td></tr>
 <tr><td>
-<label for="tradetrackerxml" title="Choose amount of items to show on the site. Default is 12." class="info"><?php _e("Amount of items to show:", 'tradetracker-amount' ); ?> </label>
+<label for="tradetrackerxml" title="Choose the amount of items to show on the site. Default is 12." class="info"><?php _e("Amount of items to show:", 'tradetracker-amount' ); ?> </label>
 </td><td>
 <input type="text" name="<?php echo $Tradetracker_amount_field_name; ?>" value="<?php echo $Tradetracker_amount_val; ?>" size="5">
 </td></tr>
