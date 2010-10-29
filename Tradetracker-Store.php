@@ -2,8 +2,8 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 0.2
-Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme.
+Version: 0.3
+Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
 */
@@ -24,6 +24,7 @@ if(!defined('WP_PLUGIN_URL')){
 	define('WP_PLUGIN_URL', WP_CONTENT_URL.'/plugins');
 }
 add_action('wp_print_styles', 'add_my_stylesheet');
+
 
 /* 
 ..--==[ Function to add a database table for this script ]==--..
@@ -66,8 +67,8 @@ function tradetracker_store_uninstall()
 */
 
     function add_my_stylesheet() {
-        $myStyleUrl = WP_PLUGIN_URL . '/Tradetracker-Store/store.css';
-        $myStyleFile = WP_PLUGIN_DIR . '/Tradetracker-Store/store.css';
+        $myStyleUrl = WP_PLUGIN_URL . '/tradetracker-store/store.css';
+        $myStyleFile = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
         if ( file_exists($myStyleFile) ) {
             wp_register_style('myStyleSheets', $myStyleUrl);
             wp_enqueue_style( 'myStyleSheets');
@@ -82,13 +83,12 @@ function store_items()
 {
 $Tradetracker_xml = get_option( Tradetracker_xml );
 if ($Tradetracker_xml == null) {
-	echo "No store active yet";
+	return "No store active yet";
 } else {
 	$cache_time = 3600*24; // 24 hours
 
-	$cache_file = WP_PLUGIN_DIR . '/Tradetracker-Store/cache.xml';
+	$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 	$timedif = @(time() - filemtime($cache_file));
-
 		if (file_exists($cache_file) && $timedif < $cache_time) {
     			$string = file_get_contents($cache_file);
 			$products = simplexml_load_string($string);
@@ -119,7 +119,7 @@ function fill_database()
 			$table = PRO_TABLE_PREFIX."store";
     			$emptytable = "DELETE FROM $table;;";
     			$wpdb->query($emptytable);
-			$cache_file = WP_PLUGIN_DIR . '/Tradetracker-Store/cache.xml';
+			$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 			$string = file_get_contents($cache_file);
 			$products = simplexml_load_string($string);
 			foreach($products as $product) // loop through our items
@@ -158,48 +158,47 @@ $productID = get_option( Tradetracker_productid );
 $productID = str_replace(",", " or productID=", $productID);
 $visits=$wpdb->get_results("SELECT * FROM ".$table." where productID=".$productID."");
 }
-
+$storeitems = "";
 foreach ($visits as $product){
 
-
-echo "<div class=\"store-outerbox\">";
-echo " 	<div class=\"store-titel\">";
-echo 		$product->name;
-echo "	</div>";			
-echo "	<div class=\"store-image\">";
-echo "		<a href=\"".$product->imageURL."\" rel=\"lightbox[store]\">";
-echo "			<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:180px;max-height:180px;\" />";
-echo "		</a>";
-echo "	</div>";
-echo "	<div class=\"store-footer\">";
-echo "		<div class=\"store-description\">";
-echo 			$product->description;
-echo "		</div>";
-echo "		<div class=\"buttons\">";
-echo "			<a href=\"".$product->productURL."\" class=\"regular\">";
-echo "				Buy Item";
-echo "			</a>";
-echo "		</div>";
-echo "		<div class=\"store-price\">";
-echo "			<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">";
-echo "				<tr>";
-echo "					<td style=\"height:23px;\" class=\"euros\">";
-echo $product->price." ".$product->currency;
-echo "					</td>";
-echo "				</tr>";
-echo "			</table>";
-echo "		</div>";
-echo "	</div>";
-echo "</div>";
+$storeitems .= "<div class=\"store-outerbox\">
+	 	<div class=\"store-titel\">
+			".$product->name."
+		</div>			
+	<div class=\"store-image\">
+		<a href=\"".$product->imageURL."\" rel=\"lightbox[store]\">
+	<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:180px;max-height:180px;\" /></a>
+</div>
+<div class=\"store-footer\">
+<div class=\"store-description\">
+".$product->description."
+</div>
+<div class=\"buttons\">
+<a href=\"".$product->productURL."\" class=\"regular\">
+Buy Item
+</a>
+</div>
+<div class=\"store-price\">
+			<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+<tr>
+<td style=\"height:23px;\" class=\"euros\">
+".$product->price." ".$product->currency."
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>";
 }
+return $storeitems;
 }
 
 
+add_shortcode('display_store', 'display_store_items');
 function display_store_items()
 {
 return store_items();
 }
-
 
 function adminstore_items()
 {
@@ -209,7 +208,7 @@ if ($Tradetracker_xml == null) {
 } else {
 	$cache_time = 3600*24; // 24 hours
 
-	$cache_file = WP_PLUGIN_DIR . '/Tradetracker-Store/cache.xml';
+	$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 	$timedif = @(time() - filemtime($cache_file));
 
 		if (file_exists($cache_file) && $timedif < $cache_time) {
@@ -408,6 +407,10 @@ function tradetracker_store_help() {
 <li>Copy <?php echo WP_PLUGIN_DIR . '/Tradetracker-Store/'; ?>theme/store.php into your own theme folder
 <li>Create a new Page in your wordpress admin menu and make sure you choose your new template (Store Template) as the template for the page.
 <li>You do not need to add text, just to fill in the title. Save the page and you will have your store ready.
+</ul>
+<h2>Installation using a shortcode in your post or page:</h2>
+<ul>
+<li>Use [display_store] in a page you created
 </ul>
 <?php 
  

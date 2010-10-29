@@ -6,7 +6,7 @@ Template Name: Store template
 
 */
 display_store_items();
-
+?>
 <?php get_footer() ?>
 
 
