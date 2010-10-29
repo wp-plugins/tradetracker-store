@@ -1,22 +1,18 @@
 === Plugin Name ===
 Contributors: RPG84
 Donate link: none
-Tags: tradetracker, store, productfeed
+Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements
 Requires at least: 2.0.2
 Tested up to: 3.0.1
 Stable tag: 0.4
 
-A plugin that lets you create a store from the tradetracker productfeed.
+A plugin that lets you create a store from the Tradetracker productfeed.
 
 == Description ==
 
-This plugin gives you the abillity to add a store to your WordPress, based
-
-on a tradetracker productfeed. Tradetracker is an affiliate system that has
+This plugin gives you the abillity to add a store to your WordPress, based on a tradetracker productfeed. Tradetracker is an affiliate system that has
 the abillity to generate a product feed for you. So you can have a store
-that brings in money without the hassle of owning a store. All you need to do
-
-is choose a store connected on tradetracker and add it.
+that brings in money without the hassle of owning a store. All you need to do is choose a store connected on tradetracker and add it.
 
 Users of your blog will then see the products on your blog and when interested
 they will be sent to the store. When they buy an item you will get a percentage of that sale.
