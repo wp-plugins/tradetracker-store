@@ -427,6 +427,7 @@ function tradetracker_store_help() {
 <li><b>Output Type:</b> Make sure you select XML
 <li><b>Coding:</b> Choose the iso-8859-1 option
 <li>If you press "Generate" you will get a link. Use that at the Tradetracker XML option.
+<li>If you can't find these steps this <a href=http://www.youtube.com/watch?v=c149cIEJFLk>movie</a> can help. Just remember you need a XML and not a CSV. 
 </ul>
 <h2>Installation everywhere in your theme:</h2>
 <ul>
