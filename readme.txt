@@ -35,7 +35,14 @@ No, not yet.
 
 I've created functions for this plugin of which I thought they'd be useful, but ofcourse I may have left things out which other people would like to see. If you have any ideas, do share them with me, as I can always try to implement it.
 
+== Screenshots ==
+
+1. This is how the items will be shown on your site
+2. This is the settings menu in the admin area
+3. Here you select which products you want to show on your site
+
 == Changelog ==
+
 = 0.5 = 
 
 Improved method of selecting which items you'd like to show
