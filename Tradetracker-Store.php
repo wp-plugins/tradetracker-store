@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 0.5
+Version: 0.6
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -303,14 +303,23 @@ function my_plugin_menu() {
   add_submenu_page('tradetracker-shop', 'Tradetracker Store settings', 'Tt Store Settings', 'manage_options', 'tradetracker-shop', 'tradetracker_store_options');
   add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-items', 'adminstore_items');
-
+add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
 }
+
 
 function tradetracker_store_options() {
 
   if (!current_user_can('manage_options'))  {
     wp_die( __('You do not have sufficient permissions to access this page.') );
   }
+
+$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
+$file_directory = dirname($file);
+
+if(is_writable($file_directory)){
+} else {
+echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
+}
 
     // variables for the field and option names 
     $hidden_field_name = 'mt_submit_hidden';
@@ -413,7 +422,7 @@ function tradetracker_store_help() {
 <h2>Tradetracker:</h2>
 <p>
 <ul>
-<li>First you will need to register with <a href="<a href="http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=&amp;u=" target="_blank">TradeTracker UK</a>
+<li>First you will need to register with <a href="http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=&amp;u=" target="_blank">TradeTracker UK</a>
 <li>When your site is accepted for their affiliate program you will receive an email. 
 <li>Login to <a href="http://tc.tradetracker.net/?c=27&amp;m=0&amp;a=48684&amp;r=wp-pluginlogin&amp;u=%2Fgb%2Fpublisher%2Flogin" target="_blank">Tradetracker</a>
 <li>Within Tradetracker you go to "Affiliatemanagement" and then "Campagnes". Here you can find a campaign for you site
@@ -435,7 +444,7 @@ function tradetracker_store_help() {
 </ul>
 <h2>Installation using template:</h2>
 <ul>
-<li>Copy <?php echo WP_PLUGIN_DIR . '/Tradetracker-Store/'; ?>theme/store.php into your own theme folder
+<li>Copy <?php echo WP_PLUGIN_DIR . '/tradetracker-store/'; ?>theme/store.php into your own theme folder
 <li>Create a new Page in your wordpress admin menu and make sure you choose your new template (Store Template) as the template for the page.
 <li>You do not need to add text, just to fill in the title. Save the page and you will have your store ready.
 </ul>
@@ -446,4 +455,34 @@ function tradetracker_store_help() {
 <?php 
  
 }
+
+function tradetracker_store_feedback() {
+if (isset($_REQUEST['email']))
+//if "email" is filled out, send email
+  {
+  //send email
+  $name = $_REQUEST['name'] ;
+  $email = $_REQUEST['email'] ;
+  $subject = $_REQUEST['subject'] ;
+  $message = $_REQUEST['message'] ;
+  mail( "robert.braam@gmail.com", "$subject",
+  $message, "From: $name <$email>" );
+  echo "<div class=\"updated\"><p><strong>Feedback has been send</strong></p></div>";
+  }
+else
+//if "email" is not filled out, display the form
+  {
+  echo "<h2>Ideas,comments or feedback?:</h2><p><table><form method='post' action=''>
+<tr><td>Name: </td><td align=\"right\"><input name='name' type='text' /></td></tr>
+  <tr><td>Email: </td><td align=\"right\"><input name='email' type='text' /></td></tr>
+  <tr><td>Subject:</td><td align=\"right\"> <input name='subject' type='text' /></td></tr>
+  <tr><td colspan=\"2\">Message:</td></tr>
+  <tr><td colspan=\"2\"><textarea name='message' rows='15' cols='40'></textarea></td></tr>
+<tr><td colspan=\"2\"><p class=\"submit\">
+<input type=\"submit\" name=\"Submit\" class=\"button-primary\" value=\"Send feedback\" />
+</p></td></tr>
+  </form></table>";
+  }
+}
+
 ?>
