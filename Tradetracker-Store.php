@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 0.6
+Version: 0.7
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -90,14 +90,6 @@ if ($Tradetracker_xml == null) {
 	$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 	$timedif = @(time() - filemtime($cache_file));
 		if (file_exists($cache_file) && $timedif < $cache_time) {
-    			$string = file_get_contents($cache_file);
-			$products = simplexml_load_string($string);
-			global $wpdb; 
-			$table = PRO_TABLE_PREFIX."store";
-			$visits=$wpdb->get_results("SELECT * FROM ".$table."");
-			if(count($products) != $wpdb->num_rows){
-			fill_database();
-			}
 		} else {
     			$string = file_get_contents($Tradetracker_xml);
     			if ($f = @fopen($cache_file, 'w')) {
@@ -212,14 +204,6 @@ if ($Tradetracker_xml == null) {
 	$timedif = @(time() - filemtime($cache_file));
 
 		if (file_exists($cache_file) && $timedif < $cache_time) {
-    			$string = file_get_contents($cache_file);
-			$products = simplexml_load_string($string);
-			global $wpdb; 
-			$table = PRO_TABLE_PREFIX."store";
-			$visits=$wpdb->get_results("SELECT * FROM ".$table."");
-			if(count($products) != $wpdb->num_rows){
-			fill_database();
-			}
 		} else {
     			$string = file_get_contents($Tradetracker_xml);
     			if ($f = @fopen($cache_file, 'w')) {
@@ -248,21 +232,62 @@ function adminshow_items()
  if ( get_option(Tradetracker_productid)  != $Tradetracker_items) {
         update_option(Tradetracker_productid, $Tradetracker_items );
   }
-echo "<div class=\"updated\"><p><strong>"._e('settings saved.', 'menu-test' )."</strong></p></div>";	
+echo "<div class=\"updated\"><p><strong>Settings Saved</strong></p></div>";	
 }
-
+if($_GET['order']==null){
+$order = "name";
+} else {
+$order = $_GET['order'];
+}
 global $wpdb; 
+$limit = $_GET['limit'];
+$currentpage = $_GET['currentpage'];
+if (!($limit)){
+$limit = 100;} // Default results per-page.
+if (!($currentpage)){
+$currentpage = 0;} // Default page value.
 $table = PRO_TABLE_PREFIX."store";
-
-$visits=$wpdb->get_results("SELECT * FROM ".$table."");
-echo "<table>";
-echo "<tr><td>";
-echo "<b>ProductID</b>";
-echo "</td><td>";
-echo "<b>Product name</b>";
-echo "</td><td>";
-echo "<b>Price</b>";
-echo "</td><td>";
+$countquery=$wpdb->get_results("SELECT * FROM ".$table."");
+$numrows = $wpdb->num_rows;
+$pages = intval($numrows/$limit); // Number of results pages.
+if ($numrows%$limit) {
+$pages++;} 
+$current = ($currentpage/$limit) + 1;
+if (($pages < 1) || ($pages == 0)) {
+$total = 1;}
+else {
+$total = $pages;} 
+$first = $currentpage + 1;
+if (!((($currentpage + $limit) / $limit) >= $pages) && $pages != 1) {
+$last = $currentpage + $limit;}
+else{
+$last = $numrows;}
+?>
+<table width="700" border="0">
+ <tr>
+  <td width="50%" align="left">
+Showing products <b><?=$first?></b> - <b><?=$last?></b> of <b><?=$numrows?></b>
+  </td>
+  <td width="50%" align="right">
+Page <b><?=$current?></b> of <b><?=$total?></b>
+  </td>
+ </tr>
+ <tr>
+  <td colspan="2" align="right">
+Results per-page: <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=100">100</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=200">200</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=500">500</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=1000">1000</a>
+  </td>
+ </tr>
+</table>
+<?php
+$visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+echo "<table width=\"700\">";
+echo "<tr><td width=\"100\">";
+echo "<b><a href=\"admin.php?page=tradetracker-shop-items&order=productID\">ProductID</a></b>";
+echo "</td><td width=\"480\">";
+echo "<b><a href=\"admin.php?page=tradetracker-shop-items&order=name\">Product name</a></b>";
+echo "</td><td width=\"50\">";
+echo "<b><a href=\"admin.php?page=tradetracker-shop-items&order=price\">Price</a></b>";
+echo "</td><td width=\"70\">";
 echo "<b>Currency</b>";
 echo "</td></tr>";
 echo "<form name=\"form2\" method=\"post\" action=\"\">";
@@ -293,6 +318,24 @@ echo "<input type=\"submit\" name=\"Submit\" class=\"button-primary\" value=\"Sa
 echo "</p>";
 
 echo "</form>";
+echo "<table width=\"700\"><tr><td>";
+if ($currentpage != 0) { // Don't show back link if current page is first page.
+$back_page = $currentpage - $limit;
+echo("<a href=\"admin.php?page=tradetracker-shop-items&order=$order&currentpage=$back_page&limit=$limit\">back</a>    \n");}
+
+for ($i=1; $i <= $pages; $i++) // loop through each page and give link to it.
+{
+ $ppage = $limit*($i - 1);
+ if ($ppage == $currentpage){
+ echo("<b>$i</b> \n");} // If current page don't give link, just text.
+ else{
+ echo("<a href=\"admin.php?page=tradetracker-shop-items&order=$order&currentpage=$ppage&limit=$limit\">$i</a> \n");}
+}
+
+if (!((($currentpage+$limit) / $limit) >= $pages) && $pages != 1) { // If last page don't give next link.
+$next_page = $currentpage + $limit;
+echo("    <a href=\"admin.php?page=tradetracker-shop-items&order=$order&currentpage=$next_page&limit=$limit\">next</a>\n");}
+echo "</td></tr></table>";
 }
 
 add_action('admin_menu', 'my_plugin_menu');
@@ -304,6 +347,7 @@ function my_plugin_menu() {
   add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-items', 'adminstore_items');
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
+
 }
 
 
@@ -333,10 +377,12 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
     $Tradetracker_productid_name = 'Tradetracker_productid';
     $Tradetracker_productid_field_name = 'Tradetracker_productid';
 
+
     // Read in existing option value from database
     $Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
     $Tradetracker_amount_val = get_option( $Tradetracker_amount_name );
     $Tradetracker_productid_val = get_option( $Tradetracker_productid_name );
+
 
     // See if the user has posted us some information
     // If they did, this hidden field will be set to 'Y'
@@ -347,6 +393,7 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
  	$Tradetracker_amount_val = $_POST[ $Tradetracker_amount_field_name ];
  	$Tradetracker_productid_val = $_POST[ $Tradetracker_productid_field_name ];
 
+
         // Save the posted value in the database
 
 
@@ -354,6 +401,10 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
         update_option( $Tradetracker_amount_name, $Tradetracker_amount_val );
   }	
  if ( get_option(Tradetracker_xml)  != $Tradetracker_xml_val) {
+	$myFile = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
+	$fh = fopen($myFile, 'w') or die("can't open file");
+	fclose($fh);
+	unlink($myFile);
         update_option( $Tradetracker_xml_name, $Tradetracker_xml_val );
   }
  if ( get_option(Tradetracker_productid)  != $Tradetracker_productid_val) {
@@ -401,7 +452,6 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
 </td><td>
 <input type="text" name="<?php echo $Tradetracker_amount_field_name; ?>" value="<?php echo $Tradetracker_amount_val; ?>" size="5">
 </td></tr>
-
 </table>
 <hr />
 
@@ -451,6 +501,10 @@ function tradetracker_store_help() {
 <h2>Installation using a shortcode in your post or page:</h2>
 <ul>
 <li>Use [display_store] in a page you created
+</ul>
+<h2>Extra Plugins:</h2>
+<ul>
+<li>Plugin also supports Lightbox. So if you don't have it yet i would advise to install <a href=http://wordpress.org/extend/plugins/wp-jquery-lightbox/>this plugin.</a>
 </ul>
 <?php 
  

@@ -4,7 +4,7 @@ Donate link: none
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements
 Requires at least: 2.0.2
 Tested up to: 3.0.1
-Stable tag: 0.6
+Stable tag: 0.7
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -14,8 +14,9 @@ This plugin gives you the abillity to add a store to your WordPress, based on a 
 the abillity to generate a product feed for you. So you can have a store
 that brings in money without the hassle of owning a store. All you need to do is choose a store connected on tradetracker and add it.
 
-Users of your blog will then see the products on your blog and when interested
-they will be sent to the store. When they buy an item you will get a percentage of that sale.
+Users of your blog will then see the products on your blog and when interested they will be sent to the store. When they buy an item you will get a percentage of that sale.
+
+Plugin also supports Lightbox. So if you don't have it yet i would advise to install http://wordpress.org/extend/plugins/wp-jquery-lightbox/
 
 == Installation ==
 
@@ -42,6 +43,10 @@ I've created functions for this plugin of which I thought they'd be useful, but 
 3. Here you select which products you want to show on your site
 
 == Changelog ==
+
+= 0.7 =
+
+Improved the way the item selection screen looks like.
 
 = 0.6 =
 
