@@ -413,7 +413,7 @@ function tradetracker_store_help() {
 <h2>Tradetracker:</h2>
 <p>
 <ul>
-<li>First you will need to register with <a href="http://tc.tradetracker.net/?c=27&amp;m=0&amp;a=48684&amp;r=wp-pluginregister&amp;u=%2Fgb%2Fpublisher%2Fregister" target="_blank">Tradetracker</a>
+<li>First you will need to register with <a href="<a href="http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=&amp;u=" target="_blank">TradeTracker UK</a>
 <li>When your site is accepted for their affiliate program you will receive an email. 
 <li>Login to <a href="http://tc.tradetracker.net/?c=27&amp;m=0&amp;a=48684&amp;r=wp-pluginlogin&amp;u=%2Fgb%2Fpublisher%2Flogin" target="_blank">Tradetracker</a>
 <li>Within Tradetracker you go to "Affiliatemanagement" and then "Campagnes". Here you can find a campaign for you site
