@@ -474,11 +474,11 @@ function tradetracker_store_help() {
 <ul>
 <li>First you will need to register with <a href="http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=&amp;u=" target="_blank">TradeTracker UK</a>
 <li>When your site is accepted for their affiliate program you will receive an email. 
-<li>Login to <a href="http://tc.tradetracker.net/?c=27&amp;m=0&amp;a=48684&amp;r=wp-pluginlogin&amp;u=%2Fgb%2Fpublisher%2Flogin" target="_blank">Tradetracker</a>
+<li>Login to <a href="http://tc.tradetracker.net/?c=1065&amp;m=0&amp;a=66047&amp;r=login&amp;u=%2Fgb%2Fpublisher%2Flogin" target="_blank">Tradetracker</a>
 <li>Within Tradetracker you go to "Affiliatemanagement" and then "Campagnes". Here you can find a campaign for you site
 <li>When selecting a campaign make sure it has a productfeed.
 <li>Sign up to one of the campaigns with a product feed and wait till you are accepted (some will manually approve you and some will do so automatically)
-<li>When accepted go to <a href="http://tc.tradetracker.net/?c=27&amp;m=0&amp;a=48684&amp;r=wp-pluginfeed&amp;u=https%3A%2F%2Faffiliate.tradetracker.com%2FaffiliateMaterial%2FproductFeed" target="_blank">the product feed page</a>
+<li>When accepted go to <a href="http://tc.tradetracker.net/?c=1065&amp;m=0&amp;a=66047&amp;r=feed&amp;u=https%3A%2F%2Faffiliate.tradetracker.com%2FaffiliateMaterial%2FproductFeed" target="_blank">the product feed page</a>
 <li>On the right side choose "create url"
 <li>On the new screen you have the options for the product feed
 <li><b>Product feed:</b> You can choose which site you want to place the product feed on
