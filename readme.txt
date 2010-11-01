@@ -65,11 +65,5 @@ Improved method of selecting which items you'd like to show
 
 Removed a lot of spelling mistakes
 
-= 0.3 =
 
-Made a shortcode to place in a page or post.
-
-= 0.2 =
-
-First version
 `<?php code(); // goes in backticks ?>`
