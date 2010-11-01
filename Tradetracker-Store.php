@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 0.8
+Version: 0.9
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -528,7 +528,7 @@ function tradetracker_store_help() {
 <h2>Tradetracker:</h2>
 <p>
 <ul>
-<li>First you will need to register with <a href="http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=60431&amp;r=&amp;u=" target="_blank">TradeTracker UK</a>
+<li>First you will need to register with <a href="http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=" target="_blank">TradeTracker UK</a>
 <li>When your site is accepted for their affiliate program you will receive an email. 
 <li>Login to <a href="http://tc.tradetracker.net/?c=1065&amp;m=0&amp;a=66047&amp;r=login&amp;u=%2Fgb%2Fpublisher%2Flogin" target="_blank">Tradetracker</a>
 <li>Within Tradetracker you go to "Affiliatemanagement" and then "Campagnes". Here you can find a campaign for you site
@@ -629,8 +629,8 @@ foreach ($client->getReportCampaign($affiliateSiteID, $options) as $report) {
 	echo '<td>' . round($report->reportData->totalCommission,2) . '</td></tr>';
 
 }
-$report = $client->getReportAffiliateSite($affiliateSiteID, $options);
-
+try { 
+ $report = $client->getReportAffiliateSite($affiliateSiteID, $options);
 	echo '<tr><td><b>Total</b></td>';
 	echo '<td>' . $report->uniqueImpressionCount . '</td>';
 	echo '<td>' . round($report->impressionCommission,2) . '</td>';
@@ -641,6 +641,9 @@ $report = $client->getReportAffiliateSite($affiliateSiteID, $options);
 	echo '<td>' . $report->saleCount . '</td>';
 	echo '<td>' . round($report->saleCommission,2) . '</td>';
 	echo '<td>' . round($report->totalCommission,2) . '</td></tr>';
+} catch (SoapFault $exception) { 
+  echo " <div class=\"error\"><p><strong>Some unknown issue is annoying and ruining something. Please report this by using <a href=\"admin.php?page=tradetracker-shop-feedback\">Tt Store Feedback</a></strong></p></div>";
+} 
 echo "</table>";
 }
 }
