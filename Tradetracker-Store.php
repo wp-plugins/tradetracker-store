@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 0.7
+Version: 0.8
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -33,7 +33,10 @@ add_action('wp_print_styles', 'add_my_stylesheet');
 function tradetracker_store_install()
 {
     global $wpdb;
-    $table = PRO_TABLE_PREFIX."store";
+$table = PRO_TABLE_PREFIX."store";
+if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
+
+    
     $structure = "CREATE TABLE $table (
         id INT(9) NOT NULL AUTO_INCREMENT,
 	productID INT(10) NOT NULL,
@@ -47,6 +50,7 @@ function tradetracker_store_install()
     );";
     $wpdb->query($structure);
 	  // Populate table
+}
 }
 
 /* 
@@ -347,6 +351,9 @@ function my_plugin_menu() {
   add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-items', 'adminstore_items');
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
+if(class_exists('SoapClient')){
+add_submenu_page('tradetracker-shop', 'Tradetracker Store Stats', 'Tt Store Stats', 'manage_options', 'tradetracker-shop-stats', 'tradetracker_store_stats');
+}
 
 }
 
@@ -359,7 +366,8 @@ function tradetracker_store_options() {
 
 $file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
 $file_directory = dirname($file);
-
+if(!class_exists('SoapClient')){
+echo "<div class=\"updated\"><p><strong><a href=\"http://www.electrictoolbox.com/class-soapclient-not-found/\" target=\"_blank\">SoapClient</a> is not enabled on your hosting. Stats are disabled.</strong></p></div>"; }
 if(is_writable($file_directory)){
 } else {
 echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
@@ -377,11 +385,24 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
     $Tradetracker_productid_name = 'Tradetracker_productid';
     $Tradetracker_productid_field_name = 'Tradetracker_productid';
 
+    $Tradetracker_customerid_name = 'Tradetracker_customerid';
+    $Tradetracker_customerid_field_name = 'Tradetracker_customerid';
+
+    $Tradetracker_access_code_name = 'Tradetracker_access_code';
+    $Tradetracker_access_code_field_name = 'Tradetracker_access_code';
+
+    $Tradetracker_siteid_name = 'Tradetracker_siteid';
+    $Tradetracker_siteid_field_name = 'Tradetracker_siteid';
+
+
 
     // Read in existing option value from database
     $Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
     $Tradetracker_amount_val = get_option( $Tradetracker_amount_name );
     $Tradetracker_productid_val = get_option( $Tradetracker_productid_name );
+    $Tradetracker_customerid_val = get_option( $Tradetracker_customerid_name );
+    $Tradetracker_access_code_val = get_option( $Tradetracker_access_code_name );
+    $Tradetracker_siteid_val = get_option( $Tradetracker_siteid_name );
 
 
     // See if the user has posted us some information
@@ -392,7 +413,9 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
         $Tradetracker_xml_val = $_POST[ $Tradetracker_xml_field_name ];
  	$Tradetracker_amount_val = $_POST[ $Tradetracker_amount_field_name ];
  	$Tradetracker_productid_val = $_POST[ $Tradetracker_productid_field_name ];
-
+ 	$Tradetracker_customerid_val = $_POST[ $Tradetracker_customerid_field_name ];
+ 	$Tradetracker_access_code_val = $_POST[ $Tradetracker_access_code_field_name ];
+ 	$Tradetracker_siteid_val = $_POST[ $Tradetracker_siteid_field_name ];
 
         // Save the posted value in the database
 
@@ -409,6 +432,15 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
   }
  if ( get_option(Tradetracker_productid)  != $Tradetracker_productid_val) {
         update_option( $Tradetracker_productid_name, $Tradetracker_productid_val );
+  }
+ if ( get_option(Tradetracker_customerid)  != $Tradetracker_customerid_val) {
+        update_option( $Tradetracker_customerid_name, $Tradetracker_customerid_val );
+  }
+ if ( get_option(Tradetracker_access_code)  != $Tradetracker_access_code_val) {
+        update_option( $Tradetracker_access_code_name, $Tradetracker_access_code_val );
+  }
+ if ( get_option(Tradetracker_siteid)  != $Tradetracker_siteid_val) {
+        update_option( $Tradetracker_siteid_name, $Tradetracker_siteid_val );
   }
 
         // Put an settings updated message on the screen
@@ -452,6 +484,30 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
 </td><td>
 <input type="text" name="<?php echo $Tradetracker_amount_field_name; ?>" value="<?php echo $Tradetracker_amount_val; ?>" size="5">
 </td></tr>
+<?php
+if(class_exists('SoapClient')){
+?>
+<tr><td colspan="2">
+<h2>Settings for Statistics</h2>
+</td></tr>
+
+<tr><td>
+<label for="tradetrackercustomerid" title="Fill in your customer ID. You will need to enable webservices in Tradetracker" class="info"><?php _e("Customer ID:", 'tradetracker-customerid' ); ?> </label>
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_customerid_field_name; ?>" value="<?php echo $Tradetracker_customerid_val; ?>" size="5"> <a href="https://affiliate.tradetracker.com/webService" target="_blank">Get Customer ID</a>
+</td></tr>
+<tr><td>
+<label for="tradetrackeraccess_code" title="Fill in your access code." class="info"><?php _e("Access code:", 'tradetracker-access_code' ); ?> </label>
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_access_code_field_name; ?>" value="<?php echo $Tradetracker_access_code_val; ?>" size="50">
+</td></tr>
+<tr><td>
+<label for="tradetrackersiteid" title="Fill in your Site ID." class="info"><?php _e("Site ID:", 'tradetracker-siteid' ); ?> </label>
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_siteid_field_name; ?>" value="<?php echo $Tradetracker_siteid_val; ?>" size="5"> <a href="https://affiliate.tradetracker.com/customerSite/list" target="_blank">Get Site ID</a>
+</td></tr>
+<?php
+} ?>
 </table>
 <hr />
 
@@ -539,4 +595,53 @@ else
   }
 }
 
+function tradetracker_store_stats() {
+$siteid = get_option( Tradetracker_siteid );
+$customerid = get_option( Tradetracker_customerid );
+$acces_code = get_option( Tradetracker_access_code );
+if (get_option( Tradetracker_siteid ) == null || get_option( Tradetracker_customerid ) == null || get_option( Tradetracker_access_code ) == null){
+echo "Please adjust your stats settings";
+} else {
+$client = new SoapClient('http://ws.tradetracker.com/soap/affiliate?wsdl');
+$client->authenticate($customerid, ''.$acces_code.'');
+
+$affiliateSiteID = $siteid;
+$registrationDateFrom = ''.\Date('Y-m-d', strtotime("-30 days")).'';
+$registrationDateTo = ''.Date("Y-m-d").'';
+
+$options = array(
+	'dateFrom' => ''.Date('Y-m-d', strtotime("-30 days")).'',
+	'dateTo' => ''.Date("Y-m-d").'',
+);
+echo "Statistics for ".Date('Y-M-d', strtotime('-30 days'))." till ".Date('Y-M-d')."";
+echo "<table width=\"900\">";
+echo "<tr><td><b>Campaign</b></td><td><b>Views</b></td><td><b>Commission</b></td><td><b>Clicks</b></td><td><b>Commission</b></td><td><b>Leads</b></td><td><b>Commission</b></td><td><b>Sales</b></td><td><b>Commission</b></td><td><b>Total</b></td></tr>";
+foreach ($client->getReportCampaign($affiliateSiteID, $options) as $report) {
+	echo '<tr><td>' . $report->campaign->name . '</td>';
+	echo '<td>' . $report->reportData->uniqueImpressionCount . '</td>';
+	echo '<td>' . round($report->reportData->impressionCommission,2) . '</td>';
+	echo '<td>' . $report->reportData->uniqueClickCount . '</td>';
+	echo '<td>' . round($report->reportData->clickCommission,2) . '</td>';
+	echo '<td>' . $report->reportData->leadCount . '</td>';
+	echo '<td>' . round($report->reportData->leadCommission,2) . '</td>';
+	echo '<td>' . $report->reportData->saleCount . '</td>';
+	echo '<td>' . round($report->reportData->saleCommission,2) . '</td>';
+	echo '<td>' . round($report->reportData->totalCommission,2) . '</td></tr>';
+
+}
+$report = $client->getReportAffiliateSite($affiliateSiteID, $options);
+
+	echo '<tr><td><b>Total</b></td>';
+	echo '<td>' . $report->uniqueImpressionCount . '</td>';
+	echo '<td>' . round($report->impressionCommission,2) . '</td>';
+	echo '<td>' . $report->uniqueClickCount . '</td>';
+	echo '<td>' . round($report->clickCommission,2) . '</td>';
+	echo '<td>' . $report->leadCount . '</td>';
+	echo '<td>' . round($report->leadCommission,2) . '</td>';
+	echo '<td>' . $report->saleCount . '</td>';
+	echo '<td>' . round($report->saleCommission,2) . '</td>';
+	echo '<td>' . round($report->totalCommission,2) . '</td></tr>';
+echo "</table>";
+}
+}
 ?>
