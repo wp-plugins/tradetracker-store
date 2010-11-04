@@ -4,7 +4,7 @@ Donate link: none
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements
 Requires at least: 2.0.2
 Tested up to: 3.0.1
-Stable tag: 0.9.1
+Stable tag: 1.0
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -41,7 +41,7 @@ I've created functions for this plugin of which I thought they'd be useful, but 
 
 == Changelog ==
 
-= 0.9.1 = 
+= 1.0 = 
 
 Images weren't showing up. This should be solved now
 
