@@ -1,71 +1,50 @@
 .store-outerbox{
 	float:left;
 	margin:0px 15px 15px 0;
-	width:250px;
-	height:373px;
+	height:353px;
 	border:solid 1px #999999;
 	position:relative;
 	font-family:"Century Gothic", Times, serif;
-	color: #000000;
 }
 .store-titel {
 	float:left;
 	position:relative;
-	width:244px;
 	height:30px;
 	line-height:15px;
 	font-size:11px;
 	padding:3px;
 	font-weight:bold;
 	text-align:center;
-	background-color:#ececed;
 	font-family:"Century Gothic", Times, serif;
-	color: #000000;
 }
 
 .store-image{
-	float:left;
-	position:relative;
-	width:250px;
-	height:200px;
+	height:180px;
 	padding:0px;
 	overflow:hidden;
-	text-align:center;
-	vertical-align:middle;
-	
+	margin: auto;
+		
 }
 .store-image img{
+	display: block; 
 	border:0px;
-	vertical-align:middle;
+	margin: auto;   
 }
-.store-image a:link,
-.store-image a:visited,
-.store-image a:active,
-.store-image a:hover{
-	display:block;
-	width:250px;
-	height:200px;
-	background:#fff;
-	cursor:pointer;
-	vertical-align:middle;
-}
+
 .store-footer{
 	float:left;
 	position:relative;
-	width:250px;
 	height:137px;
-	background-color:#ececed;
+	
 }
 .store-description{
 	position:absolute;
 	top:5px;
 	left:5px;
-	width:245px;
 	height:90px;
 	line-height:14px;
 	font-size:10px;
 	overflow:auto;
-	color: #000000;
 }
 .store-price{
 	position:absolute;
@@ -73,7 +52,7 @@
 	bottom:1px;
 	width:60px;
 	height:38px;
-	background-image:url(images/productkaart-prijs-bg.gif);
+	background-image:url(images/productkaart-prijs-bg.png);
 	color:#ffffff;
 	font-size:11px;
 	font-weight:bold;

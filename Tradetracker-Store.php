@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.2.2
+Version: 1.3
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -49,6 +49,12 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 	UNIQUE KEY id (id)
     );";
     $wpdb->query($structure);
+
+    update_option( Tradetracker_width, "250" );
+    update_option( Tradetracker_colortitle, "#ececed" );
+    update_option( Tradetracker_colorfooter, "#ececed" );
+    update_option( Tradetracker_colorimagebg, "#FFFFFF" );
+    update_option( Tradetracker_colorfont, "#000000" );
 	  // Populate table
 }
 }
@@ -63,6 +69,11 @@ function tradetracker_store_uninstall()
     $table = PRO_TABLE_PREFIX."store";
     $structure = "drop table if exists $table";
     $wpdb->query($structure);  
+	$myFile = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
+	$fh = fopen($myFile, 'w') or die("can't open file");
+	fclose($fh);
+	unlink($myFile);
+	
 }
 
 
@@ -143,7 +154,23 @@ function show_items()
 	} else {
 		$Tradetracker_amount_i = $Tradetracker_amount; 
 	}
-	global $wpdb; 
+	global $wpdb;
+	$width= get_option( Tradetracker_width );
+	$widthtitle = $width-6;
+	$colortitle = get_option( Tradetracker_colortitle );
+	$colorfooter = get_option( Tradetracker_colorfooter );
+	$colorimagebg = get_option( Tradetracker_colorimagebg );
+	$colorfont = get_option( Tradetracker_colorfont );
+	
+	echo "<style type=\"text/css\" media=\"screen\">";
+	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";}";
+	echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";}";
+	echo ".store-image{width:".$width."px;}";
+	echo ".store-footer{width:".$width."px;background-color:".$colorfooter.";}";
+	echo ".store-description{width:".$widthtitle."px;color:".$colorfont.";}";
+	echo ".store-image{width:".$width."px;background-color:".$colorimagebg.";}";
+	echo "</style>";
+
 	$table = PRO_TABLE_PREFIX."store";
 	$Tradetracker_productid = get_option( Tradetracker_productid );
 	if ($Tradetracker_productid == null) 
@@ -163,7 +190,7 @@ function show_items()
 				</div>			
 				<div class=\"store-image\">
 					<a href=\"".$product->imageURL."\" rel=\"lightbox[store]\">
-						<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:180px;max-height:180px;\" />
+						<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:".$width."px;max-height:180px;\" />
 					</a>
 				</div>
 				<div class=\"store-footer\">
@@ -383,18 +410,176 @@ function my_plugin_menu() {
 
  add_menu_page('Tradetracker Store', 'Tt Store', 'manage_options', 'tradetracker-shop', 'tradetracker_store_options');
   add_submenu_page('tradetracker-shop', 'Tradetracker Store settings', 'Tt Store Settings', 'manage_options', 'tradetracker-shop', 'tradetracker_store_options');
-  add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
 $mypage = add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-items', 'adminstore_items');
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
 if(class_exists('SoapClient')){
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Stats', 'Tt Store Stats', 'manage_options', 'tradetracker-shop-stats', 'tradetracker_store_stats');
 }
+$mylayout =  add_submenu_page('tradetracker-shop', 'Tradetracker Store layout', 'Tt Store Layout', 'manage_options', 'tradetracker-shop-layout', 'tradetracker_store_layout');
+  add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
+
 add_action( "admin_print_scripts-$mypage", 'ozh_loadjs_admin_head' );
+add_action( "admin_print_scripts-$mylayout", 'ozh_loadcss_admin_head' );
 }
 
 function ozh_loadjs_admin_head() {
 	wp_enqueue_script('loadjs', WP_PLUGIN_URL .'/tradetracker-store/js/jquery.js');
 	wp_enqueue_script('loadjs1', WP_PLUGIN_URL .'/tradetracker-store/js/main.js');
+}
+function ozh_loadcss_admin_head() {
+	echo "<link rel='stylesheet' href='".WP_PLUGIN_URL ."/tradetracker-store/store.css' type='text/css' />\n";
+}
+
+
+function tradetracker_store_layout() {
+  if (!current_user_can('manage_options'))  {
+    wp_die( __('You do not have sufficient permissions to access this page.') );
+  }
+    $hidden_field_name = 'mt_submit_hidden';
+
+    $Tradetracker_width_name = 'Tradetracker_width';
+    $Tradetracker_width_field_name = 'Tradetracker_width';
+    $Tradetracker_width_val = get_option( $Tradetracker_width_name );
+
+    $Tradetracker_colortitle_name = 'Tradetracker_colortitle';
+    $Tradetracker_colortitle_field_name = 'Tradetracker_colortitle';
+    $Tradetracker_colortitle_val = get_option( $Tradetracker_colortitle_name );
+
+    $Tradetracker_colorfooter_name = 'Tradetracker_colorfooter';
+    $Tradetracker_colorfooter_field_name = 'Tradetracker_colorfooter';
+    $Tradetracker_colorfooter_val = get_option( $Tradetracker_colorfooter_name );
+
+    $Tradetracker_colorimagebg_name = 'Tradetracker_colorimagebg';
+    $Tradetracker_colorimagebg_field_name = 'Tradetracker_colorimagebg';
+    $Tradetracker_colorimagebg_val = get_option( $Tradetracker_colorimagebg_name );
+
+    $Tradetracker_colorfont_name = 'Tradetracker_colorfont';
+    $Tradetracker_colorfont_field_name = 'Tradetracker_colorfont';
+    $Tradetracker_colorfont_val = get_option( $Tradetracker_colorfont_name );
+
+    if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
+        // Read their posted value
+
+        $Tradetracker_width_val = $_POST[ $Tradetracker_width_field_name ];
+	$Tradetracker_colortitle_val = $_POST[ $Tradetracker_colortitle_field_name ];
+	$Tradetracker_colorfooter_val = $_POST[ $Tradetracker_colorfooter_field_name ];
+	$Tradetracker_colorimagebg_val = $_POST[ $Tradetracker_colorimagebg_field_name ];
+	$Tradetracker_colorfont_val = $_POST[ $Tradetracker_colorfont_field_name ];
+
+        // Save the posted value in the database
+
+
+ if ( get_option(Tradetracker_width)  != $Tradetracker_width_val) {
+        update_option( $Tradetracker_width_name, $Tradetracker_width_val );
+  }
+
+ if ( get_option(Tradetracker_colortitle)  != $Tradetracker_colortitle_val) {
+        update_option( $Tradetracker_colortitle_name, $Tradetracker_colortitle_val );
+  }	
+ if ( get_option(Tradetracker_colorfooter)  != $Tradetracker_colorfooter_val) {
+        update_option( $Tradetracker_colorfooter_name, $Tradetracker_colorfooter_val );
+  }
+ if ( get_option(Tradetracker_colorimagebg)  != $Tradetracker_colorimagebg_val) {
+        update_option( $Tradetracker_colorimagebg_name, $Tradetracker_colorimagebg_val );
+  }
+ if ( get_option(Tradetracker_colorfont)  != $Tradetracker_colorfont_val) {
+        update_option( $Tradetracker_colorfont_name, $Tradetracker_colorfont_val );
+  }
+        // Put an settings updated message on the screen
+?>
+<div class="updated"><p><strong><?php _e('settings saved.', 'menu-test' ); ?></strong></p></div>
+<?php
+
+    }
+echo "<h2>" . __( 'Tradetracker Store Layout', 'menu-test' ) . "</h2>";
+	$width= get_option( Tradetracker_width );
+	$widthtitle = $width-6;
+	$colortitle = get_option( Tradetracker_colortitle );
+	$colorfooter = get_option( Tradetracker_colorfooter );
+	$colorimagebg = get_option( Tradetracker_colorimagebg );
+	$colorfont = get_option( Tradetracker_colorfont );
+?>
+<style type="text/css" media="screen">
+.info {
+		border-bottom: 1px dotted #666;
+		cursor: help;
+	}
+<?php
+	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";}";
+	echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";}";
+	echo ".store-image{width:".$width."px;}";
+	echo ".store-footer{width:".$width."px;background-color:".$colorfooter.";}";
+	echo ".store-description{width:".$widthtitle."px;color:".$colorfont.";}";
+	echo ".store-image{width:".$width."px;background-color:".$colorimagebg.";}";
+
+?>
+
+</style>
+	<div id="sideblock" style="float:right;width:<?php echo $width; ?>px;margin-right:20px;border:1px;"> 
+		<div class="store-outerbox">
+				<div class="store-titel">
+					Wordpress Plugin
+				</div>			
+				<div class="store-image">
+					<img src="<?php echo "".WP_PLUGIN_URL."/tradetracker-store/screenshot-1.png"; ?>" style="max-width:<?php echo $width; ?>px;max-height:180px;">
+				</div>
+				<div class="store-footer">
+					<div class="store-description">
+						A Plugin you can use
+					</div>
+					<div class="buttons">
+						<a href="#" class="regular">
+							Buy Item
+						</a>
+					</div>
+					<div class="store-price">
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td style="height:23px;" class="euros">
+									0,00 EUR
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+ 	</div>
+<form name="form1" method="post" action="">
+<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
+<table>
+<tr><td><label for="tradetrackerwidth" title="Fill in how width you want 1 item to be." class="info"><?php _e("Store width:", 'tradetracker-width' ); ?> </label> 
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_width_field_name; ?>" value="<?php echo $Tradetracker_width_val; ?>" size="7">
+</td></tr>
+
+<tr><td><label for="tradetrackercolortitle" title="What color would you like to use for your title background." class="info"><?php _e("Title background color:", 'tradetracker-colortitle' ); ?> </label> 
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_colortitle_field_name; ?>" value="<?php echo $Tradetracker_colortitle_val; ?>" size="7"> <a href="http://www.2createawebsite.com/build/hex-colors.html#colorgenerator" target="_blank">Color Picker</a>
+</td></tr>
+
+<tr><td><label for="tradetrackercolorfooter" title="What color would you like to use for your footer background." class="info"><?php _e("Footer background color:", 'tradetracker-colorfooter' ); ?> </label> 
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_colorfooter_field_name; ?>" value="<?php echo $Tradetracker_colorfooter_val; ?>" size="7">
+</td></tr>
+
+<tr><td><label for="tradetrackercolorimagebg" title="What color would you like to use for your image background." class="info"><?php _e("Image background color:", 'tradetracker-colorimagebg' ); ?> </label> 
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_colorimagebg_field_name; ?>" value="<?php echo $Tradetracker_colorimagebg_val; ?>" size="7">
+</td></tr>
+
+<tr><td><label for="tradetrackercolorfont" title="What font color would you like to use." class="info"><?php _e("Font color:", 'tradetracker-colorfont' ); ?> </label> 
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_colorfont_field_name; ?>" value="<?php echo $Tradetracker_colorfont_val; ?>" size="7">
+</td></tr>
+</table>
+<hr />
+
+<p class="submit">
+<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
+</p>
+
+</form>
+<?php
 }
 
 
