@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.3
+Version: 1.3.1
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -155,12 +155,32 @@ function show_items()
 		$Tradetracker_amount_i = $Tradetracker_amount; 
 	}
 	global $wpdb;
-	$width= get_option( Tradetracker_width );
+	if( get_option( Tradetracker_width ) == "" ){
+		$width= "250";
+	} else {
+		$width= get_option( Tradetracker_width );
+	}
 	$widthtitle = $width-6;
-	$colortitle = get_option( Tradetracker_colortitle );
-	$colorfooter = get_option( Tradetracker_colorfooter );
+	if( get_option( Tradetracker_colortitle ) == "" ){
+		$colortitle = "#ececed";
+	} else {
+		$colortitle = get_option( Tradetracker_colortitle );
+	}
+	if( get_option( Tradetracker_colorfooter ) == "" ){
+		$colorfooter = "#ececed";
+	} else {
+		$colorfooter = get_option( Tradetracker_colorfooter );
+	}
+	if( get_option( Tradetracker_colorimagebg ) == "" ){
+		$colorimagebg = "#ffffff";
+	} else {
 	$colorimagebg = get_option( Tradetracker_colorimagebg );
+	}
+	if( get_option( Tradetracker_colorfont ) == "" ){
+		$colorfont = "#000000";
+	} else {
 	$colorfont = get_option( Tradetracker_colorfont );
+	}
 	
 	echo "<style type=\"text/css\" media=\"screen\">";
 	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";}";
@@ -492,12 +512,32 @@ function tradetracker_store_layout() {
 
     }
 echo "<h2>" . __( 'Tradetracker Store Layout', 'menu-test' ) . "</h2>";
-	$width= get_option( Tradetracker_width );
+	if( get_option( Tradetracker_width ) == "" ){
+		$width= "250";
+	} else {
+		$width= get_option( Tradetracker_width );
+	}
 	$widthtitle = $width-6;
-	$colortitle = get_option( Tradetracker_colortitle );
-	$colorfooter = get_option( Tradetracker_colorfooter );
+	if( get_option( Tradetracker_colortitle ) == "" ){
+		$colortitle = "#ececed";
+	} else {
+		$colortitle = get_option( Tradetracker_colortitle );
+	}
+	if( get_option( Tradetracker_colorfooter ) == "" ){
+		$colorfooter = "#ececed";
+	} else {
+		$colorfooter = get_option( Tradetracker_colorfooter );
+	}
+	if( get_option( Tradetracker_colorimagebg ) == "" ){
+		$colorimagebg = "#ffffff";
+	} else {
 	$colorimagebg = get_option( Tradetracker_colorimagebg );
+	}
+	if( get_option( Tradetracker_colorfont ) == "" ){
+		$colorfont = "#000000";
+	} else {
 	$colorfont = get_option( Tradetracker_colorfont );
+	}
 ?>
 <style type="text/css" media="screen">
 .info {
@@ -549,27 +589,27 @@ echo "<h2>" . __( 'Tradetracker Store Layout', 'menu-test' ) . "</h2>";
 <table>
 <tr><td><label for="tradetrackerwidth" title="Fill in how width you want 1 item to be." class="info"><?php _e("Store width:", 'tradetracker-width' ); ?> </label> 
 </td><td>
-<input type="text" name="<?php echo $Tradetracker_width_field_name; ?>" value="<?php echo $Tradetracker_width_val; ?>" size="7">
+<input type="text" name="<?php echo $Tradetracker_width_field_name; ?>" value="<?php echo $width; ?>" size="7">
 </td></tr>
 
 <tr><td><label for="tradetrackercolortitle" title="What color would you like to use for your title background." class="info"><?php _e("Title background color:", 'tradetracker-colortitle' ); ?> </label> 
 </td><td>
-<input type="text" name="<?php echo $Tradetracker_colortitle_field_name; ?>" value="<?php echo $Tradetracker_colortitle_val; ?>" size="7"> <a href="http://www.2createawebsite.com/build/hex-colors.html#colorgenerator" target="_blank">Color Picker</a>
+<input type="text" name="<?php echo $Tradetracker_colortitle_field_name; ?>" value="<?php echo $colortitle; ?>" size="7"> <a href="http://www.2createawebsite.com/build/hex-colors.html#colorgenerator" target="_blank">Color Picker</a>
 </td></tr>
 
 <tr><td><label for="tradetrackercolorfooter" title="What color would you like to use for your footer background." class="info"><?php _e("Footer background color:", 'tradetracker-colorfooter' ); ?> </label> 
 </td><td>
-<input type="text" name="<?php echo $Tradetracker_colorfooter_field_name; ?>" value="<?php echo $Tradetracker_colorfooter_val; ?>" size="7">
+<input type="text" name="<?php echo $Tradetracker_colorfooter_field_name; ?>" value="<?php echo $colorfooter; ?>" size="7">
 </td></tr>
 
 <tr><td><label for="tradetrackercolorimagebg" title="What color would you like to use for your image background." class="info"><?php _e("Image background color:", 'tradetracker-colorimagebg' ); ?> </label> 
 </td><td>
-<input type="text" name="<?php echo $Tradetracker_colorimagebg_field_name; ?>" value="<?php echo $Tradetracker_colorimagebg_val; ?>" size="7">
+<input type="text" name="<?php echo $Tradetracker_colorimagebg_field_name; ?>" value="<?php echo $colorimagebg; ?>" size="7">
 </td></tr>
 
 <tr><td><label for="tradetrackercolorfont" title="What font color would you like to use." class="info"><?php _e("Font color:", 'tradetracker-colorfont' ); ?> </label> 
 </td><td>
-<input type="text" name="<?php echo $Tradetracker_colorfont_field_name; ?>" value="<?php echo $Tradetracker_colorfont_val; ?>" size="7">
+<input type="text" name="<?php echo $Tradetracker_colorfont_field_name; ?>" value="<?php echo $colorfont; ?>" size="7">
 </td></tr>
 </table>
 <hr />
