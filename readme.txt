@@ -4,7 +4,7 @@ Donate link: none
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements
 Requires at least: 2.0.2
 Tested up to: 3.0.1
-Stable tag: 1.1
+Stable tag: 1.2
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -41,6 +41,11 @@ I've created functions for this plugin of which I thought they'd be useful, but 
 
 == Changelog ==
 
+= 1.2 =
+
+Improved item selection screen. It shows image when hovering over the name
+Also solved issue with selecting items on several pages. Now they are saved.
+
 = 1.1 =
 
 Changed the stats page. Please let me know if all issues are solved.
@@ -65,13 +70,6 @@ Improved the way the item selection screen looks like.
 
 Added a check to see if your folder is writable for the cache file. Also added a feedback form.
 
-= 0.5 = 
-
-Improved method of selecting which items you'd like to show
-
-= 0.4 =
-
-Removed a lot of spelling mistakes
 
 
 `<?php code(); // goes in backticks ?>`

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.1
+Version: 1.2
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -69,15 +69,14 @@ function tradetracker_store_uninstall()
 /* 
 ..--==[ Function to add the stylesheet for the store ]==--.. 
 */
-
-    function add_my_stylesheet() {
-        $myStyleUrl = WP_PLUGIN_URL . '/tradetracker-store/store.css';
-        $myStyleFile = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
-        if ( file_exists($myStyleFile) ) {
-            wp_register_style('myStyleSheets', $myStyleUrl);
-            wp_enqueue_style( 'myStyleSheets');
+function add_my_stylesheet() {
+	$myStyleUrl = WP_PLUGIN_URL . '/tradetracker-store/store.css';
+	$myStyleFile = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
+	if ( file_exists($myStyleFile) ) {
+		wp_register_style('myStyleSheets', $myStyleUrl);
+		wp_enqueue_style( 'myStyleSheets');
         }
-    }
+}
 
 /* 
 ..--==[ Function to see if XML is loaded already and cached. ]==--.. 
@@ -111,25 +110,25 @@ if ($Tradetracker_xml == null) {
 
 function fill_database()
 {
-			global $wpdb; 
-			$table = PRO_TABLE_PREFIX."store";
-    			$emptytable = "DELETE FROM $table;;";
-    			$wpdb->query($emptytable);
-			$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
-			$string = file_get_contents($cache_file);
-			$products = simplexml_load_string($string);
-			foreach($products as $product) // loop through our items
-				{
-				    	global $wpdb; 
-				    	$currentpage["productID"]=$product->productID;		
- 					$currentpage["name"]=$product->name;
-    					$currentpage["imageURL"]=$product->imageURL;
-    					$currentpage["productURL"]=$product->productURL;
-    					$currentpage["description"]=$product->description;
-    					$currentpage["price"]=$product->price;
-    					$currentpage["currency"]=$product->price['currency'];
-    					$wpdb->insert( $table, $currentpage);//insert the captured values
-				}
+	global $wpdb; 
+	$table = PRO_TABLE_PREFIX."store";
+	$emptytable = "DELETE FROM $table;;";
+	$wpdb->query($emptytable);
+	$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
+	$string = file_get_contents($cache_file);
+	$products = simplexml_load_string($string);
+	foreach($products as $product) // loop through our items
+	{
+	    	global $wpdb; 
+	    	$currentpage["productID"]=$product->productID;		
+		$currentpage["name"]=$product->name;
+		$currentpage["imageURL"]=$product->imageURL;
+		$currentpage["productURL"]=$product->productURL;
+		$currentpage["description"]=$product->description;
+		$currentpage["price"]=$product->price;
+		$currentpage["currency"]=$product->price['currency'];
+		$wpdb->insert( $table, $currentpage);//insert the captured values
+	}
 }
 /* 
 ..--==[ Function to show the items. ]==--.. 
@@ -137,77 +136,79 @@ function fill_database()
 
 function show_items()
 {
-$Tradetracker_amount = get_option( Tradetracker_amount );
-if ($Tradetracker_amount == null) {
-$Tradetracker_amount_i = 12; 
-} else {
-$Tradetracker_amount_i = $Tradetracker_amount; 
+	$Tradetracker_amount = get_option( Tradetracker_amount );
+	if ($Tradetracker_amount == null) 
+	{
+		$Tradetracker_amount_i = 12; 
+	} else {
+		$Tradetracker_amount_i = $Tradetracker_amount; 
+	}
+	global $wpdb; 
+	$table = PRO_TABLE_PREFIX."store";
+	$Tradetracker_productid = get_option( Tradetracker_productid );
+	if ($Tradetracker_productid == null) 
+	{
+		$visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY RAND() LIMIT $Tradetracker_amount_i");
+	} else {
+		$productID = get_option( Tradetracker_productid );
+		$productID = str_replace(",", " or productID=", $productID);
+		$visits=$wpdb->get_results("SELECT * FROM ".$table." where productID=".$productID."");
+	}
+	$storeitems = "";
+	foreach ($visits as $product){
+		$storeitems .= "
+			<div class=\"store-outerbox\">
+				<div class=\"store-titel\">
+					".$product->name."
+				</div>			
+				<div class=\"store-image\">
+					<a href=\"".$product->imageURL."\" rel=\"lightbox[store]\">
+						<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:180px;max-height:180px;\" />
+					</a>
+				</div>
+				<div class=\"store-footer\">
+					<div class=\"store-description\">
+						".$product->description."
+					</div>
+					<div class=\"buttons\">
+						<a href=\"".$product->productURL."\" class=\"regular\">
+							Buy Item
+						</a>
+					</div>
+					<div class=\"store-price\">
+						<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
+							<tr>
+								<td style=\"height:23px;\" class=\"euros\">
+									".$product->price." ".$product->currency."
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>";
+	}
+	return $storeitems;
 }
-global $wpdb; 
-$table = PRO_TABLE_PREFIX."store";
-
-$Tradetracker_productid = get_option( Tradetracker_productid );
-if ($Tradetracker_productid == null) {
-$visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY RAND() LIMIT $Tradetracker_amount_i");
-} else {
-$productID = get_option( Tradetracker_productid );
-$productID = str_replace(",", " or productID=", $productID);
-$visits=$wpdb->get_results("SELECT * FROM ".$table." where productID=".$productID."");
-}
-$storeitems = "";
-foreach ($visits as $product){
-
-$storeitems .= "<div class=\"store-outerbox\">
-	 	<div class=\"store-titel\">
-			".$product->name."
-		</div>			
-	<div class=\"store-image\">
-		<a href=\"".$product->imageURL."\" rel=\"lightbox[store]\">
-	<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:180px;max-height:180px;\" /></a>
-</div>
-<div class=\"store-footer\">
-<div class=\"store-description\">
-".$product->description."
-</div>
-<div class=\"buttons\">
-<a href=\"".$product->productURL."\" class=\"regular\">
-Buy Item
-</a>
-</div>
-<div class=\"store-price\">
-			<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
-<tr>
-<td style=\"height:23px;\" class=\"euros\">
-".$product->price." ".$product->currency."
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>";
-}
-return $storeitems;
-}
-
 
 add_shortcode('display_store', 'display_store_items');
+
 function display_store_items()
 {
-return store_items();
+	return store_items();
 }
 
 function adminstore_items()
 {
-$Tradetracker_xml = get_option( Tradetracker_xml );
-if ($Tradetracker_xml == null) {
-	echo "No XML filled in yet please change the settings first.";
-} else {
-	$cache_time = 3600*24; // 24 hours
-
-	$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
-	$timedif = @(time() - filemtime($cache_file));
-
-		if (file_exists($cache_file) && $timedif < $cache_time) {
+	$Tradetracker_xml = get_option( Tradetracker_xml );
+	if ($Tradetracker_xml == null) 
+	{
+		echo "No XML filled in yet please change the settings first.";
+	} else {
+		$cache_time = 3600*24; // 24 hours
+		$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
+		$timedif = @(time() - filemtime($cache_file));
+		if (file_exists($cache_file) && $timedif < $cache_time) 
+		{
 		} else {
     			$string = file_get_contents($Tradetracker_xml);
     			if ($f = @fopen($cache_file, 'w')) {
@@ -222,65 +223,89 @@ if ($Tradetracker_xml == null) {
 
 function adminshow_items()
 {
-  if (!current_user_can('manage_options'))  {
-    wp_die( __('You do not have sufficient permissions to access this page.') );
-  }
-    if( isset($_POST['posted']) && $_POST['posted'] == 'Y' ) {
-        // Read their posted value
-
-        $Tradetracker_items = $_POST['item'];
-	$Tradetracker_items = implode(",", $Tradetracker_items);
-        // Save the posted value in the database
-
-
- if ( get_option(Tradetracker_productid)  != $Tradetracker_items) {
-        update_option(Tradetracker_productid, $Tradetracker_items );
-  }
-echo "<div class=\"updated\"><p><strong>Settings Saved</strong></p></div>";	
-}
-if($_GET['order']==null){
-$order = "name";
-} else {
-$order = $_GET['order'];
-}
-global $wpdb; 
-$limit = $_GET['limit'];
-$currentpage = $_GET['currentpage'];
-if (!($limit)){
-$limit = 100;} // Default results per-page.
-if (!($currentpage)){
-$currentpage = 0;} // Default page value.
-$table = PRO_TABLE_PREFIX."store";
-$countquery=$wpdb->get_results("SELECT * FROM ".$table."");
-$numrows = $wpdb->num_rows;
-$pages = intval($numrows/$limit); // Number of results pages.
-if ($numrows%$limit) {
-$pages++;} 
-$current = ($currentpage/$limit) + 1;
-if (($pages < 1) || ($pages == 0)) {
-$total = 1;}
-else {
-$total = $pages;} 
-$first = $currentpage + 1;
-if (!((($currentpage + $limit) / $limit) >= $pages) && $pages != 1) {
-$last = $currentpage + $limit;}
-else{
-$last = $numrows;}
+	if (!current_user_can('manage_options'))
+	{
+		wp_die( __('You do not have sufficient permissions to access this page.') );
+	}
+    	if( isset($_POST['posted']) && $_POST['posted'] == 'Y' ) 
+	{
+                $Tradetracker_items = $_POST['item'];
+		$Tradetracker_items = implode(",", $Tradetracker_items);
+		if($_POST['itemsother']!="")
+		{
+			$Tradetracker_items = $Tradetracker_items.",".$_POST['itemsother'];
+		}
+		if ( get_option(Tradetracker_productid)  != $Tradetracker_items) 
+		{
+			update_option(Tradetracker_productid, $Tradetracker_items );
+  		}
+		echo "<div class=\"updated\"><p><strong>Settings Saved</strong></p></div>";	
+	}
+	if($_GET['order']==null)
+	{
+		$order = "name";
+	} else {
+		$order = $_GET['order'];
+	}
+	global $wpdb; 
+	$limit = $_GET['limit'];
+	$currentpage = $_GET['currentpage'];
+	if (!($limit))
+	{
+		$limit = 100;
+	}
+	if (!($currentpage)){
+		$currentpage = 0;
+	}
+	$table = PRO_TABLE_PREFIX."store";
+	$countquery=$wpdb->get_results("SELECT * FROM ".$table."");
+	$numrows = $wpdb->num_rows;
+	$pages = intval($numrows/$limit); // Number of results pages.
+	if ($numrows%$limit) 
+	{
+		$pages++;
+	} 
+	$current = ($currentpage/$limit) + 1;
+	if (($pages < 1) || ($pages == 0)) 
+	{
+		$total = 1;
+	} else {
+		$total = $pages;
+	} 
+	$first = $currentpage + 1;
+	if (!((($currentpage + $limit) / $limit) >= $pages) && $pages != 1) 
+	{
+		$last = $currentpage + $limit;
+	} else {
+		$last = $numrows;
+	}
 ?>
+<style type="text/css" media="screen">
+#screenshot{
+	position:absolute;
+	border:1px solid #ccc;
+	background:#333;
+	padding:5px;
+	display:none;
+	color:#fff;
+	}
+
+/*  */
+</style>
 <table width="700" border="0">
- <tr>
-  <td width="50%" align="left">
-Showing products <b><?=$first?></b> - <b><?=$last?></b> of <b><?=$numrows?></b>
-  </td>
-  <td width="50%" align="right">
-Page <b><?=$current?></b> of <b><?=$total?></b>
-  </td>
- </tr>
- <tr>
-  <td colspan="2" align="right">
-Results per-page: <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=100">100</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=200">200</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=500">500</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=1000">1000</a>
-  </td>
- </tr>
+	<tr>
+		<td width="50%" align="left">
+			Showing products <b><?=$first?></b> - <b><?=$last?></b> of <b><?=$numrows?></b>
+  		</td>
+  		<td width="50%" align="right">
+			Page <b><?=$current?></b> of <b><?=$total?></b>
+  		</td>
+ 	</tr>
+ 	<tr>
+  		<td colspan="2" align="right">
+			Results per-page: <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=100">100</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=200">200</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=500">500</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=1000">1000</a>
+  		</td>
+ 	</tr>
 </table>
 <?php
 $visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
@@ -296,7 +321,9 @@ echo "<b>Currency</b>";
 echo "</td></tr>";
 echo "<form name=\"form2\" method=\"post\" action=\"\">";
 echo "<input type=\"hidden\" name=\"posted\" value=\"Y\">";
+$array2="";
 foreach ($visits as $product){
+$array2 .= ",".$product->productID."";
 echo "<tr><td>";
 $productID = get_option( Tradetracker_productid );
 $productID = explode(",",$productID);
@@ -307,15 +334,21 @@ echo "<input type=\"checkbox\" checked=\"yes\" name=\"item[]\" value=".$product-
 echo "<input type=\"checkbox\" name=\"item[]\" value=".$product->productID." />";
 }
 echo 		$product->productID;
-echo "</td><td>";
+echo "</td><td><a href=\"#thumb\" class=\"screenshot\" rel=\"".$product->imageURL."\">";
 echo 		$product->name;
-echo "</td><td>";
+echo "</a></td><td>";
 echo 		$product->price;
 echo "</td><td>";
 echo 		$product->currency;
 echo "</td></tr>";
 
+
 }
+$array1 = $productID;
+$array2 = explode(",", $array2);
+$result = array_diff($array1, $array2);
+$result = implode(",", $result);
+echo "<input type=\"hidden\" name=\"itemsother\" value=\"".$result."\" />";
 echo "</table>";
 echo "<p class=\"submit\">";
 echo "<input type=\"submit\" name=\"Submit\" class=\"button-primary\" value=\"Save Changes\" />";
@@ -346,15 +379,20 @@ add_action('admin_menu', 'my_plugin_menu');
 
 function my_plugin_menu() {
 
-  add_menu_page('Tradetracker Store', 'Tt Store', 'manage_options', 'tradetracker-shop', 'tradetracker_store_options');
+ add_menu_page('Tradetracker Store', 'Tt Store', 'manage_options', 'tradetracker-shop', 'tradetracker_store_options');
   add_submenu_page('tradetracker-shop', 'Tradetracker Store settings', 'Tt Store Settings', 'manage_options', 'tradetracker-shop', 'tradetracker_store_options');
   add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
-add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-items', 'adminstore_items');
+$mypage = add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-items', 'adminstore_items');
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
 if(class_exists('SoapClient')){
 add_submenu_page('tradetracker-shop', 'Tradetracker Store Stats', 'Tt Store Stats', 'manage_options', 'tradetracker-shop-stats', 'tradetracker_store_stats');
 }
+add_action( "admin_print_scripts-$mypage", 'ozh_loadjs_admin_head' );
+}
 
+function ozh_loadjs_admin_head() {
+	wp_enqueue_script('loadjs', WP_PLUGIN_URL .'/tradetracker-store/js/jquery.js');
+	wp_enqueue_script('loadjs1', WP_PLUGIN_URL .'/tradetracker-store/js/main.js');
 }
 
 
