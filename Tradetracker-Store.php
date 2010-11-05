@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.0.1
+Version: 1.1
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -467,7 +467,11 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
 		border-bottom: 1px dotted #666;
 		cursor: help;
 	}
+
 </style>
+	<div id="sideblock" style="float:right;width:270px;margin-left:10px;border:1px;"> 
+		<iframe width=270 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+ 	</div>
 <form name="form1" method="post" action="">
 <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 <table>
@@ -556,7 +560,7 @@ function tradetracker_store_help() {
 </ul>
 <h2>Installation using a shortcode in your post or page:</h2>
 <ul>
-<li>Use [display_store] in a page you created
+<li>Use [display_store] in a page you created (make sure you do this in the HTML view)
 </ul>
 <h2>Extra Plugins:</h2>
 <ul>
@@ -602,18 +606,34 @@ $acces_code = get_option( Tradetracker_access_code );
 if (get_option( Tradetracker_siteid ) == null || get_option( Tradetracker_customerid ) == null || get_option( Tradetracker_access_code ) == null){
 echo "Please adjust your stats settings";
 } else {
+try { 
 $client = new SoapClient('http://ws.tradetracker.com/soap/affiliate?wsdl');
 $client->authenticate($customerid, ''.$acces_code.'');
-
 $affiliateSiteID = $siteid;
-$registrationDateFrom = ''.\Date('Y-m-d', strtotime("-30 days")).'';
-$registrationDateTo = ''.Date("Y-m-d").'';
 
+
+
+echo "<table width=\"900\">";
+if($_GET['timeframe']=="month"){
+$registrationDateFrom = ''.Date('Y-m-d', strtotime("-30 days")).'';
+$registrationDateTo = ''.Date("Y-m-d").'';
+echo "<tr><td>Statistics for ".Date('d-M-Y', strtotime('-30 days'))." till ".Date('d-M-Y')."</td>";
+}
+else if($_GET['timeframe']=="week"){
+$registrationDateFrom = ''.Date('Y-m-d', strtotime("-7 days")).'';
+$registrationDateTo = ''.Date("Y-m-d").'';
+echo "<tr><td>Statistics for ".Date('d-M-Y', strtotime('-7 days'))." till ".Date('d-M-Y')."</td>";
+}else{
+$registrationDateFrom = ''.Date("Y-m-d").'';
+$registrationDateTo = ''.Date("Y-m-d").'';
+echo "<tr><td>Statistics for ".Date('d-M-Y')."</td>";
+}
 $options = array(
-	'dateFrom' => ''.Date('Y-m-d', strtotime("-30 days")).'',
-	'dateTo' => ''.Date("Y-m-d").'',
+	'dateFrom' => ''.$registrationDateFrom.'',
+	'dateTo' => ''.$registrationDateTo.'',
 );
-echo "Statistics for ".Date('Y-M-d', strtotime('-30 days'))." till ".Date('Y-M-d')."";
+echo "</td><td align=\"right\"><a href=\"admin.php?page=tradetracker-shop-stats\">Today</a> - <a href=\"admin.php?page=tradetracker-shop-stats&timeframe=week\">Last 7 days</a> - <a href=\"admin.php?page=tradetracker-shop-stats&timeframe=month\">Last 30 days</a>";
+echo "</table>";
 echo "<table width=\"900\">";
 echo "<tr><td><b>Campaign</b></td><td><b>Views</b></td><td><b>Commission</b></td><td><b>Clicks</b></td><td><b>Commission</b></td><td><b>Leads</b></td><td><b>Commission</b></td><td><b>Sales</b></td><td><b>Commission</b></td><td><b>Total</b></td></tr>";
 foreach ($client->getReportCampaign($affiliateSiteID, $options) as $report) {
@@ -626,21 +646,23 @@ foreach ($client->getReportCampaign($affiliateSiteID, $options) as $report) {
 	echo '<td>' . round($report->reportData->leadCommission,2) . '</td>';
 	echo '<td>' . $report->reportData->saleCount . '</td>';
 	echo '<td>' . round($report->reportData->saleCommission,2) . '</td>';
-	echo '<td>' . round($report->reportData->totalCommission,2) . '</td></tr>';
+	echo '<td><b>' . round($report->reportData->totalCommission,2) . '</b></td></tr>';
 
 }
-try { 
+
+
+
  $report = $client->getReportAffiliateSite($affiliateSiteID, $options);
 	echo '<tr><td><b>Total</b></td>';
-	echo '<td>' . $report->uniqueImpressionCount . '</td>';
-	echo '<td>' . round($report->impressionCommission,2) . '</td>';
-	echo '<td>' . $report->uniqueClickCount . '</td>';
-	echo '<td>' . round($report->clickCommission,2) . '</td>';
-	echo '<td>' . $report->leadCount . '</td>';
-	echo '<td>' . round($report->leadCommission,2) . '</td>';
-	echo '<td>' . $report->saleCount . '</td>';
-	echo '<td>' . round($report->saleCommission,2) . '</td>';
-	echo '<td>' . round($report->totalCommission,2) . '</td></tr>';
+	echo '<td><b>' . $report->uniqueImpressionCount . '</b></td>';
+	echo '<td><b>' . round($report->impressionCommission,2) . '</b></td>';
+	echo '<td><b>' . $report->uniqueClickCount . '</b></td>';
+	echo '<td><b>' . round($report->clickCommission,2) . '</b></td>';
+	echo '<td><b>' . $report->leadCount . '</b></td>';
+	echo '<td><b>' . round($report->leadCommission,2) . '</b></td>';
+	echo '<td><b>' . $report->saleCount . '</b></td>';
+	echo '<td><b>' . round($report->saleCommission,2) . '</b></td>';
+	echo '<td><b>' . round($report->totalCommission,2) . '</b></td></tr>';
 } catch (SoapFault $exception) { 
   echo " <div class=\"error\"><p><strong>Some unknown issue is annoying and ruining something. Please report this by using <a href=\"admin.php?page=tradetracker-shop-feedback\">Tt Store Feedback</a></strong></p></div>";
 } 
