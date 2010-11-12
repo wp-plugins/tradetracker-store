@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.3.2
+Version: 1.3.3
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -93,7 +93,7 @@ function add_my_stylesheet() {
 ..--==[ Function to see if XML is loaded already and cached. ]==--.. 
 */
 
-function store_items()
+function store_items($used)
 {
 $Tradetracker_xml = get_option( Tradetracker_xml );
 if ($Tradetracker_xml == null) {
@@ -112,7 +112,7 @@ if ($Tradetracker_xml == null) {
     			}
 			fill_database();
 		}
-	return show_items();
+	return show_items($used);
 	}
 }
 /* 
@@ -145,7 +145,7 @@ function fill_database()
 ..--==[ Function to show the items. ]==--.. 
 */
 
-function show_items()
+function show_items($usedhow)
 {
 	$Tradetracker_amount = get_option( Tradetracker_amount );
 	if ($Tradetracker_amount == null) 
@@ -234,14 +234,24 @@ function show_items()
 				</div>
 			</div>";
 	}
+	if ($usedhow == 1){
 	return $storeitems;
+	}
+	if ($usedhow == 2){
+	echo $storeitems;
+	}
 }
 
-add_shortcode('display_store', 'display_store_items');
+add_shortcode('display_store', 'display_store_items_short');
+
+function display_store_items_short()
+{
+	return store_items(1);
+}
 
 function display_store_items()
 {
-	return store_items();
+	return store_items(2);
 }
 
 function adminstore_items()
