@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.3.3
+Version: 1.3.4
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -203,13 +203,18 @@ function show_items($usedhow)
 	}
 	$storeitems = "";
 	foreach ($visits as $product){
+		if(get_option(Tradetracker_lightbox)==1){
+			$image = $product->imageURL;
+		} else {
+			$image = $product->productURL;
+		}
 		$storeitems .= "
 			<div class=\"store-outerbox\">
 				<div class=\"store-titel\">
 					".$product->name."
 				</div>			
 				<div class=\"store-image\">
-					<a href=\"".$product->imageURL."\" rel=\"lightbox[store]\">
+					<a href=\"".$image."\" rel=\"lightbox[store]\">
 						<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:".$width."px;max-height:180px;\" />
 					</a>
 				</div>
@@ -653,6 +658,9 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
 
     $Tradetracker_xml_name = 'Tradetracker_xml';
     $Tradetracker_xml_field_name = 'Tradetracker_xml';
+
+    $Tradetracker_lightbox_name = 'Tradetracker_lightbox';
+    $Tradetracker_lightbox_field_name = 'Tradetracker_lightbox';
     
     $Tradetracker_amount_name = 'Tradetracker_amount';
     $Tradetracker_amount_field_name = 'Tradetracker_amount';
@@ -678,6 +686,7 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
     $Tradetracker_customerid_val = get_option( $Tradetracker_customerid_name );
     $Tradetracker_access_code_val = get_option( $Tradetracker_access_code_name );
     $Tradetracker_siteid_val = get_option( $Tradetracker_siteid_name );
+    $Tradetracker_lightbox_val = get_option( $Tradetracker_lightbox_name );
 
 
     // See if the user has posted us some information
@@ -691,6 +700,7 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
  	$Tradetracker_customerid_val = $_POST[ $Tradetracker_customerid_field_name ];
  	$Tradetracker_access_code_val = $_POST[ $Tradetracker_access_code_field_name ];
  	$Tradetracker_siteid_val = $_POST[ $Tradetracker_siteid_field_name ];
+ 	$Tradetracker_lightbox_val = $_POST[ $Tradetracker_lightbox_field_name ];
 
         // Save the posted value in the database
 
@@ -716,6 +726,9 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
   }
  if ( get_option(Tradetracker_siteid)  != $Tradetracker_siteid_val) {
         update_option( $Tradetracker_siteid_name, $Tradetracker_siteid_val );
+  }
+ if ( get_option(Tradetracker_lightbox)  != $Tradetracker_lightbox_val) {
+        update_option( $Tradetracker_lightbox_name, $Tradetracker_lightbox_val );
   }
 
         // Put an settings updated message on the screen
@@ -763,6 +776,12 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
 </td><td>
 <input type="text" name="<?php echo $Tradetracker_amount_field_name; ?>" value="<?php echo $Tradetracker_amount_val; ?>" size="5">
 </td></tr>
+<tr><td>
+<label for="tradetrackerlightbox" title="Do you want to use lightbox for the images you will need an extra plugin for that" class="info"><?php _e("Use Lightbox:", 'tradetracker-lightbox' ); ?> </label>
+</td><td>
+Yes: <input type="radio" name="<?php echo $Tradetracker_lightbox_field_name; ?>" <?php if($Tradetracker_lightbox_val==1) {echo "checked=\"checked\"";} ?> value="1"> No: <input type="radio" name="<?php echo $Tradetracker_lightbox_field_name; ?>" <?php if($Tradetracker_lightbox_val==0){echo "checked=\"checked\"";} ?> value="0"> <a href="http://wordpress.org/extend/plugins/wp-jquery-lightbox/" target="_blank">You will need this plugin</a>
+</td></tr>
+
 <?php
 if(class_exists('SoapClient')){
 ?>
