@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.3.4
+Version: 1.3.5
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -205,8 +205,12 @@ function show_items($usedhow)
 	foreach ($visits as $product){
 		if(get_option(Tradetracker_lightbox)==1){
 			$image = $product->imageURL;
+			$target = "";	
+			$rel = "rel=\"lightbox[store]\"";
 		} else {
 			$image = $product->productURL;
+			$target = "target=\"_blank\"";
+			$rel = "";
 		}
 		$storeitems .= "
 			<div class=\"store-outerbox\">
@@ -214,7 +218,7 @@ function show_items($usedhow)
 					".$product->name."
 				</div>			
 				<div class=\"store-image\">
-					<a href=\"".$image."\" rel=\"lightbox[store]\">
+					<a href=\"".$image."\" ".$rel." ".$target.">
 						<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:".$width."px;max-height:180px;\" />
 					</a>
 				</div>
