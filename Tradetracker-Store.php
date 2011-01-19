@@ -2,10 +2,10 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.3.5
+Version: 1.3.6
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
-Author URI: http://randommusicvideos.com
+Author URI: http://vannetti.nl
 */
 
 /* 
@@ -363,15 +363,15 @@ function adminshow_items()
 <table width="700" border="0">
 	<tr>
 		<td width="50%" align="left">
-			Showing products <b><?=$first?></b> - <b><?=$last?></b> of <b><?=$numrows?></b>
+			Showing products <b><? echo $first; ?></b> - <b><?php echo $last; ?></b> of <b><?php echo $numrows; ?></b>
   		</td>
   		<td width="50%" align="right">
-			Page <b><?=$current?></b> of <b><?=$total?></b>
+			Page <b><?php echo $current; ?></b> of <b><?php echo $total; ?></b>
   		</td>
  	</tr>
  	<tr>
   		<td colspan="2" align="right">
-			Results per-page: <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=100">100</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=200">200</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=500">500</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?=$currentpage?>&limit=1000">1000</a>
+			Results per-page: <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=100">100</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=200">200</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=500">500</a> | <a href="admin.php?page=tradetracker-shop-items&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=1000">1000</a>
   		</td>
  	</tr>
 </table>
@@ -412,10 +412,12 @@ echo "</td></tr>";
 
 
 }
+if(!empty($array2)){
 $array1 = $productID;
 $array2 = explode(",", $array2);
 $result = array_diff($array1, $array2);
 $result = implode(",", $result);
+}
 echo "<input type=\"hidden\" name=\"itemsother\" value=\"".$result."\" />";
 echo "</table>";
 echo "<p class=\"submit\">";
