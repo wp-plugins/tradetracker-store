@@ -92,7 +92,3 @@ Improved the way the item selection screen looks like.
 = 0.6 =
 
 Added a check to see if your folder is writable for the cache file. Also added a feedback form.
-
-
-
-`<?php code(); // goes in backticks ?>`
