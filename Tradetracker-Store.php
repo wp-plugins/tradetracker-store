@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.4
+Version: 1.4.1
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -107,13 +107,17 @@ if ($Tradetracker_xml == null) {
 	return "No store activated yet";
 } else {
 	$cache_time = 3600*$update; // 24 hours
-
+$context = stream_context_create(array(
+    'http' => array(
+        'timeout' => 3      // Timeout in seconds
+    )
+));
 	$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 	$timedif = @(time() - filemtime($cache_file));
 		if (file_exists($cache_file) && $timedif < $cache_time) {
 			if ('' == file_get_contents($cache_file))
 				{
-		     			$string = file_get_contents($Tradetracker_xml);
+		     			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
 		    			if ($f = @fopen($cache_file, 'w')) {
         					fwrite ($f, $string, strlen($string));
         					fclose($f);
@@ -121,7 +125,7 @@ if ($Tradetracker_xml == null) {
 					fill_database();
 				}  
 		} else {
-    			$string = file_get_contents($Tradetracker_xml);
+    			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
     			if ($f = @fopen($cache_file, 'w')) {
         			fwrite ($f, $string, strlen($string));
         			fclose($f);
@@ -297,6 +301,11 @@ function adminstore_items()
 	{
 		echo "No XML filled in yet please change the settings first.";
 	} else {
+	$context = stream_context_create(array(
+    'http' => array(
+        'timeout' => 3      // Timeout in seconds
+    )
+	));
 		$cache_time = 3600*$update; // 24 hours
 		$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 		$timedif = @(time() - filemtime($cache_file));
@@ -304,7 +313,7 @@ function adminstore_items()
 		{
 			if ('' == file_get_contents($cache_file))
 				{
-		     			$string = file_get_contents($Tradetracker_xml);
+		     			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
 		    			if ($f = @fopen($cache_file, 'w')) {
         					fwrite ($f, $string, strlen($string));
         					fclose($f);
@@ -313,7 +322,7 @@ function adminstore_items()
 				}  
 
 		} else {
-    			$string = file_get_contents($Tradetracker_xml);
+    			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
     			if ($f = @fopen($cache_file, 'w')) {
         			fwrite ($f, $string, strlen($string));
         			fclose($f);
