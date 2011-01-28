@@ -3,8 +3,8 @@ Contributors: RPG84
 Donate link: none
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements
 Requires at least: 2.0.2
-Tested up to: 3.0.1
-Stable tag: 1.3.6
+Tested up to: 3.0.4
+Stable tag: 1.4
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -41,6 +41,11 @@ I've created functions for this plugin of which I thought they'd be useful, but 
 
 == Changelog ==
 
+= 1.4 =
+Added ability to manually choose the Font used in the layout settings
+Added a extra check for when cache.xml stayed empty
+Added an option in setting screen where you can decide how often an new xml file is downloaded
+
 = 1.3.6 = 
 Small bug solved in the item selection screen
 
@@ -76,19 +81,3 @@ Changed the stats page. Please let me know if all issues are solved.
 = 1.0 = 
 
 Images weren't showing up. This should be solved now
-
-= 0.9 =
-
-Fixed some issues with the statistics page. Hopefully there will be no more errors there.
-
-= 0.8 =
-
-Added statistics to the admin menu. Now you can see how good your stores did in the last 30 days.
-
-= 0.7 =
-
-Improved the way the item selection screen looks like.
-
-= 0.6 =
-
-Added a check to see if your folder is writable for the cache file. Also added a feedback form.

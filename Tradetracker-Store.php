@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 1.3.6
+Version: 1.4
 Description: A Plugin that will add the functions for a TradeTracker store based on the affiliate feeds. Show it by using  display_store_items funtion in your theme or [display_store] in a page.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -95,15 +95,31 @@ function add_my_stylesheet() {
 
 function store_items($used)
 {
+	global $wpdb;
+	if( get_option( Tradetracker_update ) == "" ){
+		$update= "24";
+	} else {
+		$update= get_option( Tradetracker_update );
+	}
+
 $Tradetracker_xml = get_option( Tradetracker_xml );
 if ($Tradetracker_xml == null) {
 	return "No store activated yet";
 } else {
-	$cache_time = 3600*24; // 24 hours
+	$cache_time = 3600*$update; // 24 hours
 
 	$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 	$timedif = @(time() - filemtime($cache_file));
 		if (file_exists($cache_file) && $timedif < $cache_time) {
+			if ('' == file_get_contents($cache_file))
+				{
+		     			$string = file_get_contents($Tradetracker_xml);
+		    			if ($f = @fopen($cache_file, 'w')) {
+        					fwrite ($f, $string, strlen($string));
+        					fclose($f);
+    					}
+					fill_database();
+				}  
 		} else {
     			$string = file_get_contents($Tradetracker_xml);
     			if ($f = @fopen($cache_file, 'w')) {
@@ -160,6 +176,11 @@ function show_items($usedhow)
 	} else {
 		$width= get_option( Tradetracker_width );
 	}
+	if( get_option( Tradetracker_font ) == "" ){
+		$font= "Verdana";
+	} else {
+		$font= get_option( Tradetracker_font );
+	}
 	$widthtitle = $width-6;
 	if( get_option( Tradetracker_colortitle ) == "" ){
 		$colortitle = "#ececed";
@@ -183,7 +204,7 @@ function show_items($usedhow)
 	}
 	
 	echo "<style type=\"text/css\" media=\"screen\">";
-	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";}";
+	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";}";
 	echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";}";
 	echo ".store-image{width:".$width."px;}";
 	echo ".store-footer{width:".$width."px;background-color:".$colorfooter.";}";
@@ -265,16 +286,32 @@ function display_store_items()
 
 function adminstore_items()
 {
+	global $wpdb;
+	if( get_option( Tradetracker_update ) == "" ){
+		$update= "24";
+	} else {
+		$update= get_option( Tradetracker_update );
+	}
 	$Tradetracker_xml = get_option( Tradetracker_xml );
 	if ($Tradetracker_xml == null) 
 	{
 		echo "No XML filled in yet please change the settings first.";
 	} else {
-		$cache_time = 3600*24; // 24 hours
+		$cache_time = 3600*$update; // 24 hours
 		$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 		$timedif = @(time() - filemtime($cache_file));
 		if (file_exists($cache_file) && $timedif < $cache_time) 
 		{
+			if ('' == file_get_contents($cache_file))
+				{
+		     			$string = file_get_contents($Tradetracker_xml);
+		    			if ($f = @fopen($cache_file, 'w')) {
+        					fwrite ($f, $string, strlen($string));
+        					fclose($f);
+    					}
+					fill_database();
+				}  
+
 		} else {
     			$string = file_get_contents($Tradetracker_xml);
     			if ($f = @fopen($cache_file, 'w')) {
@@ -482,6 +519,10 @@ function tradetracker_store_layout() {
     $Tradetracker_width_field_name = 'Tradetracker_width';
     $Tradetracker_width_val = get_option( $Tradetracker_width_name );
 
+    $Tradetracker_font_name = 'Tradetracker_font';
+    $Tradetracker_font_field_name = 'Tradetracker_font';
+    $Tradetracker_font_val = get_option( $Tradetracker_font_name );
+
     $Tradetracker_colortitle_name = 'Tradetracker_colortitle';
     $Tradetracker_colortitle_field_name = 'Tradetracker_colortitle';
     $Tradetracker_colortitle_val = get_option( $Tradetracker_colortitle_name );
@@ -502,6 +543,7 @@ function tradetracker_store_layout() {
         // Read their posted value
 
         $Tradetracker_width_val = $_POST[ $Tradetracker_width_field_name ];
+        $Tradetracker_font_val = $_POST[ $Tradetracker_font_field_name ];
 	$Tradetracker_colortitle_val = $_POST[ $Tradetracker_colortitle_field_name ];
 	$Tradetracker_colorfooter_val = $_POST[ $Tradetracker_colorfooter_field_name ];
 	$Tradetracker_colorimagebg_val = $_POST[ $Tradetracker_colorimagebg_field_name ];
@@ -513,7 +555,9 @@ function tradetracker_store_layout() {
  if ( get_option(Tradetracker_width)  != $Tradetracker_width_val) {
         update_option( $Tradetracker_width_name, $Tradetracker_width_val );
   }
-
+ if ( get_option(Tradetracker_font)  != $Tradetracker_font_val) {
+        update_option( $Tradetracker_font_name, $Tradetracker_font_val );
+  }
  if ( get_option(Tradetracker_colortitle)  != $Tradetracker_colortitle_val) {
         update_option( $Tradetracker_colortitle_name, $Tradetracker_colortitle_val );
   }	
@@ -537,6 +581,11 @@ echo "<h2>" . __( 'Tradetracker Store Layout', 'menu-test' ) . "</h2>";
 		$width= "250";
 	} else {
 		$width= get_option( Tradetracker_width );
+	}
+	if( get_option( Tradetracker_font ) == "" ){
+		$font= "Verdana";
+	} else {
+		$font= get_option( Tradetracker_font );
 	}
 	$widthtitle = $width-6;
 	if( get_option( Tradetracker_colortitle ) == "" ){
@@ -566,7 +615,7 @@ echo "<h2>" . __( 'Tradetracker Store Layout', 'menu-test' ) . "</h2>";
 		cursor: help;
 	}
 <?php
-	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";}";
+	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";}";
 	echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";}";
 	echo ".store-image{width:".$width."px;}";
 	echo ".store-footer{width:".$width."px;background-color:".$colorfooter.";}";
@@ -586,7 +635,7 @@ echo "<h2>" . __( 'Tradetracker Store Layout', 'menu-test' ) . "</h2>";
 				</div>
 				<div class="store-footer">
 					<div class="store-description">
-						A Plugin you can use
+						The description for the item you can buy using the <?php echo $font; ?> font.
 					</div>
 					<div class="buttons">
 						<a href="#" class="regular">
@@ -611,6 +660,11 @@ echo "<h2>" . __( 'Tradetracker Store Layout', 'menu-test' ) . "</h2>";
 <tr><td><label for="tradetrackerwidth" title="Fill in how width you want 1 item to be." class="info"><?php _e("Store width:", 'tradetracker-width' ); ?> </label> 
 </td><td>
 <input type="text" name="<?php echo $Tradetracker_width_field_name; ?>" value="<?php echo $width; ?>" size="7">
+</td></tr>
+
+<tr><td><label for="tradetrackerfont" title="Fill in which font you want to use. Standard font is Verdana." class="info"><?php _e("Font:", 'tradetracker-font' ); ?> </label> 
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_font_field_name; ?>" value="<?php echo $font; ?>" size="7"> <a href="http://www.fonttester.com/help/list_of_web_safe_fonts.html" target="_blank">WebSafe Fonts</a>
 </td></tr>
 
 <tr><td><label for="tradetrackercolortitle" title="What color would you like to use for your title background." class="info"><?php _e("Title background color:", 'tradetracker-colortitle' ); ?> </label> 
@@ -665,6 +719,9 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
     $Tradetracker_xml_name = 'Tradetracker_xml';
     $Tradetracker_xml_field_name = 'Tradetracker_xml';
 
+    $Tradetracker_update_name = 'Tradetracker_update';
+    $Tradetracker_update_field_name = 'Tradetracker_update';
+
     $Tradetracker_lightbox_name = 'Tradetracker_lightbox';
     $Tradetracker_lightbox_field_name = 'Tradetracker_lightbox';
     
@@ -687,6 +744,7 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
 
     // Read in existing option value from database
     $Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
+    $Tradetracker_update_val = get_option( $Tradetracker_update_name );
     $Tradetracker_amount_val = get_option( $Tradetracker_amount_name );
     $Tradetracker_productid_val = get_option( $Tradetracker_productid_name );
     $Tradetracker_customerid_val = get_option( $Tradetracker_customerid_name );
@@ -701,6 +759,7 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
         // Read their posted value
 
         $Tradetracker_xml_val = $_POST[ $Tradetracker_xml_field_name ];
+        $Tradetracker_update_val = $_POST[ $Tradetracker_update_field_name ];
  	$Tradetracker_amount_val = $_POST[ $Tradetracker_amount_field_name ];
  	$Tradetracker_productid_val = $_POST[ $Tradetracker_productid_field_name ];
  	$Tradetracker_customerid_val = $_POST[ $Tradetracker_customerid_field_name ];
@@ -714,6 +773,9 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
  if ( get_option(Tradetracker_amount)  != $Tradetracker_amount_val) {
         update_option( $Tradetracker_amount_name, $Tradetracker_amount_val );
   }	
+ if ( get_option(Tradetracker_update)  != $Tradetracker_update_val) {
+        update_option( $Tradetracker_update_name, $Tradetracker_update_val );
+  }
  if ( get_option(Tradetracker_xml)  != $Tradetracker_xml_val) {
 	$myFile = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
 	$fh = fopen($myFile, 'w') or die("can't open file");
@@ -776,6 +838,10 @@ echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_d
 <tr><td><label for="tradetrackerproductid" title="If you'd only like to show certain items fill in the productID here, seperated by a comma (for instance: 298,300,500 ). This will override the limit you've set below." class="info"><?php _e("Tradetracker productID:", 'tradetracker-xml' ); ?> </label> 
 </td><td>
 <input type="text" name="<?php echo $Tradetracker_productid_field_name; ?>" value="<?php echo $Tradetracker_productid_val; ?>" size="50"> <a href="admin.php?page=tradetracker-shop-items" target="_blank">Find productID</a>
+</td></tr>
+<tr><td><label for="tradetrackerupdate" title="How often should the store get the newest xml. Default is 24 hours." class="info"><?php _e("Tradetracker update:", 'tradetracker-update' ); ?> </label> 
+</td><td>
+<input type="text" name="<?php echo $Tradetracker_update_field_name; ?>" value="<?php echo $Tradetracker_update_val; ?>" size="5"> Only use whole hours.
 </td></tr>
 <tr><td>
 <label for="tradetrackerxml" title="Choose the amount of items to show on the site. Default is 12." class="info"><?php _e("Amount of items to show:", 'tradetracker-amount' ); ?> </label>
