@@ -42,9 +42,9 @@ I've created functions for this plugin of which I thought they'd be useful, but 
 == Changelog ==
 
 = 1.4 =
-Added ability to manually choose the Font used in the layout settings
-Added a extra check for when cache.xml stayed empty
-Added an option in setting screen where you can decide how often an new xml file is downloaded
+1. Added ability to manually choose the Font used in the layout settings
+1. Added a extra check for when cache.xml stayed empty
+1. Added an option in setting screen where you can decide how often an new xml file is downloaded
 
 = 1.3.6 = 
 Small bug solved in the item selection screen
