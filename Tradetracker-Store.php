@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 2.0
+Version: 2.0.1
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -251,7 +251,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				$colorfont = $multi_val->laycolorfont;
 			}
 			$Tradetracker_productid = $multi_val->multiitems;
-			$storename = $multi_val->multiname;
+			$storename = str_replace(" ", "_", $multi_val->multiname);
 		}
 	}
 	echo "<style type=\"text/css\" media=\"screen\">";
