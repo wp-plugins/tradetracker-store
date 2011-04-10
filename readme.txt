@@ -3,15 +3,15 @@ Contributors: RPG84
 Donate link: none
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements
 Requires at least: 2.0.2
-Tested up to: 3.0.4
-Stable tag: 1.4.1
+Tested up to: 3.1.1
+Stable tag: 2.0
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
 == Description ==
 
 This plugin gives you the abillity to add a store to your WordPress, based on a tradetracker productfeed. Tradetracker is an affiliate system that has
-the abillity to generate a product feed for you. So you can have a store that brings in money without the hassle of owning a store. All you need to do is choose a store connected on tradetracker and add it. Users of your blog will then see the products on your blog and when interested they will be sent to the store. When they buy an item you will get a percentage of that sale.
+the abillity to generate a product feed for you. So you can have a store that brings in money without the hassle of owning a complete webstore. All you need to do is choose a store connected on tradetracker and add it. Users of your blog will then see the products on your blog and when interested they will be sent to the store. When they buy an item you will get a percentage of that sale.
 
 Plugin also supports Lightbox. So if you don't have it yet i would advise to install http://wordpress.org/extend/plugins/wp-jquery-lightbox/
 
@@ -19,9 +19,7 @@ Plugin also supports Lightbox. So if you don't have it yet i would advise to ins
 
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
-1. Place `<?php display_store_items(); ?>` in your templates.
-1. or use the template file that comes with the plugin.
-1. or use [display_store] in your page or post.
+1. Adjust all settings in the TT Store on the left side of the admin menu
 
 == Frequently Asked Questions ==
 
@@ -40,6 +38,11 @@ I've created functions for this plugin of which I thought they'd be useful, but 
 3. Here you select which products you want to show on your site
 
 == Changelog ==
+= 2.0 = 
+1. Completely redid the whole menu 
+1. Stats in dashboard
+1. Multistore (still with one XML) possibility
+1. Multiple layouts possible
 
 = 1.4.1 =
 Improved algoritm for importing XML
@@ -67,20 +70,3 @@ Fixed minor issue when updating
 = 1.3 =
 
 In Tt Store Layout you will be able to adjust the layout. You can change the width and the colors
-
-= 1.2.2 =
-
-Small issue with the size of the images on the Tt Store Items tab fixed
-
-= 1.2 =
-
-Improved item selection screen. It shows image when hovering over the name
-Also solved issue with selecting items on several pages. Now they are saved.
-
-= 1.1 =
-
-Changed the stats page. Please let me know if all issues are solved.
-
-= 1.0 = 
-
-Images weren't showing up. This should be solved now
