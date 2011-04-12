@@ -209,7 +209,7 @@ foreach ($client->getReportCampaign($affiliateSiteID, $options) as $report) {
 	echo '<td><b>' . $report->saleCount . '</b></td>';
 	echo '<td><b>' . round($report->saleCommission,2) . '</b></td>';
 } catch (SoapFault $exception) { 
-  echo " <div class=\"error\"><p><strong>Some unknown issue is annoying and ruining something. Please report this by using <a href=\"admin.php?page=tradetracker-shop-feedback\">Tt Store Feedback</a></strong></p></div>";
+
 } 
 echo "</table>";
 }

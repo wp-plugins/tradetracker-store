@@ -51,6 +51,12 @@ function adminshow_multiitems()
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
 global $wpdb;
+	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
+	$file_directory = dirname($file);
+	if(is_writable($file_directory)){
+	} else {
+		echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
+	}
 $pro_table_prefix=$wpdb->prefix.'tradetracker_';
 $tablemulti = PRO_TABLE_PREFIX."multi";
 define('PRO_TABLE_PREFIX', $pro_table_prefix); 
@@ -198,6 +204,8 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
 		}
 	echo "<h2>" . __( 'Tradetracker Item Selection for "<b>'.$multiname.'</b>"', 'menu-test' ) . "</h2>";
+
+
 
 ?>
 <table width="700" border="0">

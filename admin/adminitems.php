@@ -131,6 +131,12 @@ function adminshow_items()
 			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
 		}
 	echo "<h2>" . __( 'Tradetracker Item Selection', 'menu-test' ) . "</h2>";
+	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
+	$file_directory = dirname($file);
+	if(is_writable($file_directory)){
+	} else {
+		echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
+	}
 
 ?>
 <table width="700" border="0">
