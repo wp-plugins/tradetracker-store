@@ -53,8 +53,8 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
         name VARCHAR(80) NOT NULL,
         imageURL VARCHAR(200) NOT NULL,
 	productURL VARCHAR(1000) NOT NULL,
-	price DECIMAL(5,2) NOT NULL,
-	currency VARCHAR(10) NOT NULL,
+	price DECIMAL(10,2) NOT NULL,
+	currency VARCHAR(5) NOT NULL,
         description text,
 	UNIQUE KEY id (id)
     );";
