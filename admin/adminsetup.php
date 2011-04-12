@@ -9,9 +9,14 @@ function tradetracker_store_setup() {
 	if(is_writable($file_directory)){
 	} else {
 		echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
+	}	
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$table = PRO_TABLE_PREFIX."store";
+	if (get_option(pricedecimal) != "10,2"){
+	$result=$wpdb->query("ALTER TABLE `".$table."` CHANGE `price` `price` DECIMAL( 10, 2 ) NOT NULL DEFAULT '0.00' ");
+		update_option( pricedecimal, "10,2" );
 	}
-
-
 	// variables for the field and option names 
 	$hidden_field_name = 'mt_submit_hidden';
 

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 2.0.2
+Version: 2.0.3
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -53,8 +53,8 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
         name VARCHAR(80) NOT NULL,
         imageURL VARCHAR(200) NOT NULL,
 	productURL VARCHAR(1000) NOT NULL,
-	price DECIMAL(10,2) NOT NULL,
-	currency VARCHAR(5) NOT NULL,
+	price DECIMAL(5,2) NOT NULL,
+	currency VARCHAR(10) NOT NULL,
         description text,
 	UNIQUE KEY id (id)
     );";
