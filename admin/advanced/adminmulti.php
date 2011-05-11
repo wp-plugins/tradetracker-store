@@ -103,25 +103,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 <?php
 
 	}
-	if (get_option(Tradetracker_settings)==2){
-		echo "<a href=\"admin.php?page=tradetracker-shop\">Setup</a> 
-			> 
-			<a href=\"admin.php?page=tradetracker-shop-settings\">Settings</a>";
-		if ( get_option( Tradetracker_statsdash ) == 1 ) {
-		echo " >
-			<a href=\"admin.php?page=tradetracker-shop-stats\">Statistics</a>";
-		}
-		echo " >
-			<a href=\"admin.php?page=tradetracker-shop-layout\">Layout</a>
-			>
-			<b><a href=\"admin.php?page=tradetracker-shop-multi\">Store Settings</a></b>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-multiitems\">Item Selection</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-overview\">Overview</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
-	}
+
 
 ?>
 <style type="text/css" media="screen">
@@ -132,9 +114,25 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 
 </style>
 <div class="wrap">
-
-<?php 	echo "<h2>" . __( 'Tradetracker Multi Store Settings', 'menu-test' ) . "</h2>"; ?>
-
+<?php 	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>"; ?>
+<ul class="tabset_tabs">
+   <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
+		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+   <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
+		<?php } ?>
+   <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multi#tab5" class="active">Store</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+</ul>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<iframe width=200 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+ 	</div>
+<div id="tab5" class="tabset_content">
+   <h2 class="tabset_label">Store</h2>
 <form name="form1" method="post" action="">
 <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 <?php if(!empty($multiid)){ ?>
@@ -181,7 +179,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_multiamount_field_name; ?>" value="<?php echo $Tradetracker_multiamount_val; ?>" size="7">
+			<input type="text" name="<?php echo $Tradetracker_multiamount_field_name; ?>" value="<?php if ($Tradetracker_multiamount_val=="") {echo "10"; } else {echo $Tradetracker_multiamount_val;} ?>" size="7">
 		</td>
 	</tr>
 
@@ -221,7 +219,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	<input type="submit" name="Submit" class="button-primary" value="<?php if($multiid>="1"){ esc_attr_e('Save Changes'); } else { esc_attr_e('Create'); } ?>" />
 	<INPUT type="button" name="New" value="<?php esc_attr_e('New') ?>" onclick="location.href='admin.php?page=tradetracker-shop-multi'"> 
 	<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-multiitems'"> 
-	<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help'">
+	<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help6'">
 </p>
 
 </form>
@@ -257,7 +255,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		}
 ?>
 	</table>
-</div>
+</div></div>
 <?php
 }
 ?>

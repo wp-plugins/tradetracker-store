@@ -161,25 +161,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	} else {
 	$colorfont = $Tradetracker_colorfont_val;
 	}
-	if (get_option(Tradetracker_settings)==2){
-		echo "<a href=\"admin.php?page=tradetracker-shop\">Setup</a>
-			> 
-			<a href=\"admin.php?page=tradetracker-shop-settings\">Settings</a>";
-		if ( get_option( Tradetracker_statsdash ) == 1 ) {
-		echo " >
-			<a href=\"admin.php?page=tradetracker-shop-stats\">Statistics</a>";
-		}
-		echo " >
-			<b><a href=\"admin.php?page=tradetracker-shop-layout\">Layout</a></b>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-multi\">Store Settings</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-multiitems\">Item Selection</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-overview\">Overview</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
-	}
+
 ?>
 
 <style type="text/css" media="screen">
@@ -188,17 +170,18 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		cursor: help;
 	}
 <?php
-	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";}";
-	echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";}";
-	echo ".store-image{width:".$width."px;}";
-	echo ".store-footer{width:".$width."px;background-color:".$colorfooter.";}";
-	echo ".store-description{width:".$widthtitle."px;color:".$colorfont.";}";
-	echo ".store-image{width:".$width."px;background-color:".$colorimagebg.";}";
+	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;height:353px;border:solid 1px #999999;position:relative;}";
+	echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
+	echo ".store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
+	echo ".store-image img{display: block;border:0px;margin: auto;}";
+	echo ".store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;height:137px;}";
+	echo ".store-description{width:".$widthtitle."px;color:".$colorfont.";position:absolute;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+
 ?>
 
 </style>
 <div class="wrap">
-<?php 	echo "<h2>" . __( 'Tradetracker Store Layout', 'menu-test' ) . "</h2>"; ?>
+<?php 	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>"; ?>
 	<div id="sideblock" style="float:right;width:<?php echo $width; ?>px;margin-right:20px;border:1px;"> 
 		<div class="store-outerbox">
 				<div class="store-titel">
@@ -228,7 +211,21 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				</div>
 			</div>
  	</div>
-
+<ul class="tabset_tabs">
+   <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
+		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+   <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
+		<?php } ?>
+   <li><a href="admin.php?page=tradetracker-shop-layout#tab4" class="active">Layout</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+</ul>
+<div id="tab4" class="tabset_content">
+   <h2 class="tabset_label">Layout</h2>
 <form name="form1" method="post" action="">
 <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 <?php if(!empty($layoutid)){ ?>
@@ -320,12 +317,12 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	<input type="submit" name="Submit" class="button-primary" value="<?php if($layoutid>="1"){ esc_attr_e('Save Changes'); } else { esc_attr_e('Create'); } ?>" />
 	<INPUT type="button" name="New" value="<?php esc_attr_e('New') ?>" onclick="location.href='admin.php?page=tradetracker-shop-layout'"> 
 	<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-multi'"> 
-	<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help'">
+	<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help5'">
 
 </p>
 
 </form>
-	<table width="750">
+	<table width="700">
 		<tr>
 			<td>
 				<b>Name</b>
@@ -388,6 +385,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		}
 ?>
 	</table>
+</div>
 </div>
 <?php
 

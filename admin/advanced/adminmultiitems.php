@@ -60,25 +60,32 @@ global $wpdb;
 $pro_table_prefix=$wpdb->prefix.'tradetracker_';
 $tablemulti = PRO_TABLE_PREFIX."multi";
 define('PRO_TABLE_PREFIX', $pro_table_prefix); 
-	if (get_option(Tradetracker_settings)==2){
-		echo "<a href=\"admin.php?page=tradetracker-shop\">Setup</a> 
-			> 
-			<a href=\"admin.php?page=tradetracker-shop-settings\">Settings</a>";
-		if ( get_option( Tradetracker_statsdash ) == 1 ) {
-		echo " >
-			<a href=\"admin.php?page=tradetracker-shop-stats\">Statistics</a>";
-		}
-		echo " >
-			<a href=\"admin.php?page=tradetracker-shop-layout\">Layout</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-multi\">Store Settings</a>
-			>
-			<b><a href=\"admin.php?page=tradetracker-shop-multiitems\">Item Selection</a></b>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-overview\">Overview</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
-	}
+
+
+	echo '<div class="wrap">';
+?>
+<?php 	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>"; ?>
+<ul class="tabset_tabs">
+   <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
+		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+   <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
+		<?php } ?>
+   <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6" class="active">Items</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+</ul>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<iframe width=200 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+ 	</div>
+<div id="tab6" class="tabset_content">
+   <h2 class="tabset_label">Items</h2>
+
+
+<?php
 	if (empty($_GET['multiid'])){
 ?>
 	<table width="400">
@@ -275,7 +282,7 @@ $visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIM
 		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 	
 		<INPUT type="button" name="Storeselect" value="<?php esc_attr_e('Store Selection') ?>" onclick="location.href='admin.php?page=tradetracker-shop-multiitems'"> 
 		<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-overview'"> 
-		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help'">
+		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help7'">
 <?php
 	echo "</p>";
 	echo "</form>";
@@ -296,6 +303,6 @@ echo "<table width=\"700\"><tr><td>";
 						$next_page = $currentpage + $limit;
 						echo("    <a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=$order&currentpage=$next_page&limit=$limit\">next</a>\n");}
 						echo "</td></tr></table>";
-	echo "</div>";
+	echo "</div></div>";
 }}
 ?>

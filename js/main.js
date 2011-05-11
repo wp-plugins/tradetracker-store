@@ -22,7 +22,7 @@ this.screenshotPreview = function(){
 		this.t = this.title;
 		this.title = "";	
 		var c = (this.t != "") ? "<br/>" + this.t : "";
-		$("body").append("<p id='screenshot'><img src='"+ this.rel +"' alt='url preview' / style='max-width: 250px;max-height:250px;'>"+ c +"</p>");								 
+		$("body").append("<p id='screenshot'><img src='"+ this.rel +"' alt='url preview' / style='z-index:99;max-width: 250px;max-height:250px;'>"+ c +"</p>");								 
 		$("#screenshot")
 			.css("top",(e.pageY - xOffset) + "px")
 			.css("left",(e.pageX + yOffset) + "px")

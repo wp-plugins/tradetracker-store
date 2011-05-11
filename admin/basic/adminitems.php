@@ -119,18 +119,7 @@ function adminshow_items()
 </style>
 <?php
 	echo '<div class="wrap">';
-	if (get_option(Tradetracker_settings)==1){
-		echo "<a href=\"admin.php?page=tradetracker-shop\">Basic Setup</a> 
-			> 
-			<a href=\"admin.php?page=tradetracker-shop-settings\">Basic Settings</a>
-			> 
-			<b><a href=\"admin.php?page=tradetracker-shop-items\">Basic Items Selection</a></b>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-overview\">Overview</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
-		}
-	echo "<h2>" . __( 'Tradetracker Item Selection', 'menu-test' ) . "</h2>";
+	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>";
 	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
 	$file_directory = dirname($file);
 	if(is_writable($file_directory)){
@@ -139,6 +128,19 @@ function adminshow_items()
 	}
 
 ?>
+<ul class="tabset_tabs">
+   <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-items#tab3" class="active">Items</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab4">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab5">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="redhelp">Help</a></li>
+</ul>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<iframe width=200 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+ 	</div>
+<div id="tab3" class="tabset_content">
+   <h2 class="tabset_label">Items</h2>
 <table width="700" border="0">
 	<tr>
 		<td width="50%" align="left">
@@ -207,7 +209,7 @@ $visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIM
 			if (get_option( Tradetracker_settings )==1){ ?> 
 				<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-overview'"> 
 			<?php } ?>
-		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help'">
+		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help4'">
 <?php
 	echo "</p>";
 	echo "</form>";
@@ -228,6 +230,6 @@ echo "<table width=\"700\"><tr><td>";
 						$next_page = $currentpage + $limit;
 						echo("    <a href=\"admin.php?page=tradetracker-shop-items&order=$order&currentpage=$next_page&limit=$limit\">next</a>\n");}
 						echo "</td></tr></table>";
-	echo "</div>";
+	echo "</div></div>";
 }
 ?>

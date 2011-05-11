@@ -13,26 +13,35 @@ Author URI: http://vannetti.nl
  */
 
 global $wpdb;
-include('admin/adminmenu.php');
-include('admin/adminsetup.php');
-include('admin/adminoptions.php');
-include('admin/adminitems.php');
-include('admin/adminlayout.php');
-include('admin/adminoverview.php');
-include('admin/adminstats.php');
-include('admin/adminmulti.php');
-include('admin/adminmultiitems.php');
-
 $pro_table_prefix=$wpdb->prefix.'tradetracker_';
 define('PRO_TABLE_PREFIX', $pro_table_prefix);
-register_activation_hook(__FILE__,'tradetracker_store_install');
-register_deactivation_hook(__FILE__ ,'tradetracker_store_uninstall');
 if(!defined('WP_CONTENT_URL')){
 	define('WP_CONTENT_URL', get_option('siteurl').'/wp-content');
 }
 if(!defined('WP_PLUGIN_URL')){
 	define('WP_PLUGIN_URL', WP_CONTENT_URL.'/plugins');
 }
+
+include('admin/adminmenu.php');
+include('admin/adminsetup.php');
+include('admin/adminoptions.php');
+
+if (get_option(Tradetracker_settings)=="1"){
+include('admin/basic/adminitems.php');
+include('admin/basic/adminoverview.php');
+}
+
+if (get_option(Tradetracker_settings)=="2"){
+include('admin/advanced/adminlayout.php');
+include('admin/advanced/adminstats.php');
+include('admin/advanced/adminmulti.php');
+include('admin/advanced/adminmultiitems.php');
+include('admin/advanced/adminoverview.php');
+}
+
+
+register_activation_hook(__FILE__,'tradetracker_store_install');
+register_deactivation_hook(__FILE__ ,'tradetracker_store_uninstall');
 add_action('wp_print_styles', 'add_my_stylesheet');
 
 

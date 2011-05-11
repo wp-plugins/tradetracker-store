@@ -93,36 +93,8 @@ function tradetracker_store_setup() {
 	} else {
 		echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
 	}
-	if ($Tradetracker_settings_val==1){
-		echo "<b><a href=\"admin.php?page=tradetracker-shop\">Setup</a></b> 
-			> 
-			<a href=\"admin.php?page=tradetracker-shop-settings\">Basic Settings</a>
-			> 
-			<a href=\"admin.php?page=tradetracker-shop-items\">Basic Items Selection</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-overview\">Overview</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
-		}
-	if ($Tradetracker_settings_val==2){
-		echo "<b><a href=\"admin.php?page=tradetracker-shop\">Setup</a></b> 
-			> 
-			<a href=\"admin.php?page=tradetracker-shop-settings\">Settings</a>";
-		if ( get_option( Tradetracker_statsdash ) == 1 ) {
-		echo " >
-			<a href=\"admin.php?page=tradetracker-shop-stats\">Statistics</a>";
-		}
-		echo " >
-			<a href=\"admin.php?page=tradetracker-shop-layout\">Layout</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-multi\">Store Settings</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-multiitems\">Item Selection</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-overview\">Overview</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
-	}
+
+
 
 	// header
 	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>";
@@ -136,9 +108,38 @@ function tradetracker_store_setup() {
 	}
 
 </style>
-	<div id="sideblock" style="float:right;width:270px;margin-left:10px;border:1px;"> 
-		<iframe width=270 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+	<?php if ($Tradetracker_settings_val==1){ ?>
+<ul class="tabset_tabs">
+   <li><a href="admin.php?page=tradetracker-shop#tab1" class="active">Setup</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-items#tab3">Items</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab4">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab5">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="redhelp">Help</a></li>
+</ul>
+	<?php } if ($Tradetracker_settings_val==2){ ?>
+<ul class="tabset_tabs">
+   <li><a href="admin.php?page=tradetracker-shop#tab1" class="active">Setup</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
+		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+   <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
+		<?php } ?>
+   <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+
+</ul>
+	<?php } ?>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<iframe width=200 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
  	</div>
+<div id="tab1" class="tabset_content">
+   <h2 class="tabset_label">Setup</h2>
+
+
 <form name="form1" method="post" action="">
 	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 	<table>
@@ -178,6 +179,9 @@ function tradetracker_store_setup() {
 
 </form>
 </div>
+</div>
+
+
 <?php
 }
 ?>

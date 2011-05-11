@@ -42,29 +42,12 @@ function tradetracker_store_stats() {
 		<div class="updated"><p><strong><?php _e('settings saved.', 'menu-test' ); ?></strong></p></div>
 <?php
 	}
-	if (get_option(Tradetracker_settings)==2){
-		echo "<a href=\"admin.php?page=tradetracker-shop\">Setup</a> 
-			> 
-			<a href=\"admin.php?page=tradetracker-shop-settings\">Settings</a>";
-		if ( get_option( Tradetracker_statsdash ) == 1 ) {
-		echo " >
-			<b><a href=\"admin.php?page=tradetracker-shop-stats\">Statistics</a></b>";
-		}
-		echo " >
-			<a href=\"admin.php?page=tradetracker-shop-layout\">Layout</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-multi\">Store Settings</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-multiitems\">Item Selection</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-overview\">Overview</a>
-			>
-			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
-	}
+	
 
 
 ?>
 <div class="wrap">
+	<?php echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>"; ?>
 <style type="text/css" media="screen">
 .info {
 		border-bottom: 1px dotted #666;
@@ -72,14 +55,27 @@ function tradetracker_store_stats() {
 	}
 
 </style>
+<ul class="tabset_tabs">
+   <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
+		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+   <li><a href="admin.php?page=tradetracker-shop-stats#tab3" class="active">Stats</a></li>
+		<?php } ?>
+   <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+</ul>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<iframe width=200 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+ 	</div>
+<div id="tab3" class="tabset_content">
+   <h2 class="tabset_label">Stats</h2>
 <form name="form1" method="post" action="">
 	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 	<table>
-		<tr>
-			<td colspan="2">
-				<h2>Settings for Statistics</h2>
-			</td>
-		</tr>
 		<tr>
 			<td>
 				<label for="tradetrackercustomerid" title="Fill in your customer ID. You will need to enable webservices in Tradetracker" class="info">
@@ -147,7 +143,7 @@ function tradetracker_store_stats() {
 			<?php if ( get_option( Tradetracker_settings )==2){ ?> 
 				<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-layout'">
 			<?php } ?>
-		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help'">
+		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help4'">
 	</p>
 
 </form>
@@ -211,7 +207,7 @@ foreach ($client->getReportCampaign($affiliateSiteID, $options) as $report) {
 } catch (SoapFault $exception) { 
 
 } 
-echo "</table>";
+echo "</table></div>";
 }
 }
 
