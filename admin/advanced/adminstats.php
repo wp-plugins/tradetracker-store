@@ -147,7 +147,7 @@ function tradetracker_store_stats() {
 	</p>
 
 </form>
-</div>
+</div></div>
 <?php
 		}}
 
@@ -207,7 +207,7 @@ foreach ($client->getReportCampaign($affiliateSiteID, $options) as $report) {
 } catch (SoapFault $exception) { 
 
 } 
-echo "</table></div>";
+echo "</table>";
 }
 }
 
