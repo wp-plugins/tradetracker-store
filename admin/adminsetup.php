@@ -108,7 +108,7 @@ function tradetracker_store_setup() {
 	}
 
 </style>
-	<?php if ($Tradetracker_settings_val==1){ ?>
+	<?php if ($Tradetracker_settings_val==1 || empty($Tradetracker_settings_val)){ ?>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1" class="active">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
