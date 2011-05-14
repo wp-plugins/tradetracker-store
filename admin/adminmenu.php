@@ -131,7 +131,7 @@ function tradetracker_store_help() {
    <h2 class="tabset_label">Setup</h2>
 <h2>Setup:</h2>
 <p>
-Select what setup you want. Do you want to use the <b>Basic</b> version or the <b>Advanced</b> version
+Select what setup you want to use. Do you want to use the <b>Basic</b> version or the <b>Advanced</b> version
 <p><b>Basic Version</b>:
 <br>As the name says this is the Basic version of the plugin with only the basic settings to put a product feed on your site.
 <br>These features are possible in the Basic version:
@@ -175,7 +175,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 <h2>Settings:</h2>
 <p>This is the main settings screen for the plugin. Basically this is the place where you input your XML file and select how the items are shown.
 
-<p><b>Tradetracker XML:</b><br> This is where you select which productfeed you are going to use. You will get the link to the XML file from Tradetracker. To find out how to get the XML file go <a href="admin.php?page=tradetracker-shop-help#help2">here</a>.
+<p><b>Tradetracker XML:</b><br> This is where you select which product feed you are going to use. You will get the link to the XML file from Tradetracker. To find out how to get the XML file go <a href="admin.php?page=tradetracker-shop-help#help2">here</a>.
 <?php if (get_option(Tradetracker_settings)==2){ ?>
 <p><b>Tradetracker update:</b><br> Here you can choose how often the plugin should update the XML feed in to the database. In most cases 24 hours would be ok. But if the affiliate program updates their XML feed every 10 days you may as well use 240 hours to save bandwidth.
 <p><b>Income stats on your Dashboard?:</b><br>If you want to see the income stats in your wordpress dashboard select this option. It will also give you an extra tab called <b>Stats</b> on your setup page where you can fill in all needed details for the stats.
@@ -183,7 +183,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 <?php if (get_option(Tradetracker_settings)==1){ ?>
 <p><b>Tradetracker productID:</b><br> Here you will see all the ID's from the items you selected on the Item Selection screen. You can use this field to delete all items you selected. If this field is filled the next option will be ignored.
 <p><b>Amount of items to show:</b><br> Instead of selecting which items you want to show on the site you can show them randomly. If you fill in an amount here the plugin will show that amount of items randomly on the site. (this option will not be here when you selected products to show on the site)
-<p><b>Use Lightbox:</b><br> If you want to use lightbox, this means when users click on the image of the product the image will be shows with a nice black border around it, you can enable it here. If it is disabled users will go the the product page instead.
+<p><b>Use Lightbox:</b><br> If you want to use lightbox, this means when users click on the image of the product the image will be shown with a nice black border around it, you can enable it here. If it is disabled users will go the the product page instead.
 <?php } ?>
 </div>
 <?php if (get_option(Tradetracker_settings)==1){ ?>
@@ -198,7 +198,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 <?php if (get_option(Tradetracker_settings)==2){ ?>
 	<p>If you just go to the Items tab you will see all the created stores which you can select items for. You can do this by clicking on <b>Select Items</b> at the store you want to adjust.
 <?php } ?>
-	<p>In this screen you can select which items you want to show on your site. If you don't select any items it will randomly show items from this list. The amount of items it will randomly show is based on the amount you filled in in the settings screen. When you select items here it will only show those items. So if you select 30 items. It will show 30 items on 1 page.
+	<p>In this screen you can select which items you want to show on your site. If you don't select any items it will randomly show items from this list. The amount of items it will randomly show is based on the amount you filled in in the settings screen. When you select items here it will only show those items. So if you select 30 items, it will show 30 items on 1 page.
 	<p>On top you can select how many items you see on this selection page. That setting is only for this selection page and is not the amount of items shown on your actual site
 	<p>If you hover your mouse over the product name you will see the image belonging to the item
 	<p>You can sort the list by clicking on <b>ProductID</b>, <b>ProductName</b> and <b>Price</b>.
@@ -211,7 +211,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<h2>Statistics Settings:</h2>
 	<p>This tab only shows up when you have selected to show the Stats on your wordpress dashboard on the <b>Settings</b> page. To be able to show the stats in your dashboard you need to fill out these details:
 	<p><b>Customer ID:</b><br> You need to fill in the Customer ID you get from TradeTracker. You can find your customerID by clicking on the link next to this option called <b>Get Customer ID</b>>. When it is the first time you will need to enable webservices on that page.
-	<p><b>Access Code:</b><br> You will find this code just below your customerid in Tradetracker
+	<p><b>Access Code:</b><br> You will find this code just below your customerID in Tradetracker
 	<p><b>Site ID:</b><br> When you click on <b>Get SiteID</b> you will go to a page on Tradetracker showing all your registered sites. In front of the site you would like to use you will find the ID number. Fill in that number in this field.
 	<p><b>Timeframe of stats:</b><br>Here you can choose what timeframe you want to show on your dashboard. Most people will be using weekly or monthly stats. But if you have a lot of sales on a daily basis you can use the Day setting.
 </div>
@@ -230,7 +230,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<p><b>File size: </b><br>This will tell you how big the XML file is you are using. The bigger the file the more bandwidth it will use.
 <?php if (get_option(Tradetracker_settings)==2){ ?>
 	<p><b>Update Frequency: </b><br>Here you will see how often the XML file will be redownloaded to your hosting. Most companies on Tradetracker will tell you in there productfeed page how often they will update there productfeed.
-	<p><b>Monthly bandwidth: </b><br>This gives you an estimate on the bandwidth the XML file import will use on a monthtly basis. This is basically the file size x (720/hours you filled in in the update frequency settings)
+	<p><b>Monthly bandwidth: </b><br>This gives you an estimate on the bandwidth the XML file import will use on a monthly basis. This is basically the file size x (720/hours you filled in in the update frequency settings)
 	<p><b>Stats in Dashboard: </b><br>If this says yes it will mean you can see the income statistics in your wordpress dashboard.
 	<p><b>CustomerID:</b><br>The customer ID you have filled in in your statistic settings.
 	<p><b>Access code:</b><br>The access code you have filled in in your statistic settings.

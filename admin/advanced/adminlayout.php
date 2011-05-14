@@ -202,7 +202,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 					<div class="store-price">
 						<table cellspacing="0" cellpadding="0" border="0">
 							<tr>
-								<td style="height:23px;" class="euros">
+								<td style="width:55px;height:20px;" class="euros">
 									0,00 EUR
 								</td>
 							</tr>

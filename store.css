@@ -6,12 +6,12 @@
 	height:38px;
 	background-image:url(images/productkaart-prijs-bg.png);
 	color:#ffffff;
-	font-size:10px;
+	font-size:9px !important;
 	font-weight:bold;
 	text-align:center;
 }
 .store-price table{
-	margin:7px 3px 0 0;
+	margin:9px 0 0 0;
 	float:right;
 	border:0;
 }
@@ -19,6 +19,7 @@
 .store-price table td.euros{
 	letter-spacing:-1px;
 	border:0;
+	font-size:9px !important;
 }
 
 .buttons a, .buttons button{
