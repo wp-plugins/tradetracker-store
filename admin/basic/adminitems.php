@@ -147,7 +147,7 @@ function adminshow_items()
 			Showing products <b><? echo $first; ?></b> - <b><?php echo $last; ?></b> of <b><?php echo $numrows; ?></b>
   		</td>
   		<td width="50%" align="right">
-			Page <b><?php echo $current; ?></b> of <b><?php echo $total; ?></b>
+			<?php if ($currentpage != 0) { $back_page = $currentpage - $limit; echo("<a href=\"admin.php?page=tradetracker-shop-items&order=$order&currentpage=$back_page&limit=$limit\"><</a>");} ?> Page <b><?php echo $current; ?></b> of <b><?php echo $total; ?></b> <?php if (!((($currentpage+$limit) / $limit) >= $pages) && $pages != 1) { $next_page = $currentpage + $limit; echo("<a href=\"admin.php?page=tradetracker-shop-items&order=$order&currentpage=$next_page&limit=$limit\">></a>");} ?>
   		</td>
  	</tr>
  	<tr>
