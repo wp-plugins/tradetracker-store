@@ -58,7 +58,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				Monthly bandwidth:
 			</td>
 			<td>
-				<?php $filename = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';	if (file_exists($filename)) {echo 30*format_bytes(filesize($filename));} else { echo "Not calculated yet"; } ?>
+				<?php $filename = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';	if (file_exists($filename)) {echo format_bytes(30*filesize($filename));} else { echo "Not calculated yet"; } ?>
 			</td>
 
 		</tr>

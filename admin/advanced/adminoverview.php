@@ -67,7 +67,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				Monthly bandwidth:
 			</td>
 			<td>
-				<?php $filename = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml'; if (get_option( Tradetracker_update )=="") { $hoursplanned = "24"; } else { $hoursplanned = get_option( Tradetracker_update ); }	if (file_exists($filename)) {echo (720/$hoursplanned)*format_bytes(filesize($filename));} else { echo "Not calculated yet"; } ?>
+				<?php $filename = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml'; if (get_option( Tradetracker_update )=="") { $hoursplanned = "24"; } else { $hoursplanned = get_option( Tradetracker_update ); }	if (file_exists($filename)) {echo format_bytes((720/$hoursplanned)*filesize($filename));} else { echo "Not calculated yet"; } ?>
 			</td>
 
 		</tr>
