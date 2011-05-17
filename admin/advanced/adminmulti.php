@@ -146,7 +146,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_multiname_field_name; ?>" value="<?php echo $Tradetracker_multiname_val; ?>" size="20">
+			<input type="text" name="<?php echo $Tradetracker_multiname_field_name; ?>" value="<?php echo $Tradetracker_multiname_val; ?>" size="20"> This cannot start with a number
 		</td>
 	</tr>
 	<tr>
