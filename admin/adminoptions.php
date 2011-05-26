@@ -145,7 +145,7 @@ function tradetracker_store_options() {
 </ul>
 	<?php } ?>
 	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<iframe width=200 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+		<?php news(); ?>
  	</div>
 <div id="tab2" class="tabset_content">
    <h2 class="tabset_label">Setup</h2>

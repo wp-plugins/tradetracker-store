@@ -1,24 +1,41 @@
 .store-price{
 	position:absolute;
-	right:-1px;
-	bottom:1px;
-	width:60px;
-	height:38px;
+	right:-1px !important;
+	bottom:1px !important;;
+	width:60px !important;
+	height:38px !important;
 	background-image:url(images/productkaart-prijs-bg.png);
-	color:#ffffff;
+	color:#ffffff !important;
 	font-size:9px !important;
-	font-weight:bold;
-	text-align:center;
+	font-weight:bold !important;
+	text-align:center !important;
 }
 .store-price table{
-	margin:9px 0 0 0;
+	margin:9px 0 0 0 !important;
 	float:right;
-	border:0;
+	border:0px !important;
+	text-align:center !important;
+	line-height: 2 !important;
+}
+.store-price table tr {
+    background: none;
+    padding: 0px !important;
+   
+}
+.store-price table tr td {
+border: 0px !important;
+padding: 0px !important;
 }
 
+.store-price table td, table th, table tr {
+    border: 0px solid #CCCCCC;
+padding: 0px !important;
+}
+
+
 .store-price table td.euros{
-	letter-spacing:-1px;
-	border:0;
+	letter-spacing:-1px !important;
+	border:0 !important;
 	font-size:9px !important;
 }
 

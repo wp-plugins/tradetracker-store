@@ -75,7 +75,7 @@ function tradetracker_store_help() {
    <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="active">Help</a></li>
 </ul>
 	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<iframe width=200 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+		<?php news(); ?>
  	</div>
 <div id="tab6" class="tabset_content">
    <h2 class="tabset_label">Help</h2>
@@ -340,7 +340,7 @@ if($subject == "") {
 message sent using TT-Store on: ".get_option( siteurl )."";
   mail( "robert.braam@gmail.com", "$subject",
   $message, "From: $name <$email>" );
-  echo "<div class=\"updated\"><p><strong>Feedback has been send</strong></p></div>";
+  echo "<div class=\"updated\"><p><strong>Feedback has been sent</strong></p></div>";
   }
 else
 //if "email" is not filled out, display the form
@@ -348,7 +348,7 @@ else
 ?>
 <h2>Ideas, comments or feedback?:</h2>
 	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<iframe width=200 height=800 frameborder="0" src="http://debestekleurplaten.nl/tradetracker-store/news.php"></iframe>
+		<?php news(); ?>
  	</div>
 	<?php if (get_option(Tradetracker_settings)==1){ ?>
 <ul class="tabset_tabs">

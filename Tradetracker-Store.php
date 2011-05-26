@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 2.1.5
+Version: 2.1.6
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -48,6 +48,113 @@ add_action('wp_print_styles', 'add_my_stylesheet');
 /* 
 ..--==[ Function to add a database table for this script ]==--..
 */
+function news()
+{
+?>
+<style type="text/css" media="screen">
+.plugin_news
+{
+	float:left;
+	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+	font-size:12px;	
+	width:200px;
+}
+
+.plugin_news h3
+{
+	font-size:15px;
+	margin:0 0 10px;
+	color:#E41B17;
+}
+
+.plugin_news ul
+{
+	margin:0;
+	padding:0 0 0 15px;
+}
+
+.plugin_news_section
+{
+margin-bottom:5px;
+margin-top:5px;
+margin-left:0px;
+background: #FDFFEE;
+border: 1px solid #DDDDDD;
+padding:10px;
+}
+
+.plugin_news li
+{
+	font-size:11px;
+	line-height:16px;
+	list-style:disc;
+	margin:0px;
+}
+#slider ul,#slider li
+{
+	list-style:none;
+	margin:0;
+	padding:0
+}
+
+#slider,#slider li
+{
+	width:140px;
+	overflow:hidden
+}
+
+</style>
+	<div class="plugin_news">
+	<div class="plugin_news_section">
+	<h3>Sites using this plugin</h3>
+	<ul>
+<?php
+	$site_file = 'http://debestekleurplaten.nl/tradetracker-store/sites.xml';
+	$sites = file_get_contents($site_file);
+	$sites = simplexml_load_string($sites);
+	foreach($sites as $site) // loop through our items
+	{
+echo "<li><a href=\"".$site->siteadres."\" target=\"_blank\">".$site->sitenaam."</a>";		
+	}
+?>		
+	</ul>
+	</div>
+	<div class="plugin_news_section">
+	<h3>Your Site here?</h3>
+	<div id="slider">
+	<ul>
+		<li>if you want Your site here please use Tt Store Feedback and let me know
+	</ul>
+	</div>
+	</div>
+	<div class="plugin_news_section">
+	<h3>Rate the plugin</h3>
+	<div id="slider">
+	<ul>
+		<li>if you like this plugin please go to <a href="http://wordpress.org/extend/plugins/tradetracker-store/" target="_blank">here</a> and give it a rating and vote for yes if the plugin works.
+	</ul>
+	</div>
+	</div>
+	<div class="plugin_news_section">
+	<h3>News</h3>
+	<div id="slider">
+	<ul>
+<?php
+	$news_file = 'http://debestekleurplaten.nl/tradetracker-store/news.xml';
+	$news = file_get_contents($news_file);
+	$news = simplexml_load_string($news);
+	foreach($news as $newsmsg) // loop through our items
+	{
+echo "<p><li><b>".$newsmsg->newsdate."</b><br>".$newsmsg->newsmessage."";
+	}
+?>
+	</ul>
+	</div>
+	</div>
+	</div>
+
+<?php
+}
 
 function tradetracker_store_install()
 {
