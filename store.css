@@ -16,6 +16,7 @@
 	border:0px !important;
 	text-align:center !important;
 	line-height: 2 !important;
+	border-collapse: inherit !important;
 }
 .store-price table tr {
     background: none;
