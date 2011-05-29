@@ -128,6 +128,7 @@ function adminshow_items()
 	}
 
 ?>
+<div class="plugindiv">
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
@@ -136,9 +137,6 @@ function adminshow_items()
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab5">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="redhelp">Help</a></li>
 </ul>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
 <div id="tab3" class="tabset_content">
    <h2 class="tabset_label">Items</h2>
 <table width="700" border="0">
@@ -230,6 +228,13 @@ echo "<table width=\"700\"><tr><td>";
 						$next_page = $currentpage + $limit;
 						echo("    <a href=\"admin.php?page=tradetracker-shop-items&order=$order&currentpage=$next_page&limit=$limit\">next</a>\n");}
 						echo "</td></tr></table>";
-	echo "</div></div>";
+?>
+</div>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<?php news(); ?>
+ 	</div>
+</div>
+</div>
+<?php
 }
 ?>

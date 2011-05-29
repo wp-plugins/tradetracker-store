@@ -1,4 +1,5 @@
 <?php
+
 function adminstore_multiitems()
 {
 	global $wpdb;
@@ -65,6 +66,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	echo '<div class="wrap">';
 ?>
 <?php 	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>"; ?>
+<div class="plugindiv">
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
@@ -78,9 +80,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
 </ul>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
+
 <div id="tab6" class="tabset_content">
    <h2 class="tabset_label">Items</h2>
 
@@ -302,7 +302,15 @@ echo "<table width=\"700\"><tr><td>";
 					if (!((($currentpage+$limit) / $limit) >= $pages) && $pages != 1) { // If last page don't give next link.
 						$next_page = $currentpage + $limit;
 						echo("    <a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=$order&currentpage=$next_page&limit=$limit\">next</a>\n");}
-						echo "</td></tr></table>";
-	echo "</div></div>";
-}}
+						echo "</td></tr></table></div>";
+}
+?>
+</div>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<?php news(); ?>
+ 	</div>
+</div>
+</div>
+<?php
+}
 ?>

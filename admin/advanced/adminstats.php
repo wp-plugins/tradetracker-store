@@ -55,6 +55,7 @@ function tradetracker_store_stats() {
 	}
 
 </style>
+<div class="plugindiv">
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
@@ -68,9 +69,7 @@ function tradetracker_store_stats() {
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
 </ul>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
+
 <div id="tab3" class="tabset_content">
    <h2 class="tabset_label">Stats</h2>
 <form name="form1" method="post" action="">
@@ -147,6 +146,10 @@ function tradetracker_store_stats() {
 	</p>
 
 </form>
+</div>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<?php news(); ?>
+ 	</div>
 </div></div>
 <?php
 		}}

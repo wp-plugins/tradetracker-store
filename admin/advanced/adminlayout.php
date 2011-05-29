@@ -182,35 +182,6 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 </style>
 <div class="wrap">
 <?php 	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>"; ?>
-	<div id="sideblock" style="float:right;width:<?php echo $width; ?>px;margin-right:20px;border:1px;"> 
-		<div class="store-outerbox">
-				<div class="store-titel">
-					<?php echo $name; ?>
-				</div>			
-				<div class="store-image">
-					<img src="<?php echo "".WP_PLUGIN_URL."/tradetracker-store/screenshot-1.png"; ?>" style="max-width:<?php echo $width; ?>px;max-height:180px;">
-				</div>
-				<div class="store-footer">
-					<div class="store-description">
-						The description for the item you can buy using the <?php echo $font; ?> font.
-					</div>
-					<div class="buttons">
-						<a href="#" class="regular">
-							Buy Item
-						</a>
-					</div>
-					<div class="store-price">
-						<table cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td style="width:55px;height:20px;" class="euros">
-									0,00 EUR
-								</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
- 	</div>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
@@ -386,6 +357,36 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 ?>
 	</table>
 </div>
+	<div id="sideblock" style="float:left;width:<?php echo $width; ?>px;margin-left:20px;border:1px;"> 
+		<div class="store-outerbox">
+				<div class="store-titel">
+					<?php echo $name; ?>
+				</div>			
+				<div class="store-image">
+					<img src="<?php echo "".WP_PLUGIN_URL."/tradetracker-store/screenshot-1.png"; ?>" style="max-width:<?php echo $width; ?>px;max-height:180px;">
+				</div>
+				<div class="store-footer">
+					<div class="store-description">
+						The description for the item you can buy using the <?php echo $font; ?> font.
+					</div>
+					<div class="buttons">
+						<a href="#" class="regular">
+							Buy Item
+						</a>
+					</div>
+					<div class="store-price">
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td style="width:55px;height:20px;" class="euros">
+									0,00 EUR
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+ 	</div>
+
 </div>
 <?php
 

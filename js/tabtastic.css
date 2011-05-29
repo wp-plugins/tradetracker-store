@@ -1,3 +1,4 @@
+.plugindiv { width:950px; }
 .tabset_tabs	{ margin:0; padding:0; list-style-type:none; position:relative; z-index:2; white-space:nowrap; }
 .tabset_tabs li	{ margin:0; padding:0; display:inline }
 .tabset_tabs a	{ color:#339 ! important; background-color:#def ! important; border:1px solid #99c; text-decoration:none; padding:0 0.6em; border-left-width:1px; border-bottom:none }
@@ -11,7 +12,7 @@
 
 .tabset_tabs li.firstchild a	{ border-left-width:1px }
 
-.tabset_content	{ border:1px solid black; background-color:white; position:relative; padding:0.5em 1em; display:none;width:700px;}
+.tabset_content	{ border:1px solid black; background-color:white; position:relative; padding:0.5em 1em; display:none;width:700px; float:left;min-height:1037px;}
 .tabset_content1	{ border:1px solid black; background-color:white; position:relative; display:none;width:700px;}
 .tabset_label	{ display:none }
 

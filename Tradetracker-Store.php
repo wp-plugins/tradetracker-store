@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 2.1.6
+Version: 2.1.7
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -58,6 +58,7 @@ function news()
 	font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
 	font-size:12px;	
 	width:200px;
+	min-height:1050px;
 }
 
 .plugin_news h3
@@ -99,12 +100,26 @@ padding:10px;
 
 #slider,#slider li
 {
-	width:140px;
+	width:180px;
 	overflow:hidden
 }
 
 </style>
 	<div class="plugin_news">
+	<div class="plugin_news_section">
+	<h3>Donate</h3>
+	<div id="slider">
+	<ul>
+		<li>if you really like this plugin and it helped to improve the income of your site please show the creator your graditude:
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="J3UBRGHKXSAWC">
+<input type="image" src="https://www.paypalobjects.com/nl_NL/NL/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal, de veilige en complete manier van online betalen.">
+<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
+</form>
+	</ul>
+	</div>
+	</div>
 	<div class="plugin_news_section">
 	<h3>Sites using this plugin</h3>
 	<ul>
@@ -233,20 +248,21 @@ function store_items($used, $winkel)
 	} else {
 		$update= get_option( Tradetracker_update );
 	}
-
-$Tradetracker_xml = get_option( Tradetracker_xml );
-if ($Tradetracker_xml == null) {
-	return "No store activated yet";
-} else {
-	$cache_time = 3600*$update; // 24 hours
-$context = stream_context_create(array(
+	$Tradetracker_xml = get_option( Tradetracker_xml );
+	if ($Tradetracker_xml == null) 
+	{
+		echo "No XML filled in yet please change the settings first.";
+	} else {
+	$context = stream_context_create(array(
     'http' => array(
         'timeout' => 3      // Timeout in seconds
     )
-));
-	$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
-	$timedif = @(time() - filemtime($cache_file));
-		if (file_exists($cache_file) && $timedif < $cache_time) {
+	));
+		$cache_time = 3600*$update; // 24 hours
+		$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
+		$timedif = @(time() - filemtime($cache_file));
+		if (file_exists($cache_file) && $timedif < $cache_time) 
+		{
 			if ('' == file_get_contents($cache_file))
 				{
 		     			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
@@ -256,6 +272,7 @@ $context = stream_context_create(array(
     					}
 					fill_database();
 				}  
+
 		} else {
     			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
     			if ($f = @fopen($cache_file, 'w')) {
@@ -282,7 +299,7 @@ function fill_database()
 	$products = simplexml_load_string($string);
 	foreach($products as $product) // loop through our items
 	{
-	    	global $wpdb; 
+		global $wpdb; 
 	    	$currentpage["productID"]=$product->productID;		
 		$currentpage["name"]=$product->name;
 		$currentpage["imageURL"]=$product->imageURL;
@@ -367,7 +384,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				$colorfont = $multi_val->laycolorfont;
 			}
 			$Tradetracker_productid = $multi_val->multiitems;
-			$storename = str_replace(" ", "_", $multi_val->multiname);
+			$storename = create_slug($multi_val->multiname);
 		}
 	}
 	echo "<style type=\"text/css\" media=\"screen\">";

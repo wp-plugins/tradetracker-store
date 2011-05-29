@@ -115,6 +115,8 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 </style>
 <div class="wrap">
 <?php 	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>"; ?>
+<div class="plugindiv">
+
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
@@ -128,11 +130,16 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
 </ul>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
+
 <div id="tab5" class="tabset_content">
    <h2 class="tabset_label">Store</h2>
+<?php 
+$tablelayout = PRO_TABLE_PREFIX."layout";
+$layoutscount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM ".$tablelayout.""));
+if($layoutscount=="0"){
+echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\">Layout</a> before creating a store";
+} else { 
+?>
 <form name="form1" method="post" action="">
 <input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 <?php if(!empty($multiid)){ ?>
@@ -255,6 +262,13 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		}
 ?>
 	</table>
+<?php
+}
+?>
+</div>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<?php news(); ?>
+ 	</div>
 </div></div>
 <?php
 }

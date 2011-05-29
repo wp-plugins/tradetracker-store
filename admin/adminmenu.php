@@ -1,5 +1,35 @@
 <?php
 add_action('admin_menu', 'my_plugin_menu');
+function create_slug($str, $lowercase = TRUE)
+{
+
+    if ($lowercase === TRUE) $str = strtolower($str);    
+
+    $str = strip_tags($str);
+
+    // Use dash or underscore as separator        
+    $replace = '-';
+
+    $trans = array(
+                    '&\#\d+?;'                => '',
+                    '&\S+?;'                => '',
+                    '\s+'                    => $replace,
+                    '[^a-z0-9\-\._]'        => '',
+                    $replace.'+'            => $replace,
+                    $replace.'$'            => $replace,
+                    '^'.$replace            => $replace,
+                    '\.+$'                    => ''
+                  );
+
+    foreach ($trans as $key => $val)
+    {
+        $str = preg_replace("#".$key."#i", $val, $str);
+    } 
+
+    $str = trim(stripslashes($str));
+
+    return $str;
+}
 
 function my_plugin_menu() {
 	global $wpdb;
@@ -63,7 +93,7 @@ function ozh_loadcss_admin_head() {
 
 function tradetracker_store_help() {
 ?>
-
+<div class="plugindiv">
 	<?php if (get_option(Tradetracker_settings)==1){ ?>
 <h2>Basic Settings help:</h2>
 <ul class="tabset_tabs">
@@ -74,9 +104,7 @@ function tradetracker_store_help() {
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab5">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="active">Help</a></li>
 </ul>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
+
 <div id="tab6" class="tabset_content">
    <h2 class="tabset_label">Help</h2>
 <?php } if (get_option(Tradetracker_settings)==2){ ?>
@@ -94,9 +122,7 @@ function tradetracker_store_help() {
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="active">Help</a></li>
 </ul>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
+
 <div id="tab9" class="tabset_content">
    <h2 class="tabset_label">Help</h2>
 	<?php } ?>
@@ -311,6 +337,10 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 <?php } ?>
 
 </div>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<?php news(); ?>
+ 	</div>
+</div>
 <?php 
  
 }
@@ -347,9 +377,8 @@ else
   {
 ?>
 <h2>Ideas, comments or feedback?:</h2>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
+<div class="plugindiv">
+
 	<?php if (get_option(Tradetracker_settings)==1){ ?>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
@@ -426,7 +455,11 @@ else
 				</tr>
   			</form>
 		</table>
-	</div></div>
+	</div>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<?php news(); ?>
+ 	</div>
+</div></div>
 <?php
   }
 }

@@ -17,6 +17,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 			
 ?>
 	<h2>Overview of selected options:</h2>
+<div class="plugindiv">
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
@@ -25,9 +26,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab5">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="redhelp">Help</a></li>
 </ul>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
+
 <div id="tab4" class="tabset_content">
    <h2 class="tabset_label">Overview</h2>
 	<table width="700">
@@ -102,6 +101,10 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-feedback'"> 
 			<?php } ?>
 		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help5'">
+</div>
+	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<?php news(); ?>
+ 	</div>
 </div>
 <?php
 

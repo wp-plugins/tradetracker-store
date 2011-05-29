@@ -108,6 +108,7 @@ function tradetracker_store_setup() {
 	}
 
 </style>
+<div class="plugindiv">
 <?php if (empty($Tradetracker_settings_val)) { ?>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1" class="active">Setup</a></li>
@@ -139,9 +140,6 @@ function tradetracker_store_setup() {
 
 </ul>
 	<?php } ?>
-	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
-		<?php news(); ?>
- 	</div>
 <div id="tab1" class="tabset_content">
    <h2 class="tabset_label">Setup</h2>
 
@@ -185,9 +183,12 @@ function tradetracker_store_setup() {
 
 </form>
 </div>
+
+	<div id="sideblock" style="float:left;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 
+		<?php news(); ?>
+ 	</div>
 </div>
-
-
+</div>
 <?php
 }
 ?>
