@@ -4,7 +4,7 @@ Donate link: none
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements
 Requires at least: 2.0.1
 Tested up to: 3.1.3
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -38,6 +38,9 @@ I've created functions for this plugin of which I thought they'd be useful, but 
 3. Here you select which products you want to show on your site
 
 == Changelog ==
+= 2.1.8 =
+More debugging added. Also improved the importing of an XML a bit so that should go faster.
+
 = 2.1.7 =
 1. Made some changes to the way the layout was shown in the site. It should give less problems now
 1. Added some more error notifications to tell you when something is going wrong.

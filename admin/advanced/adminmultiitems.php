@@ -41,6 +41,11 @@ function adminstore_multiitems()
     			}
 			fill_database();
 		}
+$tablestore = PRO_TABLE_PREFIX."store";
+$storecount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM ".$tablestore.""));
+if($storecount=="0"){
+fill_database();
+}
 	return adminshow_multiitems();
 	}
 }

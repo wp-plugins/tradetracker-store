@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 2.1.7
+Version: 2.1.8
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -38,11 +38,35 @@ include('admin/advanced/adminmulti.php');
 include('admin/advanced/adminmultiitems.php');
 include('admin/advanced/adminoverview.php');
 }
-
+	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
+	$file_directory = dirname($file);
+	if(!is_writable($file_directory)){
+		$warning = __('Please make sure the directory '.$file_directory.'/ is writable else Tradetracker-Store will not function','ttstore' );
+		add_action('admin_notices', create_function( '', "echo \"<div class='error'><p>$warning</p></div>\";" ) );
+	}
 
 register_activation_hook(__FILE__,'tradetracker_store_install');
 register_deactivation_hook(__FILE__ ,'tradetracker_store_uninstall');
 add_action('wp_print_styles', 'add_my_stylesheet');
+add_filter('plugin_action_links', 'TTstore_plugin_action_links', 10, 2);
+
+function TTstore_plugin_action_links($links, $file) {
+    static $this_plugin;
+
+    if (!$this_plugin) {
+        $this_plugin = plugin_basename(__FILE__);
+    }
+
+    if ($file == $this_plugin) {
+        // The "page" query string value must be equal to the slug
+        // of the Settings admin page we defined earlier, which in
+        // this case equals "myplugin-settings".
+        $settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=tradetracker-shop">Settings</a>';
+        array_unshift($links, $settings_link);
+    }
+
+    return $links;
+}
 
 
 /* 
@@ -281,6 +305,11 @@ function store_items($used, $winkel)
     			}
 			fill_database();
 		}
+$tablestore = PRO_TABLE_PREFIX."store";
+$storecount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM ".$tablestore.""));
+if($storecount=="0"){
+fill_database();
+}
 	return show_items($used, $winkel);
 	}
 }

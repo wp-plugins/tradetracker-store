@@ -142,8 +142,10 @@ function tradetracker_store_setup() {
 	<?php } ?>
 <div id="tab1" class="tabset_content">
    <h2 class="tabset_label">Setup</h2>
-
-
+<?php if (empty($Tradetracker_settings_val)) { ?>
+<b>If you don't have a tradetracker account yet go to <a href="admin.php?page=tradetracker-shop-help#help2">the help pages</a> to see how to create one.</b>
+<p>
+<?php } ?>
 <form name="form1" method="post" action="">
 	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 	<table>
