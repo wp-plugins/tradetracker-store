@@ -15,6 +15,8 @@ function tradetracker_store_options() {
 
 	// variables for the field and option names 
 	$hidden_field_name = 'mt_submit_hidden';
+	$Tradetracker_buynow_name = 'Tradetracker_buynow';
+	$Tradetracker_buynow_field_name = 'Tradetracker_buynow';
 
 	$Tradetracker_xml_name = 'Tradetracker_xml';
 	$Tradetracker_xml_field_name = 'Tradetracker_xml';
@@ -37,6 +39,7 @@ function tradetracker_store_options() {
 
 
 	// Read in existing option value from database
+	$Tradetracker_buynow_val = get_option( $Tradetracker_buynow_name );
 	$Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
 	$Tradetracker_update_val = get_option( $Tradetracker_update_name );
 	$Tradetracker_productid_val = get_option( $Tradetracker_productid_name );
@@ -49,6 +52,7 @@ function tradetracker_store_options() {
 	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
 	if (get_option(Tradetracker_settings)==1){
 	// Read their posted value
+		$Tradetracker_buynow_val = $_POST[ $Tradetracker_buynow_field_name ];
 		$Tradetracker_xml_val = $_POST[ $Tradetracker_xml_field_name ];
 		$Tradetracker_update_val = get_option( $Tradetracker_update_name );
 		$Tradetracker_productid_val = $_POST[ $Tradetracker_productid_field_name ];
@@ -75,6 +79,9 @@ function tradetracker_store_options() {
 			fclose($fh);
 			unlink($myFile);
 			update_option( $Tradetracker_xml_name, $Tradetracker_xml_val );
+		}
+		if ( get_option(Tradetracker_buynow)  != $Tradetracker_buynow_val) {
+			update_option( $Tradetracker_buynow_name, $Tradetracker_buynow_val );
 		}
 		if ( get_option(Tradetracker_update)  != $Tradetracker_update_val) {
 			update_option( $Tradetracker_update_name, $Tradetracker_update_val );
@@ -191,6 +198,16 @@ function tradetracker_store_options() {
 			<td>
 				<input type="text" name="<?php echo $Tradetracker_productid_field_name; ?>" value="<?php echo $Tradetracker_productid_val; ?>" size="50"> 
 				<a href="admin.php?page=tradetracker-shop-items" target="_blank">Find productID</a>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="tradetrackerbuynow" title="What text would you like on the button (standard will be Buy Now)." class="info">
+					<?php _e("Buy Button text:", 'tradetracker-buynow' ); ?> 
+				</label> 
+			</td>
+			<td>
+				<input type="text" name="<?php echo $Tradetracker_buynow_field_name; ?>" value="<?php echo $Tradetracker_buynow_val; ?>" size="50"> 
 			</td>
 		</tr>
 		<?php if ($Tradetracker_productid_val==""){ ?>

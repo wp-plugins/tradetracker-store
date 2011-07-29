@@ -13,6 +13,11 @@ function tradetracker_store_setup() {
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
 	$table = PRO_TABLE_PREFIX."store";
+	$tablemulti = PRO_TABLE_PREFIX."multi";
+	if (get_option(versionbuynow) != "1"){
+	$result=$wpdb->query("ALTER TABLE `".$tablemulti."` ADD `buynow` TEXT NOT NULL");
+		update_option( versionbuynow, "1" );
+	}
 	if (get_option(pricedecimal) != "10,2"){
 	$result=$wpdb->query("ALTER TABLE `".$table."` CHANGE `price` `price` DECIMAL( 10, 2 ) NOT NULL DEFAULT '0.00' ");
 		update_option( pricedecimal, "10,2" );

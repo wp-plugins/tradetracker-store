@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 2.1.8
+Version: 2.1.9
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://vannetti.nl
@@ -348,6 +348,11 @@ function show_items($usedhow, $winkelvol)
 	global $wpdb;
 $pro_table_prefix=$wpdb->prefix.'tradetracker_';
 $tablemulti = PRO_TABLE_PREFIX."multi";
+	if (get_option(versionbuynow) != "1"){
+	$result=$wpdb->query("ALTER TABLE `".$tablemulti."` ADD `buynow` TEXT NOT NULL");
+		update_option( versionbuynow, "1" );
+	}
+
 $tablelayout = PRO_TABLE_PREFIX."layout";
 define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	if ($winkelvol=="0"){
@@ -361,6 +366,11 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				$Tradetracker_amount_i = "LIMIT ".$Tradetracker_amount.""; 
 			}
 		}
+		if( get_option( Tradetracker_buynow ) == "" ){
+			$buynow= "Buy Item";
+		} else {
+			$buynow= get_option( Tradetracker_buynow );
+		}
 			$width= "250";
 			$font= "Verdana";
 			$widthtitle = $width-6;
@@ -371,9 +381,14 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 			$storename = "basic";
 
 	} else {
-		$multi=$wpdb->get_results("SELECT multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
+		$multi=$wpdb->get_results("SELECT buynow, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
 		foreach ($multi as $multi_val){
 			$Tradetracker_amount = $multi_val->multiamount;
+			if( $multi_val->buynow == "" ){
+				$buynow= "Buy Item";
+			} else {
+				$buynow= $multi_val->buynow;
+			}
 			if ($multi_val->multiamount == "") 
 			{
 				$Tradetracker_amount_i = "LIMIT 12"; 
@@ -436,6 +451,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		$visits=$wpdb->get_results("SELECT * FROM ".$table." where productID='".$productID."' ORDER BY RAND() ".$Tradetracker_amount_i."");
 	}
 	$storeitems = "";
+
 	foreach ($visits as $product){
 		if(get_option(Tradetracker_lightbox)==1){
 			$image = $product->imageURL;
@@ -462,7 +478,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 					</div>
 					<div class=\"buttons\">
 						<a href=\"".$product->productURL."\" class=\"regular\">
-							Buy Item
+							".$buynow."
 						</a>
 					</div>
 					<div class=\"store-price\">

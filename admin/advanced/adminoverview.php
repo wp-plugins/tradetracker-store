@@ -124,7 +124,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	<h2>Overview of created stores:</h2>
 <?php	
 		
-	$multi=$wpdb->get_results("SELECT ".$tablemulti.".id as multiid, layname, multiname, multilayout, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
+	$multi=$wpdb->get_results("SELECT ".$tablemulti.".id as multiid, buynow, layname, multiname, multilayout, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
 	foreach ($multi as $multi_val){
 ?>
 	<table width="700">
@@ -142,6 +142,14 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 			</td>
 			<td>
 				<?php echo $multi_val->layname; ?>
+			</td>
+		</tr>
+		<tr>
+			<td width="150">
+				Buy now text:
+			</td>
+			<td>
+				<?php echo $multi_val->buynow; ?>
 			</td>
 		</tr>
 		<tr>

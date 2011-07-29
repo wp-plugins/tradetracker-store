@@ -7,6 +7,10 @@ function tradetracker_store_multi() {
 global $wpdb;
 $pro_table_prefix=$wpdb->prefix.'tradetracker_';
 $tablemulti = PRO_TABLE_PREFIX."multi";
+if (get_option(versionbuynow) != "1"){
+	$result=$wpdb->query("ALTER TABLE `".$tablemulti."` ADD `buynow` TEXT NOT NULL");
+	update_option( versionbuynow, "1" );
+}
 define('PRO_TABLE_PREFIX', $pro_table_prefix);
     $structuremulti = "CREATE TABLE IF NOT EXISTS $tablemulti (
         id INT(9) NOT NULL AUTO_INCREMENT,
@@ -28,9 +32,10 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		if(!empty($_POST['multiid'])){
 			$multiid = $_POST['multiid'];
 		} 
-		$multi=$wpdb->get_results("SELECT multiname, multilayout, multiitems, multiamount, multilightbox FROM ".$tablemulti." where id=".$multiid."");
+		$multi=$wpdb->get_results("SELECT buynow, multiname, multilayout, multiitems, multiamount, multilightbox FROM ".$tablemulti." where id=".$multiid."");
 		foreach ($multi as $multi_val){
-			
+			$Tradetracker_buynow_val = $multi_val->buynow;
+			$db_buynow_val = $multi_val->buynow;
 			$Tradetracker_multiname_val = $multi_val->multiname;
 			$db_multiname_val = $multi_val->multiname;
 			$Tradetracker_multilayout_val = $multi_val->multilayout;
@@ -44,6 +49,9 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		}
 
 	}
+	$Tradetracker_buynow_name = 'Tradetracker_buynow';
+	$Tradetracker_buynow_field_name = 'Tradetracker_buynow';
+
 	$Tradetracker_multiname_name = 'Tradetracker_multiname';
 	$Tradetracker_multiname_field_name = 'Tradetracker_multiname';
 
@@ -62,7 +70,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 
 	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
         // Read their posted value
-
+        	$Tradetracker_buynow_val = $_POST[ $Tradetracker_buynow_field_name ];
         	$Tradetracker_multiname_val = $_POST[ $Tradetracker_multiname_field_name ];
         	$Tradetracker_multilayout_val = $_POST[ $Tradetracker_multilayout_field_name ];
 		$Tradetracker_multiamount_val = $_POST[ $Tradetracker_multiamount_field_name ];
@@ -72,6 +80,9 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 
         // Save the posted value in the database
 		if(!empty($_POST['multiid'])) {
+		if ( $db_buynow_val  != $Tradetracker_buynow_val) {
+			$query = $wpdb->update( $tablemulti, array( 'buynow' => $Tradetracker_buynow_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
+  		}
  		if ( $db_multiname_val  != $Tradetracker_multiname_val) {
 			$query = $wpdb->update( $tablemulti, array( 'multiname' => $Tradetracker_multiname_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
   		}
@@ -89,6 +100,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
  		}
 		$Tradetracker_multiid_val = $_POST['multiid'];
 		} else {
+        		$currentpage["buynow"]=$Tradetracker_buynow_val;
         		$currentpage["multiname"]=$Tradetracker_multiname_val;
         		$currentpage["multilayout"]=$Tradetracker_multilayout_val;
         		$currentpage["multiamount"]=$Tradetracker_multiamount_val;
@@ -178,7 +190,16 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</select>		
 		</td>
 	</tr>
-
+	<tr>
+		<td>
+			<label for="tradetrackerbuynow" title="What text would you like to use on the button (standard is Buy now)." class="info">
+				<?php _e("Text on button:", 'tradetracker-buynow' ); ?>
+			</label> 
+		</td>
+		<td>
+			<input type="text" name="<?php echo $Tradetracker_buynow_field_name; ?>" value="<?php echo $Tradetracker_buynow_val; ?>" size="20"> 
+		</td>
+	</tr>
 	<tr>
 		<td>
 			<label for="tradetrackerfont" title="How much items would you like to show." class="info">
