@@ -7,7 +7,7 @@ function tradetracker_store_multi() {
 global $wpdb;
 $pro_table_prefix=$wpdb->prefix.'tradetracker_';
 $tablemulti = PRO_TABLE_PREFIX."multi";
-if (get_option(versionbuynow) != "1"){
+if (get_option(versionbuynow) != "2"){
 	$result=$wpdb->query("ALTER TABLE `".$tablemulti."` ADD `buynow` TEXT NOT NULL");
 	update_option( versionbuynow, "1" );
 }
@@ -19,6 +19,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
         multiitems VARCHAR(10000) NOT NULL,
         multiamount int(3) NOT NULL,
 	multilightbox VARCHAR(1) NOT NULL,
+	buynow TEXT NOT NULL,
 	UNIQUE KEY id (id)
     );";
     $wpdb->query($structuremulti);

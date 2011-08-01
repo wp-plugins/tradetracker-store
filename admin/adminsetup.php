@@ -14,7 +14,7 @@ function tradetracker_store_setup() {
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
 	$table = PRO_TABLE_PREFIX."store";
 	$tablemulti = PRO_TABLE_PREFIX."multi";
-	if (get_option(versionbuynow) != "1"){
+	if (get_option(versionbuynow) != "2"){
 	$result=$wpdb->query("ALTER TABLE `".$tablemulti."` ADD `buynow` TEXT NOT NULL");
 		update_option( versionbuynow, "1" );
 	}
