@@ -4,63 +4,11 @@ function tradetracker_store_setup() {
 	if (!current_user_can('manage_options'))  {
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
-	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
-	$file_directory = dirname($file);
-	if(is_writable($file_directory)){
-	} else {
-		echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
-	}	
+	ttstoreheader();
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
 	$table = PRO_TABLE_PREFIX."store";
 	$tablemulti = PRO_TABLE_PREFIX."multi";
-	if (get_option(versionbuynow) != "2"){
-	$result=$wpdb->query("ALTER TABLE `".$tablemulti."` ADD `buynow` TEXT NOT NULL");
-		update_option( versionbuynow, "1" );
-	}
-	if (get_option(pricedecimal) != "10,2"){
-	$result=$wpdb->query("ALTER TABLE `".$table."` CHANGE `price` `price` DECIMAL( 10, 2 ) NOT NULL DEFAULT '0.00' ");
-		update_option( pricedecimal, "10,2" );
-	}
-	if (get_option(tradetracker_store_productid) != "1"){
-	$result=$wpdb->query("ALTER TABLE `".$table."` CHANGE `productID` `productID` VARCHAR( 25 ) NOT NULL DEFAULT '0' ");
-		update_option( tradetracker_store_productid, "1" );
-		global $wpdb;
-		$Tradetracker_xml = get_option( Tradetracker_xml );
-		if ($Tradetracker_xml == null) 
-		{
-			
-		} else {
-		$context = stream_context_create(array(
-    	'http' => array(
-	        'timeout' => 3      // Timeout in seconds
-    	)
-		));
-		$cache_time = 1; // 24 hours
-		$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
-		$timedif = @(time() - filemtime($cache_file));
-		if (file_exists($cache_file) && $timedif < $cache_time) 
-		{
-			if ('' == file_get_contents($cache_file))
-				{
-		     			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
-		    			if ($f = @fopen($cache_file, 'w')) {
-        					fwrite ($f, $string, strlen($string));
-        					fclose($f);
-    					}
-					fill_database();
-				}  
-
-		} else {
-    			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
-    			if ($f = @fopen($cache_file, 'w')) {
-        			fwrite ($f, $string, strlen($string));
-        			fclose($f);
-    			}
-			fill_database();
-		}
-	}
-	}
 	// variables for the field and option names 
 	$hidden_field_name = 'mt_submit_hidden';
 
@@ -78,7 +26,7 @@ function tradetracker_store_setup() {
 		$Tradetracker_settings_val = $_POST[ $Tradetracker_settings_field_name ];
        		// Save the posted value in the database
 
-		if ( get_option(Tradetracker_settings)  != $Tradetracker_settings_val) {
+		if ( get_option("Tradetracker_settings")  != $Tradetracker_settings_val) {
 			update_option( $Tradetracker_settings_name, $Tradetracker_settings_val );
 		}
 
@@ -92,11 +40,10 @@ function tradetracker_store_setup() {
 
 	// Now display the settings editing screen
 	echo '<div class="wrap">';
-	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
-	$file_directory = dirname($file);
-	if(is_writable($file_directory)){
-	} else {
-		echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
+	$folder =  WP_PLUGIN_DIR . "/tradetracker-store/splits";
+	if(!is_writable($folder)){
+		$warning = __('Please make sure the directory '.$folder.'/ is writable else Tradetracker-Store will not function','ttstore' );
+		add_action('admin_notices', create_function( '', "echo \"<div class='error'><p>$warning</p></div>\";" ) );
 	}
 
 
@@ -127,13 +74,14 @@ function tradetracker_store_setup() {
    <li><a href="admin.php?page=tradetracker-shop-items#tab3">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab4">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab5">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab6" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab7" class="redhelp">Help</a></li>
 </ul>
 	<?php } if ($Tradetracker_settings_val==2){ ?>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1" class="active">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
-		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+		<?php if ( get_option("Tradetracker_statsdash") == 1 ) { ?>
    <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
 		<?php } ?>
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
@@ -141,7 +89,8 @@ function tradetracker_store_setup() {
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
 
 </ul>
 	<?php } ?>

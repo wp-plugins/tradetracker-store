@@ -35,17 +35,26 @@ function my_plugin_menu() {
 	global $wpdb;
 	add_menu_page('Tradetracker Store', 'Tt Store', 'manage_options', 'tradetracker-shop', 'tradetracker_store_setup');
 	$tabs = add_submenu_page('tradetracker-shop', 'Tradetracker Store setup', 'Tt Store Setup', 'manage_options', 'tradetracker-shop', 'tradetracker_store_setup');
-	if (get_option( Tradetracker_settings )==1){
+	if (get_option("Tradetracker_settings")==1){
 		$tabs1 = add_submenu_page('tradetracker-shop', 'Tradetracker Store settings', 'Tt Store Settings', 'manage_options', 'tradetracker-shop-settings', 'tradetracker_store_options');
 		$mypage = add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-items', 'adminstore_items');
 		$tabs2 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Overview', 'Tt Store Overview', 'manage_options', 'tradetracker-shop-overview', 'tradetracker_store_overview');
 		$tabs3 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
 		$tabs4 = add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
+		add_submenu_page('tradetracker-shop', 'Tradetracker Store debug', 'Tt Store Debug', 'manage_options', 'tradetracker-shop-debug', 'debug_ttstore');
+		add_action( "admin_print_scripts-$tabs1", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs2", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs3", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs4", 'tabs_admin_head' );
+		if(function_exists('curl_init')) {
+			$tabs5 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Premium', 'Tt Store premium', 'manage_options', 'tradetracker-shop-premium', 'premium_ttstore');
+			add_action( "admin_print_scripts-$tabs5", 'tabs_admin_head' );
+		}
 	}
-	if (get_option( Tradetracker_settings )==2){
+	if (get_option("Tradetracker_settings")==2){
 		$tabs5 = add_submenu_page('tradetracker-shop', 'Tradetracker Store settings', 'Tt Store Settings', 'manage_options', 'tradetracker-shop-settings', 'tradetracker_store_options');
 		if(class_exists('SoapClient')){
-			if (get_option( Tradetracker_statsdash )==1){
+			if (get_option("Tradetracker_statsdash")==1){
 				$tabs6 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Stats', 'Tt Store Stats', 'manage_options', 'tradetracker-shop-stats', 'tradetracker_store_stats');
 			}
 		}
@@ -55,25 +64,27 @@ function my_plugin_menu() {
 		$tabs8 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Overview', 'Tt Store Overview', 'manage_options', 'tradetracker-shop-overview', 'tradetracker_store_overview');
 		$tabs9 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
 		$tabs10 = add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
-		if (get_option( Tradetracker_stores )>1){
+		if (get_option("Tradetracker_stores")>1){
 			add_submenu_page('tradetracker-shop', 'Tradetracker Multi', 'Tt Store Multi', 'manage_options', 'tradetracker-shop-multi', 'tradetracker_store_multi');
 		}
+		add_submenu_page('tradetracker-shop', 'Tradetracker Store debug', 'Tt Store Debug', 'manage_options', 'tradetracker-shop-debug', 'debug_ttstore');
+		add_action( "admin_print_scripts-$tabs5", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$mylayout", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs6", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs7", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs8", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs9", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs10", 'tabs_admin_head' );
+		if(function_exists('curl_init')) {
+			$tabs11 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Premium', 'Tt Store premium', 'manage_options', 'tradetracker-shop-premium', 'premium_ttstore');
+			add_action( "admin_print_scripts-$tabs11", 'tabs_admin_head' );
+		}
+
 	}
 	add_action( "admin_print_scripts-$mypage", 'ozh_loadjs_admin_head' );
 	add_action( "admin_print_scripts-$mylayout", 'ozh_loadcss_admin_head' );
 	add_action( "admin_print_scripts-$tabs", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs1", 'tabs_admin_head' );
 	add_action( "admin_print_scripts-$mypage", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs2", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs3", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs4", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs5", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$mylayout", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs6", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs7", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs8", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs9", 'tabs_admin_head' );
-	add_action( "admin_print_scripts-$tabs10", 'tabs_admin_head' );
 }
 
 function ozh_loadjs_admin_head() {
@@ -94,7 +105,7 @@ function ozh_loadcss_admin_head() {
 function tradetracker_store_help() {
 ?>
 <div class="plugindiv">
-	<?php if (get_option(Tradetracker_settings)==1){ ?>
+	<?php if (get_option("Tradetracker_settings")==1){ ?>
 <h2>Basic Settings help:</h2>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
@@ -102,17 +113,18 @@ function tradetracker_store_help() {
    <li><a href="admin.php?page=tradetracker-shop-items#tab3">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab4">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab5">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="active">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab6" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab7" class="active">Help</a></li>
 </ul>
 
-<div id="tab6" class="tabset_content">
+<div id="tab7" class="tabset_content">
    <h2 class="tabset_label">Help</h2>
-<?php } if (get_option(Tradetracker_settings)==2){ ?>
+<?php } if (get_option("Tradetracker_settings")==2){ ?>
 <h2>Advanced Settings help:</h2>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
-		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+		<?php if ( get_option("Tradetracker_statsdash") == 1 ) { ?>
    <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
 		<?php } ?>
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
@@ -120,16 +132,17 @@ function tradetracker_store_help() {
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="active">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="active">Help</a></li>
 </ul>
 
-<div id="tab9" class="tabset_content">
+<div id="tab10" class="tabset_content">
    <h2 class="tabset_label">Help</h2>
 	<?php } ?>
 
 
 <h2>Select the tab you would like to get help on below:</h2>
-<?php if (get_option(Tradetracker_settings)==1){ ?>
+<?php if (get_option("Tradetracker_settings")==1){ ?>
 <ul class="tabset_tabs">
    <li><a href="#help1" class="active">Setup</a></li>
    <li><a href="#help2">Registration</a></li>
@@ -139,7 +152,7 @@ function tradetracker_store_help() {
    <li><a href="#help6">Feedback</a></li>
 </ul>
 <?php } ?>
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 <ul class="tabset_tabs">
    <li><a href="#help1" class="active">Setup</a></li>
    <li><a href="#help2">Registration</a></li>
@@ -201,37 +214,39 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 <h2>Settings:</h2>
 <p>This is the main settings screen for the plugin. Basically this is the place where you input your XML file and select how the items are shown.
 
-<p><b>Tradetracker XML:</b><br> This is where you select which product feed you are going to use. You will get the link to the XML file from Tradetracker. To find out how to get the XML file go <a href="admin.php?page=tradetracker-shop-help#help2">here</a>.
-<?php if (get_option(Tradetracker_settings)==2){ ?>
-<p><b>Tradetracker update:</b><br> Here you can choose how often the plugin should update the XML feed in to the database. In most cases 24 hours would be ok. But if the affiliate program updates their XML feed every 10 days you may as well use 240 hours to save bandwidth.
+<p><b>Tradetracker XML:</b><br> This is where you select which product feed you are going to use. You will get the link to the XML file from Tradetracker. To find out how to get the XML file go <a href="admin.php?page=tradetracker-shop-help#help2">here</a> When you save the settings you are able to add another XML in the new text input box.
+<?php if (get_option("Tradetracker_settings")==2){ ?>
+<p><b>Use your own currency symbol:</b><br>It is possible to user other currency details then the one delivered from the XML. When you change this setting to yes, you will be able to Change the currency details below this option
+<p><b>Adjust Currency: </b><br>Here you see all current currency details from the XML. Next to it you can fill in what you would like to show instead of the original currency details
 <p><b>Income stats on your Dashboard?:</b><br>If you want to see the income stats in your wordpress dashboard select this option. It will also give you an extra tab called <b>Stats</b> on your setup page where you can fill in all needed details for the stats.
 <?php } ?>
-<?php if (get_option(Tradetracker_settings)==1){ ?>
+<?php if (get_option("Tradetracker_settings")==1){ ?>
 <p><b>Tradetracker productID:</b><br> Here you will see all the ID's from the items you selected on the Item Selection screen. You can use this field to delete all items you selected. If this field is filled the next option will be ignored.
 <p><b>Amount of items to show:</b><br> Instead of selecting which items you want to show on the site you can show them randomly. If you fill in an amount here the plugin will show that amount of items randomly on the site. (this option will not be here when you selected products to show on the site)
 <p><b>Use Lightbox:</b><br> If you want to use lightbox, this means when users click on the image of the product the image will be shown with a nice black border around it, you can enable it here. If it is disabled users will go the the product page instead.
 <?php } ?>
 </div>
-<?php if (get_option(Tradetracker_settings)==1){ ?>
+<?php if (get_option("Tradetracker_settings")==1){ ?>
 <div id="help4" class="tabset_content1">
    <h2 class="tabset_label">Items</h2>
 <?php } ?>
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 <div id="help7" class="tabset_content1">
    <h2 class="tabset_label">Items</h2>
 <?php } ?>
 	<h2>Item Selection:</h2>
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 	<p>If you just go to the Items tab you will see all the created stores which you can select items for. You can do this by clicking on <b>Select Items</b> at the store you want to adjust.
 <?php } ?>
 	<p>In this screen you can select which items you want to show on your site. If you don't select any items it will randomly show items from this list. The amount of items it will randomly show is based on the amount you filled in in the settings screen. When you select items here it will only show those items. So if you select 30 items, it will show 30 items on 1 page.
 	<p>On top you can select how many items you see on this selection page. That setting is only for this selection page and is not the amount of items shown on your actual site
 	<p>If you hover your mouse over the product name you will see the image belonging to the item
 	<p>You can sort the list by clicking on <b>ProductID</b>, <b>ProductName</b> and <b>Price</b>.
+	<p>It is also possible to see which extra fields exist within the XML feed.
 	<p>At the bottom you can browse between different pages by clicking on that page number. Dont forget to press Save Changes first before going to another page, otherwise you might loose your selection.
 </div>
 
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 <div id="help4" class="tabset_content1">
    <h2 class="tabset_label">Stats</h2>
 	<h2>Statistics Settings:</h2>
@@ -242,11 +257,11 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<p><b>Timeframe of stats:</b><br>Here you can choose what timeframe you want to show on your dashboard. Most people will be using weekly or monthly stats. But if you have a lot of sales on a daily basis you can use the Day setting.
 </div>
 <?php } ?>
-<?php if (get_option(Tradetracker_settings)==1){ ?>
+<?php if (get_option("Tradetracker_settings")==1){ ?>
 <div id="help5" class="tabset_content1">
    <h2 class="tabset_label">Overview</h2>
 <?php } ?>
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 <div id="help8" class="tabset_content1">
    <h2 class="tabset_label">Overview</h2>
 <?php } ?>
@@ -254,7 +269,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<p>On this page you will see the overview of the settings you have chosen. 
 	<p><b>Selected XML File:</b><br>Here you can open the XML you provided. You can look in to the XML and see how it is built and also see if there are issues with the link you provided.
 	<p><b>File size: </b><br>This will tell you how big the XML file is you are using. The bigger the file the more bandwidth it will use.
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 	<p><b>Update Frequency: </b><br>Here you will see how often the XML file will be redownloaded to your hosting. Most companies on Tradetracker will tell you in there productfeed page how often they will update there productfeed.
 	<p><b>Monthly bandwidth: </b><br>This gives you an estimate on the bandwidth the XML file import will use on a monthly basis. This is basically the file size x (720/hours you filled in in the update frequency settings)
 	<p><b>Stats in Dashboard: </b><br>If this says yes it will mean you can see the income statistics in your wordpress dashboard.
@@ -275,7 +290,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<p><b>In your theme</b>
 	<br>To show the items in your theme you can use the following <b><?php echo htmlentities('<?php display_multi_items($store="x") ?>'); ?></b> anywhere in your theme.
 <?php } ?>
-<?php if (get_option(Tradetracker_settings)==1){ ?>
+<?php if (get_option("Tradetracker_settings")==1){ ?>
 	<p><b>Monthly bandwidth: </b><br>This gives you an estimate on the bandwidth the XML file import will use on a monthtly basis. This is basically the file size x 30 days. Because the plugin collects the data from the XML on a 24 hours basis.
 	<p><b>Amount of items:</b><br>This shows how many items will be shown on the site randomly. This will not be visible when you have selected which items needs to be shown on the site.
 	<p><b>Items being shown:</b><br>This is the list of items you selected to be shown on the website.
@@ -289,7 +304,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 <?php } ?>
 </div>
 
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 <div id="help5" class="tabset_content1">
    <h2 class="tabset_label">Layout</h2>
 	<h2>Layout Settings:</h2>
@@ -308,11 +323,11 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 </div>
 
 <?php } ?>
-<?php if (get_option(Tradetracker_settings)==1){ ?>
+<?php if (get_option("Tradetracker_settings")==1){ ?>
 <div id="help6" class="tabset_content1">
    <h2 class="tabset_label">Feedback</h2>
 <?php } ?>
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 <div id="help9" class="tabset_content1">
    <h2 class="tabset_label">Feedback</h2>
 <?php } ?>
@@ -320,7 +335,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<p>You can use this form to give me feedback about the plugin. You can tell me if you miss certain features or when something is not working. You can also request to be added to the plugin news part with your site. Just remember the more information you give, the easier it is for me to help you.
 </div>
 
-<?php if (get_option(Tradetracker_settings)==2){ ?>
+<?php if (get_option("Tradetracker_settings")==2){ ?>
 <div id="help6" class="tabset_content1">
    <h2 class="tabset_label">Store</h2>
 	<h2>Store Settings:</h2>
@@ -328,6 +343,8 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<p>This tab consists of 2 parts. The top part gives you the abillity to fill in the settings. On the bottom part you see already created stores which you can adjust.
 	<p><b>Name for Store:</b><br>This is the name for the store you are creating. This is so you can easily recognise which store is which when you are selecting items for it.
 	<p><b>Layout:</b><br>Here you can choose which layout settings you would like to use.
+	<p><b>Feed:</b><br>Here you can choose which feed you would like to use in your store. You can also select all feeds if you would like to. 
+	<p><b>Text on button:</b><br>Here you can choose which text should be shown on the button instead of the standard buy now text.
 	<p><b>Amount of items:</b><br>This is the amount of items the plugin will show. It will select this amount of items from the product feed (or the items you selected) and show them randomly.
 	<p><b>Selected Items:</b><br> Here you will see all the ID's from the items you selected on the Item Selection screen. You can use this field to delete all items you selected.
 	<p><b>Use Lightbox:</b><br> If you want to use lightbox, (This enlarges the image once it has been clicked by a user and shows it with a nice black border around it) you can enable it here. If it is disabled users will go to the product page instead.
@@ -360,15 +377,15 @@ if($name == "") {
 	}
   $email = $_REQUEST['email'] ;
 if($email == "") {
-	$email = get_option( admin_email );
+	$email = get_option("admin_email");
 	}
   $subject = $_REQUEST['subject'] ;
 if($subject == "") {
 	$subject = "Tradetracker Store Feedback";
 	}
   $message = $_REQUEST['message']." 
-message sent using TT-Store on: ".get_option( siteurl )."";
-  mail( "robert.braam@gmail.com", "$subject",
+message sent using TT-Store on: ".get_option("siteurl")."";
+  mail( "info@wpaffiliatefeed.com", "$subject",
   $message, "From: $name <$email>" );
   echo "<div class=\"updated\"><p><strong>Feedback has been sent</strong></p></div>";
   }
@@ -379,22 +396,23 @@ else
 <h2>Ideas, comments or feedback?:</h2>
 <div class="plugindiv">
 
-	<?php if (get_option(Tradetracker_settings)==1){ ?>
+	<?php if (get_option("Tradetracker_settings")==1){ ?>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
    <li><a href="admin.php?page=tradetracker-shop-items#tab3">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab4">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab5" class="active">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab6" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab7" class="redhelp">Help</a></li>
 </ul>
 <div id="tab5" class="tabset_content">
    <h2 class="tabset_label">Feedback</h2>
-<?php } if (get_option(Tradetracker_settings)==2){ ?>
+<?php } if (get_option("Tradetracker_settings")==2){ ?>
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
-		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+		<?php if ( get_option("Tradetracker_statsdash") == 1 ) { ?>
    <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
 		<?php } ?>
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
@@ -402,7 +420,8 @@ else
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8" class="active">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
 </ul>
 <div id="tab8" class="tabset_content">
    <h2 class="tabset_label">Feedback</h2>
@@ -448,7 +467,7 @@ else
 					<td colspan="2">
 						<p class="submit">
 							<input type="submit" name="Submit" class="button-primary" value="Send feedback" />
-							<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help<?php if (get_option(Tradetracker_settings)==2){ echo "9"; } else { echo "6"; } ?>'">
+							<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help<?php if (get_option("Tradetracker_settings")==2){ echo "9"; } else { echo "6"; } ?>'">
 
 						</p>
 					</td>

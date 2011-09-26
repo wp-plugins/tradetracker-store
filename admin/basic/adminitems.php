@@ -2,45 +2,17 @@
 function adminstore_items()
 {
 	global $wpdb;
-	if( get_option( Tradetracker_update ) == "" ){
+	if( get_option("Tradetracker_update") == "" ){
 		$update= "24";
 	} else {
-		$update= get_option( Tradetracker_update );
+		$update= get_option("Tradetracker_update");
 	}
-	$Tradetracker_xml = get_option( Tradetracker_xml );
+	$Tradetracker_xml = get_option("Tradetracker_xml");
 	if ($Tradetracker_xml == null) 
 	{
 		echo "No XML filled in yet please change the settings first.";
 	} else {
-	$context = stream_context_create(array(
-    'http' => array(
-        'timeout' => 3      // Timeout in seconds
-    )
-	));
-		$cache_time = 3600*$update; // 24 hours
-		$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
-		$timedif = @(time() - filemtime($cache_file));
-		if (file_exists($cache_file) && $timedif < $cache_time) 
-		{
-			if ('' == file_get_contents($cache_file))
-				{
-		     			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
-		    			if ($f = @fopen($cache_file, 'w')) {
-        					fwrite ($f, $string, strlen($string));
-        					fclose($f);
-    					}
-					fill_database();
-				}  
-
-		} else {
-    			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
-    			if ($f = @fopen($cache_file, 'w')) {
-        			fwrite ($f, $string, strlen($string));
-        			fclose($f);
-    			}
-			fill_database();
-		}
-	return adminshow_items();
+		return adminshow_items();
 	}
 }
 
@@ -58,7 +30,7 @@ function adminshow_items()
 		{
 			$Tradetracker_items = $Tradetracker_items.",".$_POST['itemsother'];
 		}
-		if ( get_option(Tradetracker_productid)  != $Tradetracker_items) 
+		if ( get_option("Tradetracker_productid")  != $Tradetracker_items) 
 		{
 			update_option(Tradetracker_productid, $Tradetracker_items );
   		}
@@ -120,12 +92,7 @@ function adminshow_items()
 <?php
 	echo '<div class="wrap">';
 	echo "<h2>" . __( 'Tradetracker Store Setup', 'menu-test' ) . "</h2>";
-	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
-	$file_directory = dirname($file);
-	if(is_writable($file_directory)){
-	} else {
-		echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
-	}
+	ttstoreheader();
 
 ?>
 <div class="plugindiv">
@@ -135,7 +102,8 @@ function adminshow_items()
    <li><a href="admin.php?page=tradetracker-shop-items#tab3" class="active">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab4">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab5">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab6" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab6" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab7" class="redhelp">Help</a></li>
 </ul>
 <div id="tab3" class="tabset_content">
    <h2 class="tabset_label">Items</h2>
@@ -172,7 +140,7 @@ $visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIM
 			foreach ($visits as $product){
 				$array2 .= ",".$product->productID."";
 				echo "<tr><td>";
-				$productID = get_option( Tradetracker_productid );
+				$productID = get_option("Tradetracker_productid");
 				$productID = explode(",",$productID);
 				if(in_array($product->productID, $productID, true))
 				{
@@ -204,7 +172,7 @@ $visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIM
 	<b>Always save changes before pressing next.</b><br>
 		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 	
 	<?php
-			if (get_option( Tradetracker_settings )==1){ ?> 
+			if (get_option("Tradetracker_settings")==1){ ?> 
 				<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-overview'"> 
 			<?php } ?>
 		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help4'">

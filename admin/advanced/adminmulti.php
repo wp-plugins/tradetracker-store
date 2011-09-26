@@ -4,14 +4,9 @@ function tradetracker_store_multi() {
 	{
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
+ttstoreheader();
 global $wpdb;
-$pro_table_prefix=$wpdb->prefix.'tradetracker_';
 $tablemulti = PRO_TABLE_PREFIX."multi";
-if (get_option(versionbuynow) != "2"){
-	$result=$wpdb->query("ALTER TABLE `".$tablemulti."` ADD `buynow` TEXT NOT NULL");
-	update_option( versionbuynow, "1" );
-}
-define('PRO_TABLE_PREFIX', $pro_table_prefix);
     $structuremulti = "CREATE TABLE IF NOT EXISTS $tablemulti (
         id INT(9) NOT NULL AUTO_INCREMENT,
 	multiname VARCHAR(100) NOT NULL,
@@ -19,11 +14,19 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
         multiitems VARCHAR(10000) NOT NULL,
         multiamount int(3) NOT NULL,
 	multilightbox VARCHAR(1) NOT NULL,
+	multixmlfeed VARCHAR(10) NOT NULL,
 	buynow TEXT NOT NULL,
 	UNIQUE KEY id (id)
     );";
     $wpdb->query($structuremulti);
-
+$Tradetracker_multiname_val ="";
+$db_multilayout_val ="";
+$Tradetracker_buynow_val ="";
+$Tradetracker_multiamount_val ="";
+$Tradetracker_multiitems_val ="";
+$Tradetracker_multilightbox_val ="";
+$Tradetracker_multilightbox_val ="";
+$multiid  ="";
 	$hidden_field_name = 'mt_submit_hidden';
 
 	if (!empty($_GET['multiid']) || !empty($_POST['multiid'])){
@@ -33,12 +36,14 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		if(!empty($_POST['multiid'])){
 			$multiid = $_POST['multiid'];
 		} 
-		$multi=$wpdb->get_results("SELECT buynow, multiname, multilayout, multiitems, multiamount, multilightbox FROM ".$tablemulti." where id=".$multiid."");
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiname, multilayout, multiitems, multiamount, multilightbox FROM ".$tablemulti." where id=".$multiid."");
 		foreach ($multi as $multi_val){
 			$Tradetracker_buynow_val = $multi_val->buynow;
 			$db_buynow_val = $multi_val->buynow;
 			$Tradetracker_multiname_val = $multi_val->multiname;
 			$db_multiname_val = $multi_val->multiname;
+			$Tradetracker_multixmlfeed_val = $multi_val->multixmlfeed;
+			$db_multixmlfeed_val = $multi_val->multixmlfeed;
 			$Tradetracker_multilayout_val = $multi_val->multilayout;
 			$db_multilayout_val = $multi_val->multilayout;
 			$Tradetracker_multiitems_val = $multi_val->multiitems;
@@ -68,10 +73,14 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	$Tradetracker_multilightbox_name = 'Tradetracker_multilightbox';
 	$Tradetracker_multilightbox_field_name = 'Tradetracker_multilightbox';
 
+	$Tradetracker_multixmlfeed_name = 'Tradetracker_multixmlfeed';
+	$Tradetracker_multixmlfeed_field_name = 'Tradetracker_multixmlfeed';
+
 
 	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
         // Read their posted value
         	$Tradetracker_buynow_val = $_POST[ $Tradetracker_buynow_field_name ];
+       		$Tradetracker_multixmlfeed_val = $_POST[ $Tradetracker_multixmlfeed_field_name ];
         	$Tradetracker_multiname_val = $_POST[ $Tradetracker_multiname_field_name ];
         	$Tradetracker_multilayout_val = $_POST[ $Tradetracker_multilayout_field_name ];
 		$Tradetracker_multiamount_val = $_POST[ $Tradetracker_multiamount_field_name ];
@@ -86,6 +95,9 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
   		}
  		if ( $db_multiname_val  != $Tradetracker_multiname_val) {
 			$query = $wpdb->update( $tablemulti, array( 'multiname' => $Tradetracker_multiname_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
+  		}
+ 		if ( $db_multixmlfeed_val  != $Tradetracker_multixmlfeed_val) {
+			$query = $wpdb->update( $tablemulti, array( 'multixmlfeed' => $Tradetracker_multixmlfeed_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
   		}
  		if ( $db_multilayout_val  != $Tradetracker_multilayout_val) {
 			$query = $wpdb->update( $tablemulti, array( 'multilayout' => $Tradetracker_multilayout_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
@@ -107,6 +119,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
         		$currentpage["multiamount"]=$Tradetracker_multiamount_val;
         		$currentpage["multiitems"]=$Tradetracker_multiitems_val;
         		$currentpage["multilightbox"]=$Tradetracker_multilightbox_val;
+        		$currentpage["multixmlfeed"]=$Tradetracker_multixmlfeed_val;
 			$wpdb->insert( $tablemulti, $currentpage);
 			$Tradetracker_multiid_val = $wpdb->insert_id;
 		}
@@ -133,7 +146,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
-		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+		<?php if ( get_option("Tradetracker_statsdash") == 1 ) { ?>
    <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
 		<?php } ?>
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
@@ -141,7 +154,8 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
 </ul>
 
 <div id="tab5" class="tabset_content">
@@ -178,19 +192,58 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 		<td>
 			<select name="<?php echo $Tradetracker_multilayout_field_name; ?>">
 <?php
+
 		$tablelayout = PRO_TABLE_PREFIX."layout";
 		$layout=$wpdb->get_results("SELECT id, layname FROM ".$tablelayout."");
 		foreach ($layout as $layout_val){
+
 			if($layout_val->id == $db_multilayout_val) {
 				echo "<option selected=\"selected\" value=\"".$layout_val->id."\">$layout_val->layname</option>";
 			} else {
 				echo "<option value=\"".$layout_val->id."\">$layout_val->layname</option>";
 			}
 		}
+		
 ?>
 			</select>		
 		</td>
 	</tr>
+
+
+	<tr>
+		<td>
+			<label for="tradetrackerwidth" title="Which feed would you like to use." class="info">
+				<?php _e("Feed:", 'tradetracker-multifeed' ); ?>
+			</label> 
+		</td>
+		<td>
+			<select name="<?php echo $Tradetracker_multixmlfeed_field_name; ?>">
+<?php
+		if($db_multixmlfeed_val == "" ){
+			echo "<option selected=\"selected\" value=\"*\">All feeds</option>";
+		} else {
+			echo "<option value=\"*\">All feeds</option>";
+		}
+		$tablexml = PRO_TABLE_PREFIX."store";
+		$xmlfeed=$wpdb->get_results("SELECT xmlfeed, producturl FROM ".$tablexml." group by xmlfeed");
+		$i="0";
+		foreach ($xmlfeed as $xmlfeed_val){
+			$xmlfeed = get_option("Tradetracker_xmlname");
+			$keys = $xmlfeed_val->xmlfeed;
+			if($xmlfeed_val->xmlfeed == $Tradetracker_multixmlfeed_val) {
+				echo "<option selected=\"selected\" value=\"".$xmlfeed_val->xmlfeed."\">".$xmlfeed[$i]."</option>";
+			} else {
+				echo "<option value=\"".$xmlfeed_val->xmlfeed."\">".$xmlfeed[$i]."</option>";
+			}
+			$i++;
+		}
+?>
+			</select>		
+		</td>
+	</tr>
+
+
+
 	<tr>
 		<td>
 			<label for="tradetrackerbuynow" title="What text would you like to use on the button (standard is Buy now)." class="info">

@@ -1,7 +1,6 @@
 .store-price{
-	position:absolute;
-	right:-1px !important;
-	bottom:1px !important;;
+	position:relative;
+	float:right;
 	width:60px !important;
 	height:38px !important;
 	background-image:url(images/productkaart-prijs-bg.png);
@@ -26,6 +25,7 @@
 .store-price table tr td {
 border: 0px !important;
 padding: 0px !important;
+background: none repeat scroll 0 0 transparent !important;
 }
 
 .store-price table td, table th, table tr {
@@ -41,11 +41,11 @@ padding: 0px !important;
 }
 
 .buttons a, .buttons button{
-position:absolute;
+position:relative;
 bottom:0px;
     display:block;
     float:left;
-    margin:0 7px 0 0;
+    margin-top: 9px;
     background-color:#f5f5f5;
     border:1px solid #dedede;
     border-top:1px solid #eee;

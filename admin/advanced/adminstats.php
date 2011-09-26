@@ -1,7 +1,8 @@
 <?php
 function tradetracker_store_stats() {
-		if (get_option( Tradetracker_settings )>=2){
+		if (get_option("Tradetracker_settings")>=2){
 		if(class_exists('SoapClient')){
+ttstoreheader();
 	$hidden_field_name = 'mt_submit_hidden';
 	$Tradetracker_customerid_name = 'Tradetracker_customerid';
 	$Tradetracker_customerid_field_name = 'Tradetracker_customerid';
@@ -26,16 +27,16 @@ function tradetracker_store_stats() {
 		$Tradetracker_access_code_val = $_POST[ $Tradetracker_access_code_field_name ];
 		$Tradetracker_siteid_val = $_POST[ $Tradetracker_siteid_field_name ];
 		$Tradetracker_statstime_val = $_POST[ $Tradetracker_statstime_field_name ];
-		if ( get_option(Tradetracker_customerid)  != $Tradetracker_customerid_val) {
+		if ( get_option("Tradetracker_customerid")  != $Tradetracker_customerid_val) {
 			update_option( $Tradetracker_customerid_name, $Tradetracker_customerid_val );
 		}
-		if ( get_option(Tradetracker_access_code)  != $Tradetracker_access_code_val) {
+		if ( get_option("Tradetracker_access_code")  != $Tradetracker_access_code_val) {
 			update_option( $Tradetracker_access_code_name, $Tradetracker_access_code_val );
 		}
-		if ( get_option(Tradetracker_siteid)  != $Tradetracker_siteid_val) {
+		if ( get_option("Tradetracker_siteid")  != $Tradetracker_siteid_val) {
 			update_option( $Tradetracker_siteid_name, $Tradetracker_siteid_val );
 		}
-		if ( get_option(Tradetracker_statstime)  != $Tradetracker_statstime_val) {
+		if ( get_option("Tradetracker_statstime")  != $Tradetracker_statstime_val) {
 			update_option( $Tradetracker_statstime_name, $Tradetracker_statstime_val );
 		}
 ?>
@@ -59,7 +60,7 @@ function tradetracker_store_stats() {
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
-		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+		<?php if ( get_option("Tradetracker_statsdash") == 1 ) { ?>
    <li><a href="admin.php?page=tradetracker-shop-stats#tab3" class="active">Stats</a></li>
 		<?php } ?>
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
@@ -67,7 +68,8 @@ function tradetracker_store_stats() {
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
 </ul>
 
 <div id="tab3" class="tabset_content">
@@ -136,10 +138,10 @@ function tradetracker_store_stats() {
 	<p class="submit">
 		<b>Always save changes before pressing next.</b><br>
 		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 	
-			<?php if (get_option( Tradetracker_settings )==1){ ?> 
+			<?php if (get_option("Tradetracker_settings")==1){ ?> 
 				<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-items'"> 
 			<?php } ?>
-			<?php if ( get_option( Tradetracker_settings )==2){ ?> 
+			<?php if ( get_option("Tradetracker_settings")==2){ ?> 
 				<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-layout'">
 			<?php } ?>
 		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help4'">
@@ -158,10 +160,10 @@ function tradetracker_store_stats() {
 }
 
 function tradetracker_store_statistics() {
-$siteid = get_option( Tradetracker_siteid );
-$customerid = get_option( Tradetracker_customerid );
-$acces_code = get_option( Tradetracker_access_code );
-if (get_option( Tradetracker_siteid ) == null || get_option( Tradetracker_customerid ) == null || get_option( Tradetracker_access_code ) == null){
+$siteid = get_option("Tradetracker_siteid");
+$customerid = get_option("Tradetracker_customerid");
+$acces_code = get_option("Tradetracker_access_code");
+if (get_option("Tradetracker_siteid") == null || get_option("Tradetracker_customerid") == null || get_option("Tradetracker_access_code") == null){
 echo "Please adjust your stats settings";
 } else {
 try { 
@@ -172,11 +174,11 @@ $affiliateSiteID = $siteid;
 
 
 echo "<table width=\"500\">";
-if(get_option( Tradetracker_statstime )=="3"){
+if(get_option("Tradetracker_statstime")=="3"){
 $registrationDateFrom = ''.Date('Y-m-d', strtotime("-30 days")).'';
 $registrationDateTo = ''.Date("Y-m-d").'';
 }
-else if(get_option( Tradetracker_statstime )=="2"){
+else if(get_option("Tradetracker_statstime")=="2"){
 $registrationDateFrom = ''.Date('Y-m-d', strtotime("-7 days")).'';
 $registrationDateTo = ''.Date("Y-m-d").'';
 }else{
@@ -216,13 +218,13 @@ echo "</table>";
 
 
 function add_custom_dashboard_widget() {
-	if ( get_option( Tradetracker_statsdash ) == 1 ) {
-if(get_option( Tradetracker_statstime )=="3"){
+	if ( get_option("Tradetracker_statsdash") == 1 ) {
+if(get_option("Tradetracker_statstime")=="3"){
 $registrationDateFrom = ''.Date('Y-m-d', strtotime("-30 days")).'';
 $registrationDateTo = ''.Date("Y-m-d").'';
 $statstitle = "Income Statistics for ".Date('d-M-Y', strtotime('-30 days'))." till ".Date('d-M-Y')."";
 }
-else if(get_option( Tradetracker_statstime )=="2"){
+else if(get_option("Tradetracker_statstime")=="2"){
 $registrationDateFrom = ''.Date('Y-m-d', strtotime("-7 days")).'';
 $registrationDateTo = ''.Date("Y-m-d").'';
 $statstitle = "Income Statistics for ".Date('d-M-Y', strtotime('-7 days'))." till ".Date('d-M-Y')."";

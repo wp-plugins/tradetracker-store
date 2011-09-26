@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Tradetracker-Store
-Plugin URI: http://wordpress.org/extend/plugins/tradetracker-store/
-Version: 2.1.10
+Plugin URI: http://wpaffiliatefeed.com
+Version: 3.0.0
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
-Author URI: http://vannetti.nl
+Author URI: http://wpaffiliatefeed.com
 */
 
 /* 
@@ -25,30 +25,53 @@ if(!defined('WP_PLUGIN_URL')){
 include('admin/adminmenu.php');
 include('admin/adminsetup.php');
 include('admin/adminoptions.php');
+include('premium.php');
+include('debug.php');
+include('xml.php');
 
-if (get_option(Tradetracker_settings)=="1"){
+
+if (get_option("Tradetracker_settings")=="1"){
 include('admin/basic/adminitems.php');
 include('admin/basic/adminoverview.php');
 }
 
-if (get_option(Tradetracker_settings)=="2"){
+if (get_option("Tradetracker_settings")=="2"){
 include('admin/advanced/adminlayout.php');
 include('admin/advanced/adminstats.php');
 include('admin/advanced/adminmulti.php');
 include('admin/advanced/adminmultiitems.php');
 include('admin/advanced/adminoverview.php');
 }
-	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
-	$file_directory = dirname($file);
-	if(!is_writable($file_directory)){
-		$warning = __('Please make sure the directory '.$file_directory.'/ is writable else Tradetracker-Store will not function','ttstore' );
-		add_action('admin_notices', create_function( '', "echo \"<div class='error'><p>$warning</p></div>\";" ) );
-	}
+
 
 register_activation_hook(__FILE__,'tradetracker_store_install');
 register_deactivation_hook(__FILE__ ,'tradetracker_store_uninstall');
-add_action('wp_print_styles', 'add_my_stylesheet');
+add_action('wp_print_styles', 'ttstore_stylesheet');
 add_filter('plugin_action_links', 'TTstore_plugin_action_links', 10, 2);
+
+if (!wp_next_scheduled('xmlscheduler')) {
+	wp_schedule_event( time(), 'daily', 'xmlscheduler' );
+}
+ttstoreerrordetect();
+add_action( 'xmlscheduler', 'runxmlupdater' ); 
+
+function runxmlupdater() {
+	xml_updater();
+	premium_updater();
+}
+$store = PRO_TABLE_PREFIX."store";
+$multi = PRO_TABLE_PREFIX."multi";
+if (get_option("TTstoreversion") < "3.0.0"){
+	$result=$wpdb->query("ALTER TABLE `".$store."` ADD `extrafield` TEXT NOT NULL");
+	$result=$wpdb->query("ALTER TABLE `".$store."` ADD `extravalue` TEXT NOT NULL");
+	$result=$wpdb->query("ALTER TABLE `".$store."` ADD `xmlfeed` VARCHAR(10) NOT NULL");
+	$result=$wpdb->query("ALTER TABLE `".$store."` MODIFY `price` decimal(10,2)");
+	$result=$wpdb->query("ALTER TABLE `".$multi."` ADD `multixmlfeed` VARCHAR(10) NOT NULL");
+	delete_option("Tradetracker_xml");
+	update_option("TTstoreversion", "3.0.0" );
+	xml_updater();
+	// Don't forget to adjust this also at the installation query below.
+}
 
 function TTstore_plugin_action_links($links, $file) {
     static $this_plugin;
@@ -134,7 +157,7 @@ padding:10px;
 	<h3>Donate</h3>
 	<div id="slider">
 	<ul>
-		<li>if you really like this plugin and it helped to improve the income of your site please show the creator your graditude:
+		<li>This plugin is made in my spare time. If you really like this plugin and it helped to improve the income of your site and you are willing to show me some of the gratitude:
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="J3UBRGHKXSAWC">
@@ -148,7 +171,11 @@ padding:10px;
 	<h3>Sites using this plugin</h3>
 	<ul>
 <?php
-	$site_file = 'http://debestekleurplaten.nl/tradetracker-store/sites.xml';
+	$site_file = WP_PLUGIN_URL.'/tradetracker-store/cache/sites.xml';
+	$site_dir = WP_PLUGIN_DIR.'/tradetracker-store/cache/sites.xml';
+	if (!file_exists($site_dir)) {
+		   $site_file = 'http://wpaffiliatefeed.com/tradetracker-store/sites.xml'; 
+	} 
 	$sites = file_get_contents($site_file);
 	$sites = simplexml_load_string($sites);
 	foreach($sites as $site) // loop through our items
@@ -179,12 +206,16 @@ echo "<li><a href=\"".$site->siteadres."\" target=\"_blank\">".$site->sitenaam."
 	<div id="slider">
 	<ul>
 <?php
-	$news_file = 'http://debestekleurplaten.nl/tradetracker-store/news.xml';
+	$news_file = WP_PLUGIN_URL.'/tradetracker-store/cache/news.xml';
+	$news_dir = WP_PLUGIN_DIR.'/tradetracker-store/cache/news.xml';
+	if (!file_exists($news_dir)) {
+		   $news_file = 'http://wpaffiliatefeed.com/category/news/feed/'; 
+	} 
 	$news = file_get_contents($news_file);
 	$news = simplexml_load_string($news);
 	foreach($news as $newsmsg) // loop through our items
 	{
-echo "<p><li><b>".$newsmsg->newsdate."</b><br>".$newsmsg->newsmessage."";
+echo "<li><b><a href=\"".$newsmsg->item->link."\">".$newsmsg->item->title."</a></b><br><b>Posted: ".date("d M Y",time($newsmsg->item->pubDate))."</b><br>".$newsmsg->item->description."";
 	}
 ?>
 	</ul>
@@ -208,18 +239,21 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
         name VARCHAR(80) NOT NULL,
         imageURL VARCHAR(200) NOT NULL,
 	productURL VARCHAR(1000) NOT NULL,
-	price DECIMAL(5,2) NOT NULL,
+	price DECIMAL(10,2) NOT NULL,
 	currency VARCHAR(10) NOT NULL,
-        description text,
+	xmlfeed VARCHAR(10) NOT NULL,
+	description text,
+	extrafield text,
+	extravalue text,
 	UNIQUE KEY id (id)
     );";
-    $wpdb->query($structure);
-
-    update_option( Tradetracker_width, "250" );
-    update_option( Tradetracker_colortitle, "#ececed" );
-    update_option( Tradetracker_colorfooter, "#ececed" );
-    update_option( Tradetracker_colorimagebg, "#FFFFFF" );
-    update_option( Tradetracker_colorfont, "#000000" );
+    $wpdb->query($structure)  or die(mysql_error());
+	update_option("TTstoreversion", "3.0.0" );
+	update_option("Tradetracker_width", "250" );
+	update_option("Tradetracker_colortitle", "#ececed" );
+	update_option("Tradetracker_colorfooter", "#ececed" );
+	update_option("Tradetracker_colorimagebg", "#FFFFFF" );
+	update_option("Tradetracker_colorfont", "#000000" );
 	  // Populate table
 }
 }
@@ -230,28 +264,24 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 
 function tradetracker_store_uninstall()
 {
-    global $wpdb;
-    $table = PRO_TABLE_PREFIX."store";
-    $structure = "drop table if exists $table";
-    $table2 = PRO_TABLE_PREFIX."layout";
-    $structure2 = "drop table if exists $table2";
-    $table3 = PRO_TABLE_PREFIX."multi";
-    $structure3 = "drop table if exists $table3";
-    $wpdb->query($structure); 
-    $wpdb->query($structure2);  
-    $wpdb->query($structure3);   
-	$myFile = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
-	$fh = fopen($myFile, 'w') or die("can't open file");
-	fclose($fh);
-	unlink($myFile);
-	
+	global $wpdb;
+	$table = PRO_TABLE_PREFIX."store";
+	$structure = "drop table if exists $table";
+	$table2 = PRO_TABLE_PREFIX."layout";
+	$structure2 = "drop table if exists $table2";
+	$table3 = PRO_TABLE_PREFIX."multi";
+	$structure3 = "drop table if exists $table3";
+	$wpdb->query($structure); 
+	$wpdb->query($structure2);  
+	$wpdb->query($structure3); 
+	wp_clear_scheduled_hook('xml_update');  
 }
 
 
 /* 
 ..--==[ Function to add the stylesheet for the store ]==--.. 
 */
-function add_my_stylesheet() {
+function ttstore_stylesheet() {
 	$myStyleUrl = WP_PLUGIN_URL . '/tradetracker-store/store.css';
 	$myStyleFile = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
 	if ( file_exists($myStyleFile) ) {
@@ -259,6 +289,15 @@ function add_my_stylesheet() {
 		wp_enqueue_style( 'myStyleSheets');
         }
 }
+function TTstore_scripts() {   
+	wp_enqueue_script( 'ttstoreexpand-script', WP_PLUGIN_URL . '/tradetracker-store/js/expand.js');
+}       
+	
+add_action('init', 'TTstore_scripts'); 
+
+
+
+
 
 /* 
 ..--==[ Function to see if XML is loaded already and cached. ]==--.. 
@@ -266,51 +305,12 @@ function add_my_stylesheet() {
 
 function store_items($used, $winkel)
 {
-	global $wpdb;
-	if( get_option( Tradetracker_update ) == "" ){
-		$update= "24";
-	} else {
-		$update= get_option( Tradetracker_update );
-	}
-	$Tradetracker_xml = get_option( Tradetracker_xml );
+	$Tradetracker_xml = get_option("Tradetracker_xml");
 	if ($Tradetracker_xml == null) 
 	{
 		echo "No XML filled in yet please change the settings first.";
 	} else {
-	$context = stream_context_create(array(
-    'http' => array(
-        'timeout' => 3      // Timeout in seconds
-    )
-	));
-		$cache_time = 3600*$update; // 24 hours
-		$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
-		$timedif = @(time() - filemtime($cache_file));
-		if (file_exists($cache_file) && $timedif < $cache_time) 
-		{
-			if ('' == file_get_contents($cache_file))
-				{
-		     			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
-		    			if ($f = @fopen($cache_file, 'w')) {
-        					fwrite ($f, $string, strlen($string));
-        					fclose($f);
-    					}
-					fill_database();
-				}  
-
-		} else {
-    			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
-    			if ($f = @fopen($cache_file, 'w')) {
-        			fwrite ($f, $string, strlen($string));
-        			fclose($f);
-    			}
-			fill_database();
-		}
-$tablestore = PRO_TABLE_PREFIX."store";
-$storecount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM ".$tablestore.""));
-if($storecount=="0"){
-fill_database();
-}
-	return show_items($used, $winkel);
+		return show_items($used, $winkel);
 	}
 }
 /* 
@@ -345,19 +345,14 @@ function fill_database()
 
 function show_items($usedhow, $winkelvol)
 {
-	global $wpdb;
-$pro_table_prefix=$wpdb->prefix.'tradetracker_';
-$tablemulti = PRO_TABLE_PREFIX."multi";
-	if (get_option(versionbuynow) != "2"){
-	$result=$wpdb->query("ALTER TABLE `".$tablemulti."` ADD `buynow` TEXT NOT NULL");
-		update_option( versionbuynow, "1" );
-	}
 
+	global $wpdb;
+$tablemulti = PRO_TABLE_PREFIX."multi";
 $tablelayout = PRO_TABLE_PREFIX."layout";
-define('PRO_TABLE_PREFIX', $pro_table_prefix);
+
 	if ($winkelvol=="0"){
-		$Tradetracker_amount = get_option( Tradetracker_amount );
-		$Tradetracker_productid = get_option( Tradetracker_productid );
+		$Tradetracker_amount = get_option("Tradetracker_amount");
+		$Tradetracker_productid = get_option("Tradetracker_productid");
 		if ($Tradetracker_productid == null) {
 			if ($Tradetracker_amount == null) 
 			{
@@ -366,14 +361,16 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				$Tradetracker_amount_i = "LIMIT ".$Tradetracker_amount.""; 
 			}
 		}
-		if( get_option( Tradetracker_buynow ) == "" ){
+		$multixmlfeed = "";
+		if( get_option("Tradetracker_buynow") == "" ){
 			$buynow= "Buy Item";
 		} else {
-			$buynow= get_option( Tradetracker_buynow );
+			$buynow= get_option("Tradetracker_buynow");
 		}
 			$width= "250";
 			$font= "Verdana";
 			$widthtitle = $width-6;
+			$widthmore = $width-10;
 			$colortitle = "#ececed";
 			$colorfooter = "#ececed";
 			$colorimagebg = "#ffffff";
@@ -381,9 +378,15 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 			$storename = "basic";
 
 	} else {
-		$multi=$wpdb->get_results("SELECT buynow, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
 		foreach ($multi as $multi_val){
 			$Tradetracker_amount = $multi_val->multiamount;
+			if($multi_val->multixmlfeed == "*" ){
+				$multixmlfeed = "";
+			} else {
+				$multixmlfeed = "where xmlfeed = ".$multi_val->multixmlfeed." ";
+			}
+
 			if( $multi_val->buynow == "" ){
 				$buynow= "Buy Item";
 			} else {
@@ -407,6 +410,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 				$font= $multi_val->layfont;
 			}
 			$widthtitle = $width-6;
+			$widthmore = $width-10;
 			if( $multi_val->laycolortitle == "" ){
 				$colortitle = "#ececed";
 			} else {
@@ -432,52 +436,96 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		}
 	}
 	echo "<style type=\"text/css\" media=\"screen\">";
-	echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;height:353px;border:solid 1px #999999;position:relative;}";
+	echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #999999;position:relative;}";
 	echo ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
 	echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
 	echo ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
-	echo ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;height:137px;}";
-	echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:absolute;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+	echo ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
+	echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+	echo ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
 	echo "</style>";
 
 	$table = PRO_TABLE_PREFIX."store";
 
 	if ($Tradetracker_productid == null) 
 	{
-		$visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY RAND() $Tradetracker_amount_i");
+		$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ORDER BY RAND() $Tradetracker_amount_i");
 	} else {
 		$productID = $Tradetracker_productid;
 		$productID = str_replace(",", "' or productID='", $productID);
 		$visits=$wpdb->get_results("SELECT * FROM ".$table." where productID='".$productID."' ORDER BY RAND() ".$Tradetracker_amount_i."");
 	}
 	$storeitems = "";
-
+	$i="1";
 	foreach ($visits as $product){
-		if(get_option(Tradetracker_lightbox)==1){
+		$extrafield = explode(",",$product->extrafield);
+		$extravalue = explode(",",$product->extravalue);
+		$extras = array_combine($extrafield, $extravalue);
+		$extraname = "";
+		$extravar = "";
+		foreach ($extras as $key => $value) {
+			$Tradetracker_extra_val = get_option("Tradetracker_extra");
+			if(!empty($Tradetracker_extra_val)){
+				if(in_array($key, $Tradetracker_extra_val, true)) {
+					$extraname .= "<tr><td width=\"50\"><b>".$key."</b></td><td>".$value."</td></tr>";
+				}
+			}
+		}
+		if($extraname != ""){
+			$more = "<div class=\"".$storename."store-more\">
+					<img src=\"".WP_PLUGIN_URL."/tradetracker-store/images/more.png\" style=\"border:0;\" border=\"0\" name=\"img".$i."\" width=\"11\" height=\"13\" border=\"0\" >
+					<a href=\"#first\" onClick=\"shoh('".$i."');\" >More info</a> 
+					<div style=\"display: none;\" id=\"".$i."\" > 
+						<table style=\"width:".$widthmore."px;\" width=\"".$widthmore."\">".$extraname."</table>
+					</div>
+				</div>";
+
+		} else {
+			$more = "<div class=\"".$storename."store-more\"></div>";
+		}
+				unset($extras);
+		$producturl = $product->productURL;
+		$productname = str_replace("&", "&amp;", $product->name);
+		$productdescription = str_replace("&", "&amp;", $product->description);
+		if(get_option("Tradetracker_lightbox")==1){
 			$image = $product->imageURL;
 			$target = "";	
 			$rel = "rel=\"lightbox[store]\"";
 		} else {
-			$image = $product->productURL;
+			$image = $producturl;
 			$target = "target=\"_blank\"";
 			$rel = "";
 		}
+		if(get_option("Tradetracker_currency")=="1") {
+			$array = get_option("Tradetracker_newcur");
+			$key = $product->currency; 
+			$currency = $array[$key]; 
+		} else {
+			$currency = $product->currency;
+		}
+		if(get_option("Tradetracker_currencyloc")=="1") {
+			$price = $product->price." ".$currency;
+		}else {
+			$price = $currency." ".$product->price;
+		}
+
 		$storeitems .= "
 			<div class=\"".$storename."store-outerbox\">
 				<div class=\"".$storename."store-titel\">
-					".$product->name."
+					".$productname."
 				</div>			
 				<div class=\"".$storename."store-image\">
 					<a href=\"".$image."\" ".$rel." ".$target.">
-						<img src=\"".$product->imageURL."\" alt=\"".$product->name."\" title=\"".$product->name."\" style=\"max-width:".$width."px;max-height:180px;\" />
+						<img src=\"".$product->imageURL."\" alt=\"".$productname."\" title=\"".$productnamee."\" style=\"max-width:".$width."px;max-height:180px;\" />
 					</a>
 				</div>
 				<div class=\"".$storename."store-footer\">
 					<div class=\"".$storename."store-description\">
-						".$product->description."
+						".$productdescription."
 					</div>
+					".$more."
 					<div class=\"buttons\">
-						<a href=\"".$product->productURL."\" class=\"regular\">
+						<a href=\"".$producturl."\" class=\"regular\" target=\"_blank\">
 							".$buynow."
 						</a>
 					</div>
@@ -485,13 +533,14 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 						<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 							<tr>
 								<td style=\"width:55px;height:20px;\" class=\"euros\">
-									".$product->price." ".$product->currency."
+									".$price."
 								</td>
 							</tr>
 						</table>
 					</div>
 				</div>
 			</div>";
+	$i++;
 	}
 	if ($usedhow == 1){
 	return $storeitems;

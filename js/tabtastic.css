@@ -6,6 +6,7 @@
 .tabset_tabs a.active	{ color:black ! important; background-color:white ! important; border-color:black; border-left-width:1px; cursor:default; border-bottom:white; padding-top:1px; padding-bottom:1px }
 
 .tabset_tabs a.redhelp { color:#00c ! important; background-color:#fedced ! important; }
+.tabset_tabs a.greenpremium { color:#00c ! important; background-color:#ecfedb ! important; }
 
 
 

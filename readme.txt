@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: RPG84
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J3UBRGHKXSAWC
-Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements
+Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements, daisycon, zanox, cleafs
 Requires at least: 2.0.1
 Tested up to: 3.2.1
-Stable tag: 2.1.10
+Stable tag: 3.0.0
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -13,11 +13,13 @@ A plugin that lets you create a store from the Tradetracker productfeed.
 This plugin gives you the abillity to add a store to your WordPress, based on a tradetracker productfeed. Tradetracker is an affiliate system that has
 the abillity to generate a product feed for you. So you can have a store that brings in money without the hassle of owning a complete webstore. All you need to do is choose a store connected on tradetracker and add it. Users of your blog will then see the products on your blog and when interested they will be sent to the store. When they buy an item you will get a percentage of that sale.
 
+You can also add zanox, daisycon and cleafs With the new premium addons.
+ 
 Plugin also supports Lightbox. So if you don't have it yet i would advise to install http://wordpress.org/extend/plugins/wp-jquery-lightbox/
 
 == Installation ==
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory.
+1. Upload `tradetracker-store` to the `/wp-content/plugins/` directory.
 1. Activate the plugin through the 'Plugins' menu in WordPress.
 1. Adjust all settings in the TT Store on the left side of the admin menu
 
@@ -31,6 +33,10 @@ No, not yet.
 
 I've created functions for this plugin of which I thought they'd be useful, but ofcourse I may have left things out which other people would like to see. If you have any ideas, do share them with me, as I can always try to implement it.
 
+= Do you have a site for the plugin? =
+
+Yes you can find it at http://wpaffiliatefeed.com
+
 == Screenshots ==
 
 1. This is how the items will be shown on your site
@@ -38,33 +44,7 @@ I've created functions for this plugin of which I thought they'd be useful, but 
 3. Here you select which products you want to show on your site
 
 == Changelog ==
-= 2.1.10 =
-Fixed a issue in advanced modus for new users. If you could not create a new store you will need to reinstall the plugin after the update
+Full changelog on http://wpaffiliatefeed.com/category/releaselog/
 
-= 2.1.9 =
-Added the ability to adjust the text on the Buy Now button. The option can be found on the tab settings (basic) or the tab store (advanced) called Buy button text
-
-= 2.1.8 =
-More debugging added. Also improved the importing of an XML a bit so that should go faster.
-
-= 2.1.7 =
-1. Made some changes to the way the layout was shown in the site. It should give less problems now
-1. Added some more error notifications to tell you when something is going wrong.
-
-= 2.1.6 =
-Adjusted some of the CSS for the store. Now your theme should not interfere with the plugins css.
-
-= 2.1.5 =
-Fixed an error for when the XML feed did not use numeric values for there productid
-
-= 2.1.4 =
-Adjusted the price tag. Hopefully higher prices will fit on it now.
-
-= 2.1.3 = 
-Small error fixed that no options where shown when starting the plugin for the first time.
-
-= 2.1.2 = 
-Mostly spelling misstakes and a problem in the Stats on the dashboard.
-
-= 2.1.1 =
-Mostly graphical updates for the admin menu. Also improved the help pages.
+== Upgrade Notice ==
+Because of the major changes i advise to disable the plugin before upgrading

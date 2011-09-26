@@ -5,9 +5,8 @@ function tradetracker_store_layout() {
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
 global $wpdb;
-$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+ttstoreheader();
 $tablelayout = PRO_TABLE_PREFIX."layout";
-define('PRO_TABLE_PREFIX', $pro_table_prefix);
     $structurelay = "CREATE TABLE IF NOT EXISTS $tablelayout (
         id INT(9) NOT NULL AUTO_INCREMENT,
 	layname VARCHAR(100) NOT NULL,
@@ -20,7 +19,21 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	UNIQUE KEY id (id)
     );";
     $wpdb->query($structurelay);
-
+$Tradetracker_width_val = "";
+$Tradetracker_layoutname_val = "";
+$Tradetracker_font_val = "";
+$Tradetracker_colortitle_val = "";
+$Tradetracker_colorfooter_val = "";
+$Tradetracker_colorimagebg_val = "";
+$Tradetracker_colorfont_val = "";
+$Tradetracker_layoutname_val = "";
+$Tradetracker_width_val = "";
+$Tradetracker_font_val = "";
+$Tradetracker_colortitle_val = "";
+$Tradetracker_colorimagebg_val = "";
+$Tradetracker_colorfooter_val = "";
+$Tradetracker_colorfont_val = "";
+$layoutid = "";
 	$hidden_field_name = 'mt_submit_hidden';
 
 	if (!empty($_GET['layoutid']) || !empty($_POST['layoutid'])){
@@ -185,7 +198,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
-		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+		<?php if ( get_option("Tradetracker_statsdash") == 1 ) { ?>
    <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
 		<?php } ?>
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4" class="active">Layout</a></li>
@@ -193,7 +206,8 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
 </ul>
 <div id="tab4" class="tabset_content">
    <h2 class="tabset_label">Layout</h2>

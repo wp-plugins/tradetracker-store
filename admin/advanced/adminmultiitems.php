@@ -3,50 +3,17 @@
 function adminstore_multiitems()
 {
 	global $wpdb;
-	if( get_option( Tradetracker_update ) == "" ){
+	if( get_option("Tradetracker_update") == "" ){
 		$update= "24";
 	} else {
-		$update= get_option( Tradetracker_update );
+		$update= get_option("Tradetracker_update");
 	}
-	$Tradetracker_xml = get_option( Tradetracker_xml );
+	$Tradetracker_xml = get_option("Tradetracker_xml");
 	if ($Tradetracker_xml == null) 
 	{
 		echo "No XML filled in yet please change the settings first.";
 	} else {
-	$context = stream_context_create(array(
-    'http' => array(
-        'timeout' => 3      // Timeout in seconds
-    )
-	));
-		$cache_time = 3600*$update; // 24 hours
-		$cache_file = WP_PLUGIN_DIR . '/tradetracker-store/cache.xml';
-		$timedif = @(time() - filemtime($cache_file));
-		if (file_exists($cache_file) && $timedif < $cache_time) 
-		{
-			if ('' == file_get_contents($cache_file))
-				{
-		     			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
-		    			if ($f = @fopen($cache_file, 'w')) {
-        					fwrite ($f, $string, strlen($string));
-        					fclose($f);
-    					}
-					fill_database();
-				}  
-
-		} else {
-    			$string = file_get_contents(''.$Tradetracker_xml.'', 0, $context);
-    			if ($f = @fopen($cache_file, 'w')) {
-        			fwrite ($f, $string, strlen($string));
-        			fclose($f);
-    			}
-			fill_database();
-		}
-$tablestore = PRO_TABLE_PREFIX."store";
-$storecount = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM ".$tablestore.""));
-if($storecount=="0"){
-fill_database();
-}
-	return adminshow_multiitems();
+		return adminshow_multiitems();
 	}
 }
 
@@ -57,15 +24,8 @@ function adminshow_multiitems()
 		wp_die( __('You do not have sufficient permissions to access this page.') );
 	}
 global $wpdb;
-	$file = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
-	$file_directory = dirname($file);
-	if(is_writable($file_directory)){
-	} else {
-		echo "<div class=\"updated\"><p><strong>Please make sure the directory ".$file_directory."/ is writable.</strong></p></div>";
-	}
-$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+ttstoreheader();
 $tablemulti = PRO_TABLE_PREFIX."multi";
-define('PRO_TABLE_PREFIX', $pro_table_prefix); 
 
 
 	echo '<div class="wrap">';
@@ -75,7 +35,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 <ul class="tabset_tabs">
    <li><a href="admin.php?page=tradetracker-shop#tab1">Setup</a></li>
    <li><a href="admin.php?page=tradetracker-shop-settings#tab2">Settings</a></li>
-		<?php if ( get_option( Tradetracker_statsdash ) == 1 ) { ?>
+		<?php if ( get_option("Tradetracker_statsdash") == 1 ) { ?>
    <li><a href="admin.php?page=tradetracker-shop-stats#tab3">Stats</a></li>
 		<?php } ?>
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
@@ -83,7 +43,8 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6" class="active">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab9" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
 </ul>
 
 <div id="tab6" class="tabset_content">
@@ -128,10 +89,17 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 <?php
 	} else {
 	$multiid = $_GET['multiid'];
-		$layoutedit=$wpdb->get_results("SELECT id, multiitems, multiname FROM ".$tablemulti." where id=".$multiid."");
+		$layoutedit=$wpdb->get_results("SELECT id, multixmlfeed, multiitems, multiname FROM ".$tablemulti." where id=".$multiid."");
 		foreach ($layoutedit as $layout_val){
 			$multiitems = $layout_val->multiitems;
 			$multiname = $layout_val->multiname;
+			if($layout_val->multixmlfeed == "*" ){
+				$multixmlfeed = "";
+			}elseif($layout_val->multixmlfeed == "" ){
+				$multixmlfeed = "";
+			} else {
+				$multixmlfeed = "where xmlfeed = ".$layout_val->multixmlfeed." ";
+			}
 		}
     	if( isset($_POST['posted']) && $_POST['posted'] == 'Y' ) 
 	{
@@ -166,7 +134,7 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 		$currentpage = 0;
 	}
 	$table = PRO_TABLE_PREFIX."store";
-	$countquery=$wpdb->get_results("SELECT * FROM ".$table."");
+	$countquery=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed."");
 	$numrows = $wpdb->num_rows;
 	$pages = intval($numrows/$limit); // Number of results pages.
 	if ($numrows%$limit) 
@@ -200,11 +168,43 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	max-height:400px;
 	}
 
+span.link {
+    	position: relative;
+}
+
+    span.link a span {
+    	display: none;
+}
+
+span.link a:hover {
+    	font-size: 99%;
+    	font-color: #000000;
+}
+span.link a:hover span { 
+	display: block; 
+    	position: absolute; 
+    	margin-top: 10px; 
+    	margin-left: -500px; 
+	min-width: 500px; 
+	padding: 5px; 
+    	z-index: 100; 
+    	color: #000000; 
+    	background: #FFFFAA; 
+    	font: 12px "Arial", sans-serif;
+    	text-align: left; 
+    	text-decoration: none;
+}
+span table, span table tr, span table td{
+	border: 0 none;
+	padding-right: 5px;
+	min-width: 75px;
+	padding-left: 5px;
+}
 /*  */
 </style>
 <?php
 	echo '<div class="wrap">';
-	if (get_option(Tradetracker_settings)==1){
+	if (get_option("Tradetracker_settings")==1){
 		echo "<a href=\"admin.php?page=tradetracker-shop\">Basic Setup</a> 
 			> 
 			<a href=\"admin.php?page=tradetracker-shop-settings\">Basic Settings</a>
@@ -220,6 +220,19 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
 
 
 ?>
+<script type="text/javascript">
+function selectToggle(toggle, form) {
+     var myForm = document.forms[form];
+     for( var i=0; i < myForm.length; i++ ) { 
+          if(toggle) {
+               myForm.elements[i].checked = "checked";
+          } 
+          else {
+               myForm.elements[i].checked = "";
+          }
+     }
+}
+</script>
 <table width="700" border="0">
 	<tr>
 		<td width="50%" align="left">
@@ -236,23 +249,31 @@ define('PRO_TABLE_PREFIX', $pro_table_prefix);
  	</tr>
 </table>
 <?php
-$visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
-	echo "<table width=\"700\">";
+$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+	echo "<table width=\"700\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
 		echo "<tr><td width=\"100\">";
 			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=productID\">ProductID</a></b>";
-		echo "</td><td width=\"480\">";
+		echo "</td><td width=\"435\">";
 			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=name\">Product name</a></b>";
 		echo "</td><td width=\"50\">";
 			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=price\">Price</a></b>";
-		echo "</td><td width=\"70\">";
+		echo "</td><td width=\"65\">";
 			echo "<b>Currency</b>";
+		echo "</td><td width=\"50\">";
+			echo "<b>Extra's</b>";
 		echo "</td></tr>";
 	echo "<form name=\"form2\" method=\"post\" action=\"\">";
 		echo "<input type=\"hidden\" name=\"posted\" value=\"Y\">";
 			$array2="";
+			$colors = "1";
 			foreach ($visits as $product){
+				if ($colors == "1"){
+					$tdbgcolor= "background-color:#f0f0f0";
+				} else {
+					$tdbgcolor= "background-color:#ffffff";
+				}
 				$array2 .= ",".$product->productID."";
-				echo "<tr><td>";
+				echo "<tr style=\"".$tdbgcolor.";\"><td>";
 
 				$productID = $multiitems;
 				$productID = explode(",",$productID);
@@ -262,17 +283,43 @@ $visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIM
 				} else {
 					echo "<input type=\"checkbox\" name=\"item[]\" value=".$product->productID." />";
 				}
-			echo $product->productID;
-		echo "</td><td><a href=\"#thumb\" class=\"screenshot\" rel=\"".$product->imageURL."\">";
-			echo $product->name;
-		echo "</a></td><td>";
-			echo $product->price;
-		echo "</td><td>";
-			echo $product->currency;
-		echo "</td></tr>";
+				echo $product->productID;
+				echo "</td><td><a href=\"#thumb\" class=\"screenshot\" rel=\"".$product->imageURL."\">";
+				echo $product->name;
+				echo "</a></td><td>";
+				echo $product->price;
+				echo "</td><td>";
+				echo $product->currency;
 
+				//$extrafield = str_replace(",", "</b></td><td width=\"1000px\"><b>", "$product->extrafield");
+				//$extravalue = str_replace(",", "</td><td>", "$product->extravalue");
+				$extrafield = explode(",",$product->extrafield);
+				$extravalue = explode(",",$product->extravalue);
+				$extras = array_combine($extrafield, $extravalue);
+				$extraname = "";
+				$extravar = "";
+				foreach ($extras as $key => $value) {
+					$Tradetracker_extra_val = get_option("Tradetracker_extra");
+					if(!empty($Tradetracker_extra_val)){
+						if(in_array($key, $Tradetracker_extra_val, true)) {
+							$extraname .= "<td width=\"50\"><b>".$key."</b></td>";
+							$extravar .= "<td>".$value."</td>";
+						}
+					}
+				}
+				if($extraname != ""){
+					echo "</td><td><span class=\"link\"><a href=\"javascript: void(0)\">Yes<span><table><tr>".$extraname."</tr><tr>".$extravar."</tr></table> </span></a></span></td></tr>";
+				} else {
+					echo "</td><td>No</td></tr>";
+				}
+				unset($extras);
+				if ($colors == "1"){
+					$colors++;
+				} else {
+					$colors--;
+				}
 
-}
+			}
 		if(!empty($array2)){
 			$array1 = $productID;
 			$array2 = explode(",", $array2);
@@ -280,6 +327,7 @@ $visits=$wpdb->get_results("SELECT * FROM ".$table." ORDER BY ".$order." ASC LIM
 			$result = implode(",", $result);
 		}
 			echo "<input type=\"hidden\" name=\"itemsother\" value=\"".$result."\" />";
+	echo "<tr><td colspan=\"5\">Select <a href=\"javascript:selectToggle(true, 'form2');\">All</a> | <a href=\"javascript:selectToggle(false, 'form2');\">None</a></td></tr>";
 	echo "</table>";
 	echo "<p class=\"submit\">";
 	?>
