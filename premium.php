@@ -136,7 +136,7 @@ function premium_ttstore() {
 		</p>
 
 	</form>
-	 If you have other ideas i could add as premium content you will receive 10% of the income from that idea.
+	 If you have other ideas i could add as premium content you will receive 10% of the income from that idea. You even get 50% if you scripted the addon yourself.
 
 
 
