@@ -1,5 +1,6 @@
 <?php
 $providers = get_option('Tradetracker_premiumapi');
+if($providers != "") {
 foreach ($providers as $key => $value){
 	$update = get_option('Tradetracker_premiumaccepted');
 	if($update[$key]== "1") {
@@ -9,6 +10,7 @@ foreach ($providers as $key => $value){
 		}
 	}
 
+}
 }
 function premiumcheck() {
 	if(function_exists('curl_init')) {
@@ -136,7 +138,7 @@ function premium_ttstore() {
 		</p>
 
 	</form>
-	 If you have other ideas i could add as premium content you will receive 10% of the income from that idea. You even get 50% if you scripted the addon yourself.
+	 If you have other ideas i could add as premium content you will receive 10% of the income from that idea.
 
 
 
@@ -163,11 +165,7 @@ function premium_updater(){
 		if( $content == '0' ) {
 		//Do something. For our example, kill the script.
 			$search_array = get_option('Tradetracker_premiumaccepted');
-			if (array_key_exists($key, $search_array)) {
-				$search_array[$key] = '0'; 
-			} else {
-				array_push($search_array[$key] = '0'); 
-			}
+			$search_array[$key] = '0'; 
 			update_option('Tradetracker_premiumaccepted', $search_array );
 			$search_array = get_option('Tradetracker_premiumupdate');
 			if (array_key_exists($key, $search_array)) {
@@ -180,17 +178,13 @@ function premium_updater(){
 			if (file_exists($filename)) {
 				if($update[$key]!=$content) {
 					$search_array = get_option('Tradetracker_premiumaccepted');
-					if (array_key_exists($key, $search_array)) {
-						$search_array[$key] = '1'; 
-					} else {
-						array_push($search_array[$key] = '1'); 
-					}
+					$search_array[$key] = '1'; 
 					update_option('Tradetracker_premiumaccepted', $search_array );
 					$search_array = get_option('Tradetracker_premiumupdate');
 					if (array_key_exists($key, $search_array)) {
 						$search_array[$key] = $content; 
 					} else {
-						array_push($search_array[$key] = $content); 
+						$search_array[$key] = $content; 
 					}
 					update_option('Tradetracker_premiumupdate', $search_array );
 					$dir = WP_PLUGIN_DIR . "/tradetracker-store";
@@ -207,17 +201,13 @@ function premium_updater(){
 				}
 			} else {
 				$search_array = get_option('Tradetracker_premiumaccepted');
-				if (array_key_exists($key, $search_array)) {
-					$search_array[$key] = '1'; 
-				} else {
-					array_push($search_array[$key] = '1'); 
-				}
+				$search_array[$key] = '1'; 
 				update_option('Tradetracker_premiumaccepted', $search_array );
 				$search_array = get_option('Tradetracker_premiumupdate');
 				if (array_key_exists($key, $search_array)) {
 					$search_array[$key] = $content; 
 				} else {
-					array_push($search_array[$key] = $content); 
+					array_push($search_array[$key], $content); 
 				}
 				update_option('Tradetracker_premiumupdate', $search_array );
 				$dir = WP_PLUGIN_DIR . "/tradetracker-store";
