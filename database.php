@@ -50,26 +50,26 @@ function fill_database1()
 	foreach(glob($folder."/*xml") as $filename) {
 		$string = file_get_contents($filename, FILE_TEXT);
 		$products = simplexml_load_string($string);
-		foreach($products as $product) // loop through our items
-		{
-			$counterxml = "1";
-			$extrafield = "";
-			$extravalue = "";
-			$currentpage["productID"]=$product->xmlfile."-".$product->productID;
-			$currentpage["xmlfeed"]=$product->xmlfile;		
-			$currentpage["name"]=$product->name;
-			$currentpage["imageURL"]=$product->imageURL;
-			$currentpage["productURL"]=$product->productURL;
-			$currentpage["description"]=strip_tags($product->description);
-			$currentpage["price"]=$product->price;
-			$currentpage["currency"]=$product->price['currency'];
-			parse_recursive($product);
-			$currentpage["extrafield"]=$extrafield;
-			$currentpage["extravalue"]=$extravalue;
-			$wpdb->insert( $table, $currentpage);//insert the captured values
-			$extrafieldarray .= ",".$extrafield;
-			$itemsadded++;
-		}
+			foreach($products as $product) // loop through our items
+			{
+				$counterxml = "1";
+				$extrafield = "";
+				$extravalue = "";
+				$currentpage["productID"]=$product->xmlfile."-".$product->productID;
+				$currentpage["xmlfeed"]=$product->xmlfile;		
+				$currentpage["name"]=$product->name;
+				$currentpage["imageURL"]=$product->imageURL;
+				$currentpage["productURL"]=$product->productURL;
+				$currentpage["description"]=strip_tags($product->description);
+				$currentpage["price"]=$product->price;
+				$currentpage["currency"]=$product->price['currency'];
+				parse_recursive($product);
+				$currentpage["extrafield"]=$extrafield;
+				$currentpage["extravalue"]=$extravalue;
+				$wpdb->insert( $table, $currentpage);//insert the captured values
+				$extrafieldarray .= ",".$extrafield;
+				$itemsadded++;
+			}
 	}
 	$extrafieldarray = array_unique(explode(",",$extrafieldarray));
 	$remove_null_number = true;

@@ -55,11 +55,8 @@ function xml_updater() {
 	foreach($file as $key => $value) {
 		$recordnum = "0";
 		$processed = "0";
-		// echo "<p>Creating small xml files from $filename<br>";
-		$chunk = new $value();
 		$filenum++;
-		$chunk -> doChunk($xmlfeedID, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag',2000/*limit*/, "".WP_PLUGIN_DIR . "/tradetracker-store" /*directory must contain folder named "splits"*/);
-		// echo $processed." items processed)<br>";
+		$value($xmlfeedID, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
 		$xmlfeedID++;
 	}
 	// echo "<p>".$filenum." files created";

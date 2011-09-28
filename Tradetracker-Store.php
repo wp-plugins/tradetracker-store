@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.0.1
+Version: 3.0.2
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -58,6 +58,7 @@ add_action( 'xmlscheduler', 'runxmlupdater' );
 function runxmlupdater() {
 	xml_updater();
 	premium_updater();
+	news_updater();
 }
 $store = PRO_TABLE_PREFIX."store";
 $multi = PRO_TABLE_PREFIX."multi";
@@ -225,7 +226,29 @@ echo "<li><b><a href=\"".$newsmsg->item->link."\">".$newsmsg->item->title."</a><
 
 <?php
 }
+function news_updater(){
+			$site_file = 'http://wpaffiliatefeed.com/tradetracker-store/sites.xml';
+			if (function_exists('curl_init')) {
+				$ch = curl_init($site_file);
+				$fp = fopen($dir."/cache/sites.xml", "w");
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_exec($ch);
+				curl_close($ch);
+				fclose($fp);
+			}
+			$news_file = 'http://wpaffiliatefeed.com/feed/';
+			if (function_exists('curl_init')) {
+				$ch = curl_init($news_file);
+				$fp = fopen($dir."/cache/news.xml", "w");
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_exec($ch);
+				curl_close($ch);
+				fclose($fp);
+			}
 
+}
 function tradetracker_store_install()
 {
     global $wpdb;
