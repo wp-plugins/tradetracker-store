@@ -76,7 +76,7 @@ function my_plugin_menu() {
 		add_action( "admin_print_scripts-$tabs9", 'tabs_admin_head' );
 		add_action( "admin_print_scripts-$tabs10", 'tabs_admin_head' );
 		if(function_exists('curl_init')) {
-			$tabs11 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Premium', 'Tt Store premium', 'manage_options', 'tradetracker-shop-premium', 'premium_ttstore');
+			$tabs11 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Premium', 'Tt Store Premium', 'manage_options', 'tradetracker-shop-premium', 'premium_ttstore');
 			add_action( "admin_print_scripts-$tabs11", 'tabs_admin_head' );
 		}
 
