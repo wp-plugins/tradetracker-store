@@ -7,6 +7,8 @@ foreach ($providers as $key => $value){
 		$filename = WP_PLUGIN_DIR.'/tradetracker-store/cache/'.$value.'.php';
 		if (file_exists($filename)) {
 			include($filename);
+		} else {
+			premium_updater();
 		}
 	}
 

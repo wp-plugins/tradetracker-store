@@ -228,12 +228,14 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 		$xmlfeed=$wpdb->get_results("SELECT xmlfeed, producturl FROM ".$tablexml." group by xmlfeed");
 		$i="0";
 		foreach ($xmlfeed as $xmlfeed_val){
-			$xmlfeed = get_option("Tradetracker_xmlname");
+			$xmlfeed1 = get_option("Tradetracker_xmlname");
 			$keys = $xmlfeed_val->xmlfeed;
-			if($xmlfeed_val->xmlfeed == $Tradetracker_multixmlfeed_val) {
-				echo "<option selected=\"selected\" value=\"".$xmlfeed_val->xmlfeed."\">".$xmlfeed[$i]."</option>";
-			} else {
-				echo "<option value=\"".$xmlfeed_val->xmlfeed."\">".$xmlfeed[$i]."</option>";
+			if(!empty($xmlfeed1[$xmlfeed_val->xmlfeed])){
+				if($xmlfeed_val->xmlfeed == $db_multixmlfeed_val) {
+					echo "<option selected=\"selected\" value=\"".$xmlfeed_val->xmlfeed."\">".$xmlfeed1[$xmlfeed_val->xmlfeed]."</option>";
+				} else {
+					echo "<option value=\"".$xmlfeed_val->xmlfeed."\">".$xmlfeed1[$xmlfeed_val->xmlfeed]."</option>";
+				}
 			}
 			$i++;
 		}

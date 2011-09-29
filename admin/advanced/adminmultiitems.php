@@ -283,8 +283,13 @@ $visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ORDER BY 
 				} else {
 					echo "<input type=\"checkbox\" name=\"item[]\" value=".$product->productID." />";
 				}
+				if($product->imageURL==""){
+					$imageURL = WP_PLUGIN_URL."/tradetracker-store/images/No_image.png";
+				} else {
+					$imageURL = $product->imageURL;
+				}
 				echo $product->productID;
-				echo "</td><td><a href=\"#thumb\" class=\"screenshot\" rel=\"".$product->imageURL."\">";
+				echo "</td><td><a href=\"#thumb\" class=\"screenshot\" rel=\"".$imageURL."\">";
 				echo $product->name;
 				echo "</a></td><td>";
 				echo $product->price;

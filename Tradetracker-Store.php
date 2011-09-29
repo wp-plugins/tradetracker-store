@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.0.3
+Version: 3.0.4
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -531,6 +531,11 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 		}else {
 			$price = $currency." ".$product->price;
 		}
+		if($product->imageURL==""){
+			$imageURL = WP_PLUGIN_URL."/tradetracker-store/images/No_image.png";
+		} else {
+			$imageURL = $product->imageURL;
+		}
 
 		$storeitems .= "
 			<div class=\"".$storename."store-outerbox\">
@@ -539,7 +544,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 				</div>			
 				<div class=\"".$storename."store-image\">
 					<a href=\"".$image."\" ".$rel." ".$target.">
-						<img src=\"".$product->imageURL."\" alt=\"".$productname."\" title=\"".$productnamee."\" style=\"max-width:".$width."px;max-height:180px;\" />
+						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productnamee."\" style=\"max-width:".$width."px;max-height:180px;\" />
 					</a>
 				</div>
 				<div class=\"".$storename."store-footer\">
