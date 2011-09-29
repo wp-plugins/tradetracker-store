@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements, daisycon, zanox, cleafs
 Requires at least: 2.0.1
 Tested up to: 3.2.1
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -44,7 +44,7 @@ Yes you can find it at http://wpaffiliatefeed.com
 3. Here you select which products you want to show on your site
 
 == Changelog ==
-= 3.0.2 = 
+= 3.0.3 = 
 Cache file did not work
 
 = 3.0.1 = 
@@ -54,7 +54,7 @@ Small bug in the premium section fixed.
 Full changelog on http://wpaffiliatefeed.com/category/releaselog/
 
 == Upgrade Notice ==
-= 3.0.2 = 
+= 3.0.3 = 
 Upgrade is needed to make cache file work
 
 = 3.0.1 =

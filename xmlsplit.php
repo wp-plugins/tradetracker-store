@@ -25,7 +25,7 @@
 		}
 		if ($handle) {
 			while (!feof($handle)) {
-			$buffer = stream_get_line($handle, 4096, "</product>"); 
+			$buffer = stream_get_line($handle, 8192, "</product>"); 
 				$recordnum++;
 				$processed++;
 				fwrite($exportfile, $buffer);
