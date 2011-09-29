@@ -56,8 +56,8 @@ ttstoreerrordetect();
 add_action( 'xmlscheduler', 'runxmlupdater' ); 
 
 function runxmlupdater() {
-	xml_updater();
 	premium_updater();
+	xml_updater();
 	news_updater();
 }
 $store = PRO_TABLE_PREFIX."store";
