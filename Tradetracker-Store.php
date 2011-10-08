@@ -412,7 +412,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 	} else {
 		$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
 		foreach ($multi as $multi_val){
-			$categories = unserialize($multi_val->categories);
+
 
 			$Tradetracker_amount = $multi_val->multiamount;
 			if($multi_val->multixmlfeed == "*" ){
@@ -421,20 +421,24 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 				$multixmlfeed = "where xmlfeed = ".$multi_val->multixmlfeed." ";
 			}
 			$i="1";
-			foreach ($categories as $categories){
-				if($i == "1" ) {
-					if($multixmlfeed == ""){
-						$categorieselect = " where (categorie = \"".$categories."\"";
-					}else {
-						$categorieselect = " and (categorie = \"".$categories."\"";
+			$categories = unserialize($layout_val->categories);
+			if(!empty($categories)){
+				foreach ($categories as $categories){
+					if($i == "1" ) {
+						if($multixmlfeed == ""){
+							$categorieselect = " where (categorie = \"".$categories."\"";
+						}else {
+							$categorieselect = " and (categorie = \"".$categories."\"";
+						}
+					$i = "2";
+					} else {
+							$categorieselect .= " or categorie = \"".$categories."\"";
 					}
-				$i = "2";
-				} else {
-						$categorieselect .= " or categorie = \"".$categories."\"";
 				}
+				$categorieselect .= ") ";
+			} else {
+				$categorieselect = "";
 			}
-			$categorieselect .= ") ";
-
 			if( $multi_val->buynow == "" ){
 				$buynow= "Buy Item";
 			} else {

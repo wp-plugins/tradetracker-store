@@ -91,9 +91,6 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 	$multiid = $_GET['multiid'];
 		$layoutedit=$wpdb->get_results("SELECT id, multixmlfeed, multiitems, multiname, categories FROM ".$tablemulti." where id=".$multiid."");
 		foreach ($layoutedit as $layout_val){
-			$categories = unserialize($layout_val->categories);
-
-			echo $categorieselect;
 			$multiitems = $layout_val->multiitems;
 			$multiname = $layout_val->multiname;
 			if($layout_val->multixmlfeed == "*" ){
@@ -104,19 +101,25 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 				$multixmlfeed = "where xmlfeed = ".$layout_val->multixmlfeed." ";
 			}
 			$i="1";
-			foreach ($categories as $categories){
-				if($i == "1" ) {
-					if($multixmlfeed == ""){
-						$categorieselect = " where (categorie = \"".$categories."\"";
-					}else {
-						$categorieselect = " and (categorie = \"".$categories."\"";
+			$categories = unserialize($layout_val->categories);
+			if(!empty($categories)){
+				foreach ($categories as $categories){
+					if($i == "1" ) {
+						if($multixmlfeed == ""){
+							$categorieselect = " where (categorie = \"".$categories."\"";
+						}else {
+							$categorieselect = " and (categorie = \"".$categories."\"";
+						}
+					$i = "2";
+					} else {
+							$categorieselect .= " or categorie = \"".$categories."\"";
 					}
-				$i = "2";
-				} else {
-						$categorieselect .= " or categorie = \"".$categories."\"";
 				}
+				$categorieselect .= ") ";
+			} else {
+				$categorieselect = "";
 			}
-			$categorieselect .= ") ";
+
 		}
     	if( isset($_POST['posted']) && $_POST['posted'] == 'Y' ) 
 	{
