@@ -89,8 +89,11 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 <?php
 	} else {
 	$multiid = $_GET['multiid'];
-		$layoutedit=$wpdb->get_results("SELECT id, multixmlfeed, multiitems, multiname FROM ".$tablemulti." where id=".$multiid."");
+		$layoutedit=$wpdb->get_results("SELECT id, multixmlfeed, multiitems, multiname, categories FROM ".$tablemulti." where id=".$multiid."");
 		foreach ($layoutedit as $layout_val){
+			$categories = unserialize($layout_val->categories);
+
+			echo $categorieselect;
 			$multiitems = $layout_val->multiitems;
 			$multiname = $layout_val->multiname;
 			if($layout_val->multixmlfeed == "*" ){
@@ -100,6 +103,20 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 			} else {
 				$multixmlfeed = "where xmlfeed = ".$layout_val->multixmlfeed." ";
 			}
+			$i="1";
+			foreach ($categories as $categories){
+				if($i == "1" ) {
+					if($multixmlfeed == ""){
+						$categorieselect = " where (categorie = \"".$categories."\"";
+					}else {
+						$categorieselect = " and (categorie = \"".$categories."\"";
+					}
+				$i = "2";
+				} else {
+						$categorieselect .= " or categorie = \"".$categories."\"";
+				}
+			}
+			$categorieselect .= ") ";
 		}
     	if( isset($_POST['posted']) && $_POST['posted'] == 'Y' ) 
 	{
@@ -134,7 +151,7 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 		$currentpage = 0;
 	}
 	$table = PRO_TABLE_PREFIX."store";
-	$countquery=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed."");
+	$countquery=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect."");
 	$numrows = $wpdb->num_rows;
 	$pages = intval($numrows/$limit); // Number of results pages.
 	if ($numrows%$limit) 
@@ -249,7 +266,7 @@ function selectToggle(toggle, form) {
  	</tr>
 </table>
 <?php
-$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
 	echo "<table width=\"700\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
 		echo "<tr><td width=\"100\">";
 			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=productID\">ProductID</a></b>";

@@ -234,7 +234,7 @@ $layoutid = "";
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_width_field_name; ?>" value="<?php echo $Tradetracker_width_val; ?>" size="7">
+			<input type="text" name="<?php echo $Tradetracker_width_field_name; ?>" value="<?php echo $Tradetracker_width_val; ?>" size="20">
 		</td>
 	</tr>
 
@@ -245,7 +245,7 @@ $layoutid = "";
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_font_field_name; ?>" value="<?php echo $Tradetracker_font_val; ?>" size="7">
+			<input type="text" name="<?php echo $Tradetracker_font_field_name; ?>" value="<?php echo $Tradetracker_font_val; ?>" size="20">
 			<a href="http://www.fonttester.com/help/list_of_web_safe_fonts.html" target="_blank">WebSafe Fonts</a>
 		</td>
 	</tr>
@@ -257,7 +257,7 @@ $layoutid = "";
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_colortitle_field_name; ?>" value="<?php echo $Tradetracker_colortitle_val; ?>" size="7"> 
+			<input type="text" name="<?php echo $Tradetracker_colortitle_field_name; ?>" value="<?php echo $Tradetracker_colortitle_val; ?>" size="20"> 
 			<a href="http://www.2createawebsite.com/build/hex-colors.html#colorgenerator" target="_blank">Color Picker</a> (use the hex code including #. for instance: #000000)
 		</td>
 	</tr>
@@ -269,7 +269,7 @@ $layoutid = "";
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_colorimagebg_field_name; ?>" value="<?php echo $Tradetracker_colorimagebg_val; ?>" size="7">
+			<input type="text" name="<?php echo $Tradetracker_colorimagebg_field_name; ?>" value="<?php echo $Tradetracker_colorimagebg_val; ?>" size="20">
 		</td>
 	</tr>
 
@@ -280,7 +280,7 @@ $layoutid = "";
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_colorfooter_field_name; ?>" value="<?php echo $Tradetracker_colorfooter_val; ?>" size="7">
+			<input type="text" name="<?php echo $Tradetracker_colorfooter_field_name; ?>" value="<?php echo $Tradetracker_colorfooter_val; ?>" size="20">
 		</td>
 	</tr>
 
@@ -291,7 +291,7 @@ $layoutid = "";
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_colorfont_field_name; ?>" value="<?php echo $Tradetracker_colorfont_val; ?>" size="7">
+			<input type="text" name="<?php echo $Tradetracker_colorfont_field_name; ?>" value="<?php echo $Tradetracker_colorfont_val; ?>" size="20">
 		</td>
 	</tr>
 </table>

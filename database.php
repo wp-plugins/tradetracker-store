@@ -44,7 +44,8 @@ function fill_database1()
 	$itemsadded="0";
 	$folder =  WP_PLUGIN_DIR . "/tradetracker-store/splits";
 	$table = PRO_TABLE_PREFIX."store";
-	$emptytable = "DELETE FROM $table;;";
+	//$emptytable = "DELETE FROM $table;;";
+	$emptytable = "TRUNCATE TABLE `$table`";
 	$wpdb->query($emptytable);
 	// echo "<p>Deleted ".$wpdb->rows_affected." items in database";
 	foreach(glob($folder."/*xml") as $filename) {
@@ -58,6 +59,12 @@ function fill_database1()
 				$currentpage["productID"]=$product->xmlfile."-".$product->productID;
 				$currentpage["xmlfeed"]=$product->xmlfile;		
 				$currentpage["name"]=$product->name;
+				$currentpage["imageURL"]=$product->imageURL;
+				if($product->categories->category==""){
+					$currentpage["categorie"]="empty category";
+				} else {
+					$currentpage["categorie"]=$product->categories->category;
+				}				
 				$currentpage["imageURL"]=$product->imageURL;
 				$currentpage["productURL"]=$product->productURL;
 				$currentpage["description"]=strip_tags($product->description);

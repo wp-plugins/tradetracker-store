@@ -76,7 +76,7 @@ ttstoreheader();
    <h2 class="tabset_label">Stats</h2>
 <form name="form1" method="post" action="">
 	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
-	<table>
+	<table width="700">
 		<tr>
 			<td>
 				<label for="tradetrackercustomerid" title="Fill in your customer ID. You will need to enable webservices in Tradetracker" class="info">
@@ -84,7 +84,7 @@ ttstoreheader();
 				</label>
 			</td>
 			<td>
-				<input type="text" name="<?php echo $Tradetracker_customerid_field_name; ?>" value="<?php echo $Tradetracker_customerid_val; ?>" size="5"> 
+				<input type="text" name="<?php echo $Tradetracker_customerid_field_name; ?>" value="<?php echo $Tradetracker_customerid_val; ?>" size="33"> 
 				<a href="https://affiliate.tradetracker.com/webService" target="_blank">Get Customer ID</a>
 			</td>
 		</tr>
@@ -95,7 +95,7 @@ ttstoreheader();
 				</label>
 			</td>
 			<td>
-				<input type="text" name="<?php echo $Tradetracker_access_code_field_name; ?>" value="<?php echo $Tradetracker_access_code_val; ?>" size="50">
+				<input type="text" name="<?php echo $Tradetracker_access_code_field_name; ?>" value="<?php echo $Tradetracker_access_code_val; ?>" size="33">
 			</td>
 		</tr>
 		<tr>
@@ -105,7 +105,7 @@ ttstoreheader();
 				</label>
 			</td>
 			<td>
-				<input type="text" name="<?php echo $Tradetracker_siteid_field_name; ?>" value="<?php echo $Tradetracker_siteid_val; ?>" size="5"> 
+				<input type="text" name="<?php echo $Tradetracker_siteid_field_name; ?>" value="<?php echo $Tradetracker_siteid_val; ?>" size="33"> 
 				<a href="https://affiliate.tradetracker.com/customerSite/list" target="_blank">Get Site ID</a>
 			</td>
 		</tr>

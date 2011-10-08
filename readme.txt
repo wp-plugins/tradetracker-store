@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements, daisycon, zanox, cleafs
 Requires at least: 2.0.1
 Tested up to: 3.2.1
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -44,14 +44,16 @@ Yes you can find it at http://wpaffiliatefeed.com
 3. Here you select which products you want to show on your site
 
 == Changelog ==
-= 3.0.4 = 
-Added standard picture when feed did not deliver picture
-Fixed xmlfeed selection in store tab
+= 3.0.5 = 
+- Aligned all text input lengths
+- XML Feed selection is saved
+- Small error in Store creation has been solved. This caused the creation of duplicate stores 
+- You can select categories from items now on the Store tab. It will only show the items from that category on your item selection screen. If you don’t select any item on the item selection screen the plugin will choose random items from that category.
 
 
 = previous version =
 Full changelog on http://wpaffiliatefeed.com/category/releaselog/
 
 == Upgrade Notice ==
-= 3.0.4 = 
-Only a minor update to fix small issues
+= 3.0.5 = 
+You can now choose the category you would like to use.

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.0.4
+Version: 3.0.5
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -62,6 +62,14 @@ function runxmlupdater() {
 }
 $store = PRO_TABLE_PREFIX."store";
 $multi = PRO_TABLE_PREFIX."multi";
+
+if (get_option("TTstoreversion") == "3.0.0"){
+	$result=$wpdb->query("ALTER TABLE `".$store."` ADD `categorie` longtext NOT NULL");
+	$result=$wpdb->query("ALTER TABLE `".$multi."` ADD `categories` longtext NOT NULL");
+	update_option("TTstoreversion", "3.0.5" );
+	xml_updater();	
+}
+
 if (get_option("TTstoreversion") < "3.0.0"){
 	$result=$wpdb->query("ALTER TABLE `".$store."` ADD `extrafield` TEXT NOT NULL");
 	$result=$wpdb->query("ALTER TABLE `".$store."` ADD `extravalue` TEXT NOT NULL");
@@ -265,13 +273,14 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 	price DECIMAL(10,2) NOT NULL,
 	currency VARCHAR(10) NOT NULL,
 	xmlfeed VARCHAR(10) NOT NULL,
+	categorie longtext NOT NULL,
 	description text,
 	extrafield text,
 	extravalue text,
 	UNIQUE KEY id (id)
     );";
     $wpdb->query($structure)  or die(mysql_error());
-	update_option("TTstoreversion", "3.0.0" );
+	update_option("TTstoreversion", "3.0.5" );
 	update_option("Tradetracker_width", "250" );
 	update_option("Tradetracker_colortitle", "#ececed" );
 	update_option("Tradetracker_colorfooter", "#ececed" );
@@ -401,14 +410,30 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 			$storename = "basic";
 
 	} else {
-		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
+		$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
 		foreach ($multi as $multi_val){
+			$categories = unserialize($multi_val->categories);
+
 			$Tradetracker_amount = $multi_val->multiamount;
 			if($multi_val->multixmlfeed == "*" ){
 				$multixmlfeed = "";
 			} else {
 				$multixmlfeed = "where xmlfeed = ".$multi_val->multixmlfeed." ";
 			}
+			$i="1";
+			foreach ($categories as $categories){
+				if($i == "1" ) {
+					if($multixmlfeed == ""){
+						$categorieselect = " where (categorie = \"".$categories."\"";
+					}else {
+						$categorieselect = " and (categorie = \"".$categories."\"";
+					}
+				$i = "2";
+				} else {
+						$categorieselect .= " or categorie = \"".$categories."\"";
+				}
+			}
+			$categorieselect .= ") ";
 
 			if( $multi_val->buynow == "" ){
 				$buynow= "Buy Item";
@@ -472,7 +497,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 
 	if ($Tradetracker_productid == null) 
 	{
-		$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ORDER BY RAND() $Tradetracker_amount_i");
+		$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect." ORDER BY RAND() $Tradetracker_amount_i");
 	} else {
 		$productID = $Tradetracker_productid;
 		$productID = str_replace(",", "' or productID='", $productID);

@@ -15,6 +15,7 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
         multiamount int(3) NOT NULL,
 	multilightbox VARCHAR(1) NOT NULL,
 	multixmlfeed VARCHAR(10) NOT NULL,
+	categories longtext NOT NULL,
 	buynow TEXT NOT NULL,
 	UNIQUE KEY id (id)
     );";
@@ -36,7 +37,7 @@ $multiid  ="";
 		if(!empty($_POST['multiid'])){
 			$multiid = $_POST['multiid'];
 		} 
-		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiname, multilayout, multiitems, multiamount, multilightbox FROM ".$tablemulti." where id=".$multiid."");
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiname, multilayout, multiitems, multiamount, multilightbox, categories FROM ".$tablemulti." where id=".$multiid."");
 		foreach ($multi as $multi_val){
 			$Tradetracker_buynow_val = $multi_val->buynow;
 			$db_buynow_val = $multi_val->buynow;
@@ -52,6 +53,8 @@ $multiid  ="";
 			$db_multiamount_val = $multi_val->multiamount;
 			$Tradetracker_multilightbox_val = $multi_val->multilightbox;
 			$db_multilightbox_val = $multi_val->multilightbox;
+			$Tradetracker_categories_val = $multi_val->categories;
+			$db_categories_val = $multi_val->categories;
 		}
 
 	}
@@ -76,6 +79,9 @@ $multiid  ="";
 	$Tradetracker_multixmlfeed_name = 'Tradetracker_multixmlfeed';
 	$Tradetracker_multixmlfeed_field_name = 'Tradetracker_multixmlfeed';
 
+	$Tradetracker_categories_name = 'Tradetracker_categories';
+	$Tradetracker_categories_field_name = 'Tradetracker_categories';
+
 
 	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
         // Read their posted value
@@ -86,6 +92,7 @@ $multiid  ="";
 		$Tradetracker_multiamount_val = $_POST[ $Tradetracker_multiamount_field_name ];
 		$Tradetracker_multiitems_val = $_POST[ $Tradetracker_multiitems_field_name ];
 		$Tradetracker_multilightbox_val = $_POST[ $Tradetracker_multilightbox_field_name ];
+		$Tradetracker_categories_val = serialize($_POST[ $Tradetracker_categories_field_name ]);
 		$Tradetracker_multiid_val = $_GET['multiid'];
 
         // Save the posted value in the database
@@ -111,7 +118,10 @@ $multiid  ="";
  		if ( $db_multilightbox_val  != $Tradetracker_multilightbox_val) {
 			$query = $wpdb->update( $tablemulti, array( 'multilightbox' => $Tradetracker_multilightbox_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
  		}
-		$Tradetracker_multiid_val = $_POST['multiid'];
+ 		if ( $db_categories_val  != $Tradetracker_categories_val) {
+			$query = $wpdb->update( $tablemulti, array( 'categories' =>  $Tradetracker_categories_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
+ 		}
+		$multiid = $_POST['multiid'];
 		} else {
         		$currentpage["buynow"]=$Tradetracker_buynow_val;
         		$currentpage["multiname"]=$Tradetracker_multiname_val;
@@ -120,8 +130,9 @@ $multiid  ="";
         		$currentpage["multiitems"]=$Tradetracker_multiitems_val;
         		$currentpage["multilightbox"]=$Tradetracker_multilightbox_val;
         		$currentpage["multixmlfeed"]=$Tradetracker_multixmlfeed_val;
+        		$currentpage["categories"]=$Tradetracker_categories_val;
 			$wpdb->insert( $tablemulti, $currentpage);
-			$Tradetracker_multiid_val = $wpdb->insert_id;
+			$multiid = $wpdb->insert_id;
 		}
         // Put an settings updated message on the screen
 ?>
@@ -172,7 +183,7 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 <?php if(!empty($multiid)){ ?>
 <input type="hidden" name="multiid" value="<?php echo $multiid; ?>">
 <?php } ?>
-<table>
+<table width="700">
 	<tr>
 		<td>
 			<label for="tradetrackername" title="Fill in the name for the store." class="info">
@@ -180,7 +191,7 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_multiname_field_name; ?>" value="<?php echo $Tradetracker_multiname_val; ?>" size="20"> This cannot start with a number
+			<input type="text" name="<?php echo $Tradetracker_multiname_field_name; ?>" value="<?php echo $Tradetracker_multiname_val; ?>" size="33"> This cannot start with a number
 		</td>
 	</tr>
 	<tr>
@@ -190,7 +201,7 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</label> 
 		</td>
 		<td>
-			<select name="<?php echo $Tradetracker_multilayout_field_name; ?>">
+			<select width="200" style="width: 200px" name="<?php echo $Tradetracker_multilayout_field_name; ?>">
 <?php
 
 		$tablelayout = PRO_TABLE_PREFIX."layout";
@@ -217,13 +228,14 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</label> 
 		</td>
 		<td>
-			<select name="<?php echo $Tradetracker_multixmlfeed_field_name; ?>">
+			<select width="200" style="width: 200px" name="<?php echo $Tradetracker_multixmlfeed_field_name; ?>" onchange="toggleOther();">
 <?php
 		if($db_multixmlfeed_val == "" ){
 			echo "<option selected=\"selected\" value=\"*\">All feeds</option>";
 		} else {
 			echo "<option value=\"*\">All feeds</option>";
 		}
+
 		$tablexml = PRO_TABLE_PREFIX."store";
 		$xmlfeed=$wpdb->get_results("SELECT xmlfeed, producturl FROM ".$tablexml." group by xmlfeed");
 		$i="0";
@@ -231,7 +243,7 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			$xmlfeed1 = get_option("Tradetracker_xmlname");
 			$keys = $xmlfeed_val->xmlfeed;
 			if(!empty($xmlfeed1[$xmlfeed_val->xmlfeed])){
-				if($xmlfeed_val->xmlfeed == $db_multixmlfeed_val) {
+				if($xmlfeed_val->xmlfeed == $Tradetracker_multixmlfeed_val) {
 					echo "<option selected=\"selected\" value=\"".$xmlfeed_val->xmlfeed."\">".$xmlfeed1[$xmlfeed_val->xmlfeed]."</option>";
 				} else {
 					echo "<option value=\"".$xmlfeed_val->xmlfeed."\">".$xmlfeed1[$xmlfeed_val->xmlfeed]."</option>";
@@ -243,8 +255,65 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</select>		
 		</td>
 	</tr>
+<script>
+function toggleOther(){
+  document.getElementById('Save').style.visibility = 'visible';
+  document.getElementById('Option').style.display = 'none';
 
 
+}
+</script>
+
+	<tr>
+		<td valign="top">
+			<label for="tradetrackercategoriesfield" title="Which categories would you like to use?" class="info">
+				<?php _e("Which categories?:", 'tradetracker-categories' ); ?> 
+			</label>
+		</td>
+		<td>
+			<div id="Save" style="visibility:hidden">
+				You changed the XML Feed, You need to save first before you can select any category.
+			</div>
+			<div id="Option" style="visibility:visible">
+
+		<?php
+		if($Tradetracker_multixmlfeed_val == "*" ){
+			$multixmlfeed = "";
+		}elseif($Tradetracker_multixmlfeed_val == "" ){
+			$multixmlfeed = "";
+		} else {
+			$multixmlfeed = "where xmlfeed = ".$Tradetracker_multixmlfeed_val." ";
+		}
+			$store = PRO_TABLE_PREFIX."store";
+			$categorie = $wpdb->get_results('SELECT categorie FROM '.$store.' '.$multixmlfeed.' group by categorie ORDER BY `'.$store.'`.`categorie` ASC', OBJECT);
+			if(!empty($categorie)){
+				echo "<table width=\"400\">";
+				$i="1";
+				foreach($categorie as $categorieselect) {
+					echo "<tr><td>";
+					if(!empty($Tradetracker_categories_val)){
+						if(in_array($categorieselect->categorie, unserialize($Tradetracker_categories_val), true)) {
+							echo "<input type=\"checkbox\" checked=\"yes\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorie."\" />".$categorieselect->categorie."<br />";
+						} else {
+							echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorie."\" />".$categorieselect->categorie."<br />";
+						}
+					} else {
+						echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorie."\" />".$categorieselect->categorie."<br />";
+					}
+					echo "</td></tr>";
+				}
+				echo "</table>";
+			}
+		?>
+			</div>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+			<hr />
+		</td>
+	</tr>
 
 	<tr>
 		<td>
@@ -253,7 +322,7 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_buynow_field_name; ?>" value="<?php echo $Tradetracker_buynow_val; ?>" size="20"> 
+			<input type="text" name="<?php echo $Tradetracker_buynow_field_name; ?>" value="<?php echo $Tradetracker_buynow_val; ?>" size="33"> 
 		</td>
 	</tr>
 	<tr>
@@ -263,7 +332,7 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_multiamount_field_name; ?>" value="<?php if ($Tradetracker_multiamount_val=="") {echo "10"; } else {echo $Tradetracker_multiamount_val;} ?>" size="7">
+			<input type="text" name="<?php echo $Tradetracker_multiamount_field_name; ?>" value="<?php if ($Tradetracker_multiamount_val=="") {echo "10"; } else {echo $Tradetracker_multiamount_val;} ?>" size="33">
 		</td>
 	</tr>
 
@@ -274,7 +343,7 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</label> 
 		</td>
 		<td>
-			<input type="text" name="<?php echo $Tradetracker_multiitems_field_name; ?>" value="<?php echo $Tradetracker_multiitems_val; ?>" size="50"> 
+			<textarea rows="5" cols="60" name="<?php echo $Tradetracker_multiitems_field_name; ?>"><?php echo $Tradetracker_multiitems_val; ?></textarea> 
 		</td>
 	</tr>
 
