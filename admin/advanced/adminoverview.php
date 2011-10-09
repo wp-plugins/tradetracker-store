@@ -58,8 +58,13 @@ ttstoreheader();
 			<td>
 			<?php
 				$folder =  WP_PLUGIN_DIR . "/tradetracker-store/splits";
-				foreach(glob($folder."/*xml") as $filename) {
-					$xmlsize = format_bytes(filesize($filename))+$xmlsize;
+				$files = glob($folder."/*xml");
+				if(count($files) > 0)
+				{
+					foreach($files as $filename)
+    					{
+						$xmlsize = format_bytes(filesize($filename))+$xmlsize;
+					}
 				}
 				if ($xmlsize!="") {
 					echo round($xmlsize/1024, 2)." MB";

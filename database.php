@@ -63,7 +63,9 @@ function fill_database1()
 				if($product->categories->category==""){
 					$currentpage["categorie"]="empty category";
 				} else {
-					$currentpage["categorie"]=$product->categories->category;
+					$categories = $product->categories->category;
+					$categories = str_replace(array('(',')'), '', $categories);
+					$currentpage["categorie"]=$categories;
 				}				
 				$currentpage["imageURL"]=$product->imageURL;
 				$currentpage["productURL"]=$product->productURL;
