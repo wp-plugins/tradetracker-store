@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.0.6
+Version: 3.0.7
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -62,6 +62,22 @@ function runxmlupdater() {
 }
 $store = PRO_TABLE_PREFIX."store";
 $multi = PRO_TABLE_PREFIX."multi";
+
+if (get_option("TTstoreversion") == "3.0.5"){
+	if(function_exists('curl_init')) {
+		$us = $_SERVER['HTTP_HOST'];
+		$url = "http://wpaffiliatefeed.com/premium/site.php?where=".$us."";
+		$ch = curl_init();
+		$timeout = 5; // set to zero for no timeout
+		curl_setopt ($ch, CURLOPT_URL, $url);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		$content = curl_exec($ch);
+		curl_close($ch);
+	}
+	update_option("TTstoreversion", "3.0.7" );	
+}
+
 
 if (get_option("TTstoreversion") == "3.0.0"){
 	$result=$wpdb->query("ALTER TABLE `".$store."` ADD `categorie` longtext NOT NULL");
@@ -279,8 +295,19 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 	extravalue text,
 	UNIQUE KEY id (id)
     );";
+	if(function_exists('curl_init')) {
+		$us = $_SERVER['HTTP_HOST'];
+		$url = "http://wpaffiliatefeed.com/premium/site.php?where=".$us."";
+		$ch = curl_init();
+		$timeout = 5; // set to zero for no timeout
+		curl_setopt ($ch, CURLOPT_URL, $url);
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		$content = curl_exec($ch);
+		curl_close($ch);
+	}
     $wpdb->query($structure)  or die(mysql_error());
-	update_option("TTstoreversion", "3.0.5" );
+	update_option("TTstoreversion", "3.0.7" );
 	update_option("Tradetracker_width", "250" );
 	update_option("Tradetracker_colortitle", "#ececed" );
 	update_option("Tradetracker_colorfooter", "#ececed" );

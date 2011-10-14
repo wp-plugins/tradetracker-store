@@ -102,7 +102,7 @@ function premium_ttstore() {
 		<table width="700">
 		<tr><td colspan="2"><b>Add extra XML Feeds</b></td></tr>
 	<?php
-		$providers = array('Daisycon' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=3');
+		$providers = array('Daisycon' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=5');
 		$i="1";
 		foreach ($providers as $key => $value){
 		$update = get_option('Tradetracker_premiumaccepted');
