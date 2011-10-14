@@ -448,7 +448,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 				$multixmlfeed = "where xmlfeed = ".$multi_val->multixmlfeed." ";
 			}
 			$i="1";
-			$categories = unserialize($layout_val->categories);
+			$categories = unserialize($multi_val->categories);
 			if(!empty($categories)){
 				foreach ($categories as $categories){
 					if($i == "1" ) {
