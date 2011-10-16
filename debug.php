@@ -34,6 +34,16 @@ function debug_ttstore() {
 	} else {
 		echo "Simplexml installed: Yes<br>";
 	}
+	global $head_footer_errors;
+	if(!empty($head_footer_errors)){
+		echo '<p><strong>Your active theme:</strong>';
+		foreach ( $head_footer_errors as $error ) {
+			echo '<br>' . esc_html( $error ) . '<br>';
+		}
+	} else {
+		echo '<p><strong>Your active theme:</strong>';
+		echo "<br>Has the wp_head on the correct place";
+	}	
 }
 function ttstoreerrordetect() {
 	$tterror = "no";
@@ -65,5 +75,45 @@ function ttstoreerrordetect() {
 function ttstoreheader() {
 	echo "<div class=\"updated\"><p><strong>".get_option("Tradetracker_xml_update")."</strong></p></div>";
 	premiumcheck();
+}
+add_action( 'init', 'test_head_footer_init' );
+function test_head_footer_init() {
+	add_action( 'admin_init', 'check_head_footer' );
+	if ( isset( $_GET['test-head'] ) )
+		add_action( 'wp_head', 'test_head', 99999 ); // Some obscene priority, make sure we run last
+
+}
+ 
+function test_head() {
+	echo '<!--wp_head-->';
+}
+ 
+function check_head_footer() {
+	// Build the url to call, NOTE: uses home_url and thus requires WordPress 3.0
+	$url = add_query_arg( array( 'test-head' => ''), home_url() );
+	$response = wp_remote_get( $url, array( 'sslverify' => false ) );
+	$code = (int) wp_remote_retrieve_response_code( $response );
+	if ( $code == 200 ) {
+		global $head_footer_errors;
+		$head_footer_errors = array();
+ 
+		$html = preg_replace( '/[	
+s]/', '', wp_remote_retrieve_body( $response ) );
+ 
+		if ( ! strstr( $html, '<!--wp_head-->' ) )
+			$head_footer_errors['nohead'] = 'Is missing the call to <?php wp_head(); ?> which should appear directly before </head>. Please adjust the header.php in your theme folder and place <?php wp_head(); ?> just before </head>';
+		// Check to see if we found wp_head and if was located in the proper spot
+		if ( ! strstr( $html, '<!--wp_head--></head>' ) && ! isset( $head_footer_errors['nohead'] ) )
+			$head_footer_errors[] = 'Has the call to <?php wp_head(); ?> but it is not called directly before </head>. Please adjust the header.php in your theme folder and and move <?php wp_head(); ?> just before </head>';
+		// If we found errors with the existence of wp_head or wp_footer hook into admin_notices to complain about it
+		if ( ! empty( $head_footer_errors ) )
+			test_head_footer_notices();
+	}
+}
+ 
+
+function test_head_footer_notices() {
+		$warning = __('Error detected in TradeTracker Store plugin, please see <a href=\"admin.php?page=tradetracker-shop-debug\">debug page</a>','ttstore' );
+		add_action('admin_notices', create_function( '', "echo \"<div class='error'><p>$warning</p></div>\";" ) );
 }
 ?>

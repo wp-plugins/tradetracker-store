@@ -67,7 +67,7 @@ ttstoreheader();
 					}
 				}
 				if ($xmlsize!="") {
-					echo round($xmlsize, 2)." MB";
+					echo round($xmlsize/1024, 2)." MB";
 				} else { 
 					echo "Not calculated yet"; 
 				} 

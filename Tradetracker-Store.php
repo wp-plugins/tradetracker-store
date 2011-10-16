@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.0.7
+Version: 3.0.8
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -401,7 +401,86 @@ function fill_database()
 /* 
 ..--==[ Function to show the items. ]==--.. 
 */
+add_action('wp_head', 'header_css_style');
 
+function header_css_style() {
+	global $wpdb;
+	$tablelayout = PRO_TABLE_PREFIX."layout";
+	$tablemulti = PRO_TABLE_PREFIX."multi";
+	$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
+		foreach ($multi as $multi_val){
+			$i="1";
+			if( $multi_val->laywidth == "" ){
+				$width= "250";
+			} else {
+				$width= $multi_val->laywidth;
+			}
+			if( $multi_val->layfont == "" ){
+				$font= "Verdana";
+			} else {
+				$font= $multi_val->layfont;
+			}
+			$widthtitle = $width-6;
+			$widthmore = $width-10;
+			if( $multi_val->laycolortitle == "" ){
+				$colortitle = "#ececed";
+			} else {
+				$colortitle = $multi_val->laycolortitle;
+			}
+			if( $multi_val->laycolorfooter == "" ){
+				$colorfooter = "#ececed";
+			} else {
+				$colorfooter = $multi_val->laycolorfooter;
+			}
+			if( $multi_val->laycolorimagebg == "" ){
+				$colorimagebg = "#ffffff";
+			} else {
+				$colorimagebg = $multi_val->laycolorimagebg;
+			}
+			if( $multi_val->laycolorfont == "" ){
+				$colorfont = "#000000";
+			} else {
+				$colorfont = $multi_val->laycolorfont;
+			}
+			$Tradetracker_productid = $multi_val->multiitems;
+			$storename = create_slug($multi_val->multiname);
+		echo "<style type=\"text/css\" media=\"screen\">";
+		echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #999999;position:relative;}";
+		echo ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
+		echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
+		echo ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
+		echo ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
+		echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+		echo ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
+		echo ".".$storename."store-more img{margin:0px !important;}";
+		echo "</style>";
+	}
+		$width= "250";
+		$font= "Verdana";
+		$widthtitle = $width-6;
+		$widthmore = $width-10;
+		$colortitle = "#ececed";
+		$colorfooter = "#ececed";
+		$colorimagebg = "#ffffff";
+		$colorfont = "#000000";
+		$storename = "basic";
+		echo "<style type=\"text/css\" media=\"screen\">";
+		echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #999999;position:relative;}";
+		echo ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
+		echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
+		echo ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
+		echo ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
+		echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+		echo ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
+		echo ".".$storename."store-more img{margin:0px !important;}";
+		echo "</style>";
+}
+
+function imageSize($size) {
+	$width = $size[0];
+	$height = $size[1];
+	return ' width:' . $width . 'px;height:' . $height . 'px;" width="'.$width.'" height="'.$height.'"';
+}
 function show_items($usedhow, $winkelvol)
 {
 
@@ -483,46 +562,13 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 			} else {
 				$width= $multi_val->laywidth;
 			}
-			if( $multi_val->layfont == "" ){
-				$font= "Verdana";
-			} else {
-				$font= $multi_val->layfont;
-			}
 			$widthtitle = $width-6;
 			$widthmore = $width-10;
-			if( $multi_val->laycolortitle == "" ){
-				$colortitle = "#ececed";
-			} else {
-				$colortitle = $multi_val->laycolortitle;
-			}
-			if( $multi_val->laycolorfooter == "" ){
-				$colorfooter = "#ececed";
-			} else {
-				$colorfooter = $multi_val->laycolorfooter;
-			}
-			if( $multi_val->laycolorimagebg == "" ){
-				$colorimagebg = "#ffffff";
-			} else {
-				$colorimagebg = $multi_val->laycolorimagebg;
-			}
-			if( $multi_val->laycolorfont == "" ){
-				$colorfont = "#000000";
-			} else {
-				$colorfont = $multi_val->laycolorfont;
-			}
+
 			$Tradetracker_productid = $multi_val->multiitems;
 			$storename = create_slug($multi_val->multiname);
 		}
 	}
-	echo "<style type=\"text/css\" media=\"screen\">";
-	echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #999999;position:relative;}";
-	echo ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
-	echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
-	echo ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
-	echo ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
-	echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
-	echo ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
-	echo "</style>";
 
 	$table = PRO_TABLE_PREFIX."store";
 
@@ -592,6 +638,14 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 		} else {
 			$imageURL = $product->imageURL;
 		}
+		if (ini_get('allow_url_fopen') == true) {
+			$size = getimagesize($imageURL);
+			$sizes = imageSize($size);
+		} else {
+			$sizes = "\"";
+		}
+
+
 
 		$storeitems .= "
 			<div class=\"".$storename."store-outerbox\">
@@ -600,7 +654,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 				</div>			
 				<div class=\"".$storename."store-image\">
 					<a href=\"".$image."\" ".$rel." ".$target.">
-						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productnamee."\" style=\"max-width:".$width."px;max-height:180px;\" />
+						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" style=\"max-width:".$width."px;max-height:180px;".$sizes."/>
 					</a>
 				</div>
 				<div class=\"".$storename."store-footer\">
@@ -609,7 +663,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 					</div>
 					".$more."
 					<div class=\"buttons\">
-						<a href=\"".$producturl."\" class=\"regular\" target=\"_blank\">
+						<a href=\"".$producturl."\" class=\"regular\" target=\"_blank\" title=\"".$productname."\">
 							".$buynow."
 						</a>
 					</div>
