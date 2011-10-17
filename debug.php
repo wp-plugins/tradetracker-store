@@ -42,7 +42,7 @@ function debug_ttstore() {
 		}
 	} else {
 		echo '<p><strong>Your active theme:</strong>';
-		echo "<br>Has the wp_head on the correct place";
+		echo "<br>Has the wp_head in the header.php";
 	}	
 }
 function ttstoreerrordetect() {
@@ -103,9 +103,6 @@ s]/', '', wp_remote_retrieve_body( $response ) );
 		if ( ! strstr( $html, '<!--wp_head-->' ) )
 			$head_footer_errors['nohead'] = 'Is missing the call to <?php wp_head(); ?> which should appear directly before </head>. Please adjust the header.php in your theme folder and place <?php wp_head(); ?> just before </head>';
 		// Check to see if we found wp_head and if was located in the proper spot
-		if ( ! strstr( $html, '<!--wp_head--></head>' ) && ! isset( $head_footer_errors['nohead'] ) )
-			$head_footer_errors[] = 'Has the call to <?php wp_head(); ?> but it is not called directly before </head>. Please adjust the header.php in your theme folder and and move <?php wp_head(); ?> just before </head>';
-		// If we found errors with the existence of wp_head or wp_footer hook into admin_notices to complain about it
 		if ( ! empty( $head_footer_errors ) )
 			test_head_footer_notices();
 	}
