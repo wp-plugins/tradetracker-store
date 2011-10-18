@@ -37,13 +37,12 @@ function debug_ttstore() {
 	global $head_footer_errors;
 	if(!empty($head_footer_errors)){
 		echo '<p><strong>Your active theme:</strong>';
-		foreach ( $head_footer_errors as $error ) {
-			echo '<br>' . esc_html( $error ) . '<br>';
-		}
+		foreach ( $head_footer_errors as $error )
+		echo '<br>' . esc_html( $error ) . '<br>';
 	} else {
 		echo '<p><strong>Your active theme:</strong>';
 		echo "<br>Has the wp_head in the header.php";
-	}	
+	}
 }
 function ttstoreerrordetect() {
 	$tterror = "no";
@@ -78,30 +77,27 @@ function ttstoreheader() {
 }
 add_action( 'init', 'test_head_footer_init' );
 function test_head_footer_init() {
+	// Hook in at admin_init to perform the check for wp_head and wp_footer
 	add_action( 'admin_init', 'check_head_footer' );
-	if ( isset( $_GET['test-head'] ) )
-		add_action( 'wp_head', 'test_head', 99999 ); // Some obscene priority, make sure we run last
-
-}
- 
-function test_head() {
-	echo '<!--wp_head-->';
 }
  
 function check_head_footer() {
 	// Build the url to call, NOTE: uses home_url and thus requires WordPress 3.0
-	$url = add_query_arg( array( 'test-head' => ''), home_url() );
-	$response = wp_remote_get( $url, array( 'sslverify' => false ) );
+	$url = home_url();
+	// Perform the HTTP GET ignoring SSL errors
+	$response = wp_remote_get( $url );
+	// Grab the response code and make sure the request was sucessful
 	$code = (int) wp_remote_retrieve_response_code( $response );
 	if ( $code == 200 ) {
 		global $head_footer_errors;
-		$head_footer_errors = array();
- 
-		$html = preg_replace( '/[	
-s]/', '', wp_remote_retrieve_body( $response ) );
- 
-		if ( ! strstr( $html, '<!--wp_head-->' ) )
-			$head_footer_errors['nohead'] = 'Is missing the call to <?php wp_head(); ?> which should appear directly before </head>. Please adjust the header.php in your theme folder and place <?php wp_head(); ?> just before </head>';
+		$head_footer_errors = array();	
+		// Strip all tabs, line feeds, carriage returns and spaces
+		$html = preg_replace( '/[
+]/', '', wp_remote_retrieve_body( $response ) );
+
+		// Check to see if we found the existence of wp_head
+		if ( ! strstr( $html, 'basicstore' ) )
+			$head_footer_errors['nohead'] = 'Is missing the call to <?php wp_head(); ?> which should appear directly before </head>';
 		// Check to see if we found wp_head and if was located in the proper spot
 		if ( ! empty( $head_footer_errors ) )
 			test_head_footer_notices();
