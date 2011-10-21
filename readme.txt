@@ -27,15 +27,7 @@ Plugin also supports Lightbox. So if you don't have it yet i would advise to ins
 
 = Have you gotten any questions yet? =
 
-No, not yet.
-
-= Why can't I do certain things with the plugin? =
-
-I've created functions for this plugin of which I thought they'd be useful, but ofcourse I may have left things out which other people would like to see. If you have any ideas, do share them with me, as I can always try to implement it.
-
-= Do you have a site for the plugin? =
-
-Yes you can find it at http://wpaffiliatefeed.com
+You can find als FAQs here: http://wpaffiliatefeed.com/category/frequently-asked-questions/
 
 == Screenshots ==
 
