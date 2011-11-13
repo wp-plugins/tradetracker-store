@@ -37,7 +37,7 @@ function premium_ttstore() {
 
 	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
 		$Tradetracker_premiumprov_val = $_POST['premiumprov'];
-		$Tradetracker_premiumapi_val = $_POST['premiumapi'];
+		$Tradetracker_premiumapi_val = str_replace(" ","", $_POST['premiumapi']);
 		$remove_null_number = true;
 		//$Tradetracker_premiumprov_val = remove_array_empty_values($Tradetracker_premiumprov_val, $remove_null_number);
 		//$Tradetracker_premiumapi_val = remove_array_empty_values($Tradetracker_premiumapi_val, $remove_null_number);

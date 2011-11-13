@@ -285,20 +285,20 @@ function toggleOther(){
 			$multixmlfeed = "where xmlfeed = ".$Tradetracker_multixmlfeed_val." ";
 		}
 			$store = PRO_TABLE_PREFIX."store";
-			$categorie = $wpdb->get_results('SELECT categorie FROM '.$store.' '.$multixmlfeed.' group by categorie ORDER BY `'.$store.'`.`categorie` ASC', OBJECT);
+			$categorie = $wpdb->get_results('SELECT categorie, categorieid FROM '.$store.' '.$multixmlfeed.' group by categorie ORDER BY `'.$store.'`.`categorie` ASC', OBJECT);
 			if(!empty($categorie)){
 				echo "<table width=\"400\">";
 				$i="1";
 				foreach($categorie as $categorieselect) {
 					echo "<tr><td>";
 					if(!empty($Tradetracker_categories_val)){
-						if(in_array($categorieselect->categorie, unserialize($Tradetracker_categories_val), true)) {
-							echo "<input type=\"checkbox\" checked=\"yes\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorie."\" />".$categorieselect->categorie."<br />";
+						if(in_array($categorieselect->categorieid, unserialize($Tradetracker_categories_val), true)) {
+							echo "<input type=\"checkbox\" checked=\"yes\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorieid."\" />".$categorieselect->categorie."<br />";
 						} else {
-							echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorie."\" />".$categorieselect->categorie."<br />";
+							echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorieid."\" />".$categorieselect->categorie."<br />";
 						}
 					} else {
-						echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorie."\" />".$categorieselect->categorie."<br />";
+						echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorieid."\" />".$categorieselect->categorie."<br />";
 					}
 					echo "</td></tr>";
 				}

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements, daisycon, zanox, cleafs, tradedoubler
 Requires at least: 2.0.1
 Tested up to: 3.2.1
-Stable tag: 3.0.10
+Stable tag: 3.0.11
 
 A plugin that lets you create a store from the Tradetracker productfeed.
 
@@ -36,12 +36,15 @@ You can find als FAQs here: http://wpaffiliatefeed.com/category/frequently-asked
 3. Here you select which products you want to show on your site
 
 == Changelog ==
-= 3.0.10 =
-- Debug is now working properly and detecting properly when wp_head has been used
+= 3.0.11 =
+- Solved issue with long category names
 
 = previous version =
 Full changelog on http://wpaffiliatefeed.com/category/releaselog/
 
 == Upgrade Notice ==
+= 3.0.11 = 
+You will have to select the categories again on the store tab
+
 = 3.0.10 = 
 Update when debug still gives an error even though wp_head is in your theme
