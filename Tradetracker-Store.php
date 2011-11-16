@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.0.11
+Version: 3.0.12
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -540,13 +540,13 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 				foreach ($categories as $categories){
 					if($i == "1" ) {
 						if($multixmlfeed == ""){
-							$categorieselect = " where (categorie = \"".$categories."\"";
+							$categorieselect = " where (categorieid = \"".$categories."\"";
 						}else {
-							$categorieselect = " and (categorie = \"".$categories."\"";
+							$categorieselect = " and (categorieid = \"".$categories."\"";
 						}
 					$i = "2";
 					} else {
-							$categorieselect .= " or categorie = \"".$categories."\"";
+							$categorieselect .= " or categorieid = \"".$categories."\"";
 					}
 				}
 				$categorieselect .= ") ";
@@ -662,7 +662,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 				</div>			
 				<div class=\"".$storename."store-image\">
 					<a href=\"".$image."\" ".$rel." ".$target.">
-						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" style=\"max-width:".$width."px;max-height:180px;".$sizes."/>
+						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" style=\"max-width:".$width."px;max-height:180px;width:auto;height:auto;\"/>
 					</a>
 				</div>
 				<div class=\"".$storename."store-footer\">

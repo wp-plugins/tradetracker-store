@@ -183,13 +183,14 @@ $layoutid = "";
 		cursor: help;
 	}
 <?php
-	echo ".store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;height:353px;border:solid 1px #999999;position:relative;}";
-	echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
-	echo ".store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
-	echo ".store-image img{display: block;border:0px;margin: auto;}";
-	echo ".store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;height:137px;}";
-	echo ".store-description{width:".$widthtitle."px;color:".$colorfont.";position:absolute;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
-
+		echo ".store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #999999;position:relative;}";
+		echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
+		echo ".store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
+		echo ".store-image img{display: block;border:0px;margin: auto;}";
+		echo ".store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
+		echo ".store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+		echo ".store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
+		echo ".store-more img{margin:0px !important;}";
 ?>
 
 </style>
@@ -373,34 +374,33 @@ $layoutid = "";
 </div>
 	<div id="sideblock" style="float:left;width:<?php echo $width; ?>px;margin-left:20px;border:1px;"> 
 		<div class="store-outerbox">
-				<div class="store-titel">
-					<?php echo $name; ?>
-				</div>			
-				<div class="store-image">
-					<img src="<?php echo "".WP_PLUGIN_URL."/tradetracker-store/screenshot-1.png"; ?>" style="max-width:<?php echo $width; ?>px;max-height:180px;">
+			<div class="store-titel">
+				<?php echo $name; ?>
+			</div>			
+			<div class="store-image">
+				<img src="<?php echo "".WP_PLUGIN_URL."/tradetracker-store/screenshot-1.png"; ?>" style="max-width:<?php echo $width; ?>px;max-height:180px;">
+			</div>
+			<div class="store-footer">
+				<div class="store-description">
+					The description for the item you can buy using the <?php echo $font; ?> font.
 				</div>
-				<div class="store-footer">
-					<div class="store-description">
-						The description for the item you can buy using the <?php echo $font; ?> font.
-					</div>
-					<div class="buttons">
-						<a href="#" class="regular">
-							Buy Item
-						</a>
-					</div>
-					<div class="store-price">
-						<table cellspacing="0" cellpadding="0" border="0">
-							<tr>
-								<td style="width:55px;height:20px;" class="euros">
-									0,00 EUR
-								</td>
-							</tr>
-						</table>
-					</div>
+				<div class="buttons">
+					<a href="#" class="regular">
+						Buy Item
+					</a>
+				</div>
+				<div class="store-price">
+					<table cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td style="width:55px;height:20px;" class="euros">
+								0,00 EUR
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
- 	</div>
-
+		</div>
+	</div>
 </div>
 <?php
 

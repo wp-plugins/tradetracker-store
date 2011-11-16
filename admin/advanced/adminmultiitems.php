@@ -106,13 +106,13 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 				foreach ($categories as $categories){
 					if($i == "1" ) {
 						if($multixmlfeed == ""){
-							$categorieselect = " where (categorie = \"".$categories."\"";
+							$categorieselect = " where (categorieid = \"".$categories."\"";
 						}else {
-							$categorieselect = " and (categorie = \"".$categories."\"";
+							$categorieselect = " and (categorieid = \"".$categories."\"";
 						}
 					$i = "2";
 					} else {
-							$categorieselect .= " or categorie = \"".$categories."\"";
+							$categorieselect .= " or categorieid = \"".$categories."\"";
 					}
 				}
 				$categorieselect .= ") ";
