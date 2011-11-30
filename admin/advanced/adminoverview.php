@@ -27,13 +27,14 @@ ttstoreheader();
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-overview#tab7" class="active">Overview</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab8" class="active">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
 </ul>
 
-<div id="tab7" class="tabset_content">
+<div id="tab8" class="tabset_content">
    <h2 class="tabset_label">Overview</h2>
 	<table width="700">
 		<tr>
@@ -209,6 +210,25 @@ ttstoreheader();
 <?php
 	}
 ?>
+	<h2>Overview of Search result page:</h2>
+	<table width="700">
+		<tr>
+			<td width="150">
+				Same settings as Store:
+			</td>
+			<td>
+				<?php 
+				$tablelayout = PRO_TABLE_PREFIX."multi";
+				$layout=$wpdb->get_row("SELECT id, multiname FROM ".$tablelayout." where id=".get_option("Tradetracker_searchlayout")."");
+				echo $layout->multiname;
+				?>
+			</td>
+		</tr>
+	</table>
+	<hr>
+	If you agree with this you can put <b>[display_search]</b> in your search result page. Or use <b>display_search_items();</b> in your search.php. It will then show items based on what people search for on your site.
+	<br>
+	<hr>
 
 			<?php if (get_option("Tradetracker_settings")==2){ ?> 
 				<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-feedback'"> 

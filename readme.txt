@@ -4,9 +4,9 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: tradetracker, store, productfeed, affiliate, generate income, advertisements, daisycon, zanox, cleafs, tradedoubler
 Requires at least: 2.0.1
 Tested up to: 3.2.1
-Stable tag: 3.0.12
+Stable tag: 3.1.0
 
-A plugin that lets you create a store from the Tradetracker productfeed. You can also add zanox, daisycon, tradedoubler and cleafs With the new premium addons.
+A plugin that lets import a XML productfeed from TradeTracker. You can also add zanox, daisycon, tradedoubler, paidonresults and cleafs With the new premium addons.
 
 == Description ==
 
@@ -38,13 +38,6 @@ You can find als FAQs here: http://wpaffiliatefeed.com/category/frequently-asked
 3. Here you select which products you want to show on your site
 
 == Changelog ==
-= 3.0.12 = 
-Small fix for categories
-Small fix to show correct images
-Update now button to manually refresh the feeds
-Layout tab show the correct layout example
-
-= previous version =
 Full changelog on http://wpaffiliatefeed.com/category/releaselog/
 
 == Upgrade Notice ==

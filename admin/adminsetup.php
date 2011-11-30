@@ -87,10 +87,11 @@ function tradetracker_store_setup() {
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab8">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
 
 </ul>
 	<?php } ?>
@@ -134,7 +135,6 @@ function tradetracker_store_setup() {
 		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 
 		<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-settings'">
 		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help'">
-
 	</p>
 
 </form>

@@ -84,12 +84,13 @@ function premium_ttstore() {
 			<li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
 			<li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
 			<li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
-			<li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
-			<li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-			<li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="active">Premium</a></li>
-			<li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
+			<li><a href="admin.php?page=tradetracker-shop-search#tab7">Overview</a></li>
+			<li><a href="admin.php?page=tradetracker-shop-overview#tab8">Overview</a></li>
+			<li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
+			<li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="active">Premium</a></li>
+			<li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
 		</ul>
-		<div id="tab9" class="tabset_content">
+		<div id="tab10" class="tabset_content">
 	<?php }
 	if(!function_exists('curl_init')) {
 		echo "Because your host does not support Curl you cannot use the premium content";
@@ -102,7 +103,7 @@ function premium_ttstore() {
 		<table width="700">
 		<tr><td colspan="2"><b>Add extra XML Feeds</b></td></tr>
 	<?php
-		$providers = array('Daisycon' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=5');
+		$providers = array('Daisycon' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=5', 'Paidonresults' => 'http://wpaffiliatefeed.com/zen-cart/index.php?main_page=product_info&cPath=1&products_id=6');
 		$i="1";
 		foreach ($providers as $key => $value){
 		$update = get_option('Tradetracker_premiumaccepted');

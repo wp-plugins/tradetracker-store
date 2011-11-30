@@ -61,9 +61,10 @@ function my_plugin_menu() {
 		$mylayout =  add_submenu_page('tradetracker-shop', 'Tradetracker Store layout', 'Tt Store Layout', 'manage_options', 'tradetracker-shop-layout', 'tradetracker_store_layout');
 		$tabs7 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Multi', 'Tt Store Multi', 'manage_options', 'tradetracker-shop-multi', 'tradetracker_store_multi');
 		$mypage = add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-multiitems', 'adminstore_multiitems');
-		$tabs8 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Overview', 'Tt Store Overview', 'manage_options', 'tradetracker-shop-overview', 'tradetracker_store_overview');
-		$tabs9 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
-		$tabs10 = add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
+		$tabs8 = add_submenu_page('tradetracker-shop', 'Tradetracker Search settings', 'Tt Store Search', 'manage_options', 'tradetracker-shop-search', 'tradetracker_store_search');
+		$tabs9 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Overview', 'Tt Store Overview', 'manage_options', 'tradetracker-shop-overview', 'tradetracker_store_overview');
+		$tabs10 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Feedback', 'Tt Store Feedback', 'manage_options', 'tradetracker-shop-feedback', 'tradetracker_store_feedback');
+		$tabs11 = add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
 		if (get_option("Tradetracker_stores")>1){
 			add_submenu_page('tradetracker-shop', 'Tradetracker Multi', 'Tt Store Multi', 'manage_options', 'tradetracker-shop-multi', 'tradetracker_store_multi');
 		}
@@ -75,9 +76,10 @@ function my_plugin_menu() {
 		add_action( "admin_print_scripts-$tabs8", 'tabs_admin_head' );
 		add_action( "admin_print_scripts-$tabs9", 'tabs_admin_head' );
 		add_action( "admin_print_scripts-$tabs10", 'tabs_admin_head' );
+		add_action( "admin_print_scripts-$tabs11", 'tabs_admin_head' );
 		if(function_exists('curl_init')) {
-			$tabs11 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Premium', 'Tt Store Premium', 'manage_options', 'tradetracker-shop-premium', 'premium_ttstore');
-			add_action( "admin_print_scripts-$tabs11", 'tabs_admin_head' );
+			$tabs12 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Premium', 'Tt Store Premium', 'manage_options', 'tradetracker-shop-premium', 'premium_ttstore');
+			add_action( "admin_print_scripts-$tabs12", 'tabs_admin_head' );
 		}
 
 	}
@@ -130,13 +132,14 @@ function tradetracker_store_help() {
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="active">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab8">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="active">Help</a></li>
 </ul>
 
-<div id="tab10" class="tabset_content">
+<div id="tab11" class="tabset_content">
    <h2 class="tabset_label">Help</h2>
 	<?php } ?>
 
@@ -161,8 +164,9 @@ function tradetracker_store_help() {
    <li><a href="#help5">Layout</a></li>
    <li><a href="#help6">Store</a></li>
    <li><a href="#help7">Items</a></li>
-   <li><a href="#help8">Overview</a></li>
-   <li><a href="#help9">Feedback</a></li>
+   <li><a href="#help8">Search</a></li>
+   <li><a href="#help9">Overview</a></li>
+   <li><a href="#help10">Feedback</a></li>
 </ul>
 
 <?php } ?>
@@ -204,7 +208,7 @@ Select what setup you want to use. Do you want to use the <b>Basic</b> version o
 <li> - <b>Product feed:</b> You can choose which site you want to place the product feed on
 <li> - <b>Affiliatesite:</b> Select the campaign
 <li> - <b>Output Type:</b> Make sure you select XML
-<li> - <b>Coding:</b> Choose the iso-8859-1 option
+<li> - <b>Coding:</b> Choose the utf-8 option
 </ul>
 If you press "Generate" you will get a link. Use that at the Tradetracker XML option. If you can't find these steps, this <a href=http://www.youtube.com/watch?v=c149cIEJFLk>movie</a> can help. Just remember you need a XML and not a CSV. 
 </div>
@@ -257,12 +261,22 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<p><b>Timeframe of stats:</b><br>Here you can choose what timeframe you want to show on your dashboard. Most people will be using weekly or monthly stats. But if you have a lot of sales on a daily basis you can use the Day setting.
 </div>
 <?php } ?>
+
+<?php if (get_option("Tradetracker_settings")==2){ ?>
+<div id="help8" class="tabset_content1">
+   <h2 class="tabset_label">Search</h2>
+	<h2>Search Settings:</h2>
+	<p>Here you can adjust all settings for the search results page. This will enable you to show items on your search result page. Based on what the visitor of your site searched for.
+	<p><b>Store:</b><br>Here you can select which settings it should use. It will use the settings you have setup for this store. 
+</div>
+<?php } ?>
+
 <?php if (get_option("Tradetracker_settings")==1){ ?>
 <div id="help5" class="tabset_content1">
    <h2 class="tabset_label">Overview</h2>
 <?php } ?>
 <?php if (get_option("Tradetracker_settings")==2){ ?>
-<div id="help8" class="tabset_content1">
+<div id="help9" class="tabset_content1">
    <h2 class="tabset_label">Overview</h2>
 <?php } ?>
 	<h2>Settings Overview:</h2>
@@ -328,7 +342,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
    <h2 class="tabset_label">Feedback</h2>
 <?php } ?>
 <?php if (get_option("Tradetracker_settings")==2){ ?>
-<div id="help9" class="tabset_content1">
+<div id="help10" class="tabset_content1">
    <h2 class="tabset_label">Feedback</h2>
 <?php } ?>
 	<h2>Feedback:</h2>
@@ -418,12 +432,14 @@ else
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8" class="active">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab8">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab9" class="active">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
 </ul>
-<div id="tab8" class="tabset_content">
+<div id="tab9" class="tabset_content">
    <h2 class="tabset_label">Feedback</h2>
 	<?php } ?>
 		<p>
@@ -467,7 +483,7 @@ else
 					<td colspan="2">
 						<p class="submit">
 							<input type="submit" name="Submit" class="button-primary" value="Send feedback" />
-							<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help<?php if (get_option("Tradetracker_settings")==2){ echo "9"; } else { echo "6"; } ?>'">
+							<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help<?php if (get_option("Tradetracker_settings")==2){ echo "10"; } else { echo "6"; } ?>'">
 
 						</p>
 					</td>

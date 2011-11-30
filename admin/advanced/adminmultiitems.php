@@ -41,10 +41,11 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6" class="active">Items</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab8">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
 </ul>
 
 <div id="tab6" class="tabset_content">
@@ -95,10 +96,13 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 			$multiname = $layout_val->multiname;
 			if($layout_val->multixmlfeed == "*" ){
 				$multixmlfeed = "";
+				$searchxmlfeed = "";
 			}elseif($layout_val->multixmlfeed == "" ){
 				$multixmlfeed = "";
+				$searchxmlfeed = "";
 			} else {
 				$multixmlfeed = "where xmlfeed = ".$layout_val->multixmlfeed." ";
+				$searchxmlfeed = " and xmlfeed = ".$layout_val->multixmlfeed." ";
 			}
 			$i="1";
 			$categories = unserialize($layout_val->categories);
@@ -107,17 +111,22 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 					if($i == "1" ) {
 						if($multixmlfeed == ""){
 							$categorieselect = " where (categorieid = \"".$categories."\"";
+							$searchcategorieselect = " and (categorieid = \"".$categories."\"";
 						}else {
 							$categorieselect = " and (categorieid = \"".$categories."\"";
+							$searchcategorieselect = " and (categorieid = \"".$categories."\"";
 						}
 					$i = "2";
 					} else {
 							$categorieselect .= " or categorieid = \"".$categories."\"";
+							$searchcategorieselect .= " or categorieid = \"".$categories."\"";
 					}
 				}
 				$categorieselect .= ") ";
+				$searchcategorieselect .= ") ";
 			} else {
 				$categorieselect = "";
+				$searchcategorieselect = "";
 			}
 
 		}
@@ -154,7 +163,12 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 		$currentpage = 0;
 	}
 	$table = PRO_TABLE_PREFIX."store";
-	$countquery=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect."");
+	if($_GET['search']!=""){
+		$keyword = $_GET['search'];
+		$countquery=$wpdb->get_results("SELECT * FROM ".$table." where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed."");
+	} else {
+		$countquery=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect."");
+	}
 	$numrows = $wpdb->num_rows;
 	$pages = intval($numrows/$limit); // Number of results pages.
 	if ($numrows%$limit) 
@@ -235,10 +249,15 @@ span table, span table tr, span table td{
 			>
 			<a href=\"admin.php?page=tradetracker-shop-feedback\">Feedback</a>";
 		}
-	echo "<h2>" . __( 'Tradetracker Item Selection for "<b>'.$multiname.'</b>"', 'menu-test' ) . "</h2>";
+	echo "<h2>" . __( 'Tradetracker Item Selection for "<b>'.$multiname.'</b>"', 'menu-test' ) . "</h2>"; 
+	echo "<form class=\"\" action=\"admin.php\" method=\"get\">
+		<input type=\"hidden\" name=\"page\" value=\"tradetracker-shop-multiitems\">
+		<input type=\"hidden\" name=\"multiid\" value=\"".$multiid."\">
+		<input type=\"hidden\" name=\"order\" value=\"".$order."\">
+		<input class=\"s\" type=\"text\" name=\"search\" value=\"\">
 
-
-
+		<input class=\"searchsubmit\" type=\"submit\" title=\"search item\" value=\"Search\">
+		</form>";
 ?>
 <script type="text/javascript">
 function selectToggle(toggle, form) {
@@ -269,7 +288,12 @@ function selectToggle(toggle, form) {
  	</tr>
 </table>
 <?php
-$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+if($_GET['search']!=""){
+	$keyword = $_GET['search'];
+	$visits=$wpdb->get_results("SELECT * FROM ".$table." where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+} else {
+	$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+}
 	echo "<table width=\"700\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
 		echo "<tr><td width=\"100\">";
 			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=productID\">ProductID</a></b>";
@@ -359,7 +383,7 @@ $visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$catego
 	<b>Always save changes before pressing next.</b><br>
 		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 	
 		<INPUT type="button" name="Storeselect" value="<?php esc_attr_e('Store Selection') ?>" onclick="location.href='admin.php?page=tradetracker-shop-multiitems'"> 
-		<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-overview'"> 
+		<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-search'"> 
 		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help7'">
 <?php
 	echo "</p>";

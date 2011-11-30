@@ -15,6 +15,8 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
         laycolorfooter VARCHAR(7) NOT NULL,
 	laycolorimagebg VARCHAR(7) NOT NULL,
 	laycolorfont VARCHAR(7) NOT NULL,
+	laycolorborder VARCHAR(7) NOT NULL,
+	laycolorbutton VARCHAR(7) NOT NULL,
 	layfont VARCHAR(50) NOT NULL,
 	UNIQUE KEY id (id)
     );";
@@ -33,6 +35,8 @@ $Tradetracker_colortitle_val = "";
 $Tradetracker_colorimagebg_val = "";
 $Tradetracker_colorfooter_val = "";
 $Tradetracker_colorfont_val = "";
+$Tradetracker_colorborder_val = "";
+$Tradetracker_colorbutton_val = "";
 $layoutid = "";
 	$hidden_field_name = 'mt_submit_hidden';
 
@@ -43,7 +47,7 @@ $layoutid = "";
 		if(!empty($_POST['layoutid'])){
 			$layoutid = $_POST['layoutid'];
 		} 
-		$layout=$wpdb->get_results("SELECT laywidth, layname, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont FROM ".$tablelayout." where id=".$layoutid."");
+		$layout=$wpdb->get_results("SELECT laywidth, layname, layfont, laycolortitle, laycolorfooter, laycolorbutton, laycolorimagebg, laycolorfont, laycolorborder FROM ".$tablelayout." where id=".$layoutid."");
 		foreach ($layout as $layout_val){
 			
 			$Tradetracker_width_val = $layout_val->laywidth;
@@ -53,6 +57,8 @@ $layoutid = "";
 			$Tradetracker_colorfooter_val = $layout_val->laycolorfooter;
 			$Tradetracker_colorimagebg_val = $layout_val->laycolorimagebg;
 			$Tradetracker_colorfont_val = $layout_val->laycolorfont;
+			$Tradetracker_colorborder_val = $layout_val->laycolorborder;
+			$Tradetracker_colorbutton_val = $layout_val->laycolorbutton;
 
 			$db_width_val = $layout_val->laywidth;
 			$db_layoutname_val = $layout_val->layname;
@@ -61,6 +67,8 @@ $layoutid = "";
 			$db_colorfooter_val = $layout_val->laycolorfooter;
 			$db_colorimagebg_val = $layout_val->laycolorimagebg;
 			$db_colorfont_val = $layout_val->laycolorfont;
+			$db_colorborder_val = $layout_val->laycolorborder;
+			$db_colorbutton_val = $layout_val->laycolorbutton;
 		}
 
 	}
@@ -85,6 +93,11 @@ $layoutid = "";
 	$Tradetracker_colorfont_name = 'Tradetracker_colorfont';
 	$Tradetracker_colorfont_field_name = 'Tradetracker_colorfont';
 
+	$Tradetracker_colorborder_name = 'Tradetracker_colorborder';
+	$Tradetracker_colorborder_field_name = 'Tradetracker_colorborder';
+
+	$Tradetracker_colorbutton_name = 'Tradetracker_colorbutton';
+	$Tradetracker_colorbutton_field_name = 'Tradetracker_colorbutton';
 
 	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
         // Read their posted value
@@ -96,6 +109,8 @@ $layoutid = "";
 		$Tradetracker_colorfooter_val = $_POST[ $Tradetracker_colorfooter_field_name ];
 		$Tradetracker_colorimagebg_val = $_POST[ $Tradetracker_colorimagebg_field_name ];
 		$Tradetracker_colorfont_val = $_POST[ $Tradetracker_colorfont_field_name ];
+		$Tradetracker_colorborder_val = $_POST[ $Tradetracker_colorborder_field_name ];
+		$Tradetracker_colorbutton_val = $_POST[ $Tradetracker_colorbutton_field_name ];
 
 
         // Save the posted value in the database
@@ -121,6 +136,12 @@ $layoutid = "";
 		if ( $db_colorfont_val  != $Tradetracker_colorfont_val) {
 			$query = $wpdb->update( $tablelayout, array( 'laycolorfont' => $Tradetracker_colorfont_val), array( 'id' => $_POST['layoutid']), array( '%s'), array( '%s'), array( '%d' ) );
 		}
+		if ( $db_colorborder_val  != $Tradetracker_colorborder_val) {
+			$query = $wpdb->update( $tablelayout, array( 'laycolorborder' => $Tradetracker_colorborder_val), array( 'id' => $_POST['layoutid']), array( '%s'), array( '%s'), array( '%d' ) );
+		}
+		if ( $db_colorbutton_val  != $Tradetracker_colorbutton_val) {
+			$query = $wpdb->update( $tablelayout, array( 'laycolorbutton' => $Tradetracker_colorbutton_val), array( 'id' => $_POST['layoutid']), array( '%s'), array( '%s'), array( '%d' ) );
+		}
 		} else {
         		$currentpage["laywidth"]=$Tradetracker_width_val;
         		$currentpage["layname"]=$Tradetracker_layoutname_val;
@@ -129,6 +150,8 @@ $layoutid = "";
         		$currentpage["laycolorfooter"]=$Tradetracker_colorfooter_val;
         		$currentpage["laycolorimagebg"]=$Tradetracker_colorimagebg_val;
         		$currentpage["laycolorfont"]=$Tradetracker_colorfont_val;
+        		$currentpage["laycolorborder"]=$Tradetracker_colorborder_val;
+        		$currentpage["laycolorbutton"]=$Tradetracker_colorbutton_val;
 			$wpdb->insert( $tablelayout, $currentpage);
 			$layoutid = $wpdb->insert_id;
 		}
@@ -174,6 +197,16 @@ $layoutid = "";
 	} else {
 	$colorfont = $Tradetracker_colorfont_val;
 	}
+	if( $Tradetracker_colorborder_val == "" ){
+		$colorborder = "#65B9C1";
+	} else {
+	$colorborder = $Tradetracker_colorborder_val;
+	}
+	if( $Tradetracker_colorbutton_val == "" ){
+		$colorbutton = "#65B9C1";
+	} else {
+	$colorbutton = $Tradetracker_colorbutton_val;
+	}
 
 ?>
 
@@ -183,7 +216,7 @@ $layoutid = "";
 		cursor: help;
 	}
 <?php
-		echo ".store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #999999;position:relative;}";
+		echo ".store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
 		echo ".store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
 		echo ".store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
 		echo ".store-image img{display: block;border:0px;margin: auto;}";
@@ -191,6 +224,22 @@ $layoutid = "";
 		echo ".store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
 		echo ".store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
 		echo ".store-more img{margin:0px !important;}";
+		echo ".store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
+		echo ".store-price table {background-color: ".$colorfooter." !important;border: 1px none !important;border-collapse: inherit !important;float: right;margin-left: 1px;margin-top: 1px;text-align: center !important;}";
+		echo ".store-price table tr {padding: 1px !important;}";
+		echo ".store-price table tr td {padding: 1px !important;}";
+		echo ".store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
+		echo ".store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
+		echo ".store-price {background-color: ".$colorborder." !important;}";
+		echo ".buttons a, .buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+		echo ".buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
+		echo ".buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
+		echo ":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
+		echo ".buttons button img, .buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
+		echo ".button.regular, .buttons a.regular {color: #FFFFFF;}";
+		echo ".buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
+		echo ".buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
+
 ?>
 
 </style>
@@ -205,10 +254,11 @@ $layoutid = "";
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4" class="active">Layout</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab8">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
 </ul>
 <div id="tab4" class="tabset_content">
    <h2 class="tabset_label">Layout</h2>
@@ -282,6 +332,26 @@ $layoutid = "";
 		</td>
 		<td>
 			<input type="text" name="<?php echo $Tradetracker_colorfooter_field_name; ?>" value="<?php echo $Tradetracker_colorfooter_val; ?>" size="20">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="tradetrackercolorfooter" title="What color would you like to use for the border." class="info">
+				<?php _e("Border color:", 'tradetracker-colorborder' ); ?> 
+			</label> 
+		</td>
+		<td>
+			<input type="text" name="<?php echo $Tradetracker_colorborder_field_name; ?>" value="<?php echo $Tradetracker_colorborder_val; ?>" size="20">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="tradetrackercolorbutton" title="What color would you like to use for the button." class="info">
+				<?php _e("Button color:", 'tradetracker-colorbutton' ); ?> 
+			</label> 
+		</td>
+		<td>
+			<input type="text" name="<?php echo $Tradetracker_colorbutton_field_name; ?>" value="<?php echo $Tradetracker_colorbutton_val; ?>" size="20">
 		</td>
 	</tr>
 
@@ -384,6 +454,7 @@ $layoutid = "";
 				<div class="store-description">
 					The description for the item you can buy using the <?php echo $font; ?> font.
 				</div>
+				<div class="store-more"></div>
 				<div class="buttons">
 					<a href="#" class="regular">
 						Buy Item
@@ -392,7 +463,7 @@ $layoutid = "";
 				<div class="store-price">
 					<table cellspacing="0" cellpadding="0" border="0">
 						<tr>
-							<td style="width:55px;height:20px;" class="euros">
+							<td style="border: 1px none; width: 100px; margin: 1px; height: 29px;" class="euros">
 								0,00 EUR
 							</td>
 						</tr>

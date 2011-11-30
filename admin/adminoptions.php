@@ -49,6 +49,9 @@ function tradetracker_store_options() {
 	$Tradetracker_xml_name = 'Tradetracker_xml';
 	$Tradetracker_xml_field_name = 'Tradetracker_xml';
 
+	$Tradetracker_xmlupdate_name = 'Tradetracker_xmlupdate';
+	$Tradetracker_xmlupdate_field_name = 'Tradetracker_xmlupdate';
+
 
 	$Tradetracker_xmlname_name = 'Tradetracker_xmlname';
 	$Tradetracker_xmlname_field_name = 'Tradetracker_xmlname';
@@ -80,6 +83,7 @@ function tradetracker_store_options() {
 	// Read in existing option value from database
 	$Tradetracker_buynow_val = get_option( $Tradetracker_buynow_name );
 	$Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
+	$Tradetracker_xmlupdate_val = get_option( $Tradetracker_xmlupdate_name );
 	$Tradetracker_xmlname_val = get_option( $Tradetracker_xmlname_name );
 	$Tradetracker_productid_val = get_option( $Tradetracker_productid_name );
 	$Tradetracker_amount_val = get_option( $Tradetracker_amount_name );
@@ -117,6 +121,7 @@ function tradetracker_store_options() {
 		$Tradetracker_xmlname_val = safeArrayCombine($Tradetracker_xml_val, $Tradetracker_xmlname_val);
 		$Tradetracker_xml_val = safeArrayCombine($Tradetracker_xml_val, $Tradetracker_xmlconv_val);
 		$Tradetracker_extra_val = $_POST['extra'];
+		$Tradetracker_xmlupdate_val = $_POST[ $Tradetracker_xmlupdate_field_name ];
 		$Tradetracker_productid_val = $_POST[ $Tradetracker_productid_field_name ];
 		$Tradetracker_amount_val = $_POST[ $Tradetracker_amount_field_name ];
 		$Tradetracker_lightbox_val = $_POST[ $Tradetracker_lightbox_field_name ];
@@ -149,8 +154,7 @@ function tradetracker_store_options() {
 		$Tradetracker_xml_val = remove_array_empty_values($Tradetracker_xml_val, $remove_null_number);
 		$Tradetracker_xmlconv_val = remove_array_empty_values($Tradetracker_xmlconv_val, $remove_null_number);
 		$Tradetracker_xml_val = safeArrayCombine($Tradetracker_xml_val, $Tradetracker_xmlconv_val);		
-
-
+		$Tradetracker_xmlupdate_val = $_POST[ $Tradetracker_xmlupdate_field_name ];
 		$Tradetracker_productid_val = get_option( $Tradetracker_productid_name );
 		$Tradetracker_amount_val = get_option( $Tradetracker_amount_name );
 		$Tradetracker_lightbox_val = get_option( $Tradetracker_lightbox_name );
@@ -165,6 +169,10 @@ function tradetracker_store_options() {
 		if ( get_option("Tradetracker_xml")  != $Tradetracker_xml_val) {
 			update_option( $Tradetracker_xml_name, $Tradetracker_xml_val );
 			xml_updater();
+		}
+		if ( get_option("Tradetracker_xmlupdate")  != $Tradetracker_xmlupdate_val) {
+			update_option( $Tradetracker_xmlupdate_name, $Tradetracker_xmlupdate_val );
+			wp_clear_scheduled_hook('xmlscheduler');
 		}
 		if ( get_option("Tradetracker_buynow")  != $Tradetracker_buynow_val) {
 			update_option( $Tradetracker_buynow_name, $Tradetracker_buynow_val );
@@ -247,10 +255,11 @@ function tradetracker_store_options() {
    <li><a href="admin.php?page=tradetracker-shop-layout#tab4">Layout</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-overview#tab7">Overview</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-feedback#tab8">Feedback</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-premium#tab9" class="greenpremium">Premium</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-help#tab10" class="redhelp">Help</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-overview#tab8">Overview</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
+   <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
 </ul>
 	<?php } ?>
 
@@ -354,6 +363,17 @@ function tradetracker_store_options() {
 			</td>
 		</tr>
 		<tr>
+		<tr>
+			<td>
+				<label for="tradetrackerupdate" title="When should it update?, standard is 00:00:00" class="info">
+					<?php _e("Update time:", 'tradetracker-update' ); ?> 
+				</label>
+			</td>
+			<td>
+				<input type="text" name="<?php echo $Tradetracker_xmlupdate_field_name; ?>" value="<?php if($Tradetracker_xmlupdate_val==""){ echo "00:00:00"; } else { echo $Tradetracker_xmlupdate_val;} ?>" size="50"> Time has to be in hh:mm:ss
+			</td>
+		</tr>
+
 			<td colspan="2">
 				<hr>
 			</td>

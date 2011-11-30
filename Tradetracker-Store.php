@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.0.12
+Version: 3.1.0
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -39,6 +39,7 @@ if (get_option("Tradetracker_settings")=="2"){
 include('admin/advanced/adminlayout.php');
 include('admin/advanced/adminstats.php');
 include('admin/advanced/adminmulti.php');
+include('admin/advanced/adminsearch.php');
 include('admin/advanced/adminmultiitems.php');
 include('admin/advanced/adminoverview.php');
 }
@@ -49,8 +50,18 @@ register_deactivation_hook(__FILE__ ,'tradetracker_store_uninstall');
 add_action('wp_print_styles', 'ttstore_stylesheet');
 add_filter('plugin_action_links', 'TTstore_plugin_action_links', 10, 2);
 
+function isTime($time){	
+	return preg_match("#([0-1]{1}[0-9]{1}|[2]{1}[0-3]{1}):[0-5]{1}[0-9]{1}#", $time);
+}
+
+
 if (!wp_next_scheduled('xmlscheduler')) {
-	wp_schedule_event( time(), 'daily', 'xmlscheduler' );
+	$tijdschedule = get_option('Tradetracker_xmlupdate');
+	if(isTime($tijdschedule)) {
+		wp_schedule_event( strtotime(date('Y-m-d '.$tijdschedule.'', strtotime("+1 day"))), 'daily', 'xmlscheduler' );
+	} else {
+		wp_schedule_event( strtotime(date('Y-m-d 00:00:01', strtotime("+1 day"))), 'daily', 'xmlscheduler' );
+	}
 }
 ttstoreerrordetect();
 add_action( 'xmlscheduler', 'runxmlupdater' ); 
@@ -62,6 +73,14 @@ function runxmlupdater() {
 }
 $store = PRO_TABLE_PREFIX."store";
 $multi = PRO_TABLE_PREFIX."multi";
+$layout = PRO_TABLE_PREFIX."layout";
+
+if (get_option("TTstoreversion") == "3.0.11"){
+	$result=$wpdb->query("ALTER TABLE `".$layout."` ADD `laycolorborder` VARCHAR(7) NOT NULL");
+	$result=$wpdb->query("ALTER TABLE `".$layout."` ADD `laycolorbutton` VARCHAR(7) NOT NULL");
+	update_option("TTstoreversion", "3.0.12" );
+	xml_updater();
+}
 
 if (get_option("TTstoreversion") == "3.0.7"){
 	$result=$wpdb->query("ALTER TABLE `".$store."` ADD `categorieid` VARCHAR(32) NOT NULL");
@@ -257,6 +276,7 @@ echo "<li><b><a href=\"".$newsmsg->item->link."\">".$newsmsg->item->title."</a><
 <?php
 }
 function news_updater(){
+			$dir =  WP_PLUGIN_DIR . "/tradetracker-store";
 			$site_file = 'http://wpaffiliatefeed.com/tradetracker-store/sites.xml';
 			if (function_exists('curl_init')) {
 				$ch = curl_init($site_file);
@@ -314,12 +334,13 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 		curl_close($ch);
 	}
     $wpdb->query($structure)  or die(mysql_error());
-	update_option("TTstoreversion", "3.0.11" );
+	update_option("TTstoreversion", "3.0.12" );
 	update_option("Tradetracker_width", "250" );
 	update_option("Tradetracker_colortitle", "#ececed" );
 	update_option("Tradetracker_colorfooter", "#ececed" );
 	update_option("Tradetracker_colorimagebg", "#FFFFFF" );
 	update_option("Tradetracker_colorfont", "#000000" );
+	update_option("Tradetracker_colorborder", "#65B9C1" );
 	  // Populate table
 }
 }
@@ -369,14 +390,14 @@ add_action('init', 'TTstore_scripts');
 ..--==[ Function to see if XML is loaded already and cached. ]==--.. 
 */
 
-function store_items($used, $winkel)
+function store_items($used, $winkel, $searching)
 {
 	$Tradetracker_xml = get_option("Tradetracker_xml");
 	if ($Tradetracker_xml == null) 
 	{
 		echo "No XML filled in yet please change the settings first.";
 	} else {
-		return show_items($used, $winkel);
+		return show_items($used, $winkel, $searching);
 	}
 }
 /* 
@@ -414,7 +435,7 @@ function header_css_style() {
 	global $wpdb;
 	$tablelayout = PRO_TABLE_PREFIX."layout";
 	$tablemulti = PRO_TABLE_PREFIX."multi";
-	$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
+	$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorbutton, laycolorborder, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
 		foreach ($multi as $multi_val){
 			$i="1";
 			if( $multi_val->laywidth == "" ){
@@ -449,10 +470,20 @@ function header_css_style() {
 			} else {
 				$colorfont = $multi_val->laycolorfont;
 			}
+			if( $multi_val->laycolorborder == "" ){
+				$colorborder = "#65B9C1";
+			} else {
+				$colorborder = $multi_val->laycolorborder;
+			}
+			if( $multi_val->laycolorbutton == "" ){
+				$colorbutton = "#65B9C1";
+			} else {
+				$colorbutton = $multi_val->laycolorbutton;
+			}
 			$Tradetracker_productid = $multi_val->multiitems;
 			$storename = create_slug($multi_val->multiname);
 		echo "<style type=\"text/css\" media=\"screen\">";
-		echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #999999;position:relative;}";
+		echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
 		echo ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
 		echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
 		echo ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
@@ -460,6 +491,21 @@ function header_css_style() {
 		echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
 		echo ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
 		echo ".".$storename."store-more img{margin:0px !important;}";
+		echo ".".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
+		echo ".".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
+		echo ".".$storename."store-price table tr {padding: 1px !important;}";
+		echo ".".$storename."store-price table tr td {padding: 1px !important;}";
+		echo ".".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
+		echo ".".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
+		echo ".".$storename."store-price {background-color: ".$colorborder." !important;}";
+		echo ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+		echo ".".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
+		echo ".".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
+		echo ".".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
+		echo ".".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
+		echo ".".$storename."button.regular, .".$storename."buttons a.regular {color: #FFFFFF;}";
+		echo ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
+		echo ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
 		echo "</style>";
 	}
 		$width= "250";
@@ -470,32 +516,46 @@ function header_css_style() {
 		$colorfooter = "#ececed";
 		$colorimagebg = "#ffffff";
 		$colorfont = "#000000";
+		$colorborder = "#65B9C1";
 		$storename = "basic";
 		echo "<style type=\"text/css\" media=\"screen\">";
-		echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #999999;position:relative;}";
+		echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
 		echo ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
-		echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
+		echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";float:left;}";
 		echo ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
 		echo ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
 		echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
 		echo ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
 		echo ".".$storename."store-more img{margin:0px !important;}";
+		echo ".".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
+		echo ".".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
+		echo ".".$storename."store-price table tr {padding: 1px !important;}";
+		echo ".".$storename."store-price table tr td {padding: 1px !important;}";
+		echo ".".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
+		echo ".".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
+		echo ".".$storename."store-price {background-color: ".$colorborder." !important;}";
+		echo ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+		echo ".".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
+		echo ".".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
+		echo ".".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
+		echo ".".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
+		echo ".".$storename."button.regular, .".$storename."buttons a.regular {color: #FFFFFF;}";
+		echo ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
+		echo ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
 		echo "</style>";
 }
 
 function imageSize($size) {
 	$width = $size[0];
 	$height = $size[1];
-	return ' width:' . $width . 'px;height:' . $height . 'px;" width="'.$width.'" height="'.$height.'"';
+	return 'width="'.$width.'" height="'.$height.'"';
 }
-function show_items($usedhow, $winkelvol)
+function show_items($usedhow, $winkelvol, $searching)
 {
 
 	global $wpdb;
-$tablemulti = PRO_TABLE_PREFIX."multi";
-$tablelayout = PRO_TABLE_PREFIX."layout";
-
-
+	$tablemulti = PRO_TABLE_PREFIX."multi";
+	$tablelayout = PRO_TABLE_PREFIX."layout";
 	if ($winkelvol=="0"){
 		$Tradetracker_amount = get_option("Tradetracker_amount");
 		$Tradetracker_productid = get_option("Tradetracker_productid");
@@ -522,12 +582,15 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 			$colorimagebg = "#ffffff";
 			$colorfont = "#000000";
 			$storename = "basic";
-
+			$colorborder = "#65B9C1";
+			$colorbutton = "#65B9C1";
 	} else {
-		$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
-		foreach ($multi as $multi_val){
-
-
+		if ($searching == "1") {
+			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".get_option("Tradetracker_searchlayout")."");
+		} else {
+			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
+		}
+		foreach ($multi as $multi_val){	
 			$Tradetracker_amount = $multi_val->multiamount;
 			if($multi_val->multixmlfeed == "*" ){
 				$multixmlfeed = "";
@@ -572,21 +635,23 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 			}
 			$widthtitle = $width-6;
 			$widthmore = $width-10;
-
 			$Tradetracker_productid = $multi_val->multiitems;
 			$storename = create_slug($multi_val->multiname);
 		}
 	}
-
 	$table = PRO_TABLE_PREFIX."store";
-
-	if ($Tradetracker_productid == null) 
-	{
-		$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect." ORDER BY RAND() $Tradetracker_amount_i");
+	if ($searching == "1") {
+		$term = mysql_real_escape_string(get_search_query());
+		$visits=$wpdb->get_results("SELECT * FROM ".$table." WHERE `name` LIKE '%$term%' or `description` LIKE '%$term%' ORDER BY RAND() $Tradetracker_amount_i");
 	} else {
-		$productID = $Tradetracker_productid;
-		$productID = str_replace(",", "' or productID='", $productID);
-		$visits=$wpdb->get_results("SELECT * FROM ".$table." where productID='".$productID."' ORDER BY RAND() ".$Tradetracker_amount_i."");
+		if ($Tradetracker_productid == null) 
+		{
+			$visits=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect." ORDER BY RAND() $Tradetracker_amount_i");
+		} else {
+			$productID = $Tradetracker_productid;
+			$productID = str_replace(",", "' or productID='", $productID);
+			$visits=$wpdb->get_results("SELECT * FROM ".$table." where productID='".$productID."' ORDER BY RAND() ".$Tradetracker_amount_i."");
+		}
 	}
 	$storeitems = "";
 	$i="1";
@@ -647,10 +712,10 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 			$imageURL = $product->imageURL;
 		}
 		if (ini_get('allow_url_fopen') == true) {
-			$size = getimagesize($imageURL);
+			$size = @getimagesize($imageURL);
 			$sizes = imageSize($size);
 		} else {
-			$sizes = "\"";
+			$sizes = "";
 		}
 
 
@@ -662,7 +727,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 				</div>			
 				<div class=\"".$storename."store-image\">
 					<a href=\"".$image."\" ".$rel." ".$target.">
-						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" style=\"max-width:".$width."px;max-height:180px;width:auto;height:auto;\"/>
+						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" ".$sizes." style=\"max-width:".$width."px;max-height:180px;width:auto;height:auto;\"/>
 					</a>
 				</div>
 				<div class=\"".$storename."store-footer\">
@@ -670,15 +735,15 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 						".$productdescription."
 					</div>
 					".$more."
-					<div class=\"buttons\">
+					<div class=\"".$storename."buttons\">
 						<a href=\"".$producturl."\" class=\"regular\" target=\"_blank\" title=\"".$productname."\">
 							".$buynow."
 						</a>
 					</div>
-					<div class=\"store-price\">
+					<div class=\"".$storename."store-price\">
 						<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 							<tr>
-								<td style=\"width:55px;height:20px;\" class=\"euros\">
+								<td style=\"border: 1px none;\" class=\"euros\">
 									".$price."
 								</td>
 							</tr>
@@ -700,12 +765,12 @@ add_shortcode('display_store', 'display_store_items_short');
 
 function display_store_items_short()
 {
-	return store_items(1, 0);
+	return store_items(1, 0, 0);
 }
 
 function display_store_items()
 {
-	return store_items(2, 0);
+	return store_items(2, 0, 0);
 }
 
 
@@ -714,13 +779,24 @@ add_shortcode('display_multi', 'display_multi_items_short');
 function display_multi_items_short($store)
 {
 	extract(shortcode_atts(array("store" => '0'), $store));
-	return store_items(1, $store);
+	return store_items(1, $store, 0);
 }
 
 function display_multi_items($store)
 {
-	return store_items(2, $store);
+	return store_items(2, $store, 0);
 }
 
+add_shortcode('display_search', 'display_search_items_short');
+
+function display_search_items_short()
+{
+	return store_items(1, 1, 1);
+}
+
+function display_search_items()
+{
+	return store_items(2, 1, 1);
+}
 
 ?>
