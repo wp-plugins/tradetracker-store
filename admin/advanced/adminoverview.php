@@ -204,7 +204,8 @@ ttstoreheader();
 		</tr>
 	</table>
 	<hr>
-	If you agree with this you can put <b>[display_multi store="<?php echo $multi_val->multiid; ?>"]</b> in any page or post you make. Or use <b>display_multi_items($store="<?php echo $multi_val->multiid; ?>")</b> in your theme files.
+	If you agree with this you can put the following on every page or post you make: [display_multi store="<?php echo $multi_val->multiid; ?>"]
+	<br> Or use this in your theme files: display_multi_items($store="<?php echo $multi_val->multiid; ?>")
 	<br>
 	<hr>
 <?php
@@ -226,7 +227,8 @@ ttstoreheader();
 		</tr>
 	</table>
 	<hr>
-	If you agree with this you can put <b>[display_search]</b> in your search result page. Or use <b>display_search_items();</b> in your search.php. It will then show items based on what people search for on your site.
+	If you agree with this you can put this in your search result page: [display_search]
+	<br> Or use this in your search.php. It will then show items based on what people search for on your site: display_search_items();
 	<br>
 	<hr>
 

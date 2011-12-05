@@ -111,7 +111,8 @@ ttstoreheader();
 		</tr>
 	</table>
 	<hr>
-	If you agree with this you can put <b>[display_store]</b> in any page or post you make. Or use <b>display_store_items()</b> in your theme files.
+	If you agree with this you can put this in any page or post you make: [display_store]
+	<br> Or use this in your theme files: display_store_items();
 	<br>
 	<hr>
 

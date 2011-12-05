@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if(get_option('tt_premium_provider')=="") {
 	update_option('tt_premium_provider', array('tradetracker', 'tradetrackerdaily') );
 } else if (!in_array('tradetrackerdaily', get_option('tt_premium_provider'))){
@@ -93,11 +93,24 @@ if(get_option('tt_premium_provider')=="") {
 			$buffer = str_replace($delivered, $needed, $buffer);
 				$recordnum++;
 				$processed++;
+
+				if(preg_match_all('/<field name=\"(.+?)\" value=\"(.+?)\"( \/)?>/i', $buffer, $matches, PREG_PATTERN_ORDER)){
+					$categoriename = $matches[2][0];
+					$i=0;
+					while($i < count($matches[1])){
+						$buffer = str_replace("<field name=\"".$matches[1][$i]."\" value=\"".$matches[2][$i]."\" />", "<field name=\"".$matches[1][$i]."\">".$matches[2][$i]."</field>", $buffer);			
+						$i++;
+					}
+				}
+				if(preg_match('/\<categories\>/i', $buffer)){
+					$buffer = str_replace("<categories>", "<categories><category path=\"" . $categoriename . "\">".$categoriename."</category>", $buffer);			
+				}
 				fwrite($exportfile, $buffer);
 				if(!preg_match('</'.$xmldatadelimiter.'>', $buffer)){
 					fwrite($exportfile, "<xmlfile>$xmlfeedID</xmlfile>");		
 					fwrite($exportfile, "</product>");
 				}
+
 				if ($recordnum>$chunksize) {
 					fwrite($exportfile, "</$xmldatadelimiter>");
 					$recordnum=0;
