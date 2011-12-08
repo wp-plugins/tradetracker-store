@@ -1,4 +1,4 @@
-ï»¿<?php
+<?php
 if(get_option('tt_premium_provider')=="") {
 	update_option('tt_premium_provider', array('tradetracker', 'tradetrackerdaily') );
 } else if (!in_array('tradetrackerdaily', get_option('tt_premium_provider'))){
@@ -14,10 +14,10 @@ if(get_option('tt_premium_provider')=="") {
 		GLOBAL $processed;
 		$xmlstring =''."\n";
 		$xmlstring.="<$xmldatadelimiter>\n";
-		$delivered = array("â€™", "â€˜");
+		$delivered = array("’", "‘");
 		$needed   = array("", "");
 		$newfile = "splits/".$basefilename."-".$filenum.".xml";
-		$exportfile = fopen($dir."/$newfile","w") or die ("Can not create $newfile.");
+		$exportfile = fopen($dir."/$newfile","w");
 		if (function_exists('curl_init')) {
 			$ch = curl_init($xmlfile);
 			$fp = fopen($dir."/cache/cache.xml", "w");
@@ -49,7 +49,7 @@ if(get_option('tt_premium_provider')=="") {
 					$filenum++;
 					fclose($exportfile);
 					$newfile = "splits/".$basefilename."-".$filenum.".xml";
-					$exportfile = fopen($dir."/$newfile","w") or die ("could not create file.");
+					$exportfile = fopen($dir."/$newfile","w");
 					fwrite($exportfile, $xmlstring);
 				}
 				if ($filenum>5000) {
@@ -58,6 +58,7 @@ if(get_option('tt_premium_provider')=="") {
 			}
 			fclose($exportfile);
 			fclose($handle);
+			unset($buffer);
 		}
 	}
 	function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum, $processed, $xmldatadelimiter, $xmlitemdelimiter){
@@ -67,7 +68,7 @@ if(get_option('tt_premium_provider')=="") {
 		$recordnum = 1; 
 		GLOBAL $processed;
 		$newfile = "splits/".$basefilename."-".$filenum.".xml";
-		$exportfile = fopen($dir."/$newfile","w") or die ("Can not create $newfile.");
+		$exportfile = fopen($dir."/$newfile","w");
 		$xmldatadelimiter = "productFeed";
 		$xmlstring =''."\n";
 		$xmlstring.="<$xmldatadelimiter>\n";
@@ -117,7 +118,7 @@ if(get_option('tt_premium_provider')=="") {
 					$filenum++;
 					fclose($exportfile);
 					$newfile = "splits/".$basefilename."-".$filenum.".xml";
-					$exportfile = fopen($dir."/$newfile","w") or die ("could not create file.");
+					$exportfile = fopen($dir."/$newfile","w");
 					fwrite($exportfile, $xmlstring);
 				}
 				if ($filenum>5000) {

@@ -41,12 +41,8 @@ function fill_database1()
 	GLOBAL $extrafield;
 	GLOBAL $extravalue;
 	GLOBAL $counterxml;
-	$itemsadded="0";
-	$folder =  WP_PLUGIN_DIR . "/tradetracker-store/splits";
 	$table = PRO_TABLE_PREFIX."store";
-	//$emptytable = "DELETE FROM $table;;";
-	$emptytable = "TRUNCATE TABLE `$table`";
-	$wpdb->query($emptytable);
+	$folder =  WP_PLUGIN_DIR . "/tradetracker-store/splits";
 	// echo "<p>Deleted ".$wpdb->rows_affected." items in database";
 	foreach(glob($folder."/*xml") as $filename) {
 		$string = file_get_contents($filename, FILE_TEXT);

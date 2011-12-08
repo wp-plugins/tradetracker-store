@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.1.1
+Version: 3.1.2
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -47,7 +47,6 @@ include('admin/advanced/adminoverview.php');
 
 register_activation_hook(__FILE__,'tradetracker_store_install');
 register_deactivation_hook(__FILE__ ,'tradetracker_store_uninstall');
-add_action('wp_print_styles', 'ttstore_stylesheet');
 add_filter('plugin_action_links', 'TTstore_plugin_action_links', 10, 2);
 
 function isTime($time){	
@@ -373,14 +372,7 @@ function tradetracker_store_uninstall()
 /* 
 ..--==[ Function to add the stylesheet for the store ]==--.. 
 */
-function ttstore_stylesheet() {
-	$myStyleUrl = WP_PLUGIN_URL . '/tradetracker-store/store.css';
-	$myStyleFile = WP_PLUGIN_DIR . '/tradetracker-store/store.css';
-	if ( file_exists($myStyleFile) ) {
-		wp_register_style('myStyleSheets', $myStyleUrl);
-		wp_enqueue_style( 'myStyleSheets');
-        }
-}
+
 function TTstore_scripts() {   
 	wp_enqueue_script( 'ttstoreexpand-script', WP_PLUGIN_URL . '/tradetracker-store/js/expand.js');
 }       
@@ -395,16 +387,7 @@ add_action('init', 'TTstore_scripts');
 ..--==[ Function to see if XML is loaded already and cached. ]==--.. 
 */
 
-function store_items($used, $winkel, $searching)
-{
-	$Tradetracker_xml = get_option("Tradetracker_xml");
-	if ($Tradetracker_xml == null) 
-	{
-		echo "No XML filled in yet please change the settings first.";
-	} else {
-		return show_items($used, $winkel, $searching);
-	}
-}
+
 /* 
 ..--==[ Function to fill the database from the xml. ]==--.. 
 */
@@ -438,9 +421,10 @@ add_action('wp_head', 'header_css_style');
 
 function header_css_style() {
 	global $wpdb;
+	$style="";
 	$tablelayout = PRO_TABLE_PREFIX."layout";
 	$tablemulti = PRO_TABLE_PREFIX."multi";
-	$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorbutton, laycolorborder, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
+	$multi=$wpdb->get_results("SELECT multiname, laywidth, layfont, laycolortitle, laycolorbutton, laycolorborder, laycolorfooter, laycolorimagebg, laycolorfont FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
 		foreach ($multi as $multi_val){
 			$i="1";
 			if( $multi_val->laywidth == "" ){
@@ -485,33 +469,32 @@ function header_css_style() {
 			} else {
 				$colorbutton = $multi_val->laycolorbutton;
 			}
-			$Tradetracker_productid = $multi_val->multiitems;
 			$storename = create_slug($multi_val->multiname);
-		echo "<style type=\"text/css\" media=\"screen\">";
-		echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
-		echo ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
-		echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
-		echo ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
-		echo ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
-		echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
-		echo ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
-		echo ".".$storename."store-more img{margin:0px !important;}";
-		echo ".".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
-		echo ".".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
-		echo ".".$storename."store-price table tr {padding: 1px !important;}";
-		echo ".".$storename."store-price table tr td {padding: 1px !important;}";
-		echo ".".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
-		echo ".".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
-		echo ".".$storename."store-price {background-color: ".$colorborder." !important;}";
-		echo ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
-		echo ".".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
-		echo ".".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
-		echo ".".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
-		echo ".".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
-		echo ".".$storename."button.regular, .".$storename."buttons a.regular {color: #FFFFFF;}";
-		echo ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
-		echo ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
-		echo "</style>";
+		$style .= "<style type=\"text/css\" media=\"screen\">";
+		$style .= ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
+		$style .= ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
+		$style .= ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
+		$style .= ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
+		$style .= ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
+		$style .= ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+		$style .= ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
+		$style .= ".".$storename."store-more img{margin:0px !important;}";
+		$style .= ".".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
+		$style .= ".".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
+		$style .= ".".$storename."store-price table tr {padding: 1px !important;}";
+		$style .= ".".$storename."store-price table tr td {padding: 1px !important;}";
+		$style .= ".".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
+		$style .= ".".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
+		$style .= ".".$storename."store-price {background-color: ".$colorborder." !important;}";
+		$style .= ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+		$style .= ".".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
+		$style .= ".".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
+		$style .= ".".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
+		$style .= ".".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
+		$style .= ".".$storename."button.regular, .".$storename."buttons a.regular {color: #FFFFFF;}";
+		$style .= ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
+		$style .= ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
+		$style .= "</style>";
 	}
 		$width= "250";
 		$font= "Verdana";
@@ -523,31 +506,32 @@ function header_css_style() {
 		$colorfont = "#000000";
 		$colorborder = "#65B9C1";
 		$storename = "basic";
-		echo "<style type=\"text/css\" media=\"screen\">";
-		echo ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
-		echo ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
-		echo ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";float:left;}";
-		echo ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
-		echo ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
-		echo ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
-		echo ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
-		echo ".".$storename."store-more img{margin:0px !important;}";
-		echo ".".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
-		echo ".".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
-		echo ".".$storename."store-price table tr {padding: 1px !important;}";
-		echo ".".$storename."store-price table tr td {padding: 1px !important;}";
-		echo ".".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
-		echo ".".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
-		echo ".".$storename."store-price {background-color: ".$colorborder." !important;}";
-		echo ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
-		echo ".".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
-		echo ".".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
-		echo ".".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
-		echo ".".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
-		echo ".".$storename."button.regular, .".$storename."buttons a.regular {color: #FFFFFF;}";
-		echo ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
-		echo ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
-		echo "</style>";
+		$style .= "<style type=\"text/css\" media=\"screen\">";
+		$style .= ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
+		$style .= ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
+		$style .= ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";float:left;}";
+		$style .= ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
+		$style .= ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
+		$style .= ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+		$style .= ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
+		$style .= ".".$storename."store-more img{margin:0px !important;}";
+		$style .= ".".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
+		$style .= ".".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
+		$style .= ".".$storename."store-price table tr {padding: 1px !important;}";
+		$style .= ".".$storename."store-price table tr td {padding: 1px !important;}";
+		$style .= ".".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
+		$style .= ".".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
+		$style .= ".".$storename."store-price {background-color: ".$colorborder." !important;}";
+		$style .= ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+		$style .= ".".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
+		$style .= ".".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
+		$style .= ".".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
+		$style .= ".".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
+		$style .= ".".$storename."button.regular, .".$storename."buttons a.regular {color: #FFFFFF;}";
+		$style .= ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
+		$style .= ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
+		$style .= "</style>";
+		echo $style;
 }
 
 function imageSize($size) {
@@ -555,9 +539,8 @@ function imageSize($size) {
 	$height = $size[1];
 	return 'width="'.$width.'" height="'.$height.'"';
 }
-function show_items($usedhow, $winkelvol, $searching)
+function show_items($winkelvol, $searching)
 {
-
 	global $wpdb;
 	$tablemulti = PRO_TABLE_PREFIX."multi";
 	$tablelayout = PRO_TABLE_PREFIX."layout";
@@ -591,9 +574,9 @@ function show_items($usedhow, $winkelvol, $searching)
 			$colorbutton = "#65B9C1";
 	} else {
 		if ($searching == "1") {
-			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".get_option("Tradetracker_searchlayout")."");
+			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".get_option("Tradetracker_searchlayout")."");
 		} else {
-			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, layfont, laycolortitle, laycolorfooter, laycolorimagebg, laycolorfont, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
+			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
 		}
 		foreach ($multi as $multi_val){	
 			$Tradetracker_amount = $multi_val->multiamount;
@@ -661,32 +644,35 @@ function show_items($usedhow, $winkelvol, $searching)
 	$storeitems = "";
 	$i="1";
 	foreach ($visits as $product){
-		$extrafield = explode(",",$product->extrafield);
-		$extravalue = explode(",",$product->extravalue);
-		$extras = array_combine($extrafield, $extravalue);
-		$extraname = "";
-		$extravar = "";
-		foreach ($extras as $key => $value) {
-			$Tradetracker_extra_val = get_option("Tradetracker_extra");
-			if(!empty($Tradetracker_extra_val)){
-				if(in_array($key, $Tradetracker_extra_val, true)) {
-					$extraname .= "<tr><td width=\"50\"><b>".$key."</b></td><td>".$value."</td></tr>";
+		$Tradetracker_extra_val = get_option("Tradetracker_extra");
+		if(!empty($Tradetracker_extra_val)){
+			$extrafield = explode(",",$product->extrafield);
+			$extravalue = explode(",",$product->extravalue);
+			$extras = array_combine($extrafield, $extravalue);
+			$extraname = "";
+			$extravar = "";
+			foreach ($extras as $key => $value) {
+				$Tradetracker_extra_val = get_option("Tradetracker_extra");
+				if(!empty($Tradetracker_extra_val)){
+					if(in_array($key, $Tradetracker_extra_val, true)) {
+						$extraname .= "<tr><td width=\"50\"><b>".$key."</b></td><td>".$value."</td></tr>";
+					}
 				}
 			}
-		}
-		if($extraname != ""){
-			$more = "<div class=\"".$storename."store-more\">
-					<img src=\"".WP_PLUGIN_URL."/tradetracker-store/images/more.png\" style=\"border:0;\" border=\"0\" name=\"img".$i."\" width=\"11\" height=\"13\" border=\"0\" >
-					<a href=\"#first\" onClick=\"shoh('".$i."');\" >More info</a> 
-					<div style=\"display: none;\" id=\"".$i."\" > 
-						<table style=\"width:".$widthmore."px;\" width=\"".$widthmore."\">".$extraname."</table>
-					</div>
-				</div>";
-
+			if($extraname != ""){
+				$more = "<div class=\"".$storename."store-more\">
+						<img src=\"".WP_PLUGIN_URL."/tradetracker-store/images/more.png\" style=\"border:0;\" border=\"0\" name=\"img".$i."\" width=\"11\" height=\"13\" border=\"0\" >
+						<a href=\"#first\" onClick=\"shoh('".$i."');\" >More info</a> 
+						<div style=\"display: none;\" id=\"".$i."\" > 
+							<table style=\"width:".$widthmore."px;\" width=\"".$widthmore."\">".$extraname."</table>
+						</div>
+					</div>";
+			} else {
+				$more = "<div class=\"".$storename."store-more\"></div>";
+			}
 		} else {
 			$more = "<div class=\"".$storename."store-more\"></div>";
 		}
-				unset($extras);
 		$producturl = $product->productURL;
 		$productname = str_replace("&", "&amp;", $product->name);
 		$productdescription = str_replace("&", "&amp;", $product->description);
@@ -717,16 +703,12 @@ function show_items($usedhow, $winkelvol, $searching)
 			$imageURL = $product->imageURL;
 		}
 		if (ini_get('allow_url_fopen') == true) {
-			$size = @getimagesize($imageURL);
-			$sizes = imageSize($size);
+			//$size = @getimagesize($imageURL);
+			//$sizes = imageSize($size);
 		} else {
 			$sizes = "";
 		}
-
-
-
-		$storeitems .= "
-			<div class=\"".$storename."store-outerbox\">
+		echo "<div class=\"".$storename."store-outerbox\">
 				<div class=\"".$storename."store-titel\">
 					".$productname."
 				</div>			
@@ -758,24 +740,15 @@ function show_items($usedhow, $winkelvol, $searching)
 			</div>";
 	$i++;
 	}
-	if ($usedhow == 1){
-	return $storeitems;
-	}
-	if ($usedhow == 2){
-	echo $storeitems;
-	}
+	
 }
 
-add_shortcode('display_store', 'display_store_items_short');
 
-function display_store_items_short()
-{
-	return store_items(1, 0, 0);
-}
+add_shortcode('display_store', 'display_store_items');
 
 function display_store_items()
 {
-	return store_items(2, 0, 0);
+	show_items(0, 0);
 }
 
 
@@ -784,24 +757,19 @@ add_shortcode('display_multi', 'display_multi_items_short');
 function display_multi_items_short($store)
 {
 	extract(shortcode_atts(array("store" => '0'), $store));
-	return store_items(1, $store, 0);
+	show_items($store, 0);
 }
 
 function display_multi_items($store)
 {
-	return store_items(2, $store, 0);
+	show_items($store, 0);
 }
 
-add_shortcode('display_search', 'display_search_items_short');
-
-function display_search_items_short()
-{
-	return store_items(1, 1, 1);
-}
+add_shortcode('display_search', 'display_search_items');
 
 function display_search_items()
 {
-	return store_items(2, 1, 1);
+	show_items(1, 1);
 }
 
 ?>
