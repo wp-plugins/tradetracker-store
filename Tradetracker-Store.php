@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.1.2
+Version: 3.1.3
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -386,7 +386,16 @@ add_action('init', 'TTstore_scripts');
 /* 
 ..--==[ Function to see if XML is loaded already and cached. ]==--.. 
 */
-
+function store_items($used, $winkel, $searching)
+{
+	$Tradetracker_xml = get_option("Tradetracker_xml");
+	if ($Tradetracker_xml == null)
+	{
+		echo "No XML filled in yet please change the settings first.";
+	} else {
+		return show_items($used, $winkel, $searching);
+	}
+} 
 
 /* 
 ..--==[ Function to fill the database from the xml. ]==--.. 
@@ -539,7 +548,7 @@ function imageSize($size) {
 	$height = $size[1];
 	return 'width="'.$width.'" height="'.$height.'"';
 }
-function show_items($winkelvol, $searching)
+function show_items($usedhow, $winkelvol, $searching)
 {
 	global $wpdb;
 	$tablemulti = PRO_TABLE_PREFIX."multi";
@@ -708,7 +717,7 @@ function show_items($winkelvol, $searching)
 		} else {
 			$sizes = "";
 		}
-		echo "<div class=\"".$storename."store-outerbox\">
+		$storeitems .= "<div class=\"".$storename."store-outerbox\">
 				<div class=\"".$storename."store-titel\">
 					".$productname."
 				</div>			
@@ -740,36 +749,43 @@ function show_items($winkelvol, $searching)
 			</div>";
 	$i++;
 	}
+	$storeitems .= "<div class=\"clear\"></div>";
+	if ($usedhow == 1){
+		return $storeitems;
+	}
+	if ($usedhow == 2){
+		echo $storeitems; 
+	}
 	
 }
-
-
-add_shortcode('display_store', 'display_store_items');
-
+add_shortcode('display_store', 'display_store_items_short');
+function display_store_items_short()
+{
+	return store_items(1, 0, 0);
+}
+	
 function display_store_items()
 {
-	show_items(0, 0);
+	return store_items(2, 0, 0);
 }
-
-
 add_shortcode('display_multi', 'display_multi_items_short');
-
 function display_multi_items_short($store)
 {
 	extract(shortcode_atts(array("store" => '0'), $store));
-	show_items($store, 0);
+	return store_items(1, $store, 0);
 }
-
 function display_multi_items($store)
 {
-	show_items($store, 0);
+	return store_items(2, $store, 0);
 }
-
-add_shortcode('display_search', 'display_search_items');
-
+add_shortcode('display_search', 'display_search_items_short');
+function display_search_items_short()
+{
+	return store_items(1, 1, 1);
+}
 function display_search_items()
 {
-	show_items(1, 1);
-}
+	return store_items(2, 1, 1);
+} 
 
 ?>
