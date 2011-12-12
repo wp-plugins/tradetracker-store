@@ -45,30 +45,33 @@ function debug_ttstore() {
 	}
 }
 function ttstoreerrordetect() {
-	$tterror = "no";
-	if (!function_exists('curl_init')) {
-		if (ini_get('allow_url_fopen') == false) {
+	$settingsselected = get_option("Tradetracker_settings");
+	if (!empty($settingsselected)) { 
+		$tterror = "no";
+		if (!function_exists('curl_init')) {
+			if (ini_get('allow_url_fopen') == false) {
+				$tterror="yes";
+			}
+		} 
+		$folder =  WP_PLUGIN_DIR . "/tradetracker-store/splits";
+	
+		if(!is_writable($folder)){
 			$tterror="yes";
 		}
-	} 
-	$folder =  WP_PLUGIN_DIR . "/tradetracker-store/splits";
-
-	if(!is_writable($folder)){
-		$tterror="yes";
-	}
-	$folder2 =  WP_PLUGIN_DIR . "/tradetracker-store/cache";
-	if(!is_writable($folder2)){
-		$tterror="yes";
-	} 
-
-	if (!extension_loaded('simplexml')) {
-		if (!dl('simplexml.so')) {
+		$folder2 =  WP_PLUGIN_DIR . "/tradetracker-store/cache";
+		if(!is_writable($folder2)){
 			$tterror="yes";
+		} 	
+	
+		if (!extension_loaded('simplexml')) {
+			if (!dl('simplexml.so')) {
+				$tterror="yes";
+			}
 		}
-	}
-	if ($tterror == "yes"){
-		$warning = __('Error detected in TradeTracker Store plugin, please see <a href=\"admin.php?page=tradetracker-shop-debug\">debug page</a>','ttstore' );
-		add_action('admin_notices', create_function( '', "echo \"<div class='error'><p>$warning</p></div>\";" ) );
+		if ($tterror == "yes"){
+			$warning = __('Error detected in TradeTracker Store plugin, please see <a href=\"admin.php?page=tradetracker-shop-debug\">debug page</a>','ttstore' );
+			add_action('admin_notices', create_function( '', "echo \"<div class='error'><p>$warning</p></div>\";" ) );
+		}
 	}
 }
 function ttstoreheader() {
