@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.1.3
+Version: 3.1.4
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -581,6 +581,9 @@ function show_items($usedhow, $winkelvol, $searching)
 			$storename = "basic";
 			$colorborder = "#65B9C1";
 			$colorbutton = "#65B9C1";
+		if(get_option("Tradetracker_lightbox")==1){
+			$uselightbox = "1";
+		}
 	} else {
 		if ($searching == "1") {
 			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".get_option("Tradetracker_searchlayout")."");
@@ -634,6 +637,9 @@ function show_items($usedhow, $winkelvol, $searching)
 			$widthmore = $width-10;
 			$Tradetracker_productid = $multi_val->multiitems;
 			$storename = create_slug($multi_val->multiname);
+			if($multi_val->multilightbox==1){
+				$uselightbox = "1";
+			}
 		}
 	}
 	$table = PRO_TABLE_PREFIX."store";
@@ -682,10 +688,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$more = "<div class=\"".$storename."store-more\"></div>";
 		}
-		$producturl = $product->productURL;
-		$productname = str_replace("&", "&amp;", $product->name);
-		$productdescription = str_replace("&", "&amp;", $product->description);
-		if(get_option("Tradetracker_lightbox")==1){
+		if($uselightbox==1){
 			$image = $product->imageURL;
 			$target = "";	
 			$rel = "rel=\"lightbox[store]\"";
@@ -694,6 +697,9 @@ function show_items($usedhow, $winkelvol, $searching)
 			$target = "target=\"_blank\"";
 			$rel = "";
 		}
+		$producturl = $product->productURL;
+		$productname = str_replace("&", "&amp;", $product->name);
+		$productdescription = str_replace("&", "&amp;", $product->description);
 		if(get_option("Tradetracker_currency")=="1") {
 			$array = get_option("Tradetracker_newcur");
 			$key = $product->currency; 
