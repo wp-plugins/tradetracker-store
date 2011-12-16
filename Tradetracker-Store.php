@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.1.4
+Version: 3.1.5
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -225,12 +225,11 @@ padding:10px;
 	<h3>Sites using this plugin</h3>
 	<ul>
 <?php
-	$site_file = WP_PLUGIN_URL.'/tradetracker-store/cache/sites.xml';
 	$site_dir = WP_PLUGIN_DIR.'/tradetracker-store/cache/sites.xml';
 	if (!file_exists($site_dir)) {
-		   $site_file = 'http://wpaffiliatefeed.com/tradetracker-store/sites.xml'; 
+		   $site_dir = 'http://wpaffiliatefeed.com/tradetracker-store/sites.xml'; 
 	} 
-	$sites = file_get_contents($site_file);
+	$sites = file_get_contents($site_dir);
 	$sites = simplexml_load_string($sites);
 	foreach($sites as $site) // loop through our items
 	{
@@ -260,12 +259,11 @@ echo "<li><a href=\"".$site->siteadres."\" target=\"_blank\">".$site->sitenaam."
 	<div id="slider">
 	<ul>
 <?php
-	$news_file = WP_PLUGIN_URL.'/tradetracker-store/cache/news.xml';
 	$news_dir = WP_PLUGIN_DIR.'/tradetracker-store/cache/news.xml';
 	if (!file_exists($news_dir)) {
-		   $news_file = 'http://wpaffiliatefeed.com/category/news/feed/'; 
+		   $news_dir = 'http://wpaffiliatefeed.com/category/news/feed/'; 
 	} 
-	$news = file_get_contents($news_file);
+	$news = file_get_contents($news_dir);
 	$news = simplexml_load_string($news);
 	foreach($news as $newsmsg) // loop through our items
 	{

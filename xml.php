@@ -44,9 +44,11 @@ function xml_updater() {
 			$files = glob($folder."/*xml");
 			if(count($files) > 0)
 			{
-				foreach($files as $file){ 
-					unlink($file); 
-					// echo "Deleted ".$file."<br>";
+				if (is_array($files)) {
+					foreach($files as $file){ 
+						unlink($file); 
+						// echo "Deleted ".$file."<br>";
+					}
 				}
 			}
 		}  
@@ -80,9 +82,11 @@ function xml_updater() {
 					$files = glob($folder."/*xml");
 					if(count($files) > 0)
 					{	
-						foreach($files as $filedel){ 
-						unlink($filedel); 
-						// echo "Deleted ".$file."<br>";
+						if (is_array($files)) {
+							foreach($files as $filedel){ 
+								unlink($filedel); 
+								// echo "Deleted ".$file."<br>";
+							}
 						}
 					}
 				}  

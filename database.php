@@ -44,9 +44,11 @@ function fill_database1()
 	$table = PRO_TABLE_PREFIX."store";
 	$folder =  WP_PLUGIN_DIR . "/tradetracker-store/splits";
 	// echo "<p>Deleted ".$wpdb->rows_affected." items in database";
-	foreach(glob($folder."/*xml") as $filename) {
-		$string = file_get_contents($filename, FILE_TEXT);
-		$products = simplexml_load_string($string);
+	$files = glob($folder."/*xml");
+	if (is_array($files)) {
+		foreach($files as $filename) {
+			$string = file_get_contents($filename, FILE_TEXT);
+			$products = simplexml_load_string($string);
 			foreach($products as $product) // loop through our items
 			{
 				$counterxml = "1";
@@ -81,6 +83,7 @@ function fill_database1()
 				$extrafieldarray .= ",".$extrafield;
 				$itemsadded++;
 			}
+		}
 	}
 	$extrafieldarray = array_unique(explode(",",$extrafieldarray));
 	$remove_null_number = true;
