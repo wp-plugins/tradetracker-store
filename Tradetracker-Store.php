@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.1.6
+Version: 3.1.7
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -73,6 +73,11 @@ function runxmlupdater() {
 $store = PRO_TABLE_PREFIX."store";
 $multi = PRO_TABLE_PREFIX."multi";
 $layout = PRO_TABLE_PREFIX."layout";
+
+if (get_option("TTstoreversion") == "3.1.6"){
+	$result=$wpdb->query("ALTER TABLE `".$layout."` ADD `laycolorbuttonfont` VARCHAR(50) NOT NULL");
+	update_option("TTstoreversion", "3.1.7" );
+}
 
 if (get_option("TTstoreversion") == "3.0.12"){
 	$result=$wpdb->query("ALTER TABLE `".$store."` MODIFY `productID` VARCHAR(36)");
@@ -438,7 +443,7 @@ function header_css_style() {
 	if (get_option("Tradetracker_settings")==2){
 	$tablelayout = PRO_TABLE_PREFIX."layout";
 	$tablemulti = PRO_TABLE_PREFIX."multi";
-	$multi=$wpdb->get_results("SELECT multiname, laywidth, layfont, laycolortitle, laycolorbutton, laycolorborder, laycolorfooter, laycolorimagebg, laycolorfont FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
+	$multi=$wpdb->get_results("SELECT multiname, laywidth, layfont, laycolortitle, laycolorbuttonfont, laycolorbutton, laycolorborder, laycolorfooter, laycolorimagebg, laycolorfont FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id");
 		foreach ($multi as $multi_val){
 			$i="1";
 			if( $multi_val->laywidth == "" ){
@@ -483,6 +488,11 @@ function header_css_style() {
 			} else {
 				$colorbutton = $multi_val->laycolorbutton;
 			}
+			if( $multi_val->laycolorbuttonfont == "" ){
+				$colorbuttonfont = "#ffffff";
+			} else {
+				$colorbuttonfont = $multi_val->laycolorbuttonfont;
+			}
 			$storename = create_slug($multi_val->multiname);
 			$style .= "<style type=\"text/css\" media=\"screen\">";
 			$style .= ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
@@ -500,14 +510,14 @@ function header_css_style() {
 			$style .= ".".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
 			$style .= ".".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
 			$style .= ".".$storename."store-price {background-color: ".$colorborder." !important;}";
-			$style .= ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+			$style .= ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: ".$colorbuttonfont.";cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
 			$style .= ".".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
 			$style .= ".".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
 			$style .= ".".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
 			$style .= ".".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
-			$style .= ".".$storename."button.regular, .".$storename."buttons a.regular {color: #FFFFFF;}";
-			$style .= ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
-			$style .= ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
+			$style .= ".".$storename."button.regular, .".$storename."buttons a.regular {color: ".$colorbuttonfont.";}";
+			$style .= ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: ".$colorbuttonfont.";}";
+			$style .= ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: ".$colorbuttonfont.";}";
 			$style .= "</style>";
 		}
 	}
@@ -699,7 +709,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			$target = "";	
 			$rel = "rel=\"lightbox[store]\"";
 		} else {
-			$image = $producturl;
+			$image = $product->productURL;
 			$target = "target=\"_blank\"";
 			$rel = "";
 		}

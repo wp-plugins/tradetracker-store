@@ -17,6 +17,7 @@ $tablelayout = PRO_TABLE_PREFIX."layout";
 	laycolorfont VARCHAR(7) NOT NULL,
 	laycolorborder VARCHAR(7) NOT NULL,
 	laycolorbutton VARCHAR(7) NOT NULL,
+	laycolorbuttonfont VARCHAR(50) NOT NULL,
 	layfont VARCHAR(50) NOT NULL,
 	UNIQUE KEY id (id)
     );";
@@ -37,6 +38,7 @@ $Tradetracker_colorfooter_val = "";
 $Tradetracker_colorfont_val = "";
 $Tradetracker_colorborder_val = "";
 $Tradetracker_colorbutton_val = "";
+$Tradetracker_colorbuttonfont_val = "";
 $layoutid = "";
 	$hidden_field_name = 'mt_submit_hidden';
 
@@ -47,7 +49,7 @@ $layoutid = "";
 		if(!empty($_POST['layoutid'])){
 			$layoutid = $_POST['layoutid'];
 		} 
-		$layout=$wpdb->get_results("SELECT laywidth, layname, layfont, laycolortitle, laycolorfooter, laycolorbutton, laycolorimagebg, laycolorfont, laycolorborder FROM ".$tablelayout." where id=".$layoutid."");
+		$layout=$wpdb->get_results("SELECT laywidth, layname, laycolorbuttonfont, layfont, laycolortitle, laycolorfooter, laycolorbutton, laycolorimagebg, laycolorfont, laycolorborder FROM ".$tablelayout." where id=".$layoutid."");
 		foreach ($layout as $layout_val){
 			
 			$Tradetracker_width_val = $layout_val->laywidth;
@@ -59,6 +61,7 @@ $layoutid = "";
 			$Tradetracker_colorfont_val = $layout_val->laycolorfont;
 			$Tradetracker_colorborder_val = $layout_val->laycolorborder;
 			$Tradetracker_colorbutton_val = $layout_val->laycolorbutton;
+			$Tradetracker_colorbuttonfont_val = $layout_val->laycolorbuttonfont;
 
 			$db_width_val = $layout_val->laywidth;
 			$db_layoutname_val = $layout_val->layname;
@@ -69,6 +72,7 @@ $layoutid = "";
 			$db_colorfont_val = $layout_val->laycolorfont;
 			$db_colorborder_val = $layout_val->laycolorborder;
 			$db_colorbutton_val = $layout_val->laycolorbutton;
+			$db_colorbuttonfont_val = $layout_val->laycolorbuttonfont;
 		}
 
 	}
@@ -99,6 +103,9 @@ $layoutid = "";
 	$Tradetracker_colorbutton_name = 'Tradetracker_colorbutton';
 	$Tradetracker_colorbutton_field_name = 'Tradetracker_colorbutton';
 
+	$Tradetracker_colorbuttonfont_name = 'Tradetracker_colorbuttonfont';
+	$Tradetracker_colorbuttonfont_field_name = 'Tradetracker_colorbuttonfont';
+
 	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' ) {
         // Read their posted value
 
@@ -111,6 +118,7 @@ $layoutid = "";
 		$Tradetracker_colorfont_val = $_POST[ $Tradetracker_colorfont_field_name ];
 		$Tradetracker_colorborder_val = $_POST[ $Tradetracker_colorborder_field_name ];
 		$Tradetracker_colorbutton_val = $_POST[ $Tradetracker_colorbutton_field_name ];
+		$Tradetracker_colorbuttonfont_val = $_POST[ $Tradetracker_colorbuttonfont_field_name ];
 
 
         // Save the posted value in the database
@@ -142,6 +150,10 @@ $layoutid = "";
 		if ( $db_colorbutton_val  != $Tradetracker_colorbutton_val) {
 			$query = $wpdb->update( $tablelayout, array( 'laycolorbutton' => $Tradetracker_colorbutton_val), array( 'id' => $_POST['layoutid']), array( '%s'), array( '%s'), array( '%d' ) );
 		}
+		if ( $db_colorbuttonfont_val  != $Tradetracker_colorbuttonfont_val) {
+			$query = $wpdb->update( $tablelayout, array( 'laycolorbuttonfont' => $Tradetracker_colorbuttonfont_val), array( 'id' => $_POST['layoutid']), array( '%s'), array( '%s'), array( '%d' ) );
+		}
+
 		} else {
         		$currentpage["laywidth"]=$Tradetracker_width_val;
         		$currentpage["layname"]=$Tradetracker_layoutname_val;
@@ -152,6 +164,7 @@ $layoutid = "";
         		$currentpage["laycolorfont"]=$Tradetracker_colorfont_val;
         		$currentpage["laycolorborder"]=$Tradetracker_colorborder_val;
         		$currentpage["laycolorbutton"]=$Tradetracker_colorbutton_val;
+        		$currentpage["laycolorbuttonfont"]=$Tradetracker_colorbuttonfont_val;
 			$wpdb->insert( $tablelayout, $currentpage);
 			$layoutid = $wpdb->insert_id;
 		}
@@ -207,6 +220,11 @@ $layoutid = "";
 	} else {
 	$colorbutton = $Tradetracker_colorbutton_val;
 	}
+	if( $Tradetracker_colorbuttonfont_val == "" ){
+		$colorbuttonfont = "#ffffff";
+	} else {
+		$colorbuttonfont = $Tradetracker_colorbuttonfont_val;
+	}
 
 ?>
 
@@ -231,14 +249,14 @@ $layoutid = "";
 		echo ".store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
 		echo ".store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
 		echo ".store-price {background-color: ".$colorborder." !important;}";
-		echo ".buttons a, .buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: #FFFFFF;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+		echo ".buttons a, .buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: ".$colorbuttonfont.";cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
 		echo ".buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
 		echo ".buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
 		echo ":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
 		echo ".buttons button img, .buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
-		echo ".button.regular, .buttons a.regular {color: #FFFFFF;}";
-		echo ".buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
-		echo ".buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
+		echo ".button.regular, .buttons a.regular {color: ".$colorbuttonfont.";}";
+		echo ".buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: ".$colorbuttonfont.";}";
+		echo ".buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: ".$colorbuttonfont.";}";
 
 ?>
 
@@ -354,7 +372,16 @@ $layoutid = "";
 			<input type="text" name="<?php echo $Tradetracker_colorbutton_field_name; ?>" value="<?php echo $Tradetracker_colorbutton_val; ?>" size="20">
 		</td>
 	</tr>
-
+	<tr>
+		<td>
+			<label for="tradetrackerbuttoncolorfont" title="What font color would you like to use for the button." class="info">
+				<?php _e("Button Font color:", 'tradetracker-colorbuttonfont' ); ?> 
+			</label> 
+		</td>
+		<td>
+			<input type="text" name="<?php echo $Tradetracker_colorbuttonfont_field_name; ?>" value="<?php echo $Tradetracker_colorbuttonfont_val; ?>" size="20">
+		</td>
+	</tr>
 	<tr>
 		<td>
 			<label for="tradetrackercolorfont" title="What font color would you like to use." class="info">
