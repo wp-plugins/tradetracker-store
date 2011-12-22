@@ -56,6 +56,7 @@ function my_plugin_menu() {
 		if(class_exists('SoapClient')){
 			if (get_option("Tradetracker_statsdash")==1){
 				$tabs6 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Stats', 'Tt Store Stats', 'manage_options', 'tradetracker-shop-stats', 'tradetracker_store_stats');
+				add_action( "admin_print_scripts-$tabs6", 'tabs_admin_head' );
 			}
 		}
 		$mylayout =  add_submenu_page('tradetracker-shop', 'Tradetracker Store layout', 'Tt Store Layout', 'manage_options', 'tradetracker-shop-layout', 'tradetracker_store_layout');
@@ -71,7 +72,6 @@ function my_plugin_menu() {
 		add_submenu_page('tradetracker-shop', 'Tradetracker Store debug', 'Tt Store Debug', 'manage_options', 'tradetracker-shop-debug', 'debug_ttstore');
 		add_action( "admin_print_scripts-$tabs5", 'tabs_admin_head' );
 		add_action( "admin_print_scripts-$mylayout", 'tabs_admin_head' );
-		add_action( "admin_print_scripts-$tabs6", 'tabs_admin_head' );
 		add_action( "admin_print_scripts-$tabs7", 'tabs_admin_head' );
 		add_action( "admin_print_scripts-$tabs8", 'tabs_admin_head' );
 		add_action( "admin_print_scripts-$tabs9", 'tabs_admin_head' );

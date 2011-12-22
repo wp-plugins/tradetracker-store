@@ -292,7 +292,7 @@ function toggleOther(){
 				$i="1";
 				foreach($categorie as $categorieselect) {
 					echo "<tr><td>";
-					if($Tradetracker_categories_val !=""){
+					if(is_array($Tradetracker_categories_val)){
 						if(in_array($categorieselect->categorieid, unserialize($Tradetracker_categories_val), true)) {
 							echo "<input type=\"checkbox\" checked=\"yes\" name=\"".$Tradetracker_categories_field_name."[]\" value=\"".$categorieselect->categorieid."\" />".$categorieselect->categorie."<br />";
 						} else {
