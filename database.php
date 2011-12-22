@@ -1,5 +1,5 @@
 <?php
-include('utf8.php');
+//include('utf8.php');
 function parse_recursive(SimpleXMLElement $element, $level = 0)
 {	
 	GLOBAL $extrafield;
@@ -48,7 +48,8 @@ function fill_database1()
 	$files = glob($folder."/*xml");
 	if (is_array($files)) {
 		foreach($files as $filename) {
-			$string = forceUTF8(file_get_contents($filename, FILE_TEXT));
+			//$string = forceUTF8(file_get_contents($filename, FILE_TEXT));
+			$string = file_get_contents($filename, FILE_TEXT);
 			$products = simplexml_load_string($string);
 			foreach($products as $product) // loop through our items
 			{
