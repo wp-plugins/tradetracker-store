@@ -112,6 +112,36 @@ function ozh_loadcss_admin_head() {
 function tradetracker_store_help() {
 ?>
 <div class="plugindiv">
+<?php 
+$settingsselected = get_option("Tradetracker_settings");
+if (empty($settingsselected)) { 
+?>
+<h2>Basic Settings help:</h2>
+<ul class="tabset_tabs">
+   <li><a href="#help2">Registration</a></li>
+</ul>
+
+<div id="help2" class="tabset_content1">
+   <h2 class="tabset_label">Registration</h2>
+<h2>Registration:</h2>
+<p>First you will need to register with <a href="http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=" target="_blank">TradeTracker UK</a> or <a href=http://tc.tradetracker.net/?c=27&m=0&a=48684&r=register&u=%2Fnl%2Fpublisher%2Fregister target="_blank">Tradetracker NL</a>
+<br>When your site is accepted for their affiliate program you will receive an email. Login to <a href="http://tc.tradetracker.net/?c=1065&amp;m=0&amp;a=66047&amp;r=login&amp;u=%2Fgb%2Fpublisher%2Flogin" target="_blank">Tradetracker</a>
+<p>Within Tradetracker you go to "Affiliatemanagement" and then "Campagnes". Here you can find a campaign for your site. When selecting a campaign make sure it has a product feed. Sign up to one of the campaigns with a product feed and wait until you are accepted (some will manually approve you and some will do so automatically so sometimes it can take a while)
+<p>When accepted go to <a href="http://tc.tradetracker.net/?c=1065&amp;m=0&amp;a=66047&amp;r=feed&amp;u=https%3A%2F%2Faffiliate.tradetracker.com%2FaffiliateMaterial%2FproductFeed" target="_blank">the product feed page</a> and make sure you select these settings:
+<ul>
+<li> - On the right side choose "create url"
+<li> - On the new screen you have the options for the product feed
+<li> - <b>Product feed:</b> You can choose which site you want to place the product feed on
+<li> - <b>Affiliatesite:</b> Select the campaign
+<li> - <b>Output Type:</b> Make sure you select XML
+<li> - <b>Coding:</b> Choose the utf-8 option
+</ul>
+If you press "Generate" you will get a link. Use that at the Tradetracker XML option. If you can't find these steps, this <a href=http://www.youtube.com/watch?v=c149cIEJFLk>movie</a> can help. Just remember you need a XML and not a CSV. 
+<?php
+}
+if (!empty($settingsselected)) { 
+?>
+
 	<?php if (get_option("Tradetracker_settings")==1){ ?>
 <h2>Basic Settings help:</h2>
 <ul class="tabset_tabs">
@@ -370,7 +400,7 @@ If you press "Generate" you will get a link. Use that at the Tradetracker XML op
 	<p>You can press the <b>New</b> button if you want to get a new blank form
 	<p>Below the buttons you will see all the stores you created. Here you can press the <b>Edit</b> button if you want to edit them or press <b>Select Items</b> to select items for this specific store.
 </div>
-<?php } ?>
+<?php }} ?>
 
 </div>
 	<div id="sideblock" style="float:right;width:200px;margin-left:10px;border:1px;position:relative;border-color:#000000;border-style:solid;"> 

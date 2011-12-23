@@ -14,7 +14,7 @@
 .tabset_tabs li.firstchild a	{ border-left-width:1px }
 
 .tabset_content	{ border:1px solid black; background-color:white; position:relative; padding:0.5em 1em; display:none;width:700px; float:left;min-height:1037px;}
-.tabset_content1	{ border:1px solid black; background-color:white; position:relative; display:none;width:700px;}
+.tabset_content1{ float:left; border:1px solid black; background-color:white; position:relative; display:none;width:700px;}
 .tabset_label	{ display:none }
 
 .tabset_content_active	{ display:block }
