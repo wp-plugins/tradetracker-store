@@ -133,7 +133,9 @@ function tradetracker_store_setup() {
 	<p class="submit">
 	<b>Always save changes before pressing next.</b><br>
 		<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 
+<?php if (!empty($Tradetracker_settings_val)) { ?>
 		<INPUT type="button" name="Next" value="<?php esc_attr_e('Next') ?>" onclick="location.href='admin.php?page=tradetracker-shop-settings'">
+<?php } ?>
 		<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help'">
 	</p>
 
