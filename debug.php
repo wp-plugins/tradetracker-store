@@ -75,13 +75,16 @@ function ttstoreerrordetect() {
 	}
 }
 function ttstoreheader() {
-	$update = "";
-	if($_GET['update']=="yes"){
-		xml_updater();
-		$update = "Update Finished:";
+	$settingsselected = get_option("Tradetracker_settings");
+	if (!empty($settingsselected)) { 
+		$update = "";
+		if($_GET['update']=="yes"){
+			xml_updater();
+			$update = "Update Finished:";
+		}
+		echo "<div class=\"updated\"><p><strong>".$update." ".get_option("Tradetracker_xml_update")." <a href=\"admin.php?page=tradetracker-shop-settings&update=yes\">Update now</a></strong></p></div>";
+		premiumcheck();
 	}
-	echo "<div class=\"updated\"><p><strong>".$update." ".get_option("Tradetracker_xml_update")." <a href=\"admin.php?page=tradetracker-shop-settings&update=yes\">Update now</a></strong></p></div>";
-	premiumcheck();
 }
 add_action( 'init', 'test_head_footer_init' );
 function test_head_footer_init() {

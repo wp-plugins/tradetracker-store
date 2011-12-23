@@ -35,6 +35,11 @@ function my_plugin_menu() {
 	global $wpdb;
 	add_menu_page('Tradetracker Store', 'Tt Store', 'manage_options', 'tradetracker-shop', 'tradetracker_store_setup');
 	$tabs = add_submenu_page('tradetracker-shop', 'Tradetracker Store setup', 'Tt Store Setup', 'manage_options', 'tradetracker-shop', 'tradetracker_store_setup');
+	$settingsselected = get_option("Tradetracker_settings");
+	if (empty($settingsselected)) { 
+		$tabs4 = add_submenu_page('tradetracker-shop', 'Tradetracker Store help', 'Tt Store Help', 'manage_options', 'tradetracker-shop-help', 'tradetracker_store_help');
+		add_action( "admin_print_scripts-$tabs4", 'tabs_admin_head' );
+	}
 	if (get_option("Tradetracker_settings")==1){
 		$tabs1 = add_submenu_page('tradetracker-shop', 'Tradetracker Store settings', 'Tt Store Settings', 'manage_options', 'tradetracker-shop-settings', 'tradetracker_store_options');
 		$mypage = add_submenu_page('tradetracker-shop', 'Tradetracker Store Items', 'Tt Store Items', 'manage_options', 'tradetracker-shop-items', 'adminstore_items');
