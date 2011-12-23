@@ -15,9 +15,12 @@ foreach ($providers as $key => $value){
 }
 }
 function premiumcheck() {
-	if(function_exists('curl_init')) {
-		if(get_option("Tradetracker_premiumapi")==""){
-			echo "<div class=\"updated\"><p><strong><a href=\"admin.php?page=tradetracker-shop-premium\">Premium content</a> has not been enabled</strong></p></div>";
+	$settingsselected = get_option("Tradetracker_settings");
+	if (!empty($settingsselected)) { 
+		if(function_exists('curl_init')) {
+			if(get_option("Tradetracker_premiumapi")==""){
+				echo "<div class=\"updated\"><p><strong><a href=\"admin.php?page=tradetracker-shop-premium\">Premium content</a> has not been enabled</strong></p></div>";
+			}
 		}
 	}
 }
