@@ -351,7 +351,7 @@ if($_GET['search']!=""){
 					$Tradetracker_extra_val = get_option("Tradetracker_extra");
 					if(!empty($Tradetracker_extra_val)){
 						if(in_array($key, $Tradetracker_extra_val, true)) {
-							$extraname .= "<td width=\"50\"><b>".$key."</b></td>";
+							$extraname .= "<td><b>".$key."</b></td>";
 							$extravar .= "<td>".$value."</td>";
 						}
 					}
