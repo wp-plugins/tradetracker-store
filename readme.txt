@@ -26,6 +26,8 @@ So remember: This plugin will not give you the ability to sell you own stuff. It
 1. Adjust all settings in the TT Store on the left side of the admin menu
 
 == Frequently Asked Questions ==
+= Do you have an example ? =
+You can see the plugin in action on: http://www.freekidscolorpages.com/store/blu-rays/
 
 = Have you gotten any questions yet? =
 
