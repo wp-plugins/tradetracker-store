@@ -24,7 +24,6 @@ function premiumcheck() {
 		}
 	}
 }
-
 function premium_ttstore() {
 	global $wpdb;
 	$hidden_field_name = 'mt_submit_hidden';
@@ -46,21 +45,14 @@ function premium_ttstore() {
 		//$Tradetracker_premiumapi_val = remove_array_empty_values($Tradetracker_premiumapi_val, $remove_null_number);
 		//$Tradetracker_premiumapi_val = safeArrayCombine($Tradetracker_premiumprov_val, $Tradetracker_premiumapi_val);
 		$Tradetracker_premiumapi_val = array_combine($Tradetracker_premiumprov_val, $Tradetracker_premiumapi_val);
-
-
-
 		if ( get_option("Tradetracker_premiumapi")  != $Tradetracker_premiumapi_val) {
 			update_option( $Tradetracker_premiumapi_name, $Tradetracker_premiumapi_val );
 			premium_updater();
 		}
-
 ?>
 		<div class="updated"><p><strong><?php _e('settings saved.', 'menu-test' ); ?></strong></p></div>
 <?php
-
 	}
-
-
 ?>
 	<div class="plugindiv">
 	<?php if (get_option("Tradetracker_settings")==1){ ?>
@@ -142,12 +134,8 @@ function premium_ttstore() {
 			<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 	
 			<INPUT type="button" name="Help" value="<?php esc_attr_e('Help') ?>" onclick="location.href='admin.php?page=tradetracker-shop-help#help3'">
 		</p>
-
 	</form>
 	 If you have other ideas i could add as premium content you will receive 10% of the income from that idea.
-
-
-
 	<?php } ?>
 		</div>
 	</div>

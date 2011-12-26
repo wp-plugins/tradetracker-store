@@ -37,25 +37,23 @@ function xml_updater() {
 	{
 		// echo "No XML filled in yet please change the settings first.";
 	}
-
 	$directory = dir(WP_PLUGIN_DIR."/tradetracker-store/splits"); 
-	while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
+	while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))
 	{  
-		if ($item != '.' && $item != '..')  
+		if ($item != '.' && $item != '..')
        		{  
 			$files = glob($folder."/*xml");
 			if(count($files) > 0)
 			{
 				if (is_array($files)) {
-					foreach($files as $file){ 
+					foreach($files as $file){
 						unlink($file); 
 						// echo "Deleted ".$file."<br>";
 					}
 				}
 			}
 		}  
-	}  
-      
+	}
 	// Close the directory  
 	$directory->close(); 
 	$xmlfeedID = "0"; 
@@ -79,13 +77,13 @@ function xml_updater() {
 			$directory = dir(WP_PLUGIN_DIR."/tradetracker-store/splits"); 
 			while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
 			{  
-				if ($item != '.' && $item != '..')  
+				if ($item != '.' && $item != '..')
     		   		{  
 					$files = glob($folder."/*xml");
 					if(count($files) > 0)
 					{	
 						if (is_array($files)) {
-							foreach($files as $filedel){ 
+							foreach($files as $filedel){
 								unlink($filedel); 
 								// echo "Deleted ".$file."<br>";
 							}

@@ -21,15 +21,12 @@ if(!defined('WP_CONTENT_URL')){
 if(!defined('WP_PLUGIN_URL')){
 	define('WP_PLUGIN_URL', WP_CONTENT_URL.'/plugins');
 }
-
 include('admin/adminmenu.php');
 include('admin/adminsetup.php');
 include('admin/adminoptions.php');
 include('premium.php');
 include('debug.php');
 include('xml.php');
-
-
 if (get_option("Tradetracker_settings")=="1"){
 include('admin/basic/adminitems.php');
 include('admin/basic/adminoverview.php');
@@ -64,7 +61,6 @@ if (!wp_next_scheduled('xmlscheduler')) {
 }
 ttstoreerrordetect();
 add_action( 'xmlscheduler', 'runxmlupdater' ); 
-
 function runxmlupdater() {
 	premium_updater();
 	xml_updater();
@@ -73,6 +69,7 @@ function runxmlupdater() {
 $store = PRO_TABLE_PREFIX."store";
 $multi = PRO_TABLE_PREFIX."multi";
 $layout = PRO_TABLE_PREFIX."layout";
+
 
 if (get_option("TTstoreversion") == "3.1.7"){
 	update_option("Tradetracker_debugemail", "1" );
@@ -251,7 +248,7 @@ padding:10px;
 	{
 echo "<li><a href=\"".$site->siteadres."\" target=\"_blank\">".$site->sitenaam."</a>";		
 	}
-?>		
+?>
 	</ul>
 	</div>
 	<div class="plugin_news_section">
@@ -283,7 +280,7 @@ echo "<li><a href=\"".$site->siteadres."\" target=\"_blank\">".$site->sitenaam."
 	$news = simplexml_load_string($news);
 	foreach($news as $newsmsg) // loop through our items
 	{
-echo "<li><b><a href=\"".$newsmsg->item->link."\">".$newsmsg->item->title."</a></b><br><b>Posted: ".date("d M Y",time($newsmsg->item->pubDate))."</b><br>".$newsmsg->item->description."";
+echo "<li><strong><a href=\"".$newsmsg->item->link."\">".$newsmsg->item->title."</a></strong><br><strong>Posted: ".date("d M Y",strtotime($newsmsg->item->pubDate))."</strong><br>".$newsmsg->item->description."</li>";
 	}
 ?>
 	</ul>
@@ -322,8 +319,6 @@ function tradetracker_store_install()
     global $wpdb;
 $table = PRO_TABLE_PREFIX."store";
 if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
-
-    
     $structure = "CREATE TABLE $table (
         id INT(9) NOT NULL AUTO_INCREMENT,
 	productID VARCHAR(36) NOT NULL,
@@ -361,7 +356,7 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 	update_option("Tradetracker_colorfont", "#000000" );
 	update_option("Tradetracker_colorborder", "#65B9C1" );
 	  // Populate table
-}
+	}
 }
 
 /* 
@@ -815,5 +810,4 @@ function display_search_items()
 {
 	return store_items(2, 1, 1);
 } 
-
 ?>
