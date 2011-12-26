@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 if(get_option('tt_premium_provider')=="") {
 	update_option('tt_premium_provider', array('tradetracker', 'tradetrackerdaily') );
 } else if (!in_array('tradetrackerdaily', get_option('tt_premium_provider'))){
@@ -12,9 +12,12 @@ if(get_option('tt_premium_provider')=="") {
 		$chunksize=2000;
 		$recordnum = 1; 
 		GLOBAL $processed;
+		GLOBAL $errorfile;
+		GLOBAL $oserrorfile;
+		$error = "";
 		$xmlstring =''."\n";
 		$xmlstring.="<$xmldatadelimiter>\n";
-		$delivered = array("’", "‘");
+		$delivered = array("â€™", "â€˜");
 		$needed   = array("", "");
 		$newfile = "splits/".$basefilename."-".$filenum.".xml";
 		$exportfile = fopen($dir."/$newfile","w");
@@ -32,6 +35,13 @@ if(get_option('tt_premium_provider')=="") {
 		} else if (ini_get('allow_url_fopen') == true) {
 			$handle = fopen($xmlfile,"r");
 		}
+		$content = file($dir."/cache/cache.xml");
+		if($content[0]=="<html><head><title>pf.tradetracker.net</title></head><body><h1>An error has occured.</h1><p>The requested product feed could not be generated:<br/><br/><code>No suitable product feeds found</code></p></body></html>"){
+			$errorfile .= ""."\r\n"."".$xmlfile;
+			$oserrorfile .= "<br>".$xmlfile;
+			$error = "1";
+		}
+		if (empty($error)){
 		if ($handle) {
 			while (!feof($handle)) {
 			$buffer = stream_get_line($handle, 81920, "</product>"); 
@@ -59,6 +69,7 @@ if(get_option('tt_premium_provider')=="") {
 			fclose($exportfile);
 			fclose($handle);
 			unset($buffer);
+		}
 		}
 	}
 	function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum, $processed, $xmldatadelimiter, $xmlitemdelimiter){

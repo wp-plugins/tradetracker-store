@@ -6,6 +6,8 @@ function xml_updater() {
 	global $wpdb;
 	global $processed;
 	global $filenum;
+	GLOBAL $errorfile;
+	GLOBAL $oserrorfile;
 	$table = PRO_TABLE_PREFIX."store";
 	//$emptytable = "DELETE FROM $table;;";
 	$emptytable = "TRUNCATE TABLE `$table`";
@@ -95,6 +97,24 @@ function xml_updater() {
 		}
 	}
 	fill_database1();
+	if(!empty($errorfile)){
+		if(get_option("Tradetracker_debugemail")==1){
+			$message = "Hi,". "\r\n" ."";
+			$message .= "". "\r\n" ."You receive this message because you are using the TradeTracker-Store plugin. It just tried to import the XML feed(s) but encountered an error.". "\r\n" ."";
+			$message .= "". "\r\n" ."The following XML feeds are giving an error or are empty. So they are not imported.". "\r\n" ."";
+			$message .= $errorfile;
+			$message .= "". "\r\n" ."". "\r\n" ."Please contact TradeTracker and ask them why the feeds are emtpy". "\r\n" ."";
+			$message .= "". "\r\n" ."To disable this email go to ".get_bloginfo(siteurl)."/wp-admin/admin.php?page=tradetracker-shop-settings and select no for the option Get email when import fails:";
+			$to      = ''.get_bloginfo('admin_email').'';
+			$subject = 'There was an issue with importing the XML Feed';
+			$headers = 'From: '.get_bloginfo('admin_email').'' . "\r\n" . 'Reply-To: '.get_bloginfo('admin_email').'' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+			mail($to, $subject, $message, $headers);
+		}
+		$osmessage = "<strong>The following XML feeds are giving an error or are empty. So they are not imported.</strong>";
+		$osmessage .= $oserrorfile;
+		$osmessage .= "<br>Please contact TradeTracker and ask them why the feeds are emtpy";
+		echo "<div class='error'>".$osmessage."</div>";
+	}
 	// echo "<p>".$filenum." files created";
 }
 ?>

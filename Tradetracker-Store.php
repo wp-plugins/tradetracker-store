@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 3.1.9
+Version: 3.1.10
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -73,6 +73,11 @@ function runxmlupdater() {
 $store = PRO_TABLE_PREFIX."store";
 $multi = PRO_TABLE_PREFIX."multi";
 $layout = PRO_TABLE_PREFIX."layout";
+
+if (get_option("TTstoreversion") == "3.1.7"){
+	update_option("Tradetracker_debugemail", "1" );
+	update_option("TTstoreversion", "3.1.10" );
+}
 
 if (get_option("TTstoreversion") == "3.1.6"){
 	$result=$wpdb->query("ALTER TABLE `".$layout."` ADD `laycolorbuttonfont` VARCHAR(50) NOT NULL");
@@ -347,8 +352,9 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 		curl_close($ch);
 	}
     $wpdb->query($structure)  or die(mysql_error());
-	update_option("TTstoreversion", "3.1.6" );
+	update_option("TTstoreversion", "3.1.10" );
 	update_option("Tradetracker_width", "250" );
+	update_option("Tradetracker_debugemail", "1" );
 	update_option("Tradetracker_colortitle", "#ececed" );
 	update_option("Tradetracker_colorfooter", "#ececed" );
 	update_option("Tradetracker_colorimagebg", "#FFFFFF" );

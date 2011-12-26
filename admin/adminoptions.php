@@ -52,6 +52,8 @@ function tradetracker_store_options() {
 	$Tradetracker_xmlupdate_name = 'Tradetracker_xmlupdate';
 	$Tradetracker_xmlupdate_field_name = 'Tradetracker_xmlupdate';
 
+	$Tradetracker_debugemail_name = 'Tradetracker_debugemail';
+	$Tradetracker_debugemail_field_name = 'Tradetracker_debugemail';
 
 	$Tradetracker_xmlname_name = 'Tradetracker_xmlname';
 	$Tradetracker_xmlname_field_name = 'Tradetracker_xmlname';
@@ -84,6 +86,7 @@ function tradetracker_store_options() {
 	$Tradetracker_buynow_val = get_option( $Tradetracker_buynow_name );
 	$Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
 	$Tradetracker_xmlupdate_val = get_option( $Tradetracker_xmlupdate_name );
+	$Tradetracker_debugemail_val = get_option( $Tradetracker_debugemail_name );
 	$Tradetracker_xmlname_val = get_option( $Tradetracker_xmlname_name );
 	$Tradetracker_productid_val = get_option( $Tradetracker_productid_name );
 	$Tradetracker_amount_val = get_option( $Tradetracker_amount_name );
@@ -93,8 +96,6 @@ function tradetracker_store_options() {
 	$Tradetracker_currencyloc_val = get_option( $Tradetracker_currencyloc_name );
 	$Tradetracker_newcur_val = get_option( $Tradetracker_newcur_name );
 	$Tradetracker_extra_val = get_option( $Tradetracker_extra_name );
-
-		
 
 
 	// See if the user has posted us some information
@@ -121,6 +122,7 @@ function tradetracker_store_options() {
 		$Tradetracker_xmlname_val = safeArrayCombine($Tradetracker_xml_val, $Tradetracker_xmlname_val);
 		$Tradetracker_xml_val = safeArrayCombine($Tradetracker_xml_val, $Tradetracker_xmlconv_val);
 		$Tradetracker_extra_val = $_POST['extra'];
+		$Tradetracker_debugemail_val = $_POST[ $Tradetracker_debugemail_field_name ];
 		$Tradetracker_xmlupdate_val = $_POST[ $Tradetracker_xmlupdate_field_name ];
 		$Tradetracker_productid_val = $_POST[ $Tradetracker_productid_field_name ];
 		$Tradetracker_amount_val = $_POST[ $Tradetracker_amount_field_name ];
@@ -155,6 +157,7 @@ function tradetracker_store_options() {
 		$Tradetracker_xmlconv_val = remove_array_empty_values($Tradetracker_xmlconv_val, $remove_null_number);
 		$Tradetracker_xml_val = safeArrayCombine($Tradetracker_xml_val, $Tradetracker_xmlconv_val);		
 		$Tradetracker_xmlupdate_val = $_POST[ $Tradetracker_xmlupdate_field_name ];
+		$Tradetracker_debugemail_val = $_POST[ $Tradetracker_debugemail_field_name ];
 		$Tradetracker_productid_val = get_option( $Tradetracker_productid_name );
 		$Tradetracker_amount_val = get_option( $Tradetracker_amount_name );
 		$Tradetracker_lightbox_val = get_option( $Tradetracker_lightbox_name );
@@ -173,6 +176,9 @@ function tradetracker_store_options() {
 		if ( get_option("Tradetracker_xmlupdate")  != $Tradetracker_xmlupdate_val) {
 			update_option( $Tradetracker_xmlupdate_name, $Tradetracker_xmlupdate_val );
 			wp_clear_scheduled_hook('xmlscheduler');
+		}
+		if ( get_option("Tradetracker_debugemail")  != $Tradetracker_debugemail_val) {
+			update_option( $Tradetracker_debugemail_name, $Tradetracker_debugemail_val );
 		}
 		if ( get_option("Tradetracker_buynow")  != $Tradetracker_buynow_val) {
 			update_option( $Tradetracker_buynow_name, $Tradetracker_buynow_val );
@@ -323,6 +329,19 @@ function tradetracker_store_options() {
 		</tr>
 		<tr>
 			<td>
+				<label for="tradetrackerdebugemail" title="Do you like to get an email when XML feeds are not imported?" class="info">
+					<?php _e("Get email when import fails:", 'tradetracker-debugemail' ); ?> 
+				</label>
+			</td>
+			<td>
+				<input type="radio" name="<?php echo $Tradetracker_debugemail_field_name; ?>" <?php if($Tradetracker_debugemail_val==1) {echo "checked";} ?> value="1"> Yes 
+				<br>
+				<input type="radio" name="<?php echo $Tradetracker_debugemail_field_name; ?>" <?php if($Tradetracker_debugemail_val==0){echo "checked";} ?> value="0"> No
+			</td>
+		</tr>
+
+		<tr>
+			<td>
 				<label for="tradetrackerextrafield" title="Which extra fields would you like to use?" class="info">
 					<?php _e("Which extra fields?:", 'tradetracker-extra' ); ?> 
 				</label>
@@ -386,12 +405,7 @@ function tradetracker_store_options() {
 			</td>
 			<td>
 				<input type="radio" name="<?php echo $Tradetracker_currency_field_name; ?>" <?php if($Tradetracker_currency_val==1) {echo "checked";} ?> value="1"> Yes 
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
+				<br>
 				<input type="radio" name="<?php echo $Tradetracker_currency_field_name; ?>" <?php if($Tradetracker_currency_val==0){echo "checked";} ?> value="0"> No
 			</td>
 		</tr>
@@ -403,12 +417,7 @@ function tradetracker_store_options() {
 			</td>
 			<td>
 				<input type="radio" name="<?php echo $Tradetracker_currencyloc_field_name; ?>" <?php if($Tradetracker_currencyloc_val==1) {echo "checked";} ?> value="1"> After the price
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
+				<br>
 				<input type="radio" name="<?php echo $Tradetracker_currencyloc_field_name; ?>" <?php if($Tradetracker_currencyloc_val==0){echo "checked";} ?> value="0"> Before the price
 			</td>
 		</tr>
@@ -538,12 +547,7 @@ function tradetracker_store_options() {
 			</td>
 			<td>
 				<input type="radio" name="<?php echo $Tradetracker_statsdash_field_name; ?>" <?php if($Tradetracker_statsdash_val==1) {echo "checked";} ?> value="1"> Yes 
-			</td>
-		</tr>
-		<tr>
-			<td>
-			</td>
-			<td>
+				<br>
 				<input type="radio" name="<?php echo $Tradetracker_statsdash_field_name; ?>" <?php if($Tradetracker_statsdash_val==0){echo "checked";} ?> value="0"> No
 			</td>
 		</tr>
