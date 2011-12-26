@@ -501,8 +501,5 @@ $layoutid = "";
 	</div>
 </div>
 <?php
-
-
-
 }
 ?>

@@ -1,5 +1,4 @@
 <?php
-
 function remove_array_empty_values($array, $remove_null_number = true)
 {
 	$new_array = array();
