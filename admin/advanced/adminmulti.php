@@ -15,6 +15,7 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
         multiamount int(3) NOT NULL,
 	multilightbox VARCHAR(1) NOT NULL,
 	multixmlfeed VARCHAR(10) NOT NULL,
+	multiproductpage VARCHAR(1) NOT NULL,
 	categories longtext NOT NULL,
 	buynow TEXT NOT NULL,
 	UNIQUE KEY id (id)
@@ -27,6 +28,7 @@ $Tradetracker_multiamount_val ="";
 $Tradetracker_multiitems_val ="";
 $Tradetracker_multilightbox_val ="";
 $Tradetracker_multilightbox_val ="";
+$Tradetracker_multiproductpage_val ="";
 $multiid  ="";
 	$hidden_field_name = 'mt_submit_hidden';
 
@@ -37,7 +39,7 @@ $multiid  ="";
 		if(!empty($_POST['multiid'])){
 			$multiid = $_POST['multiid'];
 		} 
-		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiname, multilayout, multiitems, multiamount, multilightbox, categories FROM ".$tablemulti." where id=".$multiid."");
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiproductpage, multiname, multilayout, multiitems, multiamount, multilightbox, categories FROM ".$tablemulti." where id=".$multiid."");
 		foreach ($multi as $multi_val){
 			$Tradetracker_buynow_val = $multi_val->buynow;
 			$db_buynow_val = $multi_val->buynow;
@@ -55,6 +57,8 @@ $multiid  ="";
 			$db_multilightbox_val = $multi_val->multilightbox;
 			$Tradetracker_categories_val = $multi_val->categories;
 			$db_categories_val = $multi_val->categories;
+			$Tradetracker_multiproductpage_val = $multi_val->multiproductpage;
+			$db_multiproductpage_val = $multi_val->multiproductpage;
 		}
 
 	}
@@ -79,6 +83,9 @@ $multiid  ="";
 	$Tradetracker_multixmlfeed_name = 'Tradetracker_multixmlfeed';
 	$Tradetracker_multixmlfeed_field_name = 'Tradetracker_multixmlfeed';
 
+	$Tradetracker_multiproductpage_name = 'Tradetracker_multiproductpage';
+	$Tradetracker_multiproductpage_field_name = 'Tradetracker_multiproductpage';
+
 	$Tradetracker_categories_name = 'Tradetracker_categories';
 	$Tradetracker_categories_field_name = 'Tradetracker_categories';
 
@@ -92,6 +99,7 @@ $multiid  ="";
 		$Tradetracker_multiamount_val = $_POST[ $Tradetracker_multiamount_field_name ];
 		$Tradetracker_multiitems_val = $_POST[ $Tradetracker_multiitems_field_name ];
 		$Tradetracker_multilightbox_val = $_POST[ $Tradetracker_multilightbox_field_name ];
+		$Tradetracker_multiproductpage_val = $_POST[ $Tradetracker_multiproductpage_field_name ];
 		$Tradetracker_categories_val = serialize($_POST[ $Tradetracker_categories_field_name ]);
 		$Tradetracker_multiid_val = $_GET['multiid'];
 
@@ -118,6 +126,9 @@ $multiid  ="";
  		if ( $db_multilightbox_val  != $Tradetracker_multilightbox_val) {
 			$query = $wpdb->update( $tablemulti, array( 'multilightbox' => $Tradetracker_multilightbox_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
  		}
+ 		if ( $db_multiproductpage_val  != $Tradetracker_multiproductpage_val) {
+			$query = $wpdb->update( $tablemulti, array( 'multiproductpage' => $Tradetracker_multiproductpage_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
+ 		}
  		if ( $db_categories_val  != $Tradetracker_categories_val) {
 			$query = $wpdb->update( $tablemulti, array( 'categories' =>  $Tradetracker_categories_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
  		}
@@ -130,6 +141,7 @@ $multiid  ="";
         		$currentpage["multiitems"]=$Tradetracker_multiitems_val;
         		$currentpage["multilightbox"]=$Tradetracker_multilightbox_val;
         		$currentpage["multixmlfeed"]=$Tradetracker_multixmlfeed_val;
+        		$currentpage["multiproductpage"]=$Tradetracker_multiproductpage_val;
         		$currentpage["categories"]=$Tradetracker_categories_val;
 			$wpdb->insert( $tablemulti, $currentpage);
 			$multiid = $wpdb->insert_id;
@@ -168,6 +180,13 @@ $multiid  ="";
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
+<?php 	$provider = get_option('tt_premium_function');
+	foreach($provider as $providers) {
+		if($providers == "productpage"){ 
+			echo "<li><a href=\"admin.php?page=tradetracker-shop-productpage#tab12\">Product Page</a></li>"; 
+		} 
+	}
+?>
 </ul>
 
 <div id="tab5" class="tabset_content">
@@ -220,7 +239,28 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 			</select>		
 		</td>
 	</tr>
-
+<?php 	$provider = get_option('tt_premium_function');
+	foreach($provider as $providers) {
+		if($providers == "productpage"){ 
+		?>	
+		<tr>
+			<td>
+				<label for="tradetrackerproductpage" title="Do you like to use a product page?" class="info">
+					<?php _e("Use a productpage:", 'tradetracker-productpage' ); ?> 
+				</label>
+			</td>
+			<td>
+				<input type="radio" name="<?php echo $Tradetracker_multiproductpage_field_name; ?>" <?php if($Tradetracker_multiproductpage_val==1) {echo "checked";} ?> value="1"> Yes 
+				<br>
+				<input type="radio" name="<?php echo $Tradetracker_multiproductpage_field_name; ?>" <?php if($Tradetracker_multiproductpage_val==0){echo "checked";} ?> value="0"> No
+			</td>
+		</tr>
+		<?php
+		} else {
+			echo "<input type=\"hidden\" name=\"".$Tradetracker_multiproductpage_field_name."\" value=\"".$Tradetracker_multiproductpage_val."\">";
+		}
+	}
+?>
 
 	<tr>
 		<td>

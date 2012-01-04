@@ -1,4 +1,5 @@
 <?php
+include('cache/affilinet.php');
 $providers = get_option('Tradetracker_premiumapi');
 if($providers != "") {
 foreach ($providers as $key => $value){
@@ -98,7 +99,7 @@ function premium_ttstore() {
 		<table width="700">
 		<tr><td colspan="2"><b>Add extra XML Feeds</b></td></tr>
 	<?php
-		$providers = array('Daisycon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=5', 'Paidonresults' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=6');
+		$providers = array('Daisycon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=5', 'Paidonresults' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=6', 'Affilinet' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=8');
 		$i="1";
 		foreach ($providers as $key => $value){
 		$update = get_option('Tradetracker_premiumaccepted');
@@ -127,6 +128,36 @@ function premium_ttstore() {
 		}
 	?>
 		</tr><td colspan="2">If you have extra XML providers you would like to have added please <a href="admin.php?page=tradetracker-shop-feedback">contact me</a>. If you are the first to request it you will get it for free.</td></tr>
+		<tr><td colspan="2"><b>Add extra functions</b></td></tr>
+	<?php
+		$i="50";
+		$providers = array('Product Pages'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=7' );
+		foreach ($providers as $key => $value){
+		$update = get_option('Tradetracker_premiumaccepted');
+			if($update[$key]== "1") {
+				$accepted = "Accepted";
+			}elseif($update[$key]== "0") {
+				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\">here</a>";
+			} else {
+				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\">here</a>";
+			}
+
+	?>
+			<tr>
+				<td>
+					<label for="<?php echo $key; ?>" title="If you bought an API key to use <?php echo $key; ?> please fill it in here." class="info">
+						<?php _e("".$key." APIKey:", 'tradetracker-xml' ); ?> 
+					</label> 
+				</td>
+				<td>
+					<input type="hidden" name="premiumprov[<?php echo $i;?>]" value="<?php echo $key; ?>">
+					<input type="text" name="premiumapi[<?php echo $i;?>]" value="<?php echo $Tradetracker_premiumapi_val[$key]; ?>" size="50"> <?php echo $accepted; ?>
+				</td>
+			</tr>
+	<?php
+		$i++;
+		}
+	?>
 		</table>
 		<hr />
 		<p class="submit">
@@ -147,30 +178,54 @@ function premium_updater(){
 	$providers = get_option('Tradetracker_premiumapi');
 	foreach ($providers as $key => $value){
 		$api = $value;
-		$network = strtolower($key);
-		$url = "http://wpaffiliatefeed.com/premium/answer.php?where=".$us."&api=".$api."";
-		$ch = curl_init();
-		$timeout = 5; // set to zero for no timeout
-		curl_setopt ($ch, CURLOPT_URL, $url);
-		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		$content = curl_exec($ch);
-		curl_close($ch);
-		if( $content == '0' ) {
-		//Do something. For our example, kill the script.
-			$search_array = get_option('Tradetracker_premiumaccepted');
-			$search_array[$key] = '0'; 
-			update_option('Tradetracker_premiumaccepted', $search_array );
-			$search_array = get_option('Tradetracker_premiumupdate');
-			if (array_key_exists($key, $search_array)) {
-				unset($search_array[$key]);
-			}
-			update_option('Tradetracker_premiumupdate', $search_array );
-		} else {
-			$update = get_option('Tradetracker_premiumupdate');
-			$filename = WP_PLUGIN_DIR.'/tradetracker-store/cache/'.$api.'.php';
-			if (file_exists($filename)) {
-				if($update[$key]!=$content) {
+		if(!empty($api)){
+			$network = strtolower($key);
+			$url = "http://wpaffiliatefeed.com/premium/answer.php?where=".$us."&api=".$api."";
+			$ch = curl_init();
+			$timeout = 5; // set to zero for no timeout
+			curl_setopt ($ch, CURLOPT_URL, $url);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+			$content = curl_exec($ch);
+			curl_close($ch);
+			if( $content == '0' ) {
+			//Do something. For our example, kill the script.
+				$search_array = get_option('Tradetracker_premiumaccepted');
+				$search_array[$key] = '0'; 
+				update_option('Tradetracker_premiumaccepted', $search_array );
+				$search_array = get_option('Tradetracker_premiumupdate');
+				if (array_key_exists($key, $search_array)) {
+					unset($search_array[$key]);
+				}
+				update_option('Tradetracker_premiumupdate', $search_array );
+			} else {
+				$update = get_option('Tradetracker_premiumupdate');
+				$filename = WP_PLUGIN_DIR.'/tradetracker-store/cache/'.$api.'.php';
+				if (file_exists($filename)) {
+					if($update[$key]!=$content) {
+						$search_array = get_option('Tradetracker_premiumaccepted');
+						$search_array[$key] = '1'; 
+						update_option('Tradetracker_premiumaccepted', $search_array );
+						$search_array = get_option('Tradetracker_premiumupdate');
+						if (array_key_exists($key, $search_array)) {
+							$search_array[$key] = $content; 
+						} else {
+							$search_array[$key] = $content; 
+						}
+						update_option('Tradetracker_premiumupdate', $search_array );
+						$dir = WP_PLUGIN_DIR . "/tradetracker-store";
+						$site_file = 'http://wpaffiliatefeed.com/premium/'.$network.'/'.$api.'.txt';
+						if (function_exists('curl_init')) {
+							$ch = curl_init($site_file);
+							$fp = fopen($dir."/cache/".$api.".php", "w");
+							curl_setopt($ch, CURLOPT_FILE, $fp);
+							curl_setopt($ch, CURLOPT_HEADER, 0);
+							curl_exec($ch);
+							curl_close($ch);
+							fclose($fp);
+						}
+					}
+				} else {
 					$search_array = get_option('Tradetracker_premiumaccepted');
 					$search_array[$key] = '1'; 
 					update_option('Tradetracker_premiumaccepted', $search_array );
@@ -178,7 +233,7 @@ function premium_updater(){
 					if (array_key_exists($key, $search_array)) {
 						$search_array[$key] = $content; 
 					} else {
-						$search_array[$key] = $content; 
+						array_push($search_array[$key], $content); 
 					}
 					update_option('Tradetracker_premiumupdate', $search_array );
 					$dir = WP_PLUGIN_DIR . "/tradetracker-store";
@@ -193,29 +248,6 @@ function premium_updater(){
 						fclose($fp);
 					}
 				}
-			} else {
-				$search_array = get_option('Tradetracker_premiumaccepted');
-				$search_array[$key] = '1'; 
-				update_option('Tradetracker_premiumaccepted', $search_array );
-				$search_array = get_option('Tradetracker_premiumupdate');
-				if (array_key_exists($key, $search_array)) {
-					$search_array[$key] = $content; 
-				} else {
-					array_push($search_array[$key], $content); 
-				}
-				update_option('Tradetracker_premiumupdate', $search_array );
-				$dir = WP_PLUGIN_DIR . "/tradetracker-store";
-				$site_file = 'http://wpaffiliatefeed.com/premium/'.$network.'/'.$api.'.txt';
-				if (function_exists('curl_init')) {
-					$ch = curl_init($site_file);
-					$fp = fopen($dir."/cache/".$api.".php", "w");
-					curl_setopt($ch, CURLOPT_FILE, $fp);
-					curl_setopt($ch, CURLOPT_HEADER, 0);
-					curl_exec($ch);
-					curl_close($ch);
-					fclose($fp);
-				}
-
 			}
 		}
 	}

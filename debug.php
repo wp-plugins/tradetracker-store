@@ -115,7 +115,10 @@ function check_head_footer() {
 	}
 }
 function test_head_footer_notices() {
+	$settingsselected = get_option("Tradetracker_settings");
+	if (!empty($settingsselected)) { 
 		$warning = __('Error detected in TradeTracker Store plugin, please see <a href=\"admin.php?page=tradetracker-shop-debug\">debug page</a>','ttstore' );
 		add_action('admin_notices', create_function( '', "echo \"<div class='error'><p>$warning</p></div>\";" ) );
+	}
 }
 ?>

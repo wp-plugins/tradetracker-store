@@ -86,7 +86,13 @@ function my_plugin_menu() {
 			$tabs12 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Premium', 'Tt Store Premium', 'manage_options', 'tradetracker-shop-premium', 'premium_ttstore');
 			add_action( "admin_print_scripts-$tabs12", 'tabs_admin_head' );
 		}
-
+		$provider = get_option('tt_premium_function');
+		foreach($provider as $providers) {
+			if($providers == "productpage"){
+				$tabs13 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Product Page', 'Tt Store Productpage', 'manage_options', 'tradetracker-shop-productpage', 'tradetracker_store_productpage');
+				add_action( "admin_print_scripts-$tabs13", 'tabs_admin_head' );
+			}
+		}
 	}
 	add_action( "admin_print_scripts-$mypage", 'ozh_loadjs_admin_head' );
 	add_action( "admin_print_scripts-$mylayout", 'ozh_loadcss_admin_head' );
@@ -172,6 +178,13 @@ if (!empty($settingsselected)) {
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="active">Help</a></li>
+<?php 	$provider = get_option('tt_premium_function');
+	foreach($provider as $providers) {
+		if($providers == "productpage"){ 
+			echo "<li><a href=\"admin.php?page=tradetracker-shop-productpage#tab12\">Product Page</a></li>"; 
+		} 
+	}
+?>
 </ul>
 
 <div id="tab11" class="tabset_content">
@@ -468,11 +481,17 @@ else
    <li><a href="admin.php?page=tradetracker-shop-multi#tab5">Store</a></li>
    <li><a href="admin.php?page=tradetracker-shop-multiitems#tab6">Items</a></li>
    <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
-   <li><a href="admin.php?page=tradetracker-shop-search#tab7">Search</a></li>
    <li><a href="admin.php?page=tradetracker-shop-overview#tab8">Overview</a></li>
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab9" class="active">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
+<?php 	$provider = get_option('tt_premium_function');
+	foreach($provider as $providers) {
+		if($providers == "productpage"){ 
+			echo "<li><a href=\"admin.php?page=tradetracker-shop-productpage#tab12\">Product Page</a></li>"; 
+		} 
+	}
+?>
 </ul>
 <div id="tab9" class="tabset_content">
    <h2 class="tabset_label">Feedback</h2>
