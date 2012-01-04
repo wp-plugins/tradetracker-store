@@ -70,10 +70,14 @@ $store = PRO_TABLE_PREFIX."store";
 $multi = PRO_TABLE_PREFIX."multi";
 $layout = PRO_TABLE_PREFIX."layout";
 
+if (get_option("TTstoreversion") == "3.1.10"){
+	$result=$wpdb->query("ALTER TABLE `".$multi."` ADD `multiproductpage` VARCHAR(1) NOT NULL");
+	update_option("TTstoreversion", "3.1.11" );
+}
 
 if (get_option("TTstoreversion") == "3.1.7"){
 	update_option("Tradetracker_debugemail", "1" );
-	update_option("TTstoreversion", "3.1.10" );
+	update_option("TTstoreversion", "3.1.11" );
 }
 
 if (get_option("TTstoreversion") == "3.1.6"){
@@ -347,7 +351,7 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 		curl_close($ch);
 	}
     $wpdb->query($structure)  or die(mysql_error());
-	update_option("TTstoreversion", "3.1.10" );
+	update_option("TTstoreversion", "3.1.11" );
 	update_option("Tradetracker_width", "250" );
 	update_option("Tradetracker_debugemail", "1" );
 	update_option("Tradetracker_colortitle", "#ececed" );
@@ -605,7 +609,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		if ($searching == "1") {
 			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".get_option("Tradetracker_searchlayout")."");
 		} else {
-			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
+			$multi=$wpdb->get_results("SELECT buynow, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$tablemulti.",".$tablelayout." where ".$tablemulti.".multilayout=".$tablelayout.".id and ".$tablemulti.".id=".$winkelvol."");
 		}
 		foreach ($multi as $multi_val){	
 			$Tradetracker_amount = $multi_val->multiamount;
@@ -613,6 +617,11 @@ function show_items($usedhow, $winkelvol, $searching)
 				$multixmlfeed = "";
 			} else {
 				$multixmlfeed = "where xmlfeed = ".$multi_val->multixmlfeed." ";
+			}
+			if($multi_val->multiproductpage == "1" ){
+				$multiproductpage = "1";
+			} else {
+				$multiproductpage = "0";
 			}
 			$i="1";
 			$categories = unserialize($multi_val->categories);
@@ -705,16 +714,22 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$more = "<div class=\"".$storename."store-more\"></div>";
 		}
+		if($multiproductpage == "1" ){
+			$producturl = "".get_option("Tradetracker_productpageURL")."?ttproductid=".$product->productID."";
+			$urltarget ="";
+		} else {
+			$producturl = $product->productURL;
+			$urltarget ="target=\"_blank\"";
+		}
 		if($uselightbox==1){
 			$image = $product->imageURL;
 			$target = "";	
 			$rel = "rel=\"lightbox[store]\"";
 		} else {
-			$image = $product->productURL;
-			$target = "target=\"_blank\"";
+			$image = $producturl;
+			$target = $urltarget;
 			$rel = "";
 		}
-		$producturl = $product->productURL;
 		$productname = str_replace("&", "&amp;", $product->name);
 		$productdescription = str_replace("&", "&amp;", $product->description);
 		if(get_option("Tradetracker_currency")=="1") {
@@ -755,7 +770,7 @@ function show_items($usedhow, $winkelvol, $searching)
 					</div>
 					".$more."
 					<div class=\"".$storename."buttons\">
-						<a href=\"".$producturl."\" class=\"regular\" target=\"_blank\" title=\"".$productname."\">
+						<a href=\"".$producturl."\" class=\"regular\" ".$urltarget." title=\"".$productname."\">
 							".$buynow."
 						</a>
 					</div>

@@ -17,8 +17,8 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 	$error = "";
 	$xmlstring =''."\n";
 	$xmlstring.="<$xmldatadelimiter>\n";
-	$delivered = array("�", "�");
-	$needed   = array("", "");
+	$delivered = array("’", "‘", "é", "ï");
+	$needed   = array("", "", "%E9", "%EF");
 	$newfile = "splits/".$basefilename."-".$filenum.".xml";
 	$exportfile = fopen($dir."/$newfile","w");
 	if (function_exists('curl_init')) {
@@ -49,7 +49,7 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 				$recordnum++;
 				$processed++;
 				fwrite($exportfile, $buffer);
-				if(!preg_match('</'.$xmldatadelimiter.'>', $buffer)){
+				if(!preg_match('/<\/'.$xmldatadelimiter.'>/i', $buffer)){
 					fwrite($exportfile, "<xmlfile>$xmlfeedID</xmlfile>");
 					fwrite($exportfile, "</product>");
 				}
@@ -117,7 +117,7 @@ function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recor
 				$buffer = str_replace("<categories>", "<categories><category path=\"" . $categoriename . "\">".$categoriename."</category>", $buffer);
 			}
 			fwrite($exportfile, $buffer);
-			if(!preg_match('</'.$xmldatadelimiter.'>', $buffer)){
+			if(!preg_match('/<\/'.$xmldatadelimiter.'>/i', $buffer)){
 				fwrite($exportfile, "<xmlfile>$xmlfeedID</xmlfile>");
 				fwrite($exportfile, "</product>");
 			}

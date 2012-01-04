@@ -265,6 +265,13 @@ function tradetracker_store_options() {
    <li><a href="admin.php?page=tradetracker-shop-feedback#tab9">Feedback</a></li>
    <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="redhelp">Help</a></li>
+<?php 	$provider = get_option('tt_premium_function');
+	foreach($provider as $providers) {
+		if($providers == "productpage"){ 
+			echo "<li><a href=\"admin.php?page=tradetracker-shop-productpage#tab12\">Product Page</a></li>"; 
+		} 
+	}
+?>
 </ul>
 	<?php } ?>
 
