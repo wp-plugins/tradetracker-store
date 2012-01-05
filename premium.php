@@ -1,5 +1,4 @@
 <?php
-include('cache/affilinet.php');
 $providers = get_option('Tradetracker_premiumapi');
 if($providers != "") {
 foreach ($providers as $key => $value){
