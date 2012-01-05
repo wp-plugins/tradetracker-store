@@ -242,24 +242,26 @@ echo "Please add at least one <a href=\"admin.php?page=tradetracker-shop-layout\
 		</td>
 	</tr>
 <?php 	$provider = get_option('tt_premium_function');
-	foreach($provider as $providers) {
-		if($providers == "productpage"){ 
-		?>	
-		<tr>
-			<td>
-				<label for="tradetrackerproductpage" title="Do you like to use a product page?" class="info">
-					<?php _e("Use a productpage:", 'tradetracker-productpage' ); ?> 
-				</label>
-			</td>
-			<td>
-				<input type="radio" name="<?php echo $Tradetracker_multiproductpage_field_name; ?>" <?php if($Tradetracker_multiproductpage_val==1) {echo "checked";} ?> value="1"> Yes 
-				<br>
-				<input type="radio" name="<?php echo $Tradetracker_multiproductpage_field_name; ?>" <?php if($Tradetracker_multiproductpage_val==0){echo "checked";} ?> value="0"> No
-			</td>
-		</tr>
-		<?php
-		} else {
-			echo "<input type=\"hidden\" name=\"".$Tradetracker_multiproductpage_field_name."\" value=\"".$Tradetracker_multiproductpage_val."\">";
+	if(!empty($provider)){
+		foreach($provider as $providers) {
+			if($providers == "productpage"){ 
+			?>	
+			<tr>
+				<td>
+					<label for="tradetrackerproductpage" title="Do you like to use a product page?" class="info">
+						<?php _e("Use a productpage:", 'tradetracker-productpage' ); ?> 
+					</label>
+				</td>
+				<td>
+					<input type="radio" name="<?php echo $Tradetracker_multiproductpage_field_name; ?>" <?php if($Tradetracker_multiproductpage_val==1) {echo "checked";} ?> value="1"> Yes 
+					<br>
+					<input type="radio" name="<?php echo $Tradetracker_multiproductpage_field_name; ?>" <?php if($Tradetracker_multiproductpage_val==0){echo "checked";} ?> value="0"> No
+				</td>
+			</tr>
+			<?php
+			} else {
+				echo "<input type=\"hidden\" name=\"".$Tradetracker_multiproductpage_field_name."\" value=\"".$Tradetracker_multiproductpage_val."\">";
+			}
 		}
 	}
 ?>
