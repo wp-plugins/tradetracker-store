@@ -87,10 +87,12 @@ function my_plugin_menu() {
 			add_action( "admin_print_scripts-$tabs12", 'tabs_admin_head' );
 		}
 		$provider = get_option('tt_premium_function');
-		foreach($provider as $providers) {
-			if($providers == "productpage"){
-				$tabs13 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Product Page', 'Tt Store Productpage', 'manage_options', 'tradetracker-shop-productpage', 'tradetracker_store_productpage');
-				add_action( "admin_print_scripts-$tabs13", 'tabs_admin_head' );
+		if(!empty($provider)){
+			foreach($provider as $providers) {
+				if($providers == "productpage"){
+					$tabs13 = add_submenu_page('tradetracker-shop', 'Tradetracker Store Product Page', 'Tt Store Productpage', 'manage_options', 'tradetracker-shop-productpage', 'tradetracker_store_productpage');
+					add_action( "admin_print_scripts-$tabs13", 'tabs_admin_head' );
+				}
 			}
 		}
 	}
@@ -179,10 +181,12 @@ if (!empty($settingsselected)) {
    <li><a href="admin.php?page=tradetracker-shop-premium#tab10" class="greenpremium">Premium</a></li>
    <li><a href="admin.php?page=tradetracker-shop-help#tab11" class="active">Help</a></li>
 <?php 	$provider = get_option('tt_premium_function');
-	foreach($provider as $providers) {
-		if($providers == "productpage"){ 
-			echo "<li><a href=\"admin.php?page=tradetracker-shop-productpage#tab12\">Product Page</a></li>"; 
-		} 
+	if(!empty($provider)){
+		foreach($provider as $providers) {
+			if($providers == "productpage"){ 
+				echo "<li><a href=\"admin.php?page=tradetracker-shop-productpage#tab12\">Product Page</a></li>"; 
+			} 
+		}
 	}
 ?>
 </ul>
