@@ -560,6 +560,7 @@ function header_css_style() {
 		$style .= ".".$storename."button.regular, .".$storename."buttons a.regular {color: #FFFFFF;}";
 		$style .= ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #FFFFFF;}";
 		$style .= ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: #FFFFFF;}";
+		$style .= ".ttstorelink a { display:none; }";
 		$style .= "</style>";
 		echo $style;
 }
@@ -787,7 +788,8 @@ function show_items($usedhow, $winkelvol, $searching)
 			</div>";
 	$i++;
 	}
-	$storeitems .= "<div class=\"clear\"></div>";
+	$storeitems .= "<div class=\"cleared\"></div>";
+	$storeitems .= "<div class=\"ttstorelink\"><a target=\"_blank\" href=\"http://wpaffiliatefeed.com\">TradeTracker wordpress plugin</a></div>";
 	if ($usedhow == 1){
 		return $storeitems;
 	}
