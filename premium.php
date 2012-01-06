@@ -130,7 +130,7 @@ function premium_ttstore() {
 		<tr><td colspan="2"><b>Add extra functions</b></td></tr>
 	<?php
 		$i="50";
-		$providers = array('Product Pages'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=7' );
+		$providers = array('ProductPages'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=7' );
 		foreach ($providers as $key => $value){
 		$update = get_option('Tradetracker_premiumaccepted');
 			if($update[$key]== "1") {

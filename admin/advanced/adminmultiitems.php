@@ -173,8 +173,10 @@ $tablemulti = PRO_TABLE_PREFIX."multi";
 	$table = PRO_TABLE_PREFIX."store";
 	if($_GET['search']!=""){
 		$keyword = $_GET['search'];
+		$searchlink = "&search=".$keyword;
 		$countquery=$wpdb->get_results("SELECT * FROM ".$table." where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed."");
 	} else {
+		$searchlink = "";
 		$countquery=$wpdb->get_results("SELECT * FROM ".$table." ".$multixmlfeed." ".$categorieselect."");
 	}
 	$numrows = $wpdb->num_rows;
@@ -286,12 +288,12 @@ function selectToggle(toggle, form) {
 			Showing products <b><? echo $first; ?></b> - <b><?php echo $last; ?></b> of <b><?php echo $numrows; ?></b>
   		</td>
   		<td width="50%" align="right">
-			<?php if ($currentpage != 0) { $back_page = $currentpage - $limit; echo("<a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=$order&currentpage=$back_page&limit=$limit\"><</a>");} ?> Page <b><?php echo $current; ?></b> of <b><?php echo $total; ?></b> <?php if (!((($currentpage+$limit) / $limit) >= $pages) && $pages != 1) { $next_page = $currentpage + $limit; echo("<a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=$order&currentpage=$next_page&limit=$limit\">></a>");} ?>
+			<?php if ($currentpage != 0) { $back_page = $currentpage - $limit; echo("<a href=\"admin.php?page=tradetracker-shop-multiitems".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$back_page&limit=$limit\"><</a>");} ?> Page <b><?php echo $current; ?></b> of <b><?php echo $total; ?></b> <?php if (!((($currentpage+$limit) / $limit) >= $pages) && $pages != 1) { $next_page = $currentpage + $limit; echo("<a href=\"admin.php?page=tradetracker-shop-multiitems".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$next_page&limit=$limit\">></a>");} ?>
   		</td>
  	</tr>
  	<tr>
   		<td colspan="2" align="right">
-			Results per-page: <a href="admin.php?page=tradetracker-shop-multiitems&multiid=<?php echo $multiid; ?>&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=100">100</a> | <a href="admin.php?page=tradetracker-shop-multiitems&multiid=<?php echo $multiid; ?>&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=200">200</a> | <a href="admin.php?page=tradetracker-shop-multiitems&multiid=<?php echo $multiid; ?>&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=500">500</a> | <a href="admin.php?page=tradetracker-shop-multiitems&multiid=<?php echo $multiid; ?>&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=1000">1000</a>
+			Results per-page: <a href="admin.php?page=tradetracker-shop-multiitems<?php echo $searchlink; ?>&multiid=<?php echo $multiid; ?>&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=100">100</a> | <a href="admin.php?page=tradetracker-shop-multiitems<?php echo $searchlink; ?>&multiid=<?php echo $multiid; ?>&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=200">200</a> | <a href="admin.php?page=tradetracker-shop-multiitems<?php echo $searchlink; ?>&multiid=<?php echo $multiid; ?>&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=500">500</a> | <a href="admin.php?page=tradetracker-shop-multiitems<?php echo $searchlink; ?>&multiid=<?php echo $multiid; ?>&order=<?php echo $order; ?>&currentpage=<?php echo $currentpage; ?>&limit=1000">1000</a>
   		</td>
  	</tr>
 </table>
@@ -304,11 +306,11 @@ if($_GET['search']!=""){
 }
 	echo "<table width=\"700\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
 		echo "<tr><td width=\"100\">";
-			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=productID\">ProductID</a></b>";
+			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems".$searchlink."&multiid=".$multiid."&order=productID\">ProductID</a></b>";
 		echo "</td><td width=\"435\">";
-			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=name\">Product name</a></b>";
+			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems".$searchlink."&multiid=".$multiid."&order=name\">Product name</a></b>";
 		echo "</td><td width=\"50\">";
-			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=price\">Price</a></b>";
+			echo "<b><a href=\"admin.php?page=tradetracker-shop-multiitems".$searchlink."&multiid=".$multiid."&order=price\">Price</a></b>";
 		echo "</td><td width=\"65\">";
 			echo "<b>Currency</b>";
 		echo "</td><td width=\"50\">";
@@ -399,7 +401,7 @@ if($_GET['search']!=""){
 echo "<table width=\"700\"><tr><td>";
 	if ($currentpage != 0) { // Don't show back link if current page is first page.
 		$back_page = $currentpage - $limit;
-			echo("<a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=$order&currentpage=$back_page&limit=$limit\">back</a>    \n");}
+			echo("<a href=\"admin.php?page=tradetracker-shop-multiitems".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$back_page&limit=$limit\">back</a>    \n");}
 
 			for ($i=1; $i <= $pages; $i++) // loop through each page and give link to it.
 			{
@@ -407,11 +409,11 @@ echo "<table width=\"700\"><tr><td>";
 					if ($ppage == $currentpage){
 						echo("<b>$i</b> \n");} // If current page don't give link, just text.
 					else{
-						echo("<a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=$order&currentpage=$ppage&limit=$limit\">$i</a> \n");}
+						echo("<a href=\"admin.php?page=tradetracker-shop-multiitems".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$ppage&limit=$limit\">$i</a> \n");}
 					}
 					if (!((($currentpage+$limit) / $limit) >= $pages) && $pages != 1) { // If last page don't give next link.
 						$next_page = $currentpage + $limit;
-						echo("    <a href=\"admin.php?page=tradetracker-shop-multiitems&multiid=".$multiid."&order=$order&currentpage=$next_page&limit=$limit\">next</a>\n");}
+						echo("    <a href=\"admin.php?page=tradetracker-shop-multiitems".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$next_page&limit=$limit\">next</a>\n");}
 						echo "</td></tr></table></div>";
 }
 ?>
