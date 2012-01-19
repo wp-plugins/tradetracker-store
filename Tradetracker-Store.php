@@ -99,17 +99,6 @@ if (get_option("TTstoreversion") == "3.0.7"){
 }
 
 if (get_option("TTstoreversion") == "3.0.5"){
-	if(function_exists('curl_init')) {
-		$us = $_SERVER['HTTP_HOST'];
-		$url = "http://wpaffiliatefeed.com/premium/site.php?where=".$us."";
-		$ch = curl_init();
-		$timeout = 5; // set to zero for no timeout
-		curl_setopt ($ch, CURLOPT_URL, $url);
-		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		$content = curl_exec($ch);
-		curl_close($ch);
-	}
 	update_option("TTstoreversion", "3.0.7" );	
 }
 
@@ -335,17 +324,6 @@ if($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
 	extravalue text,
 	UNIQUE KEY id (id)
     );";
-	if(function_exists('curl_init')) {
-		$us = $_SERVER['HTTP_HOST'];
-		$url = "http://wpaffiliatefeed.com/premium/site.php?where=".$us."";
-		$ch = curl_init();
-		$timeout = 5; // set to zero for no timeout
-		curl_setopt ($ch, CURLOPT_URL, $url);
-		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		$content = curl_exec($ch);
-		curl_close($ch);
-	}
     $wpdb->query($structure)  or die(mysql_error());
 	update_option("TTstoreversion", "3.1.6" );
 	update_option("Tradetracker_width", "250" );
