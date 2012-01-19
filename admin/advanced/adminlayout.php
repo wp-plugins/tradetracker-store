@@ -42,14 +42,14 @@ $Tradetracker_colorbuttonfont_val = "";
 $layoutid = "";
 	$hidden_field_name = 'mt_submit_hidden';
 
-	if (!empty($_GET['layoutid']) || !empty($_POST['layoutid'])){
-		if(!empty($_GET['layoutid'])){
+	if (isset($_GET['layoutid']) || isset($_POST['layoutid'])){
+		if(isset($_GET['layoutid'])){
 			$layoutid = $_GET['layoutid'];
 		} 
-		if(!empty($_POST['layoutid'])){
+		if(isset($_POST['layoutid'])){
 			$layoutid = $_POST['layoutid'];
 		} 
-		$layout=$wpdb->get_results("SELECT laywidth, layname, laycolorbuttonfont, layfont, laycolortitle, laycolorfooter, laycolorbutton, laycolorimagebg, laycolorfont, laycolorborder FROM ".$tablelayout." where id=".$layoutid."");
+		$layout=$wpdb->get_results("SELECT laywidth, layname, laycolorbuttonfont, layfont, laycolortitle, laycolorfooter, laycolorbutton, laycolorimagebg, laycolorfont, laycolorborder FROM ".$tablelayout." where id='".$layoutid."'");
 		foreach ($layout as $layout_val){
 			
 			$Tradetracker_width_val = $layout_val->laywidth;

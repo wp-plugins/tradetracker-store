@@ -32,14 +32,14 @@ $Tradetracker_multiproductpage_val ="";
 $multiid  ="";
 	$hidden_field_name = 'mt_submit_hidden';
 
-	if (!empty($_GET['multiid']) || !empty($_POST['multiid'])){
-		if(!empty($_GET['multiid'])){
+	if (isset($_GET['multiid']) || isset($_POST['multiid'])){
+		if(isset($_GET['multiid'])){
 			$multiid = $_GET['multiid'];
 		} 
-		if(!empty($_POST['multiid'])){
+		if(isset($_POST['multiid'])){
 			$multiid = $_POST['multiid'];
 		} 
-		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiproductpage, multiname, multilayout, multiitems, multiamount, multilightbox, categories FROM ".$tablemulti." where id=".$multiid."");
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multiproductpage, multiname, multilayout, multiitems, multiamount, multilightbox, categories FROM ".$tablemulti." where id='".$multiid."'");
 		foreach ($multi as $multi_val){
 			$Tradetracker_buynow_val = $multi_val->buynow;
 			$db_buynow_val = $multi_val->buynow;
