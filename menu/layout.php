@@ -280,7 +280,7 @@ function layout() {
 					<?php echo $layout_val->laycolorbuttonfont; ?>
 				</td>
 				<td>
-					<?php if($layout_val->id>"1" && $layout_val->layname!="basic"){ echo "<a href=\"admin.php?page=tt-store&option=layout&function=new&layoutid=".$layout_val->id."\">Edit</a>"; } ?>
+					<?php if($layout_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=layout&function=new&layoutid=".$layout_val->id."\">Edit</a>"; } ?>
 				</td>
 			</tr>
 <?php		

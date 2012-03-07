@@ -211,7 +211,7 @@ function store() {
 					<?php if($store_val->multilightbox=="1"){ echo "Yes";} else {echo "No";} ?>
 				</td>
 				<td>
-					<?php if($store_val->id>"1" && $store_val->multiname!="basic"){ echo "<a href=\"admin.php?page=tt-store&option=store&function=new&multiid=".$store_val->id."\">Edit</a>"; } ?>
+					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&function=new&multiid=".$store_val->id."\">Edit</a>"; } ?>
 				</td>
 			</tr>
 			
@@ -366,19 +366,14 @@ function store() {
 		} else {
 			echo "<option value=\"*\">All feeds</option>";
 		}
-		$xmlfeed=$wpdb->get_results("SELECT xmlfeed FROM ".$ttstoretable." group by xmlfeed");
-		$i="0";
-		foreach ($xmlfeed as $xmlfeed_val){
-			$xmlfeed1 = get_option("Tradetracker_xmlname");
-			$keys = $xmlfeed_val->xmlfeed;
-			if(!empty($xmlfeed1[$keys])){
-				if($Tradetracker_multixmlfeed_val == $keys) {
-					echo "<option selected=\"selected\" value=\"".$keys."\">".$xmlfeed1[$keys]."</option>";
-				} else {
-					echo "<option value=\"".$keys."\">".$xmlfeed1[$keys]."</option>";
-				}
+		//$xmlfeed=$wpdb->get_results("SELECT xmlfeed FROM ".$ttstoretable." group by xmlfeed");
+		$xmlfeed1 = get_option("Tradetracker_xmlname");
+		foreach ($xmlfeed1 as $key => $value) {
+			if($Tradetracker_multixmlfeed_val == $key) {
+				echo "<option selected=\"selected\" value=\"".$key."\">".$value."</option>";
+			} else {
+				echo "<option value=\"".$key."\">".$value."</option>";
 			}
-			$i++;
 		}
 ?>
 			</select>		

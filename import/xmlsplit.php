@@ -49,7 +49,7 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 			$recordnum++;
 			$processed++;
 			fwrite($exportfile, $buffer);
-			if(!preg_match('/<\/'.$xmldatadelimiter.'>/i', $buffer)){
+			if(preg_match('/<product>/i', $buffer)){
 				fwrite($exportfile,"<xmlfile>$xmlfeedID</xmlfile></product>");
 			}
 			if ($recordnum>$chunksize) {
