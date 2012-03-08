@@ -1,4 +1,46 @@
 <?php
+if (get_option("TTstoreversion") == "4.0.8"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstorelayouttable = $pro_table_prefix."layout";
+	$ttstoremultitable = $pro_table_prefix."multi";
+	$layout_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstorelayouttable;" ) );
+	if($layout_count=="0"){
+		$currentpagelayout["laywidth"]="250";
+		$currentpagelayout["layname"]="basic";
+		$currentpagelayout["layfont"]="verdana";
+		$currentpagelayout["laycolortitle"]="#ececed";
+		$currentpagelayout["laycolorfooter"]="#ececed";
+		$currentpagelayout["laycolorimagebg"]="#FFFFFF";
+		$currentpagelayout["laycolorfont"]="#000000";
+		$currentpagelayout["laycolorborder"]="#65B9C1";
+		$currentpagelayout["laycolorbutton"]="#65B9C1";
+		$currentpagelayout["laycolorbuttonfont"]="#000000";
+		$currentpagelayout["layfontsize"]="10";
+		$wpdb->insert( $ttstorelayouttable, $currentpagelayout);
+	} else {
+		$query = $wpdb->update( $ttstorelayouttable, array( 'laywidth' => "250", 'layname' => "basic", 'layfont' => "verdana", 'laycolortitle' => "#ececed", 'laycolorfooter' => "#ececed",'laycolorimagebg' => "#FFFFFF",'laycolorfont' => "#000000", 'laycolorborder' => "#65B9C1", 'laycolorbutton' => "#65B9C1", 'laycolorbuttonfont' => "#000000", 'layfontsize' => "10"), array( 'id' => "1"), array( '%d', '%s','%s','%s','%s','%s','%s','%s','%s','%s','%d' ), array( '%d' ) );
+	}
+	$multi_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoremultitable;" ) );
+	if($multi_count=="0"){
+		$currentpagemulti["multiname"]="basic";
+		$currentpagemulti["multisorting"]="rand()";
+		$currentpagemulti["multiorder"]="asc";
+		$currentpagemulti["multilayout"]="1";
+		$currentpagemulti["multiitems"]="";
+		$currentpagemulti["multiamount"]="18";
+		$currentpagemulti["multilightbox"]="0";
+		$currentpagemulti["multixmlfeed"]="*";
+		$currentpagemulti["multiproductpage"]="";
+		$currentpagemulti["categories"]="";
+		$currentpagemulti["buynow"]="Buy Now";
+		$wpdb->insert( $ttstoremultitable, $currentpagemulti);
+	} else {
+		$query = $wpdb->update( $ttstoremultitable, array( 'multiname' => "basic", 'multisorting' => "rand()", 'multiorder' => "asc", 'multilayout' => "1", 'multiitems' => "", 'multiamount' => "10", 'multilightbox' => "0",'multixmlfeed' => "*", 'multiproductpage' => "",'categories' => "", 'buynow' => "Buy Now"), array( 'id' => "1"), array( '%s','%s','%s','%d','%s','%d','%d','%s','%s','%s','%s'),array( '%d' ) );
+	}
+	update_option("TTstoreversion", "4.0.10" );
+}
+
 if (get_option("TTstoreversion") == "4.0.4"){
 	update_option("Tradetracker_showurl", "0" );
 	update_option("TTstoreversion", "4.0.8" );
@@ -7,7 +49,7 @@ if (get_option("TTstoreversion") == "4.0"){
 	update_option("Tradetracker_adminheight", "460" );
 	update_option("TTstoreversion", "4.0.4" );
 }
-if (get_option("TTstoreversion") < "4.0"){
+if (get_option("TTstoreversion") < "4.0" || get_option("TTstoreversion") == ""){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
 	$ttstorelayouttable = $pro_table_prefix."layout";
@@ -43,7 +85,7 @@ if (get_option("TTstoreversion") < "4.0"){
 		$currentpagelayout["layfontsize"]="10";
 		$wpdb->insert( $ttstorelayouttable, $currentpagelayout);
 	} else {
-		$query = $wpdb->update( $ttstorelayouttable, array( 'laywidth' => "250", 'layname' => "basic", 'layfont' => "verdana", 'laycolortitle' => "#ececed", 'laycolorfooter' => "#ececed",'laycolorimagebg' => "#FFFFFF",'laycolorfont' => "#000000", 'laycolorborder' => "#65B9C1", 'laycolorbutton' => "#65B9C1", 'laycolorbuttonfont' => "#000000", 'layfontsize' => "10"), array( 'id' => "1"), array( '%s'), array( '%s'), array( '%d' ) );
+		$query = $wpdb->update( $ttstorelayouttable, array( 'laywidth' => "250", 'layname' => "basic", 'layfont' => "verdana", 'laycolortitle' => "#ececed", 'laycolorfooter' => "#ececed",'laycolorimagebg' => "#FFFFFF",'laycolorfont' => "#000000", 'laycolorborder' => "#65B9C1", 'laycolorbutton' => "#65B9C1", 'laycolorbuttonfont' => "#000000", 'layfontsize' => "10"), array( 'id' => "1"), array( '%d', '%s','%s','%s','%s','%s','%s','%s','%s','%s','%d' ), array( '%d' ) );
 	}
 	$structuremulti = "CREATE TABLE IF NOT EXISTS $ttstoremultitable (
         id INT(9) NOT NULL AUTO_INCREMENT,
@@ -77,7 +119,7 @@ if (get_option("TTstoreversion") < "4.0"){
 		$currentpagemulti["buynow"]="Buy Now";
 		$wpdb->insert( $ttstoremultitable, $currentpagemulti);
 	} else {
-		$query = $wpdb->update( $ttstoremultitable, array( 'multiname' => "basic", 'multisorting' => "rand()", 'multiorder' => "asc", 'multilayout' => "1", 'multiitems' => "", 'multiamount' => "10", 'multilightbox' => "0",'multixmlfeed' => "*", 'multiproductpage' => "",'categories' => "", 'buynow' => "Buy Now"), array( 'id' => "1"), array( '%s'), array( '%s'), array( '%d' ) );
+		$query = $wpdb->update( $ttstoremultitable, array( 'multiname' => "basic", 'multisorting' => "rand()", 'multiorder' => "asc", 'multilayout' => "1", 'multiitems' => "", 'multiamount' => "10", 'multilightbox' => "0",'multixmlfeed' => "*", 'multiproductpage' => "",'categories' => "", 'buynow' => "Buy Now"), array( 'id' => "1"), array( '%s','%s','%s','%d','%s','%d','%d','%s','%s','%s','%s'),array( '%d' ) );
 	}
 
 	$debugemail = get_option("Tradetracker_debugemail");
