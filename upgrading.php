@@ -48,8 +48,9 @@ if (get_option("TTstoreversion") == "4.0.8"){
 	} else {
 		$query = $wpdb->update( $ttstorelayouttable, array( 'laywidth' => "250", 'layname' => "basic", 'layfont' => "verdana", 'laycolortitle' => "#ececed", 'laycolorfooter' => "#ececed",'laycolorimagebg' => "#FFFFFF",'laycolorfont' => "#000000", 'laycolorborder' => "#65B9C1", 'laycolorbutton' => "#65B9C1", 'laycolorbuttonfont' => "#000000", 'layfontsize' => "10"), array( 'id' => "1"), array( '%d', '%s','%s','%s','%s','%s','%s','%s','%s','%s','%d' ), array( '%d' ) );
 	}
-	$multi_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoremultitable;" ) );
+	$multi_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM ".$ttstoremultitable." where id = '1';" ) );
 	if($multi_count=="0"){
+		$currentpagemulti["id"]="1";
 		$currentpagemulti["multiname"]="basic";
 		$currentpagemulti["multisorting"]="rand()";
 		$currentpagemulti["multiorder"]="asc";
@@ -63,7 +64,8 @@ if (get_option("TTstoreversion") == "4.0.8"){
 		$currentpagemulti["buynow"]="Buy Now";
 		$wpdb->insert( $ttstoremultitable, $currentpagemulti);
 	} else {
-		$query = $wpdb->update( $ttstoremultitable, array( 'multiname' => "basic", 'multisorting' => "rand()", 'multiorder' => "asc", 'multilayout' => "1", 'multiitems' => "", 'multiamount' => "10", 'multilightbox' => "0",'multixmlfeed' => "*", 'multiproductpage' => "",'categories' => "", 'buynow' => "Buy Now"), array( 'id' => "1"), array( '%s','%s','%s','%d','%s','%d','%d','%s','%s','%s','%s'),array( '%d' ) );
+		$sql = "UPDATE `".$ttstoremultitable."` SET `multiname` = 'basic', `multisorting` = 'rand()', `multiorder` = 'asc', `multilayout` = '1', `multiitems` = '', `multiamount` = '10', `multilightbox` = '0', `multixmlfeed` = '*', `categories` = '', `buynow` = 'Buy Now'  WHERE `id` = '1'";
+		$wpdb->query($sql);
 	}
 	update_option("TTstoreversion", "4.0.10" );
 }
@@ -131,8 +133,9 @@ if (get_option("TTstoreversion") < "4.0" || get_option("TTstoreversion") == ""){
 	$wpdb->query($structuremulti);
 	$result=$wpdb->query("ALTER TABLE `".$ttstoremultitable."` ADD `multisorting` VARCHAR(100) NOT NULL DEFAULT 'rand()'");
 	$result=$wpdb->query("ALTER TABLE `".$ttstoremultitable."` ADD `multiorder` VARCHAR(4) NOT NULL DEFAULT 'asc'");
-	$multi_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoremultitable;" ) );
+	$multi_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM ".$ttstoremultitable." where id = '1';" ) );
 	if($multi_count=="0"){
+		$currentpagemulti["id"]="1";
 		$currentpagemulti["multiname"]="basic";
 		$currentpagemulti["multisorting"]="rand()";
 		$currentpagemulti["multiorder"]="asc";
@@ -146,7 +149,8 @@ if (get_option("TTstoreversion") < "4.0" || get_option("TTstoreversion") == ""){
 		$currentpagemulti["buynow"]="Buy Now";
 		$wpdb->insert( $ttstoremultitable, $currentpagemulti);
 	} else {
-		$query = $wpdb->update( $ttstoremultitable, array( 'multiname' => "basic", 'multisorting' => "rand()", 'multiorder' => "asc", 'multilayout' => "1", 'multiitems' => "", 'multiamount' => "10", 'multilightbox' => "0",'multixmlfeed' => "*", 'multiproductpage' => "",'categories' => "", 'buynow' => "Buy Now"), array( 'id' => "1"), array( '%s','%s','%s','%d','%s','%d','%d','%s','%s','%s','%s'),array( '%d' ) );
+		$sql = "UPDATE `".$ttstoremultitable."` SET `multiname` = 'basic', `multisorting` = 'rand()', `multiorder` = 'asc', `multilayout` = '1', `multiitems` = '', `multiamount` = '10', `multilightbox` = '0', `multixmlfeed` = '*', `categories` = '', `buynow` = 'Buy Now'  WHERE `id` = '1'";
+		$wpdb->query($sql);
 	}
 
 	$debugemail = get_option("Tradetracker_debugemail");
