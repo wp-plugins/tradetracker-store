@@ -1,4 +1,31 @@
 <?php
+if (get_option("TTstoreversion") == "4.0.10"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstoremultitable = $pro_table_prefix."multi";
+	$multi_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM ".$ttstoremultitable." where id = '1';" ) );
+	if($multi_count=="0"){
+		$currentpagemulti["id"]="1";
+		$currentpagemulti["multiname"]="basic";
+		$currentpagemulti["multisorting"]="rand()";
+		$currentpagemulti["multiorder"]="asc";
+		$currentpagemulti["multilayout"]="1";
+		$currentpagemulti["multiitems"]="";
+		$currentpagemulti["multiamount"]="18";
+		$currentpagemulti["multilightbox"]="0";
+		$currentpagemulti["multixmlfeed"]="*";
+		$currentpagemulti["multiproductpage"]="";
+		$currentpagemulti["categories"]="";
+		$currentpagemulti["buynow"]="Buy Now";
+		$wpdb->insert( $ttstoremultitable, $currentpagemulti);
+	} else {
+		$sql = "UPDATE `".$ttstoremultitable."` SET `multiname` = 'basic', `multisorting` = 'rand()', `multiorder` = 'asc', `multilayout` = '1', `multiitems` = '', `multiamount` = '10', `multilightbox` = '0', `multixmlfeed` = '*', `categories` = '', `buynow` = 'Buy Now'  WHERE `id` = '1'";
+		$wpdb->query($sql);
+	}
+	$result=$wpdb->query("ALTER TABLE `".$ttstoremultitable."` ADD `multiproductpage` VARCHAR(1) NOT NULL");
+	update_option("TTstoreversion", "4.0.11" );
+}
+
 if (get_option("TTstoreversion") == "4.0.8"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

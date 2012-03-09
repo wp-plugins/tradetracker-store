@@ -85,7 +85,21 @@ function fill_database1()
 						$currentpage["description"]=strip_tags($product->description);
 						$currentpage["price"]=$product->price;
 						$currentpage["currency"]=$product->price['currency'];
-						parse_recursive($product);
+						//parse_recursive($product);
+						foreach($product->children() as $car => $data){
+							if($data->field['name']!=""){
+								if($counterxml=="1"){
+									$extrafield = str_replace(",", "&#44;", $data->field['name']);
+									$extravalue = str_replace(",", "&#44;", $data->field);	
+									$counterxml++;			
+								} else {
+									$extrafield .= ",".str_replace(",", "&#44;", $data->field['name']);
+									$extravalue .= ",".str_replace(",", "&#44;", $data->field);
+									$counterxml++;
+								}
+								echo $extrafield->field['name'];
+							}
+						}
 						$currentpage["extrafield"]=$extrafield;
 						$currentpage["extravalue"]=$extravalue;
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
