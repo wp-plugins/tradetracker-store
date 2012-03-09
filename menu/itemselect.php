@@ -304,7 +304,7 @@ function selectToggle(toggle, form) {
 
 		<input class=\"searchsubmit\" type=\"submit\" title=\"search item\" value=\"Search\">
 		</form>"; ?>
-<table width="985" border="0">
+<table width="970" border="0">
 	<tr>
 		<td width="50%" align="left">
 			Showing products <b><? echo $first; ?></b> - <b><?php echo $last; ?></b> of <b><?php echo $numrows; ?></b>
@@ -326,7 +326,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 } else {
 	$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable." ".$multixmlfeed." ".$categorieselect." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
 }
-	echo "<table width=\"985\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
+	echo "<table width=\"970\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
 		echo "<tr><td width=\"200\">";
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=productID\">ProductID</a></b>";
 		echo "</td><td width=\"435\">";
@@ -410,6 +410,24 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 			echo "<input type=\"hidden\" name=\"itemsother\" value=\"".$result."\" />";
 	echo "<tr><td colspan=\"5\">Select <a href=\"javascript:selectToggle(true, 'form2');\">All</a> | <a href=\"javascript:selectToggle(false, 'form2');\">None</a></td></tr>";
 	echo "</table>";
+	echo "<table width=\"970\"><tr><td>";
+	if ($currentpage != 0) { // Don't show back link if current page is first page.
+		$back_page = $currentpage - $limit;
+		echo("<a href=\"admin.php?page=tt-store&option=itemselect&function=select".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$back_page&limit=$limit\">back</a>    \n");
+	}
+	for ($i=1; $i <= $pages; $i++){
+		$ppage = $limit*($i - 1);
+		if ($ppage == $currentpage){
+			echo("<b>$i</b> \n"); // If current page don't give link, just text.
+		}else{
+			echo("<a href=\"admin.php?page=tt-store&option=itemselect&function=select".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$ppage&limit=$limit\">$i</a> \n");
+		}
+	}
+	if (!((($currentpage+$limit) / $limit) >= $pages) && $pages != 1) { // If last page don't give next link.
+		$next_page = $currentpage + $limit;
+		echo("    <a href=\"admin.php?page=tt-store&option=itemselect&function=select".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$next_page&limit=$limit\">next</a>\n");
+	}
+	echo "</td></tr></table>";
 ?>
 
 		</div>
