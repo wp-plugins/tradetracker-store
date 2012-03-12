@@ -331,6 +331,8 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=productID\">ProductID</a></b>";
 		echo "</td><td width=\"435\">";
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=name\">Product name</a></b>";
+		echo "</td><td width=\"200\">";
+			echo "<b>XMLFeed</b>";
 		echo "</td><td width=\"50\">";
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=price\">Price</a></b>";
 		echo "</td><td width=\"65\">";
@@ -364,10 +366,13 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				} else {
 					$imageURL = $product->imageURL;
 				}
+				$xmlfeedname = get_option('Tradetracker_xmlname');
 				echo $product->productID;
 				echo "</td><td><a href=\"#thumb\" class=\"screenshot\" rel=\"".$imageURL."\">";
 				echo $product->name;
 				echo "</a></td><td>";
+				echo $xmlfeedname[$product->xmlfeed];
+				echo "</td><td>";
 				echo $product->price;
 				echo "</td><td>";
 				echo $product->currency;

@@ -45,7 +45,6 @@ function fill_database1()
 	global $ttstoretable;
 	global $foldersplits;
 	global $oserrorfile;
-
 	$extrafieldarray = "";
 	$files = glob($foldersplits."/*xml");
 	if (is_array($files)) {
