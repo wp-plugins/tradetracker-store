@@ -183,23 +183,47 @@ function itemselect() {
 	}
 ?>
 <style type="text/css" media="screen">
-#screenshot{
-	position:absolute;
-	border:1px solid #ccc;
-	background:#333;
-	padding:5px;
-	display:none;
-	color:#fff;
-	max-width:400px;
-	max-height:400px;
-	}
 
-span.link {
-    	position: relative;
+span.link1 {
+
 }
 
-    span.link a span {
-    	display: none;
+span.link1 a span {
+	display: none;
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+
+span.link1 a:hover {
+    	font-size: 99%;
+    	font-color: #000000;
+}
+span.link1 a:hover span { 
+	display: block; 
+    	position: absolute; 
+    	margin-top: 10px; 
+    	margin-left: -100px; 
+	max-width:700px;
+	max-height:700px;
+	padding: 5px; 
+    	z-index: 1001; 
+    	color: #000000; 
+    	background: #FFFFAA; 
+    	font: 12px "Arial", sans-serif;
+    	text-align: left; 
+    	text-decoration: none;
+}
+
+span.link {
+
+}
+
+span.link a span {
+	display: none;
+	left: 0;
+	position: absolute;
+	top: 0;
 }
 
 span.link a:hover {
@@ -210,8 +234,9 @@ span.link a:hover span {
 	display: block; 
     	position: absolute; 
     	margin-top: 10px; 
-    	margin-left: -500px; 
-	min-width: 500px; 
+    	margin-left: -100px; 
+	max-width:700px;
+	max-height:700px;
 	padding: 5px; 
     	z-index: 1001; 
     	color: #000000; 
@@ -230,44 +255,6 @@ span table, span table tr, span table td{
 </style>
 
 <script type="text/javascript">
-this.screenshotPreview = function(){	
-	/* CONFIG */
-		
-		xOffset = 10;
-		yOffset = 30;
-		
-		// these 2 variable determine popup's distance from the cursor
-		// you might want to adjust to get the right result
-		
-	/* END CONFIG */
-	$("a.screenshot").hover(function(e){
-		this.t = this.title;
-		this.title = "";	
-		var c = (this.t != "") ? "<br/>" + this.t : "";
-		$("body").append("<p id='screenshot'><img src='"+ this.rel +"' alt='url preview' / style='z-index:99;max-width: 250px;max-height:250px;'>"+ c +"</p>");								 
-		$("#screenshot")
-			.css("top",(e.pageY - xOffset) + "px")
-			.css("left",(e.pageX + yOffset) + "px")
-			.fadeIn("fast");						
-    },
-	function(){
-		this.title = this.t;	
-		$("#screenshot").remove();
-    });	
-	$("a.screenshot").mousemove(function(e){
-		$("#screenshot")
-			.css("top",(e.pageY - xOffset) + "px")
-			.css("left",(e.pageX + yOffset) + "px");
-	});			
-};
-
-
-// starting the script on page load
-$(document).ready(function(){
-	screenshotPreview();
-});
-</script>
-<script type="text/javascript">
 function selectToggle(toggle, form) {
      var myForm = document.forms[form];
      for( var i=0; i < myForm.length; i++ ) { 
@@ -280,6 +267,7 @@ function selectToggle(toggle, form) {
      }
 }
 </script>
+
 <div  id="TB_overlay" class="TB_overlayBG"></div>
 <div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
 	<div id="ttstorebox">
@@ -368,9 +356,9 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				}
 				$xmlfeedname = get_option('Tradetracker_xmlname');
 				echo $product->productID;
-				echo "</td><td><a href=\"#thumb\" class=\"screenshot\" rel=\"".$imageURL."\">";
+				echo "</td><td><span class=\"link1\"><a href=\"javascript: void(0)\">";
 				echo $product->name;
-				echo "</a></td><td>";
+				echo "<span><img src=\"".$imageURL."\"></span></a></span></td><td>";
 				echo $xmlfeedname[$product->xmlfeed];
 				echo "</td><td>";
 				echo $product->price;
@@ -447,6 +435,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 		</div>
 	</div>
 </div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <?php
 

@@ -406,20 +406,21 @@ function toggleOther(){
 		} else {
 			$multixmlfeed = "where xmlfeed = ".$Tradetracker_multixmlfeed_val." ";
 		}
-			$categorie = $wpdb->get_results('SELECT categorie, categorieid FROM '.$ttstoretable.' '.$multixmlfeed.' group by categorie ORDER BY `'.$ttstoretable.'`.`categorie` ASC', OBJECT);
+			$categorie = $wpdb->get_results('SELECT categorie, xmlfeed, categorieid FROM '.$ttstoretable.' '.$multixmlfeed.' group by categorie ORDER BY `'.$ttstoretable.'`.`categorie` ASC', OBJECT);
 			if(!empty($categorie)){
 				echo "<table width=\"400\">";
 				$i="1";
+				$xmlfeedname = get_option('Tradetracker_xmlname');
 				foreach($categorie as $categorieselect) {
 					echo "<tr><td>";
 					if(is_serialized($Tradetracker_categories_val)){
 						if(in_array($categorieselect->categorieid, unserialize($Tradetracker_categories_val), true)) {
-							echo "<input type=\"checkbox\" checked=\"yes\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$categorieselect->categorie."<br />";
+							echo "<input type=\"checkbox\" checked=\"yes\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]." - ".$categorieselect->categorie."<br />";
 						} else {
-							echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$categorieselect->categorie."<br />";
+							echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]." - ".$categorieselect->categorie."<br />";
 						}
 					} else {
-						echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$categorieselect->categorie."<br />";
+						echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]." - ".$categorieselect->categorie."<br />";
 					}
 					echo "</td></tr>";
 				}
