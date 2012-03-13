@@ -69,8 +69,8 @@ global $foldercache;
 }
 function ttstoreerrordetect($show) {
 	global $head_footer_errors;
-	global $foldersplits; 
-	global $foldercache; 
+	$foldersplits = plugin_dir_path( __FILE__ )."splits/";
+	$foldercache = plugin_dir_path( __FILE__ )."cache/";
 
 	$tterror = "no";
 	if (!function_exists('curl_init')) {
@@ -113,6 +113,7 @@ add_action( 'init', 'test_head_footer_init' );
 function test_head_footer_init() {
 	// Hook in at admin_init to perform the check for wp_head and wp_footer
 	add_action( 'admin_init', 'check_head_footer' );
+	add_action( 'admin_init', 'ttstoreerrordetect' );
 }
  
 function check_head_footer() {
