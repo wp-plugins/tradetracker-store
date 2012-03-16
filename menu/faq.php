@@ -3,9 +3,12 @@ function ttstore_faq() {
 	global $foldercache;
 	$faq_dir = $foldercache.'faq.xml';
 	if (!file_exists($faq_dir)) {
-		   $faq_dir = 'http://wpaffiliatefeed.com/tradetracker-store/faq.xml'; 
-	} 
-	$faq = file_get_contents($faq_dir);
+		$faq_dir = 'http://wpaffiliatefeed.com/tradetracker-store/faq.xml'; 
+		$faq_rec = wp_remote_get($faq_dir);
+		$faq = $faq_rec['body'];
+	} else {
+		$faq = file_get_contents($faq_dir);
+	}
 	$faq = simplexml_load_string($faq);
 	echo "<ul>";
 

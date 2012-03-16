@@ -48,7 +48,7 @@ function xml_updater() {
 	$file = $Tradetracker_xml;
 	$i="0";
 	foreach($file as $key => $value) {
-		if($i<=5){
+		if($i<=2){
 			$recordnum = "0";
 			$processed = "0";
 			$filenum++;

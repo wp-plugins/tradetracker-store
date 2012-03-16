@@ -102,6 +102,7 @@ function fill_database1()
 						$currentpage["extrafield"]=$extrafield;
 						$currentpage["extravalue"]=$extravalue;
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
+						$wpdb->flush();
 						$extrafieldarray .= ",".$extrafield;
 						$itemsadded++;
 					}

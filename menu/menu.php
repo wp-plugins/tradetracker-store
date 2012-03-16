@@ -123,6 +123,17 @@ $menuarray = array( array( 'Title' => "Add/Edit XMLFeeds",
                       'Link' => "itemselect",		
                       'Vink' => ""
                     ),
+               array( 'Title' => "Search Settings", 
+                      'Image' => plugins_url( 'images/xml-feed-options.png' , __FILE__ ),
+                      'Price' => "Free", 
+                      'Shortdesc' => "Here you can set the settings for the search results.", 
+                      'Longdesc' => "<h3>Search Settings</h3>
+		<p>This will show options on you wordpress search results page
+		</p>", 
+                      'Name' => "ttsearch",
+                      'Link' => "ttsearch",		
+                      'Vink' => ""
+                    ),
                array( 'Title' => "Plugin Settings", 
                       'Image' => plugins_url( 'images/xml-feed-options.png' , __FILE__ ),
                       'Price' => "Free", 

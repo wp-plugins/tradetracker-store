@@ -361,7 +361,7 @@ function store() {
 		<td>
 			<select width="200" style="width: 200px" name="<?php echo $Tradetracker_multixmlfeed_name; ?>" onchange="toggleOther();">
 <?php
-		if(!isset($db_multixmlfeed_val)){
+		if(!isset($$Tradetracker_multixmlfeed_val) || $Tradetracker_multixmlfeed_val == "*"){
 			echo "<option selected=\"selected\" value=\"*\">All feeds</option>";
 		} else {
 			echo "<option value=\"*\">All feeds</option>";
@@ -369,7 +369,7 @@ function store() {
 		//$xmlfeed=$wpdb->get_results("SELECT xmlfeed FROM ".$ttstoretable." group by xmlfeed");
 		$xmlfeed1 = get_option("Tradetracker_xmlname");
 		foreach ($xmlfeed1 as $key => $value) {
-			if($Tradetracker_multixmlfeed_val == $key) {
+			if($Tradetracker_multixmlfeed_val != "*" && $Tradetracker_multixmlfeed_val == $key) {
 				echo "<option selected=\"selected\" value=\"".$key."\">".$value."</option>";
 			} else {
 				echo "<option value=\"".$key."\">".$value."</option>";
@@ -404,8 +404,9 @@ function toggleOther(){
 		if((isset($Tradetracker_multixmlfeed_val) && $Tradetracker_multixmlfeed_val == "*") || !isset($Tradetracker_multixmlfeed_val) ){
 			$multixmlfeed = "";
 		} else {
-			$multixmlfeed = "where xmlfeed = ".$Tradetracker_multixmlfeed_val." ";
+			$multixmlfeed = "where xmlfeed = '".$Tradetracker_multixmlfeed_val."' ";
 		}
+			echo 'SELECT categorie, xmlfeed, categorieid FROM '.$ttstoretable.' '.$multixmlfeed.' group by categorie ORDER BY `'.$ttstoretable.'`.`categorie` ASC';
 			$categorie = $wpdb->get_results('SELECT categorie, xmlfeed, categorieid FROM '.$ttstoretable.' '.$multixmlfeed.' group by categorie ORDER BY `'.$ttstoretable.'`.`categorie` ASC', OBJECT);
 			if(!empty($categorie)){
 				echo "<table width=\"400\">";
