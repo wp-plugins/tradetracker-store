@@ -213,6 +213,7 @@ function tradetracker_store_uninstall()
 		delete_option("Tradetracker_premiumapi");
 		delete_option("Tradetracker_adminheight");
 		delete_option("Tradetracker_showurl");
+		delete_option("Tradetracker_searchlayout");
 	}
 }
 ?>
