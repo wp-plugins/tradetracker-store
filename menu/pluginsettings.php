@@ -8,6 +8,7 @@ function pluginsettings(){
 	//variables for this function
 	$Tradetracker_debugemail_name = 'Tradetracker_debugemail';
 	$Tradetracker_importtool_name = 'Tradetracker_importtool';
+	$Tradetracker_loadextra_name = 'Tradetracker_loadextra';
 	$Tradetracker_removelayout_name = 'Tradetracker_removelayout';
 	$Tradetracker_removestores_name = 'Tradetracker_removestores';
 	$Tradetracker_removeproducts_name = 'Tradetracker_removeproducts';
@@ -20,6 +21,7 @@ function pluginsettings(){
 	//filling variables from database
 	$Tradetracker_debugemail_val = get_option( $Tradetracker_debugemail_name );
 	$Tradetracker_importtool_val = get_option( $Tradetracker_importtool_name );
+	$Tradetracker_loadextra_val = get_option( $Tradetracker_loadextra_name );
 	$Tradetracker_removelayout_val = get_option( $Tradetracker_removelayout_name );
 	$Tradetracker_removestores_val = get_option( $Tradetracker_removestores_name );
 	$Tradetracker_removeproducts_val = get_option( $Tradetracker_removeproducts_name );
@@ -33,6 +35,7 @@ function pluginsettings(){
 	if( isset($_POST[ $ttstoresubmit ]) && $_POST[ $ttstoresubmit ] == 'Y' ) {
 		$Tradetracker_debugemail_val = $_POST[ $Tradetracker_debugemail_name ];
 		$Tradetracker_importtool_val = $_POST[ $Tradetracker_importtool_name ];
+		$Tradetracker_loadextra_val = $_POST[ $Tradetracker_loadextra_name ];
 		$Tradetracker_removelayout_val = $_POST[ $Tradetracker_removelayout_name ];
 		$Tradetracker_removestores_val = $_POST[ $Tradetracker_removestores_name ];
 		$Tradetracker_removeproducts_val = $_POST[ $Tradetracker_removeproducts_name ];
@@ -46,6 +49,9 @@ function pluginsettings(){
 		}
 		if ( get_option("Tradetracker_importtool")  != $Tradetracker_importtool_val) {
 			update_option( $Tradetracker_importtool_name, $Tradetracker_importtool_val );
+		}
+		if ( get_option("Tradetracker_loadextra")  != $Tradetracker_loadextra_val) {
+			update_option( $Tradetracker_loadextra_name, $Tradetracker_loadextra_val );
 		}
 		if ( get_option("Tradetracker_removelayout")  != $Tradetracker_removelayout_val) {
 			update_option( $Tradetracker_removelayout_name, $Tradetracker_removelayout_val );
@@ -117,6 +123,18 @@ function pluginsettings(){
 							<br>
 							<input type="radio" name="<?php echo $Tradetracker_importtool_name; ?>" <?php if($Tradetracker_importtool_val==3){echo "checked";} ?> value="3"> Curl (sometimes causes issues)
 						<?php } ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="tradetrackerloadextra" title="Load the extra fields in the database, if you don't use extra fields it is smarter to disable them here" class="info">
+							<?php _e("Import extra fields:", 'tradetracker-loadextra' ); ?> 
+						</label>
+					</td>
+					<td>
+						<input type="radio" name="<?php echo $Tradetracker_loadextra_name; ?>" <?php if($Tradetracker_loadextra_val==1) {echo "checked";} ?> value="1"> Yes 
+						<br>
+						<input type="radio" name="<?php echo $Tradetracker_loadextra_name; ?>" <?php if($Tradetracker_loadextra_val==0){echo "checked";} ?> value="0"> No (Can prevent timeouts, But then you cannot show extra fields)
 					</td>
 				</tr>
 				<tr>

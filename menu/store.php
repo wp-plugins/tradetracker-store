@@ -406,7 +406,6 @@ function toggleOther(){
 		} else {
 			$multixmlfeed = "where xmlfeed = '".$Tradetracker_multixmlfeed_val."' ";
 		}
-			echo 'SELECT categorie, xmlfeed, categorieid FROM '.$ttstoretable.' '.$multixmlfeed.' group by categorie ORDER BY `'.$ttstoretable.'`.`categorie` ASC';
 			$categorie = $wpdb->get_results('SELECT categorie, xmlfeed, categorieid FROM '.$ttstoretable.' '.$multixmlfeed.' group by categorie ORDER BY `'.$ttstoretable.'`.`categorie` ASC', OBJECT);
 			if(!empty($categorie)){
 				echo "<table width=\"400\">";

@@ -85,19 +85,23 @@ function fill_database1()
 						$currentpage["price"]=$product->price;
 						$currentpage["currency"]=$product->price['currency'];
 						//parse_recursive($product);
-						foreach($product->children() as $car => $data){
-							if($data->field['name']!=""){
-								if($counterxml=="1"){
-									$extrafield = str_replace(",", "&#44;", $data->field['name']);
-									$extravalue = str_replace(",", "&#44;", $data->field);	
-									$counterxml++;			
-								} else {
-									$extrafield .= ",".str_replace(",", "&#44;", $data->field['name']);
-									$extravalue .= ",".str_replace(",", "&#44;", $data->field);
-									$counterxml++;
+						if(get_option("Tradetracker_loadextra")=="1") {
+							foreach($product->children() as $car => $data){
+								if($data->field['name']!=""){
+									if($counterxml=="1"){
+										$extrafield = str_replace(",", "&#44;", $data->field['name']);
+										$extravalue = str_replace(",", "&#44;", $data->field);	
+										$counterxml++;			
+									} else {
+										$extrafield .= ",".str_replace(",", "&#44;", $data->field['name']);
+										$extravalue .= ",".str_replace(",", "&#44;", $data->field);
+										$counterxml++;
+									}
 								}
-								echo $extrafield->field['name'];
-							}
+							} 
+						} else {
+							$extrafield = "";
+							$extravalue = "";
 						}
 						$currentpage["extrafield"]=$extrafield;
 						$currentpage["extravalue"]=$extravalue;

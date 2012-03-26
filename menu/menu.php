@@ -141,6 +141,7 @@ $menuarray = array( array( 'Title' => "Add/Edit XMLFeeds",
                       'Longdesc' => "<h3>Plugin Settings</h3>
 		<p>This will give you the following options:
 		<br>- Get an email when import fails
+		<br>- Decide if you want to import extra fields. If you don't use extra fields it is better to disable them.
 		<br>- Decide how high the admin menu can be
 		<br>- Select which options should be removed when plugin is deactivated. (when you remove the plugin all settings will be also removed)
 		</p>", 
