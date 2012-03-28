@@ -44,16 +44,16 @@ function premium() {
 		<table width="985">
 		<tr><td colspan="2"><b>Add extra XML Feeds</b></td></tr>
 	<?php
-		$providers = array('Daisycon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=5', 'Paidonresults' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=6');
+		$providers = array('Daisycon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=5', 'Paidonresults' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=6', 'M4N' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=8');
 		$i="1";
 		foreach ($providers as $key => $value){
 		$update = get_option('Tradetracker_premiumaccepted');
 			if($update[$key]== "1") {
 				$accepted = "Accepted";
 			}elseif($update[$key]== "0") {
-				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\">here</a>";
+				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\" target=\"_blank\">here</a>";
 			} else {
-				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\">here</a>";
+				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\" target=\"_blank\">here</a>";
 			}
 
 	?>
@@ -81,9 +81,9 @@ function premium() {
 			if($update[$key]== "1") {
 				$accepted = "Accepted";
 			}elseif($update[$key]== "0") {
-				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\">here</a>";
+				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\" target=\"_blank\">here</a>";
 			} else {
-				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\">here</a>";
+				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\" target=\"_blank\">here</a>";
 			}
 
 	?>
