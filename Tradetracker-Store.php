@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 4.0.18
+Version: 4.0.19
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -49,9 +49,9 @@ register_deactivation_hook(__FILE__ ,'tradetracker_store_uninstall');
 if (!wp_next_scheduled('xmlscheduler')) {
 	$tijdschedule = get_option('Tradetracker_xmlupdate');
 	if(isTime($tijdschedule)) {
-		wp_schedule_event( strtotime(date('Y-m-d '.$tijdschedule.'', strtotime("+1 day"))), 'daily', 'xmlscheduler' );
+		wp_schedule_event( strtotime(date('Y-m-d '.$tijdschedule.'', strtotime("now"))), 'daily', 'xmlscheduler' );
 	} else {
-		wp_schedule_event( strtotime(date('Y-m-d 00:00:01', strtotime("+1 day"))), 'daily', 'xmlscheduler' );
+		wp_schedule_event( strtotime(date('Y-m-d 00:00:01', strtotime("now"))), 'daily', 'xmlscheduler' );
 	}
 }
 add_action( 'xmlscheduler', 'runxmlupdater' ); 
@@ -60,7 +60,6 @@ function runxmlupdater() {
 	xml_updater();
 	news_updater();
 }
-
 
 //installation and creation of database
 function tradetracker_store_install()

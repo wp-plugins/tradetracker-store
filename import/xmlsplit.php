@@ -45,7 +45,7 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 	}
 	if ($handle) {
 		while (!feof($handle)) {
-    			$buffer = stream_get_line($handle, 10000000, "</product>"); 
+    			$buffer = stream_get_line($handle, 100000, "</product>"); 
 			$recordnum++;
 			$processed++;
 			fwrite($exportfile, $buffer);
