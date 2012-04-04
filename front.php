@@ -27,6 +27,9 @@ add_action('wp_head', 'header_css_style');
 
 function header_css_style() {
 	global $wpdb;
+	if(get_option("Tradetracker_usecss") == "1"){
+		echo "<link rel=\"stylesheet\" href=\"".get_option('Tradetracker_csslink')."\" type=\"text/css\" />";
+	} else {
 	$style="";
 	global $ttstorelayouttable;
 	global $ttstoremultitable;
@@ -82,35 +85,36 @@ function header_css_style() {
 			$colorbuttonfont = $multi_val->laycolorbuttonfont;
 		}
 		$storename = create_slug($multi_val->multiname);
-		$style .= ".".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
-		$style .= ".".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
-		$style .= ".".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
-		$style .= ".".$storename."store-image img{display: block;border:0px;margin: auto;}";
-		$style .= ".".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
-		$style .= ".".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
-		$style .= ".".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
-		$style .= ".".$storename."store-more img{margin:0px !important;}";
-		$style .= ".".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
-		$style .= ".".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
-		$style .= ".".$storename."store-price table tr {padding: 1px !important;}";
-		$style .= ".".$storename."store-price table tr td {padding: 1px !important;}";
-		$style .= ".".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
-		$style .= ".".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
-		$style .= ".".$storename."store-price {background-color: ".$colorborder." !important;}";
-		$style .= ".".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: ".$colorbuttonfont.";cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
-		$style .= ".".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
-		$style .= ".".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
-		$style .= ".".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
-		$style .= ".".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
-		$style .= ".".$storename."button.regular, .".$storename."buttons a.regular {color: ".$colorbuttonfont.";}";
-		$style .= ".".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: ".$colorbuttonfont.";}";
-		$style .= ".".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: ".$colorbuttonfont.";}";
+		$style .= "\n.".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
+		$style .= "\n.".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
+		$style .= "\n.".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
+		$style .= "\n.".$storename."store-image img{display: block;border:0px;margin: auto;}";
+		$style .= "\n.".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
+		$style .= "\n.".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+		$style .= "\n.".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
+		$style .= "\n.".$storename."store-more img{margin:0px !important;}";
+		$style .= "\n.".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
+		$style .= "\n.".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
+		$style .= "\n.".$storename."store-price table tr {padding: 1px !important;}";
+		$style .= "\n.".$storename."store-price table tr td {padding: 1px !important;}";
+		$style .= "\n.".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
+		$style .= "\n.".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
+		$style .= "\n.".$storename."store-price {background-color: ".$colorborder." !important;}";
+		$style .= "\n.".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: ".$colorbuttonfont.";cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+		$style .= "\n.".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
+		$style .= "\n.".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
+		$style .= "\n.".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";
+		$style .= "\n.".$storename."buttons button img, .".$storename."buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}";
+		$style .= "\n.".$storename."button.regular, .".$storename."buttons a.regular {color: ".$colorbuttonfont.";}";
+		$style .= "\n.".$storename."buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: ".$colorbuttonfont.";}";
+		$style .= "\n.".$storename."buttons a.regular:active {background-color: #FFFFFF;border: 1px solid ".$colorbutton.";color: ".$colorbuttonfont.";}";
 		
 	}
-	$style .= ".cleared {border: medium none;clear: both;float: none;font-size: 1px;margin: 0;padding: 0;}";
-	$style .= ".ttstorelink a { display:none; }";
+	$style .= "\n.cleared {border: medium none;clear: both;float: none;font-size: 1px;margin: 0;padding: 0;}";
+	$style .= "\n.ttstorelink a { display:none; }";
 	$style .= "</style>";
 	echo $style;
+	}
 }
 
 function show_items($usedhow, $winkelvol, $searching)

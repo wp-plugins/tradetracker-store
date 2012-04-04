@@ -1,5 +1,5 @@
 <?php
-function xml_updater($xmlfilecount = "0", $itemsadded = "0") {
+function xml_updater($xmlfilecount = "0", $itemsadded = "0", $xmlfeedID = "0") {
 	//load all needed variables
 	global $wpdb;
 	global $processed;
@@ -18,7 +18,9 @@ function xml_updater($xmlfilecount = "0", $itemsadded = "0") {
 	if (isset($_GET['itemsadded'])){
 		$itemsadded = $_GET['itemsadded'];
 	}
-
+	if (isset($_GET['xmlfeedID'])){
+		$xmlfeedID = $_GET['xmlfeedID'];
+	}
 	if ($xmlfilecount == "0" && !isset($_GET['xmlfilecount'])){
 		$emptytable = "TRUNCATE TABLE `$ttstoretable`";
 		$wpdb->query($emptytable);
@@ -62,7 +64,7 @@ function xml_updater($xmlfilecount = "0", $itemsadded = "0") {
 	$value = $Tradetracker_xml[$key];
 
 
-	$xmlfeedID = "0"; 
+	 
 	$file = $Tradetracker_xml;
 	$recordnum = "0";
 	$processed = "0";
@@ -93,11 +95,11 @@ function xml_updater($xmlfilecount = "0", $itemsadded = "0") {
 
 ?>
 <script type="text/javascript">
-window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecount=$xmlfilecount&itemsadded=$itemsadded"; ?>';
+window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecount=$xmlfilecount&itemsadded=$itemsadded&xmlfeedID=$xmlfeedID"; ?>';
 </script>
 <?php
 		} else {
-			xml_updater($xmlfilecount, $filenum); 
+			xml_updater($xmlfilecount, $filenum, $xmlfeedID); 
 		}
 	} else {
 		if(!empty($errorfile)){

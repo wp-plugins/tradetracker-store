@@ -118,6 +118,7 @@ function test_head_footer_init() {
  
 function check_head_footer() {
 	// Build the url to call, NOTE: uses home_url and thus requires WordPress 3.0
+	if(get_option("Tradetracker_usecss") != "1"){
 	$url = home_url();
 	// Perform the HTTP GET ignoring SSL errors
 	$response = wp_remote_get( $url );
@@ -136,6 +137,7 @@ function check_head_footer() {
 		// Check to see if we found wp_head and if was located in the proper spot
 		if ( ! empty( $head_footer_errors ) )
 			ttstoreerrordetect("no");
+	}
 	}
 }
 function test_head_footer_notices() {

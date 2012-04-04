@@ -16,6 +16,8 @@ function pluginsettings(){
 	$Tradetracker_removeother_name = 'Tradetracker_removeother';
 	$Tradetracker_adminheight_name = 'Tradetracker_adminheight';
 	$Tradetracker_showurl_name = 'Tradetracker_showurl';
+	$Tradetracker_usecss_name = 'Tradetracker_usecss';
+	$Tradetracker_csslink_name = 'Tradetracker_csslink';
 
 
 	//filling variables from database
@@ -29,6 +31,9 @@ function pluginsettings(){
 	$Tradetracker_removeother_val = get_option( $Tradetracker_removeother_name );
 	$Tradetracker_adminheight_val = get_option( $Tradetracker_adminheight_name );
 	$Tradetracker_showurl_val = get_option( $Tradetracker_showurl_name );
+	$Tradetracker_usecss_val = get_option( $Tradetracker_usecss_name );
+	$Tradetracker_csslink_val = get_option( $Tradetracker_csslink_name );
+
 
 
 	//see if form has been submitted
@@ -43,6 +48,8 @@ function pluginsettings(){
 		$Tradetracker_removeother_val = $_POST[ $Tradetracker_removeother_name ];
 		$Tradetracker_adminheight_val = $_POST[ $Tradetracker_adminheight_name ];
 		$Tradetracker_showurl_val = $_POST[ $Tradetracker_showurl_name ];
+		$Tradetracker_usecss_val = $_POST[ $Tradetracker_usecss_name ];
+		$Tradetracker_csslink_val = $_POST[ $Tradetracker_csslink_name ];
 
 		if ( get_option("Tradetracker_debugemail")  != $Tradetracker_debugemail_val) {
 			update_option( $Tradetracker_debugemail_name, $Tradetracker_debugemail_val );
@@ -74,6 +81,12 @@ function pluginsettings(){
 		if ( get_option("Tradetracker_showurl")  != $Tradetracker_showurl_val) {
 			update_option( $Tradetracker_showurl_name, $Tradetracker_showurl_val );
 		}
+		if ( get_option("Tradetracker_usecss")  != $Tradetracker_usecss_val) {
+			update_option( $Tradetracker_usecss_name, $Tradetracker_usecss_val );
+		}
+		if ( get_option("Tradetracker_csslink")  != $Tradetracker_csslink_val) {
+			update_option( $Tradetracker_csslink_name, $Tradetracker_csslink_val );
+		}
 
 	        //put an settings updated message on the screen
 		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
@@ -95,6 +108,35 @@ function pluginsettings(){
 		<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
 			<table width="985">
+				<tr>
+					<td width="400px">
+						<label for="tradetrackerusecss" title="If you want to create your own CSS file." class="info">
+							<?php _e("Do you want to use a CSS file.:", 'tradetracker-usecss' ); ?> 
+							<br />
+							If you enable this you won't be able to use add/delete layout. You can however use your own css file.
+						</label>
+					</td>
+					<td>
+						<input type="radio" name="<?php echo $Tradetracker_usecss_name; ?>" <?php if($Tradetracker_usecss_val==1) {echo "checked";} ?> value="1"> Yes 
+						<br>
+						<input type="radio" name="<?php echo $Tradetracker_usecss_name; ?>" <?php if($Tradetracker_usecss_val==0){echo "checked";} ?> value="0"> No
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="tradetrackercsslink" title="Where is the CSS file located" class="info">
+							<?php _e("Full url to the CSS file:", 'tradetracker-csslink' ); ?> 
+						</label>
+					</td>
+					<td>
+						<input type="text" name="<?php echo $Tradetracker_csslink_name; ?>" value="<?php echo $Tradetracker_csslink_val; ?>" size="70"> <br />Make sure this is not saved in the plugins folder. Cause that will be overwritten with an update. For an example go to <a href="<?php echo plugins_url( 'style.css' , __FILE__ ); ?>" target="_blank">here</a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<hr />
+					</td>
+				</tr>
 				<tr>
 					<td width="400px">
 						<label for="tradetrackerdebugemail" title="Do you like to get an email when XML feeds are not imported?" class="info">
