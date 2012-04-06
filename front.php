@@ -123,6 +123,7 @@ function show_items($usedhow, $winkelvol, $searching)
 	global $ttstorelayouttable;
 	global $ttstoremultitable;
 	global $ttstoretable;
+	global $folderhome;
 	if ($searching == "1") {
 		$multi=$wpdb->get_results("SELECT buynow, multisorting, multiorder, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
 	} else {
@@ -223,7 +224,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			}
 			if($extraname != ""){
 				$more = "<div class=\"".$storename."store-more\">
-						<img src=\"".WP_PLUGIN_URL."/tradetracker-store/images/more.png\" style=\"border:0;\" border=\"0\" name=\"img".$i."\" width=\"11\" height=\"13\" border=\"0\" >
+						<img src=\"".$folderhome."images/more.png\" style=\"border:0;\" border=\"0\" name=\"img".$i."\" width=\"11\" height=\"13\" border=\"0\" >
 						<a href=\"#first\" onClick=\"shoh('".$i."');\" >More info</a> 
 						<div style=\"display: none;\" id=\"".$i."\" > 
 							<table style=\"width:".$widthmore."px;\" width=\"".$widthmore."\">".$extraname."</table>
@@ -266,7 +267,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			$price = $currency." ".$product->price;
 		}
 		if($product->imageURL==""){
-			$imageURL = WP_PLUGIN_URL."/tradetracker-store/images/No_image.png";
+			$imageURL = plugins_url( 'images/No_image.png' , __FILE__ );
 		} else {
 			$imageURL = $product->imageURL;
 		}

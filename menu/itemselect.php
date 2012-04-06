@@ -5,6 +5,7 @@ function itemselect() {
 	global $ttstorehidden;
 	global $ttstoremultitable;
 	global $ttstoretable;
+	global $folderhome;
 	if(!isset($_GET['function']) || $_GET['function']=="delete" ){
  		if(isset($_GET['function']) && $_GET['function']=="delete") {
 			$multiid = $_GET['multiid'];
@@ -350,7 +351,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 					echo "<input type=\"checkbox\" name=\"item[]\" value=".$product->productID." />";
 				}
 				if($product->imageURL==""){
-					$imageURL = WP_PLUGIN_URL."/tradetracker-store/images/No_image.png";
+					$imageURL = plugins_url( 'images/No_image.png' , __FILE__ );
 				} else {
 					$imageURL = $product->imageURL;
 				}

@@ -16,6 +16,8 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0") {
 		$xmlfeedID = $_GET['xmlfeedID'];
 	}
 	if ($xmlfilecount == "0" && !isset($_GET['xmlfilecount'])){
+		premium_updater();
+		news_updater();
 		delete_option("Tradetracker_importerror");
 		$emptytable = "TRUNCATE TABLE `$ttstoretable`";
 		$wpdb->query($emptytable);
