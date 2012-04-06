@@ -1,0 +1,241 @@
+#TB_window1 {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #555555;
+    box-shadow: 0 4px 30px #000000;
+    color: #000000;
+    left: 50%;
+    position: fixed;
+    text-align: left;
+    top: 50%;
+    visibility: hidden;
+    z-index: 102;
+}
+#TB_window1 {
+    color: #333333;
+    font: 12px "Lucida Grande",Verdana,Arial,sans-serif;
+}
+#TB_window1 #TB_title {
+    background-color: #222222;
+    color: #CFCFCF;
+}
+.ttstore-filled {
+	border: 1px solid #DEDEDE;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 1px 0 #FFFFFF inset, 0 0 20px rgba(0, 0, 0, 0.05) inset, 0 1px 2px rgba(0, 0, 0, 0.1);
+	height: 21px;
+	position: absolute;
+	right: 10px;
+	width: 21px;
+	bottom: 17px;
+}
+.plugin_news {
+	border: 1px solid #DEDEDE;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 1px 0 #FFFFFF inset, 0 0 20px rgba(0, 0, 0, 0.05) inset, 0 1px 2px rgba(0, 0, 0, 0.1);
+	float: left;
+	margin-left: 12px;
+	padding: 15px;
+	position: relative;
+	top: 0;
+	width: 180px;
+}
+.plugin_news p {
+	color: #666666;
+	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size: 12px;
+	line-height: 150%;
+	margin-bottom: 20px;
+}
+.plugin_news ul {
+	color: #666666;
+	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size: 12px;
+	line-height: 150%;
+	margin-bottom: 20px;
+}
+.plugin_news h3 {
+	color: #000000;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",Verdana,"Bitstream Vera Sans",sans-serif;
+	font-size: 17px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1.1;
+	margin: 0;
+	padding: 0;
+}
+#ttstoreoverlay {
+	visibility: visible;
+	background: url("images/overlay.png") repeat scroll 0 0 transparent;
+	display: block;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width:100%;
+	height:100%;
+	text-align:center;
+	z-index: 1000;
+}
+#ttstorebox {
+	width:1000px;
+	background-color: #F9F9F9;
+	text-align:center;
+	overflow:hidden;
+	box-shadow: 0 1px 0 #FFFFFF inset, 0 0 20px rgba(0, 0, 0, 0.05) inset, 0 1px 2px rgba(0, 0, 0, 0.1);
+
+}
+#ttstoreboxlayout {
+	background-color: #fff;
+	float:right;
+	min-height:354px;
+
+	z-index: 999;
+	right:40px;
+	top: 80px;
+
+}
+
+#ttstoreboxtop {
+	border-bottom: 1px solid #000000;
+	float: left;
+	height: 20px;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 990px;
+}
+#ttstoreboxoptions {
+	background-color:#F9F9F9;
+	float: right;
+	max-height:460px;
+	width:990px;
+	font-size:12px;
+	margin-left:5px;
+	margin-right:5px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	text-align:left;
+}
+#ttstoreboxbottom {
+	background-color:#F9F9F9;
+	border-top: 1px solid #000000;
+	float: left;
+	height: 27px;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 990px;
+}
+#ttstoreboxsaved {
+	float: left;
+	margin-top:5px;
+	color:green; 
+}
+#ttstoreboxerror{
+	float: left;
+	margin-top:5px;
+	color:red;
+}
+#ttstoreboxoptions td{
+	font-size:12px;
+}
+
+.ttstore-moreinfo {
+	-moz-transition-duration: 0.4s;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #DEDEDE;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 1px 0 #FFFFFF inset, 0 0 20px rgba(0, 0, 0, 0.05) inset, 0 1px 2px rgba(0, 0, 0, 0.1);
+	float: left;
+	margin: 0 0 15px 15px;
+	padding: 15px;
+	position: relative;
+	width: 679px;
+}
+.ttstore-moreinfo p {
+	color: #666666;
+	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size: 12px;
+	line-height: 150%;
+	margin: 0px;
+}
+.ttstore-moreinfo h3 {
+	color: #000000;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",Verdana,"Bitstream Vera Sans",sans-serif;
+	font-size: 17px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1.1;
+	margin: 0;
+	padding: 0;
+}
+.ttstore-adminmenu {
+	width:730px;
+	float: left;
+}
+.ttstore-module {
+	-moz-transition-duration: 0.4s;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #DEDEDE;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 1px 0 #FFFFFF inset, 0 0 20px rgba(0, 0, 0, 0.05) inset, 0 1px 2px rgba(0, 0, 0, 0.1);
+	float: left;
+	margin: 0 0 15px 15px;
+	max-height: 220px;
+	min-height: 160px;
+	padding: 15px 0 35px 15px;
+	position: relative;
+	width: 210px;
+}
+
+.ttstore-module h3 {
+	color: #000000;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",Verdana,"Bitstream Vera Sans",sans-serif;
+	font-size: 17px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1.1;
+	margin: 0;
+	padding: 0;
+}
+.ttstore-module-description p {
+	color: #666666;
+	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size: 12px;
+	line-height: 150%;
+	margin-bottom: 20px;
+}
+.ttstore-module div.module-image img {
+	padding: 6px;
+}
+.ttstore-module div.module-image {
+	background: none repeat scroll 0 0 #E0D5A1;
+	border-bottom-left-radius: 2px;
+	border-top-left-radius: 2px;
+	float: right;
+	margin: 0 0 5px 10px;
+	width: 84px;
+}
+.ttstore-module div.module-image p {
+	color: #FFFFFF;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",Verdana,"Bitstream Vera Sans",sans-serif;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+.ttstore-module .ttstore-module-actions {
+	background: none repeat scroll 0 0 #FFFFFF;
+	bottom: 15px;
+	display: block;
+	left: 15px;
+	position: absolute;
+}
+.ttstore-module div.module-image p {
+	background-color: #D2C377;
+	border-bottom-left-radius: 2px;
+	clear: both;
+	color: #FFFFFF;
+	font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",Verdana,"Bitstream Vera Sans",sans-serif;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
