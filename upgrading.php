@@ -1,4 +1,32 @@
 <?php
+if (get_option("TTstoreversion") == "4.0.17"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstoremultitable = $pro_table_prefix."multi";
+	$ttstoretable = $pro_table_prefix."store";
+	$itemedit=$wpdb->get_results("SELECT id, multiitems FROM ".$ttstoremultitable."");
+	foreach ($itemedit as $layout_val){
+		if($layout_val->multiitems != "" ) {
+			$productID = $layout_val->multiitems;
+			$productID = explode(",",$productID);
+			$amountitems = count($productID);
+			$i="0";
+			foreach ($productID as $productID_val){
+				$itemproducturl=$wpdb->get_row("SELECT productURL FROM ".$ttstoretable." where productID ='".$productID_val."'");
+				if($i=="0"){
+					$item = md5($itemproducturl->productURL);
+				} else {
+					$item .= ",".md5($itemproducturl->productURL);
+				}
+				$i++;
+			}
+			$query = $wpdb->update( $ttstoremultitable, array( 'multiitems' => $item), array( 'id' => $layout_val->id), array( '%s'), array( '%s'), array( '%d' ) );
+		}
+	}
+	wp_clear_scheduled_hook('xmlscheduler');
+	update_option("TTstoreversion", "4.0.22" );
+}
+
 if (get_option("TTstoreversion") == "4.0.11"){
 	update_option("Tradetracker_loadextra", "1");
 	update_option("TTstoreversion", "4.0.17" );

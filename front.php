@@ -270,26 +270,26 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$imageURL = $product->imageURL;
 		}
-		$storeitems .= "<div class=\"".$storename."store-outerbox\">
-				<div class=\"".$storename."store-titel\">
+		$storeitems .= "<div class=\"".$storename."store-outerbox store-outerbox\">
+				<div class=\"".$storename."store-titel store-titel\">
 					".$productname."
 				</div>			
-				<div class=\"".$storename."store-image\">
+				<div class=\"".$storename."store-image store-image\">
 					<a href=\"".$image."\" ".$rel." ".$target.">
 						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" style=\"max-width:".$width."px;max-height:180px;width:auto;height:auto;\"/>
 					</a>
 				</div>
-				<div class=\"".$storename."store-footer\">
-					<div class=\"".$storename."store-description\">
+				<div class=\"".$storename."store-footer store-footer\">
+					<div class=\"".$storename."store-description store-description\">
 						".$productdescription."
 					</div>
 					".$more."
-					<div class=\"".$storename."buttons\">
+					<div class=\"".$storename."buttons buttons\">
 						<a href=\"".$producturl."\" class=\"regular\" ".$urltarget." title=\"".$productname."\">
 							".$buynow."
 						</a>
 					</div>
-					<div class=\"".$storename."store-price\">
+					<div class=\"".$storename."store-price store-price\">
 						<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">
 							<tr>
 								<td style=\"border: 1px none;\" class=\"euros\">

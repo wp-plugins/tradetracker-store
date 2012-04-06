@@ -64,8 +64,8 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0") {
 	$recordnum = "0";
 	$processed = "0";
 	$filenum++;
-	$value($xmlfeedID, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
-	fill_database1($xmlfeedID);
+	$value($xmlfilecount, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
+	fill_database1($xmlfilecount);
 	$xmlfeedID++;
 	$directory = dir($foldersplits); 
 	while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  

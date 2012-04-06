@@ -40,6 +40,8 @@ function xmlfeed(){
 			update_option( $Tradetracker_xml_name, $Tradetracker_xml_val );
 		}
 		if ( get_option("Tradetracker_xmlname")  != $Tradetracker_xmlname_val) {
+			$Tradetracker_xmlname_val = remove_array_empty_values($Tradetracker_xmlname_val, $remove_null_number);
+			delete_option($Tradetracker_xmlname_name);
 			update_option( $Tradetracker_xmlname_name, $Tradetracker_xmlname_val );
 		}
 		

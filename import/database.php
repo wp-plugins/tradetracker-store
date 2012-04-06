@@ -66,11 +66,9 @@ function fill_database1($xmlfeedid)
 						$counterxml = "1";
 						$extrafield = "";
 						$extravalue = "";
-						$productID = (string)$product->productID;
-						if(!is_numeric($productID)){
-							$productID = md5($productID);
-						}
-						$currentpage["productID"]=$product->xmlfile."-".$productID;
+						$productID = $product->productURL;
+						$productID = md5($productID);
+						$currentpage["productID"]=$productID;
 						$currentpage["xmlfeed"]=$product->xmlfile;		
 						$currentpage["name"]=$product->name;
 						$currentpage["imageURL"]=$product->imageURL;
