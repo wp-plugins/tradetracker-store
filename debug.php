@@ -108,6 +108,14 @@ function ttstoreheader() {
 		$update = "Update Finished:";
 	}
 	echo "<div class=\"updated\"><p><strong>".$update." ".get_option("Tradetracker_xml_update")." <a href=\"admin.php?page=tt-store&update=yes\">Update now</a></strong></p></div>";
+	$errorfile = get_option("Tradetracker_importerror");
+	if(!empty($errorfile)){
+		$oldvalue = array("\n", "Feedname:", "Splitfile:");
+		$newvalue = array("<br>", "<strong>Feedname:</strong>", "<strong>Splitfile:</strong>");
+		$osmessage = "<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>";
+		$osmessage .= str_replace($oldvalue,$newvalue,$errorfile);
+		echo "<div class='error'>".$osmessage."</div>";
+	}
 }
 add_action( 'init', 'test_head_footer_init' );
 function test_head_footer_init() {

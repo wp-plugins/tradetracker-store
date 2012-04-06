@@ -34,17 +34,15 @@ function parse_recursive(SimpleXMLElement $element, $level = 0)
 }
 
 
-function fill_database1()
+function fill_database1($xmlfeedid)
 {
 	global $wpdb; 
 	global $errorfile;
-	global $itemsadded;
 	GLOBAL $extrafield;
 	GLOBAL $extravalue;
 	GLOBAL $counterxml;
 	global $ttstoretable;
 	global $foldersplits;
-	global $oserrorfile;
 	$extrafieldarray = "";
 	$files = glob($foldersplits."/*xml");
 	if (is_array($files)) {
@@ -54,8 +52,14 @@ function fill_database1()
 				//$products = @simplexml_load_string($string);
 				if($products === false)
 				{
-					$errorfile .= "". "\r\n" ."".$filename;
-					$oserrorfile .= "<br>".$filename;
+					$xmlfeed = get_option("Tradetracker_xmlname");	
+					$keys = array_keys($xmlfeed);
+					$key = $keys[$xmlfeedid];
+					$xmlfeed = $xmlfeed[$key];
+					$errorfile = get_option("Tradetracker_importerror");
+					$errorfile .= "". "\n" ."Feedname: ".$xmlfeed;
+					$errorfile .= "". "\n" ."Splitfile: ".$filename;
+					update_option( "Tradetracker_importerror", $errorfile );
 				}else {
 					foreach($products as $product) // loop through our items
 					{
@@ -108,7 +112,6 @@ function fill_database1()
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
 						$wpdb->flush();
 						$extrafieldarray .= ",".$extrafield;
-						$itemsadded++;
 					}
 				} 
 		}
@@ -127,9 +130,10 @@ function fill_database1()
 		$autoload = 'no';
 		add_option( $option_name, $newvalue, $deprecated, $autoload );
 	}
+	$item_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoretable;" ) );
 	$currentupdate = date('Y-m-d H:i:s');
 	$option_name = 'Tradetracker_xml_update' ;
-	$newvalue = "Database filled with ".$itemsadded." new items on ".$currentupdate;
+	$newvalue = "Database filled with ".$item_count." new items on ".$currentupdate;
 
 	if ( get_option( $option_name ) != $newvalue ) {
 		update_option( $option_name, $newvalue );

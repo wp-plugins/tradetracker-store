@@ -1,12 +1,9 @@
 <?php
-function xml_updater($xmlfilecount = "0", $itemsadded = "0", $xmlfeedID = "0") {
+function xml_updater($xmlfilecount = "0", $xmlfeedID = "0") {
 	//load all needed variables
 	global $wpdb;
 	global $processed;
-	global $itemsadded;
 	global $filenum;
-	GLOBAL $errorfile;
-	GLOBAL $oserrorfile;
 	global $ttstoretable;
 	global $foldersplits;
 
@@ -15,13 +12,11 @@ function xml_updater($xmlfilecount = "0", $itemsadded = "0", $xmlfeedID = "0") {
 	if ( $xmlfilecount == "0" && isset($_GET['xmlfilecount'])){
 		$xmlfilecount = $_GET['xmlfilecount'];
 	}
-	if (isset($_GET['itemsadded'])){
-		$itemsadded = $_GET['itemsadded'];
-	}
 	if (isset($_GET['xmlfeedID'])){
 		$xmlfeedID = $_GET['xmlfeedID'];
 	}
 	if ($xmlfilecount == "0" && !isset($_GET['xmlfilecount'])){
+		delete_option("Tradetracker_importerror");
 		$emptytable = "TRUNCATE TABLE `$ttstoretable`";
 		$wpdb->query($emptytable);
 		$directory = dir($foldersplits); 
@@ -70,8 +65,8 @@ function xml_updater($xmlfilecount = "0", $itemsadded = "0", $xmlfeedID = "0") {
 	$processed = "0";
 	$filenum++;
 	$value($xmlfeedID, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
+	fill_database1($xmlfeedID);
 	$xmlfeedID++;
-	fill_database1();
 	$directory = dir($foldersplits); 
 	while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
 		{  
@@ -91,17 +86,18 @@ function xml_updater($xmlfilecount = "0", $itemsadded = "0", $xmlfeedID = "0") {
 	$directory->close();
 	if ($xmlfilecount < count($Tradetracker_xml)-1){
 		$xmlfilecount++;
-		if($xmlfilecount == "10" || $xmlfilecount == "20" || $xmlfilecount == "20" || $xmlfilecount == "40" || $xmlfilecount == "50"){
-
+		$runs = array("5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80");
+		if (in_array($xmlfilecount, $runs)) {
 ?>
 <script type="text/javascript">
-window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecount=$xmlfilecount&itemsadded=$itemsadded&xmlfeedID=$xmlfeedID"; ?>';
+window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecount=$xmlfilecount&xmlfeedID=$xmlfeedID"; ?>';
 </script>
 <?php
 		} else {
 			xml_updater($xmlfilecount, $filenum, $xmlfeedID); 
 		}
 	} else {
+		$errorfile = get_option("Tradetracker_importerror");
 		if(!empty($errorfile)){
 			if(get_option("Tradetracker_debugemail")==1){
 				$message = "Hi,". "\r\n" ."";
@@ -114,9 +110,6 @@ window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecoun
 				$headers = 'From: '.get_bloginfo('admin_email').'' . "\r\n" . 'Reply-To: '.get_bloginfo('admin_email').'' . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 				mail($to, $subject, $message, $headers);
 			}
-			$osmessage = "<strong>The following XML splits are giving an error or are empty. So they are possibly not imported.</strong>";
-			$osmessage .= $oserrorfile;
-			echo "<div class='error'>".$osmessage."</div>";
 		}
 	}
 }

@@ -38,7 +38,6 @@ function xmlfeed(){
 		//save the posted value in the database
 		if ( get_option("Tradetracker_xml")  != $Tradetracker_xml_val) {
 			update_option( $Tradetracker_xml_name, $Tradetracker_xml_val );
-			xml_updater();
 		}
 		if ( get_option("Tradetracker_xmlname")  != $Tradetracker_xmlname_val) {
 			update_option( $Tradetracker_xmlname_name, $Tradetracker_xmlname_val );
@@ -46,7 +45,7 @@ function xmlfeed(){
 		
 
 	        //put an settings updated message on the screen
-		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
+		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved, click Update Items when all feeds are added</strong></div>";
 ?>
 		
 <?php
@@ -142,6 +141,7 @@ function xmlfeed(){
 					echo $saved;
 				}
 			?>
+			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Update Items') ?>" onclick="location.href='admin.php?page=tt-store&update=yes'"> 
 			<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 
 			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Close') ?>" onclick="location.href='admin.php?page=tt-store'"> 
 		</div>
