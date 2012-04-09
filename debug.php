@@ -1,7 +1,11 @@
 <?php
 function debug() {
+global $wpdb;
 global $foldersplits;
 global $foldercache;
+global $ttstoretable;
+global $ttstorelayouttable;
+global $ttstoremultitable;
 ?>
 <div  id="TB_overlay" class="TB_overlayBG"></div>
 <div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
@@ -58,6 +62,40 @@ global $foldercache;
 		echo '<p><strong>Your active theme:</strong>';
 		echo "<br>Has the wp_head in the header.php";
 	}
+	$storetableoverview = $wpdb->get_results("SHOW COLUMNS FROM ".$ttstoretable."");
+	echo "<p><strong>Table overview Store</strong>";
+	echo "<table>";
+	echo "<tr><td width=\"200px\"><strong>Field</strong></td><td width=\"200px\"><strong>Type</strong></td></tr>";
+	foreach ( $storetableoverview as $overview ) 
+	{
+		echo "<tr><td>".$overview->Field."</td>";
+		echo "<td>".$overview->Type."</td></tr>";		
+	}	
+	echo "</table>";
+
+	$multitableoverview = $wpdb->get_results("SHOW COLUMNS FROM ".$ttstoremultitable."");
+	echo "<p><strong>Table overview Multi</strong>";
+	echo "<table>";
+	echo "<tr><td width=\"200px\"><strong>Field</strong></td><td width=\"200px\"><strong>Type</strong></td></tr>";
+	foreach ( $multitableoverview as $overview ) 
+	{
+		echo "<tr><td>".$overview->Field."</td>";
+		echo "<td>".$overview->Type."</td></tr>";		
+	}	
+	echo "</table>";
+
+	$layouttableoverview = $wpdb->get_results("SHOW COLUMNS FROM ".$ttstorelayouttable."");
+	echo "<p><strong>Table overview Layout</strong>";
+	echo "<table>";
+	echo "<tr><td width=\"200px\"><strong>Field</strong></td><td width=\"200px\"><strong>Type</strong></td></tr>";
+	foreach ( $layouttableoverview as $overview ) 
+	{
+		echo "<tr><td>".$overview->Field."</td>";
+		echo "<td>".$overview->Type."</td></tr>";		
+	}	
+	echo "</table>";
+
+
 ?>
 		</div>
 		<div id="ttstoreboxbottom">

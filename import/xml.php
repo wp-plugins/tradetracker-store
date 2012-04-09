@@ -1,5 +1,5 @@
 <?php
-function xml_updater($xmlfilecount = "0", $xmlfeedID = "0") {
+function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	//load all needed variables
 	global $wpdb;
 	global $processed;
@@ -8,10 +8,10 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0") {
 	global $foldersplits;
 
 	//prepare database 
-
-	if ( $xmlfilecount == "0" && isset($_GET['xmlfilecount'])){
-		$xmlfilecount = $_GET['xmlfilecount'];
+	if(get_option("xmlfilecount")!=""){
+		$xmlfilecount = get_option("xmlfilecount");
 	}
+
 	if (isset($_GET['xmlfeedID'])){
 		$xmlfeedID = $_GET['xmlfeedID'];
 	}
@@ -88,6 +88,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0") {
 	$directory->close();
 	if ($xmlfilecount < count($Tradetracker_xml)-1){
 		$xmlfilecount++;
+		update_option("xmlfilecount", $xmlfilecount );
 		$runs = array("5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80");
 		if (in_array($xmlfilecount, $runs)) {
 ?>
@@ -96,7 +97,7 @@ window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecoun
 </script>
 <?php
 		} else {
-			xml_updater($xmlfilecount, $filenum, $xmlfeedID); 
+			xml_updater($xmlfilecount, $xmlfeedID); 
 		}
 	} else {
 		$errorfile = get_option("Tradetracker_importerror");

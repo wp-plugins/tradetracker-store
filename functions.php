@@ -93,16 +93,18 @@ function safeArrayCombine($keys, $values) {
 }
 function loadpremium(){
 	$foldercache = plugin_dir_path( __FILE__ )."cache/";
-	$providers = get_option('Tradetracker_premiumapi');
-	if($providers != "") {
-		foreach ($providers as $key => $value){
-			$update = get_option('Tradetracker_premiumaccepted');
-			if($update[$key]== "1") {
-				$filename = $foldercache.''.$value.'.php';
-				if (file_exists($filename)) {
-					include($filename);
-				} else {
-					premium_updater();
+	if(is_writable($foldercache)){
+		$providers = get_option('Tradetracker_premiumapi');
+		if($providers != "") {
+			foreach ($providers as $key => $value){
+				$update = get_option('Tradetracker_premiumaccepted');
+				if($update[$key]== "1") {
+					$filename = $foldercache.''.$value.'.php';
+					if (file_exists($filename)) {
+						include($filename);
+					} else {
+						premium_updater();
+					}
 				}
 			}
 		}
@@ -115,86 +117,87 @@ function premium_updater(){
 	delete_option('tt_premium_function');
 	delete_option('tt_premium_provider');
 	$providers = get_option('Tradetracker_premiumapi');
-	foreach ($providers as $key => $value){
-		$api = $value;
-		if(!empty($api)){
-			if($api=="0"){
-				$search_array = get_option('Tradetracker_premiumaccepted');
-				$search_array[$key] = '0'; 
-				update_option('Tradetracker_premiumaccepted', $search_array );
-			} else {
-
-			$network = strtolower($key);
-			$response = wp_remote_get("http://wpaffiliatefeed.com/premium/answernew.php?where=".$us."&api=".$api."&network=".$network."");
-			if( is_wp_error( $response ) ) {
-			//Do something. For our example, kill the script.
-				$search_array = get_option('Tradetracker_premiumaccepted');
-				$search_array[$key] = '0'; 
-				update_option('Tradetracker_premiumaccepted', $search_array );
-				$search_array = get_option('Tradetracker_premiumupdate');
-				if (array_key_exists($key, $search_array)) {
-					unset($search_array[$key]);
-				}
-				update_option('Tradetracker_premiumupdate', $search_array );
-			} else {
-				if($response['body'] == "0"){
+	if(isset($providers)){
+		foreach ($providers as $key => $value){
+			$api = $value;
+			if(!empty($api)){
+				if($api=="0"){
 					$search_array = get_option('Tradetracker_premiumaccepted');
 					$search_array[$key] = '0'; 
 					update_option('Tradetracker_premiumaccepted', $search_array );
-					$search_array = get_option('Tradetracker_premiumupdate');
-					if (array_key_exists($key, $search_array)) {
-						unset($search_array[$key]);
-					}
-					update_option('Tradetracker_premiumupdate', $search_array );
-				} else {				
-					$update = get_option('Tradetracker_premiumupdate');
-					$filename = $foldercache.''.$api.'.php';
-					if (file_exists($filename)) {
-						if($update[$key]!=$response['body']) {
-							$search_array = get_option('Tradetracker_premiumaccepted');
-							$search_array[$key] = '1'; 
-							update_option('Tradetracker_premiumaccepted', $search_array );
-							$search_array = get_option('Tradetracker_premiumupdate');
-							if (array_key_exists($key, $search_array)) {
-								$search_array[$key] = $response['body']; 
-							} else {
-								$search_array[$key] = $response['body']; 
-							}
-							update_option('Tradetracker_premiumupdate', $search_array );
-							$site_file = wp_remote_get('http://wpaffiliatefeed.com/premium/'.$network.'/'.$api.'.txt');
-							if( is_wp_error( $site_file ) ) {
-							} else {
-								$fp = fopen($filename, "w");
-								fwrite($fp, $site_file['body']); 
-								fclose($fp);
-							}
-						}
-					} else {
+				} else {
+					$network = strtolower($key);
+					$response = wp_remote_get("http://wpaffiliatefeed.com/premium/answernew.php?where=".$us."&api=".$api."&network=".$network."");
+					if( is_wp_error( $response ) ) {
+					//Do something. For our example, kill the script.
 						$search_array = get_option('Tradetracker_premiumaccepted');
-						$search_array[$key] = '1'; 
+						$search_array[$key] = '0'; 
 						update_option('Tradetracker_premiumaccepted', $search_array );
 						$search_array = get_option('Tradetracker_premiumupdate');
 						if (array_key_exists($key, $search_array)) {
-							$search_array[$key] = $response['body']; 
-						} else {
-							array_push($search_array[$key], $response['body']); 
+							unset($search_array[$key]);
 						}
 						update_option('Tradetracker_premiumupdate', $search_array );
-						$site_file = wp_remote_get('http://wpaffiliatefeed.com/premium/'.$network.'/'.$api.'.txt');
-						if( is_wp_error( $site_file ) ) {
-						} else {
-							$fp = fopen($filename, "w");
-							fwrite($fp, $site_file['body']); 
-							fclose($fp);
+					} else {
+						if($response['body'] == "0"){
+							$search_array = get_option('Tradetracker_premiumaccepted');
+							$search_array[$key] = '0'; 
+							update_option('Tradetracker_premiumaccepted', $search_array );
+							$search_array = get_option('Tradetracker_premiumupdate');
+							if (array_key_exists($key, $search_array)) {
+								unset($search_array[$key]);
+							}
+							update_option('Tradetracker_premiumupdate', $search_array );
+						} else {				
+							$update = get_option('Tradetracker_premiumupdate');
+							$filename = $foldercache.''.$api.'.php';
+							if (file_exists($filename)) {
+								if($update[$key]!=$response['body']) {
+									$search_array = get_option('Tradetracker_premiumaccepted');
+									$search_array[$key] = '1'; 
+									update_option('Tradetracker_premiumaccepted', $search_array );
+									$search_array = get_option('Tradetracker_premiumupdate');
+									if (array_key_exists($key, $search_array)) {
+										$search_array[$key] = $response['body']; 
+									} else {
+										$search_array[$key] = $response['body']; 
+									}
+									update_option('Tradetracker_premiumupdate', $search_array );
+									$site_file = wp_remote_get('http://wpaffiliatefeed.com/premium/'.$network.'/'.$api.'.txt');
+									if( is_wp_error( $site_file ) ) {
+									} else {
+										$fp = fopen($filename, "w");
+										fwrite($fp, $site_file['body']); 
+										fclose($fp);
+									}
+								}
+							} else {
+								$search_array = get_option('Tradetracker_premiumaccepted');
+								$search_array[$key] = '1'; 
+								update_option('Tradetracker_premiumaccepted', $search_array );
+								$search_array = get_option('Tradetracker_premiumupdate');
+								if (array_key_exists($key, $search_array)) {
+									$search_array[$key] = $response['body']; 
+								} else {
+									array_push($search_array[$key], $response['body']); 
+								}
+								update_option('Tradetracker_premiumupdate', $search_array );
+								$site_file = wp_remote_get('http://wpaffiliatefeed.com/premium/'.$network.'/'.$api.'.txt');
+								if( is_wp_error( $site_file ) ) {
+								} else {
+									$fp = fopen($filename, "w");
+									fwrite($fp, $site_file['body']); 
+									fclose($fp);
+								}
+							}
 						}
 					}
 				}
+			} else {
+				$search_array = get_option('Tradetracker_premiumaccepted');
+				$search_array[$key] = '0'; 
+				update_option('Tradetracker_premiumaccepted', $search_array );
 			}
-			}
-		} else {
-			$search_array = get_option('Tradetracker_premiumaccepted');
-			$search_array[$key] = '0'; 
-			update_option('Tradetracker_premiumaccepted', $search_array );
 		}
 	}
 }

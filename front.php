@@ -243,8 +243,13 @@ function show_items($usedhow, $winkelvol, $searching)
 			$producturl = $product->productURL;
 			$urltarget ="target=\"_blank\"";
 		}
+		if($product->imageURL==""){
+			$imageURL = plugins_url( 'images/No_image.png' , __FILE__ );
+		} else {
+			$imageURL = $product->imageURL;
+		}
 		if($uselightbox==1){
-			$image = $product->imageURL;
+			$image = $imageURL;
 			$target = "";	
 			$rel = "rel=\"lightbox[store]\"";
 		} else {
@@ -265,11 +270,6 @@ function show_items($usedhow, $winkelvol, $searching)
 			$price = $product->price." ".$currency;
 		}else {
 			$price = $currency." ".$product->price;
-		}
-		if($product->imageURL==""){
-			$imageURL = plugins_url( 'images/No_image.png' , __FILE__ );
-		} else {
-			$imageURL = $product->imageURL;
 		}
 		$storeitems .= "<div class=\"".$storename."store-outerbox store-outerbox\">
 				<div class=\"".$storename."store-titel store-titel\">
