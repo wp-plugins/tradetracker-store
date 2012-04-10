@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 4.0.24
+Version: 4.0.25
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -60,14 +60,14 @@ add_action( 'xmlscheduler', 'runxmlupdater' );
 function runxmlupdatercheck() {
 	$xmlfilecount = get_option("xmlfilecount");
 	$Tradetracker_xml = get_option("Tradetracker_xml");
-	if ($xmlfilecount < count($Tradetracker_xml)-1){
+	if ($xmlfilecount !="0" && $xmlfilecount < count($Tradetracker_xml)-1){
 		wp_schedule_single_event(time()+700, 'xml_updater_check');
 		xml_updater("0","0","1");
 	} else {
 		update_option("xmlfilecount", "0");
 	}
 }
-add_action('xml_updater_check','xml_updater');
+add_action('xml_updater_check','runxmlupdatercheck');
 
 
 function runxmlupdater() {

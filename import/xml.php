@@ -8,11 +8,8 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	global $foldersplits;
 
 	//prepare database 
-	if(get_option("xmlfilecount")!=""){
-		$xmlfilecount = get_option("xmlfilecount");
-	}
-
-	if (isset($_GET['xmlfeedID'])){
+	$xmlfilecount = get_option("xmlfilecount");
+	if ($xmlfeedID == "0" && isset($_GET['xmlfeedID'])){
 		$xmlfeedID = $_GET['xmlfeedID'];
 	}
 	if ($xmlfilecount == "0" && !isset($_GET['xmlfilecount'])){
@@ -89,17 +86,22 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	if ($xmlfilecount < count($Tradetracker_xml)-1){
 		$xmlfilecount++;
 		update_option("xmlfilecount", $xmlfilecount );
-		$runs = array("5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80");
-		if (in_array($xmlfilecount, $runs)) {
+		if($xmlcronjob=="0"){
+			$runs = array("5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80");
+			if (in_array($xmlfilecount, $runs)) {
 ?>
 <script type="text/javascript">
 window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecount=$xmlfilecount&xmlfeedID=$xmlfeedID"; ?>';
 </script>
 <?php
+			} else {
+				xml_updater($xmlfilecount, $xmlfeedID); 
+			}
 		} else {
-			xml_updater($xmlfilecount, $xmlfeedID); 
+				xml_updater($xmlfilecount, $xmlfeedID, "1");
 		}
 	} else {
+		update_option("xmlfilecount", "0" );
 		$errorfile = get_option("Tradetracker_importerror");
 		if(!empty($errorfile)){
 			if(get_option("Tradetracker_debugemail")==1){
