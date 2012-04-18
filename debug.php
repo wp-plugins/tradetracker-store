@@ -142,6 +142,9 @@ function ttstoreerrordetect($show) {
 function ttstoreheader() {
 	$update = "";
 	if(isset($_GET['update']) && $_GET['update']=="yes"){
+		if(!isset($_GET['xmlfilecount'])){
+			update_option("xmlfilecount", "0" );
+		}
 		xml_updater();
 		$update = "Update Finished:";
 	}

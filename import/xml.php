@@ -52,11 +52,9 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 
 
 	//check if splits directory is empty else empty it
-
 	$keys = array_keys($Tradetracker_xml);
 	$key = $keys[$xmlfilecount];
 	$value = $Tradetracker_xml[$key];
-
 
 	 
 	$file = $Tradetracker_xml;

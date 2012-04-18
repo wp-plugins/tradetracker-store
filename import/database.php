@@ -71,7 +71,6 @@ function fill_database1($xmlfeedid)
 						$currentpage["productID"]=$productID;
 						$currentpage["xmlfeed"]=$product->xmlfile;		
 						$currentpage["name"]=$product->name;
-						$currentpage["imageURL"]=$product->imageURL;
 						if($product->categories->category==""){
 							$currentpage["categorie"]="empty category";
 							$currentpage["categorieid"]=md5("empty category");
