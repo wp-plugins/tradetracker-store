@@ -87,15 +87,15 @@ function fill_database1($xmlfeedid)
 						$currentpage["currency"]=$product->price['currency'];
 						//parse_recursive($product);
 						if(get_option("Tradetracker_loadextra")=="1") {
-							foreach($product->children() as $car => $data){
-								if($data->field['name']!=""){
+							foreach($product->additional->children() as $car => $data){
+								if($data['name']!=""){
 									if($counterxml=="1"){
-										$extrafield = str_replace(",", "&#44;", $data->field['name']);
-										$extravalue = str_replace(",", "&#44;", $data->field);	
+										$extrafield = str_replace(",", "&#44;", $data['name']);
+										$extravalue = str_replace(",", "&#44;", $data);	
 										$counterxml++;			
 									} else {
-										$extrafield .= ",".str_replace(",", "&#44;", $data->field['name']);
-										$extravalue .= ",".str_replace(",", "&#44;", $data->field);
+										$extrafield .= ",".str_replace(",", "&#44;", $data['name']);
+										$extravalue .= ",".str_replace(",", "&#44;", $data);
 										$counterxml++;
 									}
 								}
