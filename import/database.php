@@ -61,6 +61,10 @@ function fill_database1($xmlfeedid)
 					$errorfile .= "". "\n" ."Splitfile: ".$filename;
 					update_option( "Tradetracker_importerror", $errorfile );
 				}else {
+					$xmlfeed = get_option("Tradetracker_xmlname");	
+					$keys = array_keys($xmlfeed);
+					$key = $keys[$xmlfeedid];
+					$xmlfeed = $xmlfeed[$key];
 					foreach($products as $product) // loop through our items
 					{
 						$counterxml = "1";
@@ -71,9 +75,10 @@ function fill_database1($xmlfeedid)
 						$currentpage["productID"]=$productID;
 						$currentpage["xmlfeed"]=$product->xmlfile;		
 						$currentpage["name"]=$product->name;
+						$currentpage["imageURL"]=$product->imageURL;
 						if($product->categories->category==""){
 							$currentpage["categorie"]="empty category";
-							$currentpage["categorieid"]=md5("empty category");
+							$currentpage["categorieid"]=md5($xmlfeed."empty category");
 						} else {
 							$categories = $product->categories->category;
 							$categories = str_replace(array('(',')'), '', $categories);
@@ -87,15 +92,15 @@ function fill_database1($xmlfeedid)
 						$currentpage["currency"]=$product->price['currency'];
 						//parse_recursive($product);
 						if(get_option("Tradetracker_loadextra")=="1") {
-							foreach($product->additional->children() as $car => $data){
-								if($data['name']!=""){
+							foreach($product->children() as $car => $data){
+								if($data->field['name']!=""){
 									if($counterxml=="1"){
-										$extrafield = str_replace(",", "&#44;", $data['name']);
-										$extravalue = str_replace(",", "&#44;", $data);	
+										$extrafield = str_replace(",", "&#44;", $data->field['name']);
+										$extravalue = str_replace(",", "&#44;", $data->field);	
 										$counterxml++;			
 									} else {
-										$extrafield .= ",".str_replace(",", "&#44;", $data['name']);
-										$extravalue .= ",".str_replace(",", "&#44;", $data);
+										$extrafield .= ",".str_replace(",", "&#44;", $data->field['name']);
+										$extravalue .= ",".str_replace(",", "&#44;", $data->field);
 										$counterxml++;
 									}
 								}

@@ -267,9 +267,11 @@ echo "</div>";
 	} 
 	$sites = file_get_contents($site_dir);
 	$sites = simplexml_load_string($sites);
-	foreach($sites as $site) // loop through our items
-	{
-echo "<li><a href=\"".$site->siteadres."\" target=\"_blank\">".$site->sitenaam."</a>";		
+	if($sites != ""){
+		foreach($sites as $site) // loop through our items
+		{
+		echo "<li><a href=\"".$site->siteadres."\" target=\"_blank\">".$site->sitenaam."</a>";		
+		}
 	}
 ?>
 	</ul>
@@ -288,12 +290,14 @@ echo "<li><a href=\"".$site->siteadres."\" target=\"_blank\">".$site->sitenaam."
 	$news_dir = $foldercache.'news.xml';
 	if (!file_exists($news_dir)) {
 		$news_dir = 'http://wpaffiliatefeed.com/category/news/feed/'; 
-	} 
+	}
 	$news = file_get_contents($news_dir);
 	$news = simplexml_load_string($news);
-	foreach($news as $newsmsg) // loop through our items
-	{
-echo "<strong><a href=\"".$newsmsg->item->link."\">".$newsmsg->item->title."</a></strong><br><strong>Posted: ".date("d M Y",strtotime($newsmsg->item->pubDate))."</strong><br>".$newsmsg->item->description."";
+	if($news != ""){
+		foreach($news as $newsmsg) // loop through our items
+		{
+			echo "<strong><a href=\"".$newsmsg->item->link."\">".$newsmsg->item->title."</a></strong><br><strong>Posted: ".date("d M Y",strtotime($newsmsg->item->pubDate))."</strong><br>".$newsmsg->item->description."";
+		}
 	}
 ?>
 	</p>
