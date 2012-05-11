@@ -37,8 +37,8 @@ imgout=new Image(9,9);
 imgin=new Image(9,9);
 
 /////////////////BEGIN USER EDITABLE///////////////////////////////
-	imgout.src="more.png";
-	imgin.src="more.png";
+	imgout.src="/wp-content/plugins/tradetracker-store/images/more.png";
+	imgin.src="/wp-content/plugins/tradetracker-store/images/more.png";
 ///////////////END USER EDITABLE///////////////////////////////////
 
 //this switches expand collapse icons

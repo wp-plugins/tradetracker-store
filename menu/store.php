@@ -27,6 +27,12 @@ function store() {
 	if(isset($post['return'])){
 		$returnpage = "1";
 	}
+	if(isset($_GET['delete'])){
+		echo "ik detecteer dit wel";
+		if($_GET['delete']>"1"){
+			$wpdb->query($wpdb->prepare("DELETE FROM ".$ttstoremultitable." WHERE `id` = ".$_GET['delete'].""));
+		}
+	}
 	//filling variables from database when editting
 	if (isset($_GET['multiid']) || isset($_POST['multiid'])){
 		if(isset($_GET['multiid'])){
@@ -180,6 +186,9 @@ function store() {
 				<td>
 					<strong>Edit</strong>
 				</td>
+				<td>
+					<strong>Delete</strong>
+				</td>
 			</tr>
 <?php
 		$storeedit=$wpdb->get_results("SELECT ".$ttstoremultitable.".id, layname, multisorting, multiorder, multilayout, multiname, multiamount, multilightbox, multixmlfeed, buynow FROM ".$ttstoremultitable.", ".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout = ".$ttstorelayouttable.".id");
@@ -212,6 +221,9 @@ function store() {
 				</td>
 				<td>
 					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&function=new&multiid=".$store_val->id."\">Edit</a>"; } ?>
+				</td>
+				<td>
+					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&delete=".$store_val->id."\">Delete</a>"; } ?>
 				</td>
 			</tr>
 			

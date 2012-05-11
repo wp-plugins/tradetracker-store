@@ -44,10 +44,10 @@ function fill_database1($xmlfeedid)
 	global $ttstoretable;
 	global $foldersplits;
 	$extrafieldarray = "";
-	$files = glob($foldersplits."/*xml");
+	$files = glob($foldersplits."*xml");
 	if (is_array($files)) {
 		foreach($files as $filename) {
-			$products = @simplexml_load_file($filename);
+			$products = simplexml_load_file($filename);
 				//$string = file_get_contents($filename, FILE_TEXT);
 				//$products = @simplexml_load_string($string);
 				if($products === false)
@@ -56,9 +56,12 @@ function fill_database1($xmlfeedid)
 					$keys = array_keys($xmlfeed);
 					$key = $keys[$xmlfeedid];
 					$xmlfeed = $xmlfeed[$key];
+					$errorxml = libxml_get_last_error();
 					$errorfile = get_option("Tradetracker_importerror");
 					$errorfile .= "". "\n" ."Feedname: ".$xmlfeed;
-					$errorfile .= "". "\n" ."Splitfile: ".$filename;
+					$errorfile .= "". "\n" ."Splitfile: ".$errorxml->file;
+					$errorfile .= "". "\n" ."Error: ".$errorxml->message;
+					libxml_clear_errors();
 					update_option( "Tradetracker_importerror", $errorfile );
 				}else {
 					$xmlfeed = get_option("Tradetracker_xmlname");	
