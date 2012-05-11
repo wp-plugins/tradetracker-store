@@ -64,7 +64,23 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	$value($xmlfilecount, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
 	fill_database1($xmlfilecount);
 	$xmlfeedID++;
-
+	$directory = dir($foldersplits); 
+	while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
+		{  
+		if ($item != '.' && $item != '..')
+   		{  
+			$files = glob($foldersplits."/*xml");
+			if(count($files) > 0)
+				{	
+				if (is_array($files)) {
+					foreach($files as $filedel){
+						unlink($filedel); 
+					}
+				}
+			}
+		}  
+	}
+	$directory->close();
 	if ($xmlfilecount < count($Tradetracker_xml)-1){
 		$xmlfilecount++;
 		update_option("xmlfilecount", $xmlfilecount );

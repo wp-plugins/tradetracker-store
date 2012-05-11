@@ -224,7 +224,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			}
 			if($extraname != ""){
 				$more = "<div class=\"".$storename."store-more\">
-						<img src=\"".$folderhome."images/more.png\" style=\"border:0;\" border=\"0\" name=\"img".$i."\" width=\"11\" height=\"13\" border=\"0\" >
+						<img src=\"/wp-content/plugins/tradetracker-store/images/more.png\" style=\"border:0;\" border=\"0\" name=\"img".$i."\" width=\"11\" height=\"13\" border=\"0\" >
 						<a href=\"#first\" onClick=\"shoh('".$i."');\" >More info</a> 
 						<div style=\"display: none;\" id=\"".$i."\" > 
 							<table style=\"width:".$widthmore."px;\" width=\"".$widthmore."\">".$extraname."</table>
