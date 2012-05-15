@@ -7,8 +7,11 @@ global $ttstoretable;
 global $ttstorelayouttable;
 global $ttstoremultitable;
 ?>
+<?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
+<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
+
 <div  id="TB_overlay" class="TB_overlayBG"></div>
-<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
+<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 		<div id="TB_title">
 			<div id="TB_ajaxWindowTitle">Debug</div>
@@ -18,7 +21,6 @@ global $ttstoremultitable;
 				</a>
 			</div>
 		</div>
-		<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
 <?php
 	echo "<b>Needed to import XML Feed</b><br>";

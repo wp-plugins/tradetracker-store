@@ -15,6 +15,7 @@ function pluginsettings(){
 	$Tradetracker_removexml_name = 'Tradetracker_removexml';
 	$Tradetracker_removeother_name = 'Tradetracker_removeother';
 	$Tradetracker_adminheight_name = 'Tradetracker_adminheight';
+	$Tradetracker_adminwidth_name = 'Tradetracker_adminwidth';
 	$Tradetracker_showurl_name = 'Tradetracker_showurl';
 	$Tradetracker_usecss_name = 'Tradetracker_usecss';
 	$Tradetracker_csslink_name = 'Tradetracker_csslink';
@@ -30,6 +31,7 @@ function pluginsettings(){
 	$Tradetracker_removexml_val = get_option( $Tradetracker_removexml_name );
 	$Tradetracker_removeother_val = get_option( $Tradetracker_removeother_name );
 	$Tradetracker_adminheight_val = get_option( $Tradetracker_adminheight_name );
+	$Tradetracker_adminwidth_val = get_option( $Tradetracker_adminwidth_name );
 	$Tradetracker_showurl_val = get_option( $Tradetracker_showurl_name );
 	$Tradetracker_usecss_val = get_option( $Tradetracker_usecss_name );
 	$Tradetracker_csslink_val = get_option( $Tradetracker_csslink_name );
@@ -47,6 +49,7 @@ function pluginsettings(){
 		$Tradetracker_removexml_val = $_POST[ $Tradetracker_removexml_name ];
 		$Tradetracker_removeother_val = $_POST[ $Tradetracker_removeother_name ];
 		$Tradetracker_adminheight_val = $_POST[ $Tradetracker_adminheight_name ];
+		$Tradetracker_adminwidth_val = $_POST[ $Tradetracker_adminwidth_name ];
 		$Tradetracker_showurl_val = $_POST[ $Tradetracker_showurl_name ];
 		$Tradetracker_usecss_val = $_POST[ $Tradetracker_usecss_name ];
 		$Tradetracker_csslink_val = $_POST[ $Tradetracker_csslink_name ];
@@ -78,6 +81,9 @@ function pluginsettings(){
 		if ( get_option("Tradetracker_adminheight") != "" && get_option("Tradetracker_adminheight")  != $Tradetracker_adminheight_val) {
 			update_option( $Tradetracker_adminheight_name, $Tradetracker_adminheight_val );
 		}
+		if ( get_option("Tradetracker_adminwidth") != "" && get_option("Tradetracker_adminwidth")  != $Tradetracker_adminwidth_val) {
+			update_option( $Tradetracker_adminwidth_name, $Tradetracker_adminwidth_val );
+		}
 		if ( get_option("Tradetracker_showurl")  != $Tradetracker_showurl_val) {
 			update_option( $Tradetracker_showurl_name, $Tradetracker_showurl_val );
 		}
@@ -92,8 +98,11 @@ function pluginsettings(){
 		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
 	}
 ?>
+<?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
+<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
+
 <div  id="TB_overlay" class="TB_overlayBG"></div>
-<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
+<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
@@ -105,9 +114,8 @@ function pluginsettings(){
 				</a>
 			</div>
 		</div>
-		<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
-			<table width="985">
+			<table width="<?php echo $adminwidth-15; ?>">
 				<tr>
 					<td width="400px">
 						<label for="tradetrackerusecss" title="If you want to create your own CSS file." class="info">
@@ -187,6 +195,16 @@ function pluginsettings(){
 					</td>
 					<td>
 						<input type="text" name="<?php echo $Tradetracker_adminheight_name; ?>" value="<?php echo $Tradetracker_adminheight_val; ?>" size="20">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="tradetrackeradminwidth" title="What width should the amdin menu be?, standard is 1000" class="info">
+							<?php _e("Admin menu width:", 'tradetracker-adminwidth' ); ?> 
+						</label>
+					</td>
+					<td>
+						<input type="text" name="<?php echo $Tradetracker_adminwidth_name; ?>" value="<?php echo $Tradetracker_adminwidth_val; ?>" size="20">
 					</td>
 				</tr>
 				<tr>

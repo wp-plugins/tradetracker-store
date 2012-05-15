@@ -183,8 +183,10 @@ function layout() {
 	}
 	if(!isset($_GET['function'])){
 ?>
+<?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
+<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
 <div  id="TB_overlay" class="TB_overlayBG"></div>
-<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
+<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 		<div id="TB_title">
 			<div id="TB_ajaxWindowTitle">Would you like to edit or add a layout?</div>
@@ -194,9 +196,9 @@ function layout() {
 				</a>
 			</div>
 		</div>
-		<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
+		
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
-		<table width="985">
+		<table width="<?php echo $adminwidth-15; ?>">
 			<tr>
 				<td colspan="4">
 				</td>
@@ -301,7 +303,7 @@ function layout() {
 
 <div  id="TB_overlay" class="TB_overlayBG"></div>
 
-<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
+<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
@@ -318,7 +320,7 @@ function layout() {
 	<div id="ttstoreboxlayout">
 	</div>
 		<input type="hidden" name="layoutid" value="<?php if(isset($layoutid)){ echo $layoutid;} ?>">
-<table>
+<table width="<?php echo $adminwidth-15; ?>">
 	<tr>
 		<td>
 			<label for="tradetrackername" title="Fill in the name for the layout." class="info">

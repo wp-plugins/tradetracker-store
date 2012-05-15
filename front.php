@@ -258,7 +258,9 @@ function show_items($usedhow, $winkelvol, $searching)
 			$rel = "";
 		}
 		$productname = str_replace("&", "&amp;", $product->name);
-		$productdescription = str_replace("&", "&amp;", $product->description);
+		$productdescription = $product->description;
+		//$productdescription = mb_convert_encoding($product->description, "UTF-8");
+		//$productdescription = str_replace("&", "&amp;", $productdescription);
 		if(get_option("Tradetracker_currency")=="1") {
 			$array = get_option("Tradetracker_newcur");
 			$key = $product->currency; 

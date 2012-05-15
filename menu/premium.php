@@ -26,8 +26,10 @@ function premium() {
 		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
 	}
 ?>
+<?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
+<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
 <div  id="TB_overlay" class="TB_overlayBG"></div>
-<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
+<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
@@ -39,9 +41,8 @@ function premium() {
 				</a>
 			</div>
 		</div>
-		<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
-		<table width="985">
+		<table width="<?php echo $adminwidth-15; ?>">
 		<tr><td colspan="2"><b>Add extra XML Feeds</b></td></tr>
 	<?php
 		$providers = array('Daisycon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=5', 'Paidonresults' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=6', 'M4N' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=8', 'Bol' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=9', 'Belboon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=10', 'Affiliatewindow' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=11');

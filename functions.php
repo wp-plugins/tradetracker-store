@@ -1,4 +1,14 @@
 <?php
+function arrayDiffEmulation($arrayFrom, $arrayAgainst)
+{
+	$arrayAgainst = array_flip($arrayAgainst);
+	foreach ($arrayFrom as $key => $value) {
+		if(isset($arrayAgainst[$value])) {
+			unset($arrayFrom[$key]);
+		}
+	}
+	return $arrayFrom;
+}
 function create_slug($string){
    $slug=preg_replace('/[^A-Za-z0-9-]+/', '-', $string);
    return $slug;

@@ -6,15 +6,28 @@ function itemselect() {
 	global $ttstoremultitable;
 	global $ttstoretable;
 	global $folderhome;
-	if(!isset($_GET['function']) || $_GET['function']=="delete" ){
+	if(!isset($_GET['function']) || $_GET['function']=="delete" || $_GET['function']=="deleteempty"){
  		if(isset($_GET['function']) && $_GET['function']=="delete") {
 			$multiid = $_GET['multiid'];
 			$query = $wpdb->update( $ttstoremultitable, array( 'multiitems' => ""), array( 'id' => $multiid), array( '%s'), array( '%s'), array( '%d' ) );
 			$deleted = "deleted all items";
 		} 
+ 		if(isset($_GET['function']) && $_GET['function']=="deleteempty") {
+			$multiid = $_GET['multiid'];
+			$itemsid = explode(",",$_GET['emptyitems']);
+			$currentitems = $wpdb->get_col("SELECT multiitems FROM ".$ttstoremultitable." where id=".$multiid."");
+			$currentitems = explode(",",$currentitems[0]);
+			$result = arrayDiffEmulation($currentitems, $itemsid);
+			$result = implode(",",$result);
+			$query = $wpdb->update( $ttstoremultitable, array( 'multiitems' => $result), array( 'id' => $multiid), array( '%s'), array( '%s'), array( '%d' ) );
+			$deleted = "deleted the items";
+		} 
 ?>
+<?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
+<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
+
 <div  id="TB_overlay" class="TB_overlayBG"></div>
-<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
+<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 		<div id="TB_title">
 			<div id="TB_ajaxWindowTitle">Select items for which store</div>
@@ -24,14 +37,25 @@ function itemselect() {
 				</a>
 			</div>
 		</div>
-		<?php $adminheight = get_option("Tradetracker_adminheight"); ?>
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
-	<table width="985">
+	<table width="<?php echo $adminwidth-15; ?>">
 		<tr>
 			<td>
 				<b>Store Name</b>
 			</td>
-			<td colspan ="4">
+			<td>
+				<b>Edit</b>
+			</td>
+			<td>
+				<b>Select Item</b>
+			</td>
+			<td>
+				<b>Delete</b>
+			</td>
+			<td>
+				<b>Delete</b>
+			</td>
+			<td>
 			</td>
 		</tr>
 <?php
@@ -41,6 +65,12 @@ function itemselect() {
 			$productID = $layout_val->multiitems;
 			$productID = explode(",",$productID);
 			$productcount = count($productID);
+			if($productcount > "0" ){
+				$fivesdrafts = $wpdb->get_col("SELECT productID FROM $ttstoretable");
+				$result = arrayDiffEmulation($productID, $fivesdrafts);
+				$emptyproductcount = count($result);
+				$emptyitems = implode(",", $result);				
+			}
 		}
 ?>
 
@@ -58,7 +88,12 @@ function itemselect() {
 			</td>
 			<td>
 				<?php if(isset($productcount)){ ?>
-					<a href="admin.php?page=tt-store&option=itemselect&function=delete&multiid=<?php echo $layout_val->id; ?>">Remove the <?php echo $productcount; ?> selected Item(s)</a>
+					<a href="admin.php?page=tt-store&option=itemselect&function=delete&multiid=<?php echo $layout_val->id; ?>">All <?php echo $productcount; ?> selected Item(s)</a>
+				<?php } ?>
+			</td>
+			<td>
+				<?php if(isset($emptyproductcount) && $emptyproductcount > "0"){ ?>
+					<a href="admin.php?page=tt-store&option=itemselect&function=deleteempty&multiid=<?php echo $layout_val->id; ?>&emptyitems=<?php echo $emptyitems; ?>"><?php echo $emptyproductcount; ?> items no longer in a feed</a>
 				<?php } ?>
 			</td>
 			<td>
@@ -270,7 +305,7 @@ function selectToggle(toggle, form) {
 </script>
 
 <div  id="TB_overlay" class="TB_overlayBG"></div>
-<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: 1000px;">
+<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 		<div id="TB_title">
 			<div id="TB_ajaxWindowTitle">Select the items you want to show</div>
@@ -293,7 +328,7 @@ function selectToggle(toggle, form) {
 
 		<input class=\"searchsubmit\" type=\"submit\" title=\"search item\" value=\"Search\">
 		</form>"; ?>
-<table width="970" border="0">
+<table width="<?php echo $adminwidth-15; ?>" border="0">
 	<tr>
 		<td width="50%" align="left">
 			Showing products <b><? echo $first; ?></b> - <b><?php echo $last; ?></b> of <b><?php echo $numrows; ?></b>
@@ -315,7 +350,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 } else {
 	$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable." ".$multixmlfeed." ".$categorieselect." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
 }
-	echo "<table width=\"970\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
+	echo "<table width=\"<?php echo $adminwidth-15; ?>\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
 		echo "<tr><td width=\"200\">";
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=productID\">ProductID</a></b>";
 		echo "</td><td width=\"435\">";
@@ -359,7 +394,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				echo $product->productID;
 				echo "</td><td><span class=\"link1\"><a href=\"javascript: void(0)\">";
 				echo $product->name;
-				echo "<span><img src=\"".$imageURL."\"></span></a></span></td><td>";
+				echo "<span><img src=\"".$imageURL."\" width=\"400px\"></span></a></span></td><td>";
 				echo $xmlfeedname[$product->xmlfeed];
 				echo "</td><td>";
 				echo $product->price;
@@ -404,7 +439,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 			echo "<input type=\"hidden\" name=\"itemsother\" value=\"".$result."\" />";
 	echo "<tr><td colspan=\"5\">Select <a href=\"javascript:selectToggle(true, 'form2');\">All</a> | <a href=\"javascript:selectToggle(false, 'form2');\">None</a></td></tr>";
 	echo "</table>";
-	echo "<table width=\"970\"><tr><td>";
+	echo "<table width=\"<?php echo $adminwidth-15; ?>\"><tr><td>";
 	if ($currentpage != 0) { // Don't show back link if current page is first page.
 		$back_page = $currentpage - $limit;
 		echo("<a href=\"admin.php?page=tt-store&option=itemselect&function=select".$searchlink."&multiid=".$multiid."&order=$order&currentpage=$back_page&limit=$limit\">back</a>    \n");

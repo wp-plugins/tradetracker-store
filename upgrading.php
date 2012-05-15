@@ -1,4 +1,8 @@
 <?php
+if (get_option("TTstoreversion") == "4.0.22"){
+	update_option("Tradetracker_adminwidth", "1000" );
+	update_option("TTstoreversion", "4.1.2" );
+}
 if (get_option("TTstoreversion") == "4.0.17"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

@@ -76,7 +76,6 @@
 	z-index: 1000;
 }
 #ttstorebox {
-	width:1000px;
 	background-color: #F9F9F9;
 	text-align:center;
 	overflow:hidden;
@@ -87,7 +86,6 @@
 	background-color: #fff;
 	float:right;
 	min-height:354px;
-
 	z-index: 999;
 	right:40px;
 	top: 80px;
@@ -100,13 +98,12 @@
 	height: 20px;
 	padding-left: 5px;
 	padding-right: 5px;
-	width: 990px;
+	
 }
 #ttstoreboxoptions {
 	background-color:#F9F9F9;
 	float: right;
 	max-height:460px;
-	width:990px;
 	font-size:12px;
 	margin-left:5px;
 	margin-right:5px;
@@ -121,7 +118,7 @@
 	height: 27px;
 	padding-left: 5px;
 	padding-right: 5px;
-	width: 990px;
+	
 }
 #ttstoreboxsaved {
 	float: left;

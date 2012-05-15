@@ -21,6 +21,18 @@ global $ttstorelayouttable;
 global $ttstoremultitable;
 global $menuarray;
 global $foldercache;
+?>
+<?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
+
+<style type="text/css" media="screen">
+#ttstorebox { width:<?php echo $adminwidth; ?>px; }
+#ttstoreboxtop {width: <?php echo $adminwidth-10; ?>px;}
+#ttstoreboxoptions {width:<?php echo $adminwidth-10; ?>px;}
+#ttstoreboxbottom {width: <?php echo $adminwidth-10; ?>px;}
+</style>
+<?php
+
+
 
 if(isset($_GET['option'])){
 	$option = $_GET['option'];
