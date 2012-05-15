@@ -182,11 +182,11 @@ function itemselect() {
 	if(isset($_GET['currentpage'])){
 		$currentpage = $_GET['currentpage'];
 	}
-	if (!($limit))
+	if (!isset($limit))
 	{
 		$limit = 100;
 	}
-	if (!($currentpage)){
+	if (!isset($currentpage)){
 		$currentpage = 0;
 	}
 	if(isset($_GET['search']) && $_GET['search'] !=""){
@@ -434,7 +434,9 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 			$array1 = $productID;
 			$array2 = explode(",", $array2);
 			$result = array_diff($array1, $array2);
-			$result = implode(",", $result);
+			if(isset($result)){
+				$result = implode(",", $result);
+			}
 		}
 			echo "<input type=\"hidden\" name=\"itemsother\" value=\"".$result."\" />";
 	echo "<tr><td colspan=\"5\">Select <a href=\"javascript:selectToggle(true, 'form2');\">All</a> | <a href=\"javascript:selectToggle(false, 'form2');\">None</a></td></tr>";

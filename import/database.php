@@ -50,6 +50,7 @@ function fill_database1($xmlfeedid)
 			$products = simplexml_load_file($filename);
 				//$string = file_get_contents($filename, FILE_TEXT);
 				//$products = @simplexml_load_string($string);
+
 				if($products === false)
 				{
 					$xmlfeed = get_option("Tradetracker_xmlname");	
@@ -63,7 +64,19 @@ function fill_database1($xmlfeedid)
 					$errorfile .= "". "\n" ."Error: ".$errorxml->message;
 					libxml_clear_errors();
 					update_option( "Tradetracker_importerror", $errorfile );
-				}else {
+				}else if ($products->body->p == "The requested product feed could not be generated:"){
+					$xmlfeed = get_option("Tradetracker_xmlname");	
+					$keys = array_keys($xmlfeed);
+					$key = $keys[$xmlfeedid];
+					$xmlfeed = $xmlfeed[$key];
+					$errorxml = libxml_get_last_error();
+					$errorfile = get_option("Tradetracker_importerror");
+					$errorfile .= "". "\n" ."Feedname: ".$xmlfeed;
+					$errorfile .= "". "\n" ."Error: Tradetracker cannot create the productfeed. The feed itself is empty";
+					libxml_clear_errors();
+					update_option( "Tradetracker_importerror", $errorfile );
+
+				} else {
 					$xmlfeed = get_option("Tradetracker_xmlname");	
 					$keys = array_keys($xmlfeed);
 					$key = $keys[$xmlfeedid];
