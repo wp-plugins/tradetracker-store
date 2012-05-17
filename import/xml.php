@@ -16,6 +16,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 		premium_updater();
 		news_updater();
 		delete_option("Tradetracker_importerror");
+		delete_option("Tradetracker_xml_extra");
 		$emptytable = "TRUNCATE TABLE `$ttstoretable`";
 		$wpdb->query($emptytable);
 		$directory = dir($foldersplits); 

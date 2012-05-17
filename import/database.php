@@ -43,7 +43,7 @@ function fill_database1($xmlfeedid)
 	GLOBAL $counterxml;
 	global $ttstoretable;
 	global $foldersplits;
-	$extrafieldarray = "";
+	$extrafieldarray = get_option('Tradetracker_xml_extra');
 	$files = glob($foldersplits."*xml");
 	if (is_array($files)) {
 		foreach($files as $filename) {
@@ -129,14 +129,24 @@ function fill_database1($xmlfeedid)
 						$currentpage["extravalue"]=$extravalue;
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
 						$wpdb->flush();
-						$extrafieldarray .= ",".$extrafield;
+						if(isset($extrafieldarray)){
+							if(is_array($extrafieldarray)){
+								if (!in_array($extrafield, $extrafieldarray)) {
+    									array_push($extrafieldarray, $extrafield);
+								}
+							} else {
+								$extrafieldarray = array($extrafield);
+							}
+						} else {
+							$extrafieldarray = array($extrafield);
+						}
 					}
 				} 
 		}
 	}
-	$extrafieldarray = array_unique(explode(",",$extrafieldarray));
-	$remove_null_number = true;
-	$extrafieldarray = remove_array_empty_values($extrafieldarray, $remove_null_number);
+	//$extrafieldarray = array_unique(explode(",",$extrafieldarray));
+	//$remove_null_number = true;
+	//$extrafieldarray = remove_array_empty_values($extrafieldarray, $remove_null_number);
 
 	$option_name = 'Tradetracker_xml_extra' ;
 	$newvalue = $extrafieldarray;
