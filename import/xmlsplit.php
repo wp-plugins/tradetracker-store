@@ -74,6 +74,7 @@ function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recor
 	$chunksize=500;
 	$recordnum = 1; 
 	GLOBAL $processed;
+	global $folderhome;
 	$newfile = "splits/".$basefilename."-".$filenum.".xml";
 	$exportfile = fopen($folderhome."/$newfile","w");
 	$xmldatadelimiter = "productFeed";

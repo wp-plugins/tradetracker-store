@@ -127,7 +127,7 @@ function premium_updater(){
 	delete_option('tt_premium_function');
 	delete_option('tt_premium_provider');
 	$providers = get_option('Tradetracker_premiumapi');
-	if(isset($providers)){
+	if(isset($providers) && $providers!=""){
 		foreach ($providers as $key => $value){
 			$api = $value;
 			if(!empty($api)){
@@ -215,23 +215,23 @@ function normalize_special_characters( $str )
 {
     # Quotes cleanup
     $str = ereg_replace( chr(ord("`")), "'", $str );        # `
-    $str = ereg_replace( chr(ord("´")), "'", $str );        # ´
-    $str = ereg_replace( chr(ord("„")), ",", $str );        # „
+    $str = ereg_replace( chr(ord("ï¿½")), "'", $str );        # ï¿½
+    $str = ereg_replace( chr(ord("ï¿½")), ",", $str );        # ï¿½
     $str = ereg_replace( chr(ord("`")), "'", $str );        # `
-    $str = ereg_replace( chr(ord("´")), "'", $str );        # ´
-    $str = ereg_replace( chr(ord("“")), "\"", $str );        # “
-    $str = ereg_replace( chr(ord("”")), "\"", $str );        # ”
-    $str = ereg_replace( chr(ord("´")), "'", $str );        # ´
+    $str = ereg_replace( chr(ord("ï¿½")), "'", $str );        # ï¿½
+    $str = ereg_replace( chr(ord("ï¿½")), "\"", $str );        # ï¿½
+    $str = ereg_replace( chr(ord("ï¿½")), "\"", $str );        # ï¿½
+    $str = ereg_replace( chr(ord("ï¿½")), "'", $str );        # ï¿½
 
-$unwanted_array = array(    'Š'=>'S', 'š'=>'s', ''=>'Z', ''=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
-                            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
-                            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'İ'=>'Y', 'Ş'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
-                            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ğ'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
-                            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ı'=>'y', 'ı'=>'y', 'ş'=>'b', 'ÿ'=>'y' );
+$unwanted_array = array(    'ï¿½'=>'S', 'ï¿½'=>'s', 'ï¿½'=>'Z', 'ï¿½'=>'z', 'ï¿½'=>'A', 'ï¿½'=>'A', 'ï¿½'=>'A', 'ï¿½'=>'A', 'ï¿½'=>'A', 'ï¿½'=>'A', 'ï¿½'=>'A', 'ï¿½'=>'C', 'ï¿½'=>'E', 'ï¿½'=>'E',
+                            'ï¿½'=>'E', 'ï¿½'=>'E', 'ï¿½'=>'I', 'ï¿½'=>'I', 'ï¿½'=>'I', 'ï¿½'=>'I', 'ï¿½'=>'N', 'ï¿½'=>'O', 'ï¿½'=>'O', 'ï¿½'=>'O', 'ï¿½'=>'O', 'ï¿½'=>'O', 'ï¿½'=>'O', 'ï¿½'=>'U',
+                            'ï¿½'=>'U', 'ï¿½'=>'U', 'ï¿½'=>'U', 'ï¿½'=>'Y', 'ï¿½'=>'B', 'ï¿½'=>'Ss', 'ï¿½'=>'a', 'ï¿½'=>'a', 'ï¿½'=>'a', 'ï¿½'=>'a', 'ï¿½'=>'a', 'ï¿½'=>'a', 'ï¿½'=>'a', 'ï¿½'=>'c',
+                            'ï¿½'=>'e', 'ï¿½'=>'e', 'ï¿½'=>'e', 'ï¿½'=>'e', 'ï¿½'=>'i', 'ï¿½'=>'i', 'ï¿½'=>'i', 'ï¿½'=>'i', 'ï¿½'=>'o', 'ï¿½'=>'n', 'ï¿½'=>'o', 'ï¿½'=>'o', 'ï¿½'=>'o', 'ï¿½'=>'o',
+                            'ï¿½'=>'o', 'ï¿½'=>'o', 'ï¿½'=>'u', 'ï¿½'=>'u', 'ï¿½'=>'u', 'ï¿½'=>'y', 'ï¿½'=>'y', 'ï¿½'=>'b', 'ï¿½'=>'y' );
 $str = strtr( $str, $unwanted_array );
 
 # Bullets, dashes, and trademarks
-$str = ereg_replace( chr(149), "&#8226;", $str );    # bullet •
+$str = ereg_replace( chr(149), "&#8226;", $str );    # bullet ï¿½
 $str = ereg_replace( chr(150), "&ndash;", $str );    # en dash
 $str = ereg_replace( chr(151), "&mdash;", $str );    # em dash
 $str = ereg_replace( chr(153), "&#8482;", $str );    # trademark

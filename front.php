@@ -239,9 +239,11 @@ function show_items($usedhow, $winkelvol, $searching)
 		if($multiproductpage == "1" ){
 			$producturl = "".get_option("Tradetracker_productpageURL")."?ttproductid=".$product->productID."";
 			$urltarget ="";
+			$rel = "";
 		} else {
 			$producturl = $product->productURL;
 			$urltarget ="target=\"_blank\"";
+			$rel = "rel=\"nofollow\"";
 		}
 		if($product->imageURL==""){
 			$imageURL = plugins_url( 'images/No_image.png' , __FILE__ );
@@ -255,7 +257,6 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$image = $producturl;
 			$target = $urltarget;
-			$rel = "";
 		}
 		$productname = str_replace("&", "&amp;", $product->name);
 		$productdescription = $product->description;
@@ -288,7 +289,7 @@ function show_items($usedhow, $winkelvol, $searching)
 					</div>
 					".$more."
 					<div class=\"".$storename."buttons buttons\">
-						<a href=\"".$producturl."\" class=\"regular\" ".$urltarget." title=\"".$productname."\">
+						<a href=\"".$producturl."\" ".$rel." class=\"regular\" ".$urltarget." title=\"".$productname."\">
 							".$buynow."
 						</a>
 					</div>

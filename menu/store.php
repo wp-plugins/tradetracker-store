@@ -131,12 +131,15 @@ function store() {
        	 			$currentpage["multiorder"]=$Tradetracker_multiorder_val;
         			$currentpage["multilayout"]=$Tradetracker_multilayout_val;
         			$currentpage["multiamount"]=$Tradetracker_multiamount_val;
+				$currentpage["multiitems"]="";
         			$currentpage["multilightbox"]=$Tradetracker_multilightbox_val;
         			$currentpage["multixmlfeed"]=$Tradetracker_multixmlfeed_val;
         			$currentpage["multiproductpage"]=$Tradetracker_multiproductpage_val;
         			$currentpage["categories"]=$Tradetracker_categories_val;
 				$wpdb->insert( $ttstoremultitable, $currentpage);
 				$multiid = $wpdb->insert_id;
+				echo "ik doe dit";
+				$wpdb->print_error();
 			}
 			//put an settings updated message on the screen
 			$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
