@@ -25,7 +25,8 @@ function ttsearch(){
 		}
 
 	        //put an settings updated message on the screen
-		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
+		$savedmessage = __("Settings saved", "ttstore");
+		$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 	}
 ?>
 <?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
@@ -36,7 +37,7 @@ function ttsearch(){
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle">Search Settings.</div>
+			<div id="TB_ajaxWindowTitle"><?php _e('Search Settings.', 'ttstore'); ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -47,8 +48,8 @@ function ttsearch(){
 			<table width="<?php echo $adminwidth-15; ?>">
 	<tr>
 		<td>
-			<label for="tradetrackerwidth" title="Use the same settings as used for this store." class="info">
-				<?php _e("Use same setting as this Store:", 'tradetracker-multilayout' ); ?>
+			<label for="tradetrackerwidth" title="<?php _e('Use the same settings as used for this store.', 'ttstore'); ?>" class="info">
+				<?php _e("Use same setting as this Store:", 'ttstore' ); ?>
 			</label> 
 		</td>
 		<td>
@@ -72,10 +73,7 @@ function ttsearch(){
 	</tr>
 	<tr>
 		<td colspan="2">
-			<br>This is only interesting if you have created a search option on your site (more information can be found <a href="http://codex.wordpress.org/Creating_a_Search_Page">here</a>)
-			<br>You could use the following shortcode or code for your theme to show items related to the keyword the user searched on:
-			<br>Shortcode: [display_search]
-			<br>Or in your theme file: display_search_items();
+			<?php _e('<br>This is only interesting if you have created a search option on your site (more information can be found <a href="http://codex.wordpress.org/Creating_a_Search_Page">here</a>) <br>You could use the following shortcode or code for your theme to show items related to the keyword the user searched on:<br>Shortcode: [display_search]<br>Or in your theme file: display_search_items();', 'ttstore'); ?>
 		</td>
 	</td>
 			</table>

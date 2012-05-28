@@ -161,7 +161,7 @@ function fill_database1($xmlfeedid)
 	$item_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoretable;" ) );
 	$currentupdate = date('Y-m-d H:i:s');
 	$option_name = 'Tradetracker_xml_update' ;
-	$newvalue = "Database filled with ".$item_count." new items on ".$currentupdate;
+	$newvalue = sprintf(__('Database filled with %1$s new items on %2$s','ttstore'), $item_count, $currentupdate);
 
 	if ( get_option( $option_name ) != $newvalue ) {
 		update_option( $option_name, $newvalue );

@@ -60,7 +60,8 @@ function xmloption(){
 		}
 
 	        //put an settings updated message on the screen
-		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
+		$savedmessage = __("Settings saved", "ttstore");
+		$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 	}
 ?>
 <?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
@@ -71,7 +72,7 @@ function xmloption(){
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle">Change XML options.</div>
+			<div id="TB_ajaxWindowTitle"><?php _e('Change XML options.','ttstore'); ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -82,8 +83,8 @@ function xmloption(){
 			<table width="<?php echo $adminwidth-15; ?>">
 				<tr>
 					<td>
-						<label for="tradetrackerextrafield" title="Which extra fields would you like to use?" class="info">
-							<?php _e("Which extra fields?:", 'tradetracker-extra' ); ?> 
+						<label for="tradetrackerextrafield" title="<?php _e('Which extra fields would you like to use?','ttstore'); ?>" class="info">
+							<?php _e("Which extra fields?:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
@@ -122,36 +123,36 @@ function xmloption(){
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackerupdate" title="When should it update?, standard is 00:00:00" class="info">
-							<?php _e("Update time:", 'tradetracker-update' ); ?> 
+						<label for="tradetrackerupdate" title="<?php _e('When should it update?, standard is 00:00:00','ttstore'); ?>" class="info">
+							<?php _e("Update time:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="text" name="<?php echo $Tradetracker_xmlupdate_name; ?>" value="<?php if($Tradetracker_xmlupdate_val==""){ echo "00:00:00"; } else { echo $Tradetracker_xmlupdate_val;} ?>" size="20"> Time has to be in hh:mm:ss
+						<input type="text" name="<?php echo $Tradetracker_xmlupdate_name; ?>" value="<?php if($Tradetracker_xmlupdate_val==""){ echo "00:00:00"; } else { echo $Tradetracker_xmlupdate_val;} ?>" size="20"> <?php _e('Time has to be in hh:mm:ss','ttstore'); ?>
 					</td>
 				</tr>
 		<tr>
 			<td>
-				<label for="tradetrackercurrency" title="Do you like to use fill in your own currency or get it from the XML?" class="info">
-					<?php _e("Use your own currency symbol:", 'tradetracker-currency' ); ?> 
+				<label for="tradetrackercurrency" title="<?php _e('Do you like to use fill in your own currency or get it from the XML?','ttstore'); ?>" class="info">
+					<?php _e("Use your own currency symbol:", 'ttstore' ); ?> 
 				</label>
 			</td>
 			<td>
-				<input type="radio" name="<?php echo $Tradetracker_currency_name; ?>" <?php if($Tradetracker_currency_val==1) {echo "checked";} ?> value="1"> Yes 
+				<input type="radio" name="<?php echo $Tradetracker_currency_name; ?>" <?php if($Tradetracker_currency_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?>
 				<br>
-				<input type="radio" name="<?php echo $Tradetracker_currency_name; ?>" <?php if($Tradetracker_currency_val==0){echo "checked";} ?> value="0"> No
+				<input type="radio" name="<?php echo $Tradetracker_currency_name; ?>" <?php if($Tradetracker_currency_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<label for="tradetrackercurrencyloc" title="Do you like to have the currency before or after the price?" class="info">
-					<?php _e("Location of the currency:", 'tradetracker-currencyloc' ); ?> 
+				<label for="tradetrackercurrencyloc" title="<?php _e('Do you like to have the currency before or after the price?','ttstore'); ?>" class="info">
+					<?php _e("Location of the currency:", 'ttstore' ); ?> 
 				</label>
 			</td>
 			<td>
-				<input type="radio" name="<?php echo $Tradetracker_currencyloc_name; ?>" <?php if($Tradetracker_currencyloc_val==1) {echo "checked";} ?> value="1"> After the price
+				<input type="radio" name="<?php echo $Tradetracker_currencyloc_name; ?>" <?php if($Tradetracker_currencyloc_val==1) {echo "checked";} ?> value="1"> <?php _e('After the price','ttstore'); ?>
 				<br>
-				<input type="radio" name="<?php echo $Tradetracker_currencyloc_name; ?>" <?php if($Tradetracker_currencyloc_val==0){echo "checked";} ?> value="0"> Before the price
+				<input type="radio" name="<?php echo $Tradetracker_currencyloc_name; ?>" <?php if($Tradetracker_currencyloc_val==0){echo "checked";} ?> value="0"> <?php _e('Before the price','ttstore'); ?>
 			</td>
 		</tr>
 		<?php 
@@ -159,18 +160,18 @@ function xmloption(){
 		?>
 			<tr>
 				<td colspan="2">
-					<b>Adjust Currency:</b>
+					<b><?php _e('Adjust Currency:','ttstore'); ?></b>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<label for="tradetrackercurrency" title="Current currency in the XML?" class="info">
-						<?php _e("XML Currency:", 'tradetracker-currency' ); ?> 
+					<label for="tradetrackercurrency" title="<?php _e('Current currency in the XML?','ttstore'); ?>" class="info">
+						<?php _e("XML Currency:", 'ttstore' ); ?> 
 					</label>
 				</td>
 				<td>
-					<label for="tradetrackercurrency" title="What would you like to show instead of the XML currency?" class="info">
-						<?php _e("New Currency:", 'tradetracker-currency' ); ?> 
+					<label for="tradetrackercurrency" title="<?php _e("What would you like to show instead of the XML currency?", 'ttstore' ); ?>" class="info">
+						<?php _e("New Currency:", 'ttstore' ); ?> 
 					</label>
 				</td>
 			</tr>

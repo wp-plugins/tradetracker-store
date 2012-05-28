@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 4.1.5
+Version: 4.1.6
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -40,6 +40,7 @@ $ttstoremultitable = PRO_TABLE_PREFIX."multi";
 $foldersplits = plugin_dir_path( __FILE__ )."splits/";
 $foldercache = plugin_dir_path( __FILE__ )."cache/";
 $folderhome = plugin_dir_path( __FILE__ );
+load_plugin_textdomain( 'ttstore', false, dirname( plugin_basename( __FILE__ ) ) . '/translation/' );
 
 //register activiation and deactivation
 register_activation_hook(__FILE__,'tradetracker_store_install');

@@ -4,7 +4,8 @@
 	// Constructor //
     
 		function store_widget() {
-			$widget_ops = array( 'classname' => 'store_widget', 'description' => 'Select the items to show in the widget' ); // Widget Settings
+			$widgettext = __("Select the items to show in the widget","ttstore");
+			$widget_ops = array( 'classname' => 'store_widget', 'description' => $widgettext ); // Widget Settings
 			$control_ops = array( 'id_base' => 'store_widget' ); // Widget Control Settings
 			$this->WP_Widget( 'store_widget', 'TT Store', $widget_ops, $control_ops ); // Create the widget
 		}
@@ -49,11 +50,11 @@
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 		
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>">Title:</label>
+			<label for="<?php echo $this->get_field_id('title'); ?>"><?php esc_attr_e('Title:') ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>'" type="text" value="<?php echo $instance['title']; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('TT_number'); ?>"><?php _e('Which store would you like to show:'); ?></label>
+			<label for="<?php echo $this->get_field_id('TT_number'); ?>"><?php _e('Which store would you like to show:', 'ttstore'); ?></label>
 			<select class="widefat" name="<?php echo $this->get_field_name('TT_number'); ?>" id="<?php echo $this->get_field_id('TT_number'); ?>">
 			<?php
 				$storeoverview=$wpdb->get_results("SELECT id, multiname FROM ".$ttstoremultitable."");
@@ -67,7 +68,7 @@
 				?>
 			</select>
 		</p>
-		Make sure this store will only show one item. Either by limiting the amount of items <a href="wp-admin/admin.php?page=tt-store&option=store">here</a> or by only selecting one item <a href="wp-admin/admin.php?page=tt-store&option=itemselect">here</a>
+		<?php _e('Make sure this store will only show one item. Either by limiting the amount of items <a href="wp-admin/admin.php?page=tt-store&option=store">here</a> or by only selecting one item <a href="wp-admin/admin.php?page=tt-store&option=itemselect">here</a>','ttstore'); ?>
 
         <?php }
  

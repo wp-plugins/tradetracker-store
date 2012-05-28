@@ -40,159 +40,106 @@ if(isset($_GET['option'])){
 		$option();
 	}
 }
-$tradetracker_xml = get_option("Tradetracker_xml"); if(is_array($tradetracker_xml) and !empty($tradetracker_xml)) {$tradetracker_xml_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"Productfeed has been entered\" alt=\"Productfeed has been entered\"></div>";} else {$tradetracker_xml_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"No productfeed has been entered\" alt=\"No productfeed has been entered\"></div>";} 
-$tradetracker_layoutcount = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstorelayouttable;" ) ); if($tradetracker_layoutcount>="2") {$layout_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"You created at least one layout\" alt=\"You created at least one layout\"></div>";} else {$layout_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"You did not create a layout yet. You can only use the basic layout now\" alt=\"You did not create a layout yet. You can only use the basic layout now\"></div>";} 
-$tradetracker_storecount = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoremultitable;" ) ); if($tradetracker_storecount>="2") {$store_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"You created at least one store\" alt=\"You created at least one store\"></div>";} else {$store_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"You did not create a store yet. You can only use the basic store now\" alt=\"You did not create a store yet. You can only use the basic store now\"></div>";} 
+$tradetracker_xml = get_option("Tradetracker_xml"); if(is_array($tradetracker_xml) and !empty($tradetracker_xml)) {$tradetracker_xml_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("Productfeed has been entered","ttstore")."\" alt=\"".__("Productfeed has been entered","ttstore")."\"></div>";} else {$tradetracker_xml_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("No productfeed has been entered","ttstore")."\" alt=\"".__("No productfeed has been entered","ttstore")."\"></div>";} 
+$tradetracker_layoutcount = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstorelayouttable;" ) ); if($tradetracker_layoutcount>="2") {$layout_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("You created at least one layout","ttstore")."\" alt=\"".__("You created at least one layout","ttstore")."\"></div>";} else {$layout_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("You did not create a layout yet. You can only use the basic layout now","ttstore")."\" alt=\"".__("You did not create a layout yet. You can only use the basic layout now","ttstore")."\"></div>";} 
+$tradetracker_storecount = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoremultitable;" ) ); if($tradetracker_storecount>="2") {$store_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("You created at least one store","ttstore")."\" alt=\"".__("You created at least one store","ttstore")."\"></div>";} else {$store_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("You did not create a store yet. You can only use the basic store now","ttstore")."\" alt=\"".__("You did not create a store yet. You can only use the basic store now","ttstore")."\"></div>";} 
 if(ttstoreerrordetect("yes")=="yes"){
-	$debug_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"Errors in the plugin\" alt=\"Errors in the plugin\"></div>";
+	$debug_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("Errors in the plugin","ttstore")."\" alt=\"".__("Errors in the plugin","ttstore")."\"></div>";
 } else {
-	$debug_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"No errors in the plugin\" alt=\"No errors in the plugin\"></div>";
+	$debug_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("No errors in the plugin","ttstore")."\" alt=\"".__("No errors in the plugin","ttstore")."\"></div>";
 }
 if(get_option("Tradetracker_premiumupdate")==""){
-	$premium_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"No premium content enabled\" alt=\"No premium content enabled\"></div>";
+	$premium_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("No premium content enabled","ttstore")."\" alt=\"".__("No premium content enabled","ttstore")."\"></div>";
 } else {
-	$premium_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"Premium content has been enabled\" alt=\"Premium content has been enabled\"></div>";
+	$premium_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("Premium content has been enabled","ttstore")."\" alt=\"".__("Premium content has been enabled","ttstore")."\"></div>";
 }
 
 $readmore = "";
-$menuarray = array( array( 'Title' => "Add/Edit XMLFeeds", 
+$menuarray = array( array( 'Title' => __("Add/Edit XMLFeeds","ttstore"), 
                       'Image' => plugins_url( 'images/enhanced-distribution.png' , __FILE__ ),
-                      'Price' => "Free", 
-                      'Shortdesc' => "Add new or edit existing XML feeds here.", 
-                      'Longdesc' => "<h3>Adding or editing XMLFeeds</h3>
-		<p>This will give you the following options:
-		<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker
-		<br>- Giving your XML Feed a name so you can recognize it
-		<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href=\"http://tc.tradetracker.net/?c=27&m=0&a=48684&r=register&u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a>
-		</p>", 
+                      'Pricecheck' => "Free", 
+                      'Price' => __("Free","ttstore"), 
+                      'Shortdesc' => __("Add new or edit existing XML feeds here.","ttstore"), 
+                      'Longdesc' => __("<h3>Adding or editing XMLFeeds</h3><p>This will give you the following options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML Feed a name so you can recognize it<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href=\"http://tc.tradetracker.net/?c=27&m=0&a=48684&r=register&u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>","ttstore"), 
                       'Name' => "xmlfeedmore",
                       'Link' => "xmlfeed",		
                       'Vink' => $tradetracker_xml_done
                     ),
-               array( 'Title' => "Change XMLFeed options", 
+               array( 'Title' => __("Change XMLFeed options","ttstore"), 
                       'Image' => plugins_url( 'images/xml-feed-options.png' , __FILE__ ),
-                      'Price' => "Free", 
-                      'Shortdesc' => "Adjust XMLFeed options like import time and extra field selection.", 
-                      'Longdesc' => "<h3>Changing XML Options</h3>
-		<p>This will give you the following options:
-		<br>- Select the extra fields you like to use
-		<br>- What time the XML feed should update
-		<br>- Adjust currency symbol
-		<br>- Location of the currency
-		</p>", 
+                      'Pricecheck' => "Free", 
+                      'Price' => __("Free","ttstore"), 
+                      'Shortdesc' => __("Adjust XMLFeed options like import time and extra field selection.","ttstore"), 
+                      'Longdesc' => __("<h3>Changing XML Options</h3><p>This will give you the following options:<br>- Select the extra fields you like to use<br>- What time the XML feed should update<br>- Adjust currency symbol<br>- Location of the currency</p>","ttstore"), 
                       'Name' => "xmloptionmore",
                       'Link' => "xmloption",		
                       'Vink' => ""
                     ),
-               array( 'Title' => "Add/Edit Layouts", 
+               array( 'Title' => __("Add/Edit Layouts","ttstore"), 
                       'Image' => plugins_url( 'images/layout-settings.png' , __FILE__ ),
-                      'Price' => "Free", 
-                      'Shortdesc' => "This will give you the abillity to add and edit the layout.", 
-                      'Longdesc' => "<h3>Adding or Editing Layouts</h3>
-		<p>You can adjust the following layout settings:
-		<br>- Adjust the width of an item box
-		<br>- Adjust the font
-		<br>- Adjust the fontsize
-		<br>- Adjust the background of the image, footer and title
-		<br>- Adjust the border color
-		<br>- Adjust the font color
-		<br>- Adjust the button font color
-		<br><strong>Important: The basic layout can never be editted</strong>
-		</p>", 
+                      'Pricecheck' => "Free", 
+                      'Price' => __("Free","ttstore"), 
+                      'Shortdesc' => __("This will give you the abillity to add and edit the layout.","ttstore"), 
+                      'Longdesc' => __("<h3>Adding or Editing Layouts</h3><p>You can adjust the following layout settings:<br>- Adjust the width of an item box<br>- Adjust the font<br>- Adjust the fontsize<br>- Adjust the background of the image, footer and title<br>- Adjust the border color<br>- Adjust the font color<br>- Adjust the button font color<br><strong>Important: The basic layout can never be editted</strong></p>","ttstore"), 
                       'Name' => "layout",
                       'Link' => "layout",		
                       'Vink' => $layout_done
                     ),
-               array( 'Title' => "Add/Edit Stores", 
+               array( 'Title' => __("Add/Edit Stores","ttstore"), 
                       'Image' => plugins_url( 'images/add-edit-stores.png' , __FILE__ ),
-                      'Price' => "Free", 
-                      'Shortdesc' => "Here you can create different stores. This will give you the abbility to use different settings for every store.", 
-                      'Longdesc' => "<h3>Adding or Editing Stores</h3>
-		<p>You can adjust the following store settings:
-		<br>- Adjust on which fields the items are sorted
-		<br>- Select the layout to use for a store
-		<br>- Select which feed you want to use for a store
-		<br>- Select which categories you would like to show in the store
-		<br>- Adjust the text on the button
-		<br>- Choose the amount of items that should be shown
-		<br>- Choose to use lightbox
-		<br><strong>Important: The basic store can never be editted</strong>
-		</p>", 
+                      'Pricecheck' => "Free", 
+                      'Price' => __("Free","ttstore"), 
+                      'Shortdesc' => __("Here you can create different stores. This will give you the abbility to use different settings for every store.","ttstore"), 
+                      'Longdesc' => __("<h3>Adding or Editing Stores</h3><p>You can adjust the following store settings:<br>- Adjust on which fields the items are sorted<br>- Select the layout to use for a store<br>- Select which feed you want to use for a store<br>- Select which categories you would like to show in the store<br>- Adjust the text on the button<br>- Choose the amount of items that should be shown<br>- Choose to use lightbox<br><strong>Important: The basic store can never be editted</strong></p>","ttstore"), 
                       'Name' => "store",
                       'Link' => "store",		
                       'Vink' => $store_done
                     ),
-               array( 'Title' => "Item Selection", 
+               array( 'Title' => __("Item Selection","ttstore"), 
                       'Image' => plugins_url( 'images/item-selection.png' , __FILE__ ),
-                      'Price' => "Free", 
-                      'Shortdesc' => "Here you can select the items you would like to show.", 
-                      'Longdesc' => "<h3>Item selection</h3>
-		<p>This will give you the following options:
-		<br>- Select all items you would like to show on the site.
-		<br>- <strong>If you don't select any item it will display all items in the selected feed/category</strong>
-		</p>", 
+                      'Pricecheck' => "Free", 
+                      'Price' => __("Free","ttstore"), 
+                      'Shortdesc' => __("Here you can select the items you would like to show.","ttstore"), 
+                      'Longdesc' => __("<h3>Item selection</h3><p>This will give you the following options:<br>- Select all items you would like to show on the site.<br>- <strong>If you don't select any item it will display all items in the selected feed/category</strong></p>","ttstore"), 
                       'Name' => "itemselect",
                       'Link' => "itemselect",		
                       'Vink' => ""
                     ),
-               array( 'Title' => "Search Settings", 
+               array( 'Title' => __("Search Settings","ttstore"), 
                       'Image' => plugins_url( 'images/xml-feed-options.png' , __FILE__ ),
-                      'Price' => "Free", 
-                      'Shortdesc' => "Here you can set the settings for the search results.", 
-                      'Longdesc' => "<h3>Search Settings</h3>
-		<p>This will show options on you wordpress search results page
-		</p>", 
+                      'Pricecheck' => "Free", 
+                      'Price' => __("Free","ttstore"), 
+                      'Shortdesc' => __("Here you can set the settings for the search results.","ttstore"), 
+                      'Longdesc' => __("<h3>Search Settings</h3><p>This will show options on you wordpress search results page</p>","ttstore"), 
                       'Name' => "ttsearch",
                       'Link' => "ttsearch",		
                       'Vink' => ""
                     ),
-               array( 'Title' => "Plugin Settings", 
+               array( 'Title' => __("Plugin Settings","ttstore"), 
                       'Image' => plugins_url( 'images/xml-feed-options.png' , __FILE__ ),
-                      'Price' => "Free", 
-                      'Shortdesc' => "Here you can set the settings for the plugin itself.", 
-                      'Longdesc' => "<h3>Plugin Settings</h3>
-		<p>This will give you the following options:
-		<br>- Get an email when import fails
-		<br>- Decide if you want to import extra fields. If you don't use extra fields it is better to disable them.
-		<br>- Decide how high the admin menu can be
-		<br>- Select which options should be removed when plugin is deactivated. (when you remove the plugin all settings will be also removed)
-		</p>", 
+                      'Pricecheck' => "Free", 
+                      'Price' => __("Free","ttstore"), 
+                      'Shortdesc' => __("Here you can set the settings for the plugin itself.","ttstore"), 
+                      'Longdesc' => __("<h3>Plugin Settings</h3><p>This will give you the following options:<br>- Get an email when import fails<br>- Decide if you want to import extra fields. If you don't use extra fields it is better to disable them.<br>- Decide how high the admin menu can be<br>- Select which options should be removed when plugin is deactivated. (when you remove the plugin all settings will be also removed)</p>","ttstore"), 
                       'Name' => "pluginsettings",
                       'Link' => "pluginsettings",		
                       'Vink' => ""
                     ),
-               array( 'Title' => "Premium Addons", 
+               array( 'Title' => __("Premium Addons","ttstore"), 
                       'Image' => plugins_url( 'images/Premium-addons.png' , __FILE__ ),
-                      'Price' => "4,99 each", 
-                      'Shortdesc' => "Here you can see what addons are available.", 
-                      'Longdesc' => "<h3>Premium Addons</h3>
-		<p>You can buy the following productfeed addons:
-		<br>- Daisycon productfeed
-		<br>- Zanox productfeed
-		<br>- Cleafs productfeed
-		<br>- Tradedoubler productfeed
-		<br>- Paidonresult productfeed
-		</p>
-		<br>
-		<p>You can buy the following function addons:
-		<br>- Add a productpage
-		</p>", 
+                      'Price' => __("4,99 each","ttstore"), 
+                      'Shortdesc' => __("Here you can see what addons are available.","ttstore"), 
+                      'Longdesc' => __("<h3>Premium Addons</h3><p>You can buy the following productfeed addons:<br>- Daisycon productfeed<br>- Zanox productfeed<br>- Cleafs productfeed<br>- Tradedoubler productfeed<br>- Paidonresult productfeed<br>- M4n productfeed<br>- Bol productfeed<br>- Belboon productfeed<br>- Affiliatewindow productfeed<br>- Avangate productfeed</p><br><p>You can buy the following function addons:<br>- Add a productpage</p>","ttstore"), 
                       'Name' => "premium",
                       'Link' => "premium",		
                       'Vink' => $premium_done
                     ),
-               array( 'Title' => "Debug", 
+               array( 'Title' => __("Debug","ttstore"), 
                       'Image' => plugins_url( 'images/debug.png' , __FILE__ ),
-                      'Price' => "Free", 
-                      'Shortdesc' => "This will tell you if there are any errors in the plugin.", 
-                      'Longdesc' => "<h3>Debugging</h3>
-		<p>You can see if the following is working properly:
-	
-		<br>- Splits and Cache folder is writable
-		<br>- Curl function enabled
-		<br>- Simplexml function enabled
-		<br>- wp_head enabled in your theme
-		</p>", 
+                      'Pricecheck' => "Free", 
+                      'Price' => __("Free","ttstore"), 
+                      'Shortdesc' => __("This will tell you if there are any errors in the plugin.","ttstore"), 
+                      'Longdesc' => __("<h3>Debugging</h3><p>You can see if the following is working properly:<br>- Splits and Cache folder is writable<br>- Curl function enabled<br>- Simplexml function enabled<br>- wp_head enabled in your theme</p>","ttstore"), 
                       'Name' => "debug",
                       'Link' => "debug",		
                       'Vink' => $debug_done
@@ -212,7 +159,7 @@ echo "<div class=\"wrap\">";
 echo "<div class=\"ttstore-adminmenu\">";
 $i=0;
 for ($row = 0; $row < $menuoptioncount; $row++) {
-if($menuarray[$row]["Price"]=="Free"){
+if($menuarray[$row]["Pricecheck"]=="Free"){
 			$price = "<div class=\"module-image\">
 				<img align=\"right\" width=\"71\" height=\"45\" src=\"".$menuarray[$row]["Image"]."\">
 				<p><span class=\"module-image-badge\">".$menuarray[$row]["Price"]."</span></p>
@@ -224,6 +171,8 @@ if($menuarray[$row]["Price"]=="Free"){
 				<p style=\"background-color: #d29576 !important;\"><span class=\"module-image-badge\">".$menuarray[$row]["Price"]."</span></p>
 			</div>";
 }
+$learnmoretext = __("Learn More","ttstore");
+$settingstext = __("Settings","ttstore");
 echo "<div class=\"ttstore-module\">
 		<h3>".$menuarray[$row]["Title"]."</h3>
 
@@ -232,8 +181,8 @@ echo "<div class=\"ttstore-module\">
 			<p>".$menuarray[$row]["Shortdesc"]."</p>
 		</div>
 		<div class=\"ttstore-module-actions\">
-			<INPUT type=\"button\" name=\"Learn More\" class=\"button-secondary\" value=\"Learn More\" onclick=\"shoh('".$menuarray[$row]["Name"]."');\"> 
-			<INPUT type=\"button\" name=\"Settings\" class=\"button-secondary\" value=\"Settings\" onclick=\"location.href='admin.php?page=tt-store&option=".$menuarray[$row]["Link"]."'\">
+			<INPUT type=\"button\" name=\"Learn More\" class=\"button-secondary\" value=\"".$learnmoretext."\" onclick=\"shoh('".$menuarray[$row]["Name"]."');\"> 
+			<INPUT type=\"button\" name=\"Settings\" class=\"button-secondary\" value=\"".$settingstext."\" onclick=\"location.href='admin.php?page=tt-store&option=".$menuarray[$row]["Link"]."'\">
 		</div>
 		".$menuarray[$row]["Vink"]."
 	</div>";
@@ -255,9 +204,9 @@ echo "</div>";
 
 ?>
 <div class="plugin_news">
-	<h3>Donate</h3>
+	<h3><?php _e("Donate","ttstore"); ?></h3>
 	<p>
-		This plugin is made in my spare time. If you really like this plugin and it helped to improve the income of your site and you are willing to show me some of the gratitude:
+		<?php _e("This plugin is made in my spare time. If you really like this plugin and it helped to improve the income of your site and you are willing to show me some of the gratitude:","ttstore"); ?>
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 			<input type="hidden" name="cmd" value="_s-xclick">
 			<input type="hidden" name="hosted_button_id" value="J3UBRGHKXSAWC">
@@ -265,11 +214,11 @@ echo "</div>";
 			<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
 		</form>
 	</p>
-	<h3>Like this on facebook</h3>
+	<h3><?php _e("Like this on facebook","ttstore"); ?></h3>
 	<p>
 	<iframe src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FWpaffiliatefeed%2F243951359002776&amp;width=180&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=false&amp;appId=126016140831179" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:180px; height:258px;"></iframe>
 	</p>
-	<h3>Sites using this plugin</h3>
+	<h3><?php _e("Sites using this plugin","ttstore"); ?></h3>
 
 	<ul>
 <?php
@@ -288,15 +237,15 @@ echo "</div>";
 ?>
 	</ul>
 
-	<h3>Your Site here?</h3>
+	<h3><?php _e("Your Site here?","ttstore"); ?></h3>
 	<p>
-		if you want Your site here please use Tt Store Feedback and let me know
+		<?php _e("if you want Your site here please use Tt Store Feedback and let me know","ttstore"); ?>
 	</p>
-	<h3>Rate the plugin</h3>
+	<h3><?php _e("Rate the plugin","ttstore"); ?></h3>
 	<p>
-		if you like this plugin please go to <a href="http://wordpress.org/extend/plugins/tradetracker-store/" target="_blank">here</a> and give it a rating and vote for yes if the plugin works.
+		<?php _e("if you like this plugin please go to <a href=\"http://wordpress.org/extend/plugins/tradetracker-store/\" target=\"_blank\">here</a> and give it a rating and vote for yes if the plugin works.","ttstore"); ?>
 	</p>
-	<h3>News</h3>
+	<h3><?php _e("News","ttstore"); ?></h3>
 	<p>
 <?php
 	$news_dir = $foldercache.'news.xml';

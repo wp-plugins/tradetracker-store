@@ -95,7 +95,8 @@ function pluginsettings(){
 		}
 
 	        //put an settings updated message on the screen
-		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
+		$savedmessage = __("Settings saved", "ttstore");
+		$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 	}
 ?>
 <?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
@@ -107,7 +108,7 @@ function pluginsettings(){
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle">Change plugin options.</div>
+			<div id="TB_ajaxWindowTitle"><? _e('Change plugin options.','ttstore'); ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -118,26 +119,28 @@ function pluginsettings(){
 			<table width="<?php echo $adminwidth-15; ?>">
 				<tr>
 					<td width="400px">
-						<label for="tradetrackerusecss" title="If you want to create your own CSS file." class="info">
-							<?php _e("Do you want to use a CSS file.:", 'tradetracker-usecss' ); ?> 
+						<label for="tradetrackerusecss" title="<?php _e('If you want to create your own CSS file.','ttstore');?>" class="info">
+							<?php _e("Do you want to use a CSS file.:", 'ttstore' ); ?> 
 							<br />
-							If you enable this you won't be able to use add/delete layout. You can however use your own css file.
+							<?php _e('If you enable this you won\'t be able to use add/delete layout. You can however use your own css file.','ttstore');?>
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_usecss_name; ?>" <?php if($Tradetracker_usecss_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_usecss_name; ?>" <?php if($Tradetracker_usecss_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore');?>
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_usecss_name; ?>" <?php if($Tradetracker_usecss_val==0){echo "checked";} ?> value="0"> No
+						<input type="radio" name="<?php echo $Tradetracker_usecss_name; ?>" <?php if($Tradetracker_usecss_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore');?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackercsslink" title="Where is the CSS file located" class="info">
-							<?php _e("Full url to the CSS file:", 'tradetracker-csslink' ); ?> 
+						<label for="tradetrackercsslink" title="<?php _e('Where is the CSS file located','ttstore');?>" class="info">
+							<?php _e("Full url to the CSS file:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="text" name="<?php echo $Tradetracker_csslink_name; ?>" value="<?php echo $Tradetracker_csslink_val; ?>" size="70"> <br />Make sure this is not saved in the plugins folder. Cause that will be overwritten with an update. For an example go to <a href="<?php echo plugins_url( 'style.css' , __FILE__ ); ?>" target="_blank">here</a>
+						<input type="text" name="<?php echo $Tradetracker_csslink_name; ?>" value="<?php echo $Tradetracker_csslink_val; ?>" size="70"> <br />
+<?php $exampleurl = plugins_url( 'style.css' , __FILE__ ); ?>
+<?php printf(__('Make sure this is not saved in the plugins folder. Cause that will be overwritten with an update. For an example go to <a href="%s" target="_blank">here</a>','ttstore'),$exampleurl);?>
 					</td>
 				</tr>
 				<tr>
@@ -147,50 +150,50 @@ function pluginsettings(){
 				</tr>
 				<tr>
 					<td width="400px">
-						<label for="tradetrackerdebugemail" title="Do you like to get an email when XML feeds are not imported?" class="info">
-							<?php _e("Get email when import fails:", 'tradetracker-debugemail' ); ?> 
+						<label for="tradetrackerdebugemail" title="<?php _e('Do you like to get an email when XML feeds are not imported?', 'ttstore');?>" class="info">
+							<?php _e("Get email when import fails:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_debugemail_name; ?>" <?php if($Tradetracker_debugemail_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_debugemail_name; ?>" <?php if($Tradetracker_debugemail_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore');?>
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_debugemail_name; ?>" <?php if($Tradetracker_debugemail_val==0){echo "checked";} ?> value="0"> No
+						<input type="radio" name="<?php echo $Tradetracker_debugemail_name; ?>" <?php if($Tradetracker_debugemail_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore');?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackerimporttool" title="Which tool should be used to import XML?" class="info">
-							<?php _e("Which import tool:", 'tradetracker-importtool' ); ?> 
+						<label for="tradetrackerimporttool" title="<?php _e('Which tool should be used to import XML?','ttstore'); ?>" class="info">
+							<?php _e("Which import tool:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
 						<?php if (ini_get('allow_url_fopen') == true) { ?>
-							<input type="radio" name="<?php echo $Tradetracker_importtool_name; ?>" <?php if($Tradetracker_importtool_val==1) {echo "checked";} ?> value="1"> Fopen (most reliable)
+							<input type="radio" name="<?php echo $Tradetracker_importtool_name; ?>" <?php if($Tradetracker_importtool_val==1) {echo "checked";} ?> value="1"> <?php _e('Fopen (most reliable)','ttstore'); ?>
 						<?php } ?>
 						<?php if (function_exists('curl_init')) { ?>
 							<br>
-							<input type="radio" name="<?php echo $Tradetracker_importtool_name; ?>" <?php if($Tradetracker_importtool_val==2){echo "checked";} ?> value="2"> Curl/Fwrite (can run out of memory)
+							<input type="radio" name="<?php echo $Tradetracker_importtool_name; ?>" <?php if($Tradetracker_importtool_val==2){echo "checked";} ?> value="2"> <?php _e('Curl/Fwrite (can run out of memory)','ttstore'); ?>
 							<br>
-							<input type="radio" name="<?php echo $Tradetracker_importtool_name; ?>" <?php if($Tradetracker_importtool_val==3){echo "checked";} ?> value="3"> Curl (sometimes causes issues)
+							<input type="radio" name="<?php echo $Tradetracker_importtool_name; ?>" <?php if($Tradetracker_importtool_val==3){echo "checked";} ?> value="3"> <?php _e('Curl (sometimes causes issues)','ttstore'); ?>
 						<?php } ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackerloadextra" title="Load the extra fields in the database, if you don't use extra fields it is smarter to disable them here" class="info">
-							<?php _e("Import extra fields:", 'tradetracker-loadextra' ); ?> 
+						<label for="tradetrackerloadextra" title="<?php _e('Load the extra fields in the database, if you don\'t use extra fields it is smarter to disable them here','ttstore'); ?>" class="info">
+							<?php _e("Import extra fields:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_loadextra_name; ?>" <?php if($Tradetracker_loadextra_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_loadextra_name; ?>" <?php if($Tradetracker_loadextra_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?>
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_loadextra_name; ?>" <?php if($Tradetracker_loadextra_val==0){echo "checked";} ?> value="0"> No (Can prevent timeouts, But then you cannot show extra fields)
+						<input type="radio" name="<?php echo $Tradetracker_loadextra_name; ?>" <?php if($Tradetracker_loadextra_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?> <?php _e('(Can prevent timeouts, But then you cannot show extra fields)','ttstore'); ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackeradminheight" title="What height should the amdin menu be?, standard is 460" class="info">
-							<?php _e("Admin menu height:", 'tradetracker-adminheight' ); ?> 
+						<label for="tradetrackeradminheight" title="<?php _e('What height should the admin menu be?, standard is 460','ttstore'); ?>" class="info">
+							<?php _e("Admin menu height:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
@@ -199,8 +202,8 @@ function pluginsettings(){
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackeradminwidth" title="What width should the amdin menu be?, standard is 1000" class="info">
-							<?php _e("Admin menu width:", 'tradetracker-adminwidth' ); ?> 
+						<label for="tradetrackeradminwidth" title="<?php _e('What width should the admin menu be?, standard is 1000','ttstore'); ?>" class="info">
+							<?php _e("Admin menu width:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
@@ -209,79 +212,79 @@ function pluginsettings(){
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackershowurl" title="Show url to plugin website in the source of the site" class="info">
-							<?php _e("Show url to plugin website in the source:", 'tradetracker-showurl' ); ?> 
+						<label for="tradetrackershowurl" title="<?php _e('Show url to plugin website in the source of the site','ttstore'); ?>" class="info">
+							<?php _e("Show url to plugin website in the source:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_showurl_name; ?>" <?php if($Tradetracker_showurl_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_showurl_name; ?>" <?php if($Tradetracker_showurl_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?>
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_showurl_name; ?>" <?php if($Tradetracker_showurl_val==0){echo "checked";} ?> value="0"> No
+						<input type="radio" name="<?php echo $Tradetracker_showurl_name; ?>" <?php if($Tradetracker_showurl_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
 						<hr />
-						What should happen when you deactivate the plugin:
+						<?php _e('What should happen when you deactivate the plugin:','ttstore'); ?>
 					</td>
 				<tr>
 					<td>
-						<label for="tradetrackerremovelayout" title="Should all layouts be removed" class="info">
-							<?php _e("Remove all layouts:", 'tradetracker-removelayout' ); ?> 
+						<label for="tradetrackerremovelayout" title="<?php _e('Should all layouts be removed','ttstore'); ?>" class="info">
+							<?php _e("Remove all layouts:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_removelayout_name; ?>" <?php if($Tradetracker_removelayout_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_removelayout_name; ?>" <?php if($Tradetracker_removelayout_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?> 
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_removelayout_name; ?>" <?php if($Tradetracker_removelayout_val==0){echo "checked";} ?> value="0"> No
+						<input type="radio" name="<?php echo $Tradetracker_removelayout_name; ?>" <?php if($Tradetracker_removelayout_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackerremovestores" title="Should all stores be removed" class="info">
-							<?php _e("Remove all stores:", 'tradetracker-removestores' ); ?> 
+						<label for="tradetrackerremovestores" title="<?php _e('Should all stores be removed','ttstore'); ?>" class="info">
+							<?php _e("Remove all stores:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_removestores_name; ?>" <?php if($Tradetracker_removestores_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_removestores_name; ?>" <?php if($Tradetracker_removestores_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?>
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_removestores_name; ?>" <?php if($Tradetracker_removestores_val==0){echo "checked";} ?> value="0"> No
+						<input type="radio" name="<?php echo $Tradetracker_removestores_name; ?>" <?php if($Tradetracker_removestores_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackerremoveproducts" title="Should all products be removed" class="info">
-							<?php _e("Remove all products:", 'tradetracker-removeproducts' ); ?> 
+						<label for="tradetrackerremoveproducts" title="<?php _e('Should all products be removed','ttstore'); ?>" class="info">
+							<?php _e("Remove all products:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_removeproducts_name; ?>" <?php if($Tradetracker_removeproducts_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_removeproducts_name; ?>" <?php if($Tradetracker_removeproducts_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?>
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_removeproducts_name; ?>" <?php if($Tradetracker_removeproducts_val==0){echo "checked";} ?> value="0"> No
+						<input type="radio" name="<?php echo $Tradetracker_removeproducts_name; ?>" <?php if($Tradetracker_removeproducts_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackerremovexml" title="Should all XML settings be removed" class="info">
-							<?php _e("Remove all XML settings:", 'tradetracker-removexml' ); ?> 
+						<label for="tradetrackerremovexml" title="<?php _e('Should all XML settings be removed','ttstore'); ?>" class="info">
+							<?php _e("Remove all XML settings:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_removexml_name; ?>" <?php if($Tradetracker_removexml_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_removexml_name; ?>" <?php if($Tradetracker_removexml_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?>
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_removexml_name; ?>" <?php if($Tradetracker_removexml_val==0){echo "checked";} ?> value="0"> No
+						<input type="radio" name="<?php echo $Tradetracker_removexml_name; ?>" <?php if($Tradetracker_removexml_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<label for="tradetrackerremovexml" title="Should all other settings be removed" class="info">
-							<?php _e("Remove all other settings:", 'tradetracker-removeother' ); ?> 
+						<label for="tradetrackerremovexml" title="<?php _e('Should all other settings be removed','ttstore'); ?>" class="info">
+							<?php _e("Remove all other settings:", 'ttstore' ); ?> 
 						</label>
 					</td>
 					<td>
-						<input type="radio" name="<?php echo $Tradetracker_removeother_name; ?>" <?php if($Tradetracker_removeother_val==1) {echo "checked";} ?> value="1"> Yes 
+						<input type="radio" name="<?php echo $Tradetracker_removeother_name; ?>" <?php if($Tradetracker_removeother_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?>
 						<br>
-						<input type="radio" name="<?php echo $Tradetracker_removeother_name; ?>" <?php if($Tradetracker_removeother_val==0){echo "checked";} ?> value="0"> No
+						<input type="radio" name="<?php echo $Tradetracker_removeother_name; ?>" <?php if($Tradetracker_removeother_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 					</td>
 				</tr>
 			</table>

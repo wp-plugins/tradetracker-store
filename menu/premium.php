@@ -23,7 +23,8 @@ function premium() {
 			premium_updater();
 		}
 	        //put an settings updated message on the screen
-		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
+		$savedmessage = __("Settings saved", "ttstore");
+		$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 	}
 ?>
 <?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
@@ -34,7 +35,7 @@ function premium() {
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle">Insert the addon apikeys.</div>
+			<div id="TB_ajaxWindowTitle"><?php _e('Insert the addon apikeys.','ttstore'); ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -43,25 +44,25 @@ function premium() {
 		</div>
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
 		<table width="<?php echo $adminwidth-15; ?>">
-		<tr><td colspan="2"><b>Add extra XML Feeds</b></td></tr>
+		<tr><td colspan="2"><b><?php _e('Add extra productfeed providers','ttstore'); ?></b></td></tr>
 	<?php
-		$providers = array('Daisycon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=5', 'Paidonresults' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=6', 'M4N' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=8', 'Bol' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=9', 'Belboon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=10', 'Affiliatewindow' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=11');
+		$providers = array('Daisycon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=2', 'Zanox' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=4', 'Cleafs' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=3', 'TradeDoubler' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=5', 'Paidonresults' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=6', 'M4N' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=8', 'Bol' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=9', 'Belboon' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=10', 'Affiliatewindow' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=11','Avangate' => 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=12');
 		$i="1";
 		foreach ($providers as $key => $value){
 		$update = get_option('Tradetracker_premiumaccepted');
 			if($update[$key]== "1") {
-				$accepted = "Accepted";
+				$accepted = __("Accepted","ttstore");
 			}elseif($update[$key]== "0") {
-				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\" target=\"_blank\">here</a>";
+				$accepted =  sprintf(__('buy an APIKey for %1$s <a href="%2$s" target="_blank">here</a>','ttstore'),$key,$value);
 			} else {
-				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\" target=\"_blank\">here</a>";
+				$accepted =  sprintf(__('buy an APIKey for %1$s <a href="%2$s" target="_blank">here</a>','ttstore'),$key,$value);
 			}
 
 	?>
 			<tr>
 				<td>
-					<label for="<?php echo $key; ?>" title="If you bought an API key to use <?php echo $key; ?> please fill it in here." class="info">
-						<?php _e("".$key." APIKey:", 'tradetracker-xml' ); ?> 
+					<label for="<?php echo $key; ?>" title="<?php printf(__('If you bought an API key to use %s please fill it in here.','ttstore'),$key); ?>" class="info">
+						<?php printf(__('%s APIKey:', 'ttstore'),$key); ?> 
 					</label> 
 				</td>
 				<td>
@@ -73,25 +74,25 @@ function premium() {
 		$i++;
 		}
 	?>
-		<tr><td colspan="2"><b>Add extra functions</b></td></tr>
+		<tr><td colspan="2"><b><?php _e('Add extra functions','ttstore'); ?></b></td></tr>
 	<?php
 		$i="50";
 		$providers = array('ProductPages'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=7' );
 		foreach ($providers as $key => $value){
 		$update = get_option('Tradetracker_premiumaccepted');
 			if($update[$key]== "1") {
-				$accepted = "Accepted";
+				$accepted = __("Accepted","ttstore");
 			}elseif($update[$key]== "0") {
-				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\" target=\"_blank\">here</a>";
+				$accepted =  sprintf(__('buy an APIKey for %1$s <a href="%2$s" target="_blank">here</a>','ttstore'),$key,$value);
 			} else {
-				$accepted = "buy an APIKey for ".$key." <a href=\"".$value."\" target=\"_blank\">here</a>";
+				$accepted =  sprintf(__('buy an APIKey for %1$s <a href="%2$s" target="_blank">here</a>','ttstore'),$key,$value);
 			}
 
 	?>
 			<tr>
 				<td>
-					<label for="<?php echo $key; ?>" title="If you bought an API key to use <?php echo $key; ?> please fill it in here." class="info">
-						<?php _e("".$key." APIKey:", 'tradetracker-xml' ); ?> 
+					<label for="<?php echo $key; ?>" title="<?php printf(__('If you bought an API key to use %s please fill it in here.','ttstore'),$key); ?>" class="info">
+						<?php printf(__('%s APIKey:', 'ttstore'),$key); ?> 
 					</label> 
 				</td>
 				<td>

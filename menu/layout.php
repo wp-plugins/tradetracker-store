@@ -84,39 +84,39 @@ function layout() {
 		} else {
 			if($Tradetracker_font_val == ""){
 				$Tradetracker_font_val="verdana";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			if($Tradetracker_fontsize_val == ""){
 				$Tradetracker_fontsize_val = "10";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			if($Tradetracker_colortitle_val==""){
 				$Tradetracker_colortitle_val = "#ececed";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			if($Tradetracker_colorfooter_val == ""){
 				$Tradetracker_colorfooter_val = "#ececed";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			if($Tradetracker_colorimagebg_val == ""){
 				$Tradetracker_colorimagebg_val = "#FFFFFF";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			if($Tradetracker_colorfont_val == ""){
 				$Tradetracker_colorfont_val = "#000000";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			if($Tradetracker_colorborder_val == ""){
 				$Tradetracker_colorborder_val = "#65B9C1";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			if($Tradetracker_colorbutton_val == ""){
 				$Tradetracker_colorbutton_val = "#65B9C1";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			if($Tradetracker_colorbuttonfont_val == ""){
 				$Tradetracker_colorbuttonfont_val = "#000000";
-				$emptyfield = "Empty fields filled with default value";
+				$emptyfield = __("Empty fields filled with default value","ttstore");
 			}
 			//get posted data
 			//save new variables when editting
@@ -171,10 +171,11 @@ function layout() {
 				$layoutid = $wpdb->insert_id;
 			}
 		        //put an settings updated message on the screen
+				$savedmessage = __("Settings saved", "ttstore");
 				if(isset($emptyfield)){
-					$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved ".$emptyfield."</strong></div>";
+					$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage." ".$emptyfield."</strong></div>";
 				} else {
-					$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
+					$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 				}
 		}
 ?>
@@ -189,7 +190,7 @@ function layout() {
 <div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle">Would you like to edit or add a layout?</div>
+			<div id="TB_ajaxWindowTitle"><?php _e('Would you like to edit or add a layout?', 'ttstore'); ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -203,42 +204,42 @@ function layout() {
 				<td colspan="4">
 				</td>
 				<td colspan="7">
-				Colors:
+				<?php _e('Colors:','ttstore'); ?>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<strong>Name</strong>
+					<strong><?php _e('Name', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Width</strong>
+					<strong><?php _e('Width', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Font</strong>
+					<strong><?php _e('Font', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Fontsize</strong>
+					<strong><?php _e('Fontsize', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Title</strong>
+					<strong><?php _e('Title', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Image</strong>
+					<strong><?php _e('Image', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Footer</strong>
+					<strong><?php _e('Footer', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Font</strong>
+					<strong><?php _e('Font', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Border</strong>
+					<strong><?php _e('Border', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Button</strong>
+					<strong><?php _e('Button', 'ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Button font</strong>
+					<strong><?php _e('Button font', 'ttstore'); ?></strong>
 				</td>
 				<td>
 				</td>
@@ -282,7 +283,7 @@ function layout() {
 					<?php echo $layout_val->laycolorbuttonfont; ?>
 				</td>
 				<td>
-					<?php if($layout_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=layout&function=new&layoutid=".$layout_val->id."\">Edit</a>"; } ?>
+					<?php if($layout_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=layout&function=new&layoutid=".$layout_val->id."\">".__('Edit','ttstore')."</a>"; } ?>
 				</td>
 			</tr>
 <?php		
@@ -291,7 +292,7 @@ function layout() {
 		</table>
 		</div>
 		<div id="ttstoreboxbottom">
-			<INPUT type="button" name="Close" class="button-primary" value="<?php esc_attr_e('Add New') ?>" onclick="location.href='admin.php?page=tt-store&option=layout&function=new'"> 
+			<INPUT type="button" name="Close" class="button-primary" value="<?php _e('Add New','ttstore'); ?>" onclick="location.href='admin.php?page=tt-store&option=layout&function=new'"> 
 			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Close') ?>" onclick="location.href='admin.php?page=tt-store'"> 
 		</div>
 	</div>
@@ -308,7 +309,7 @@ function layout() {
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle"><?php if(isset($layoutid)){ esc_attr_e('Edit layout'); } else { esc_attr_e('Create layout'); } ?></div>
+			<div id="TB_ajaxWindowTitle"><?php if(isset($layoutid)){ _e('Edit layout', 'ttstore'); } else { _e('Create layout', 'ttstore'); } ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store&option=layout">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -323,8 +324,8 @@ function layout() {
 <table width="<?php echo $adminwidth-15; ?>">
 	<tr>
 		<td>
-			<label for="tradetrackername" title="Fill in the name for the layout." class="info">
-				<?php _e("Name for Layout:", 'tradetracker-layoutname' ); ?>
+			<label for="tradetrackername" title="<?php _e("Fill in the name for the layout.", 'ttstore' ); ?>" class="info">
+				<?php _e("Name for Layout:", 'ttstore' ); ?>
 			</label> 
 		</td>
 		<td>
@@ -334,8 +335,8 @@ function layout() {
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackerwidth" title="Fill in how width you want 1 item to be." class="info">
-				<?php _e("Store width:", 'tradetracker-width' ); ?>
+			<label for="tradetrackerwidth" title="<?php _e("Fill in which width you want 1 item to have.", 'ttstore' ); ?>" class="info">
+				<?php _e("Store width:", 'ttstore' ); ?>
 			</label> 
 		</td>
 		<td>
@@ -346,8 +347,8 @@ function layout() {
 
 	<tr>
 		<td>
-			<label for="tradetrackerfont" title="Fill in which font you want to use. Standard font is Verdana." class="info">
-				<?php _e("Font:", 'tradetracker-font' ); ?> 
+			<label for="tradetrackerfont" title="<?php _e("Fill in which font you want to use. Standard font is Verdana.", 'ttstore' ); ?>" class="info">
+				<?php _e("Font:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
@@ -358,8 +359,8 @@ function layout() {
 
 	<tr>
 		<td>
-			<label for="tradetrackerfontsize" title="Fill in which size the font should be. Standard is 10" class="info">
-				<?php _e("Fontsize:", 'tradetracker-fontsize' ); ?> 
+			<label for="tradetrackerfontsize" title="<?php _e("Fill in which size the font should be. Standard is 10", 'ttstore' ); ?>" class="info">
+				<?php _e("Fontsize:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
@@ -369,20 +370,20 @@ function layout() {
 
 	<tr>
 		<td>
-			<label for="tradetrackercolortitle" title="What color would you like to use for your title background." class="info">
-				<?php _e("Title background color:", 'tradetracker-colortitle' ); ?> 
+			<label for="tradetrackercolortitle" title="<?php _e("What color would you like to use for your title background.", 'ttstore' ); ?>" class="info">
+				<?php _e("Title background color:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
 			<input type="text" name="<?php echo $Tradetracker_colortitle_name; ?>" class="target" id="layoutcolortitle" value="<?php if(isset($Tradetracker_colortitle_val)){ echo $Tradetracker_colortitle_val;} ?>" size="20" <?php if($readonlylock == "yes"){echo "readonly";} ?>> 
-			<a href="http://www.2createawebsite.com/build/hex-colors.html#colorgenerator" target="_blank">Color Picker</a> (use hex code including #. Like: #000000)
+			<a href="http://www.2createawebsite.com/build/hex-colors.html#colorgenerator" target="_blank">Color Picker</a> <?php _e("(use hex code including #. Like: #000000)", 'ttstore' ); ?>
 		</td>
 	</tr>
 
 	<tr>
 		<td>
-			<label for="tradetrackercolorimagebg" title="What color would you like to use for your image background." class="info">
-				<?php _e("Image background color:", 'tradetracker-colorimagebg' ); ?> 
+			<label for="tradetrackercolorimagebg" title="<?php _e("What color would you like to use for your image background.", 'ttstore' ); ?>" class="info">
+				<?php _e("Image background color:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
@@ -392,8 +393,8 @@ function layout() {
 
 	<tr>
 		<td>
-			<label for="tradetrackercolorfooter" title="What color would you like to use for your footer background." class="info">
-				<?php _e("Footer background color:", 'tradetracker-colorfooter' ); ?> 
+			<label for="tradetrackercolorfooter" title="<?php _e("What color would you like to use for your footer background.", 'ttstore' ); ?>" class="info">
+				<?php _e("Footer background color:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
@@ -402,8 +403,8 @@ function layout() {
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackercolorfooter" title="What color would you like to use for the border." class="info">
-				<?php _e("Border color:", 'tradetracker-colorborder' ); ?> 
+			<label for="tradetrackercolorfooter" title="<?php _e("What color would you like to use for the border.", 'ttstore' ); ?>" class="info">
+				<?php _e("Border color:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
@@ -412,8 +413,8 @@ function layout() {
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackercolorbutton" title="What color would you like to use for the button." class="info">
-				<?php _e("Button color:", 'tradetracker-colorbutton' ); ?> 
+			<label for="tradetrackercolorbutton" title="<?php _e("What color would you like to use for the button.", 'ttstore' ); ?>" class="info">
+				<?php _e("Button color:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
@@ -422,8 +423,8 @@ function layout() {
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackerbuttoncolorfont" title="What font color would you like to use for the button." class="info">
-				<?php _e("Button Font color:", 'tradetracker-colorbuttonfont' ); ?> 
+			<label for="tradetrackerbuttoncolorfont" title="<?php _e("What font color would you like to use for the button.", 'ttstore' ); ?>" class="info">
+				<?php _e("Button Font color:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
@@ -432,8 +433,8 @@ function layout() {
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackercolorfont" title="What font color would you like to use." class="info">
-				<?php _e("Font color:", 'tradetracker-colorfont' ); ?> 
+			<label for="tradetrackercolorfont" title="<?php _e("What font color would you like to use.", 'ttstore' ); ?>" class="info">
+				<?php _e("Font color:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
@@ -451,7 +452,7 @@ function layout() {
 					echo $error;
 				}
 			?>
-			<input type="submit" name="Submit" class="button-primary" value="<?php if(isset($layoutid)){ esc_attr_e('Save Changes'); } else { esc_attr_e('Create'); } ?>" /> 
+			<input type="submit" name="Submit" class="button-primary" value="<?php if(isset($layoutid)){ esc_attr_e('Save Changes'); } else { _e('Create','ttstore'); } ?>" /> 
 			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Close') ?>" onclick="location.href='admin.php?page=tt-store&option=layout'"> 
 		</div>
 	</form>

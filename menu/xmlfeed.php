@@ -47,7 +47,8 @@ function xmlfeed(){
 		
 
 	        //put an settings updated message on the screen
-		$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved, click Update Items when all feeds are added</strong></div>";
+		$savedmessage = __("Settings saved, click Update Items when all feeds are added", "ttstore");
+		$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 ?>
 		
 <?php
@@ -61,7 +62,7 @@ function xmlfeed(){
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle">Add or Edit XML feeds.</div>
+			<div id="TB_ajaxWindowTitle"><?php _e("Add or Edit XML feeds.","ttstore"); ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -72,13 +73,13 @@ function xmlfeed(){
 			<table width="<?php echo $adminwidth-15; ?>">
 			<tr>
 				<td>
-					<strong>Link to XML</strong>
+					<strong><?php _e("Link to XML","ttstore"); ?></strong>
 				</td>
 				<td>
-					<strong>XML Name</strong>
+					<strong><?php _e("XML Name","ttstore"); ?></strong>
 				</td>
 				<td>
-					<strong>XML Provider</strong>
+					<strong><?php _e("XML Provider","ttstore"); ?></strong>
 				</td>
 			</tr>
 			
@@ -144,7 +145,7 @@ function xmlfeed(){
 					echo $saved;
 				}
 			?>
-			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Update Items') ?>" onclick="location.href='admin.php?page=tt-store&update=yes'"> 
+			<INPUT type="button" name="Close" class="button-secondary" value="<?php  _e('Update Items','ttstore') ?>" onclick="location.href='admin.php?page=tt-store&update=yes'"> 
 			<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" /> 
 			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Close') ?>" onclick="location.href='admin.php?page=tt-store'"> 
 		</div>

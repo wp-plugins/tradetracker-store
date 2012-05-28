@@ -142,7 +142,8 @@ function store() {
 				$wpdb->print_error();
 			}
 			//put an settings updated message on the screen
-			$saved = "<div id=\"ttstoreboxsaved\"><strong>Settings saved</strong></div>";
+			$savedmessage = __("Settings saved", "ttstore");
+			$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 		}
 	}
 	if(!isset($_GET['function'])){
@@ -153,7 +154,7 @@ function store() {
 <div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle">Would you like to edit or add a store?</div>
+			<div id="TB_ajaxWindowTitle"><?php _e('Would you like to edit or add a store?','ttstore'); ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -164,34 +165,34 @@ function store() {
 		<table width="<?php echo $adminwidth-15; ?>">
 			<tr>
 				<td>
-					<strong>Store Name</strong>
+					<strong><?php _e('Store Name','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Sorting</strong>
+					<strong><?php _e('Sorting','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Order</strong>
+					<strong><?php _e('Order','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Layout</strong>
+					<strong><?php _e('Layout','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Feed</strong>
+					<strong><?php _e('Feed','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Button Text</strong>
+					<strong><?php _e('Button Text','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Items</strong>
+					<strong><?php _e('Items','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Lightbox</strong>
+					<strong><?php _e('Lightbox','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Edit</strong>
+					<strong><?php _e('Edit','ttstore'); ?></strong>
 				</td>
 				<td>
-					<strong>Delete</strong>
+					<strong><?php _e('Delete','ttstore'); ?></strong>
 				</td>
 			</tr>
 <?php
@@ -212,7 +213,7 @@ function store() {
 					<?php echo $store_val->layname; ?>
 				</td>
 				<td>
-					<?php if ($store_val->multixmlfeed == "*"){echo "All Feeds";} else { $xmlfeed = get_option("Tradetracker_xmlname"); echo $xmlfeed[$store_val->multixmlfeed]; }?>
+					<?php if ($store_val->multixmlfeed == "*"){_e('All Feeds','ttstore');} else { $xmlfeed = get_option("Tradetracker_xmlname"); echo $xmlfeed[$store_val->multixmlfeed]; }?>
 				</td>
 				<td>
 					<?php echo $store_val->buynow; ?>
@@ -221,13 +222,13 @@ function store() {
 					<?php echo $store_val->multiamount; ?>
 				</td>
 				<td>
-					<?php if($store_val->multilightbox=="1"){ echo "Yes";} else {echo "No";} ?>
+					<?php if($store_val->multilightbox=="1"){ _e('Yes','ttstore');} else {echo _e('No','ttstore');} ?>
 				</td>
 				<td>
-					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&function=new&multiid=".$store_val->id."\">Edit</a>"; } ?>
+					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&function=new&multiid=".$store_val->id."\">".__('Edit','ttstore')."</a>"; } ?>
 				</td>
 				<td>
-					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&delete=".$store_val->id."\">Delete</a>"; } ?>
+					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&delete=".$store_val->id."\">".__('Delete','ttstore')."</a>"; } ?>
 				</td>
 			</tr>
 			
@@ -238,7 +239,7 @@ function store() {
 		</table>
 		</div>
 		<div id="ttstoreboxbottom">
-			<INPUT type="button" name="Close" class="button-primary" value="<?php esc_attr_e('Add New') ?>" onclick="location.href='admin.php?page=tt-store&option=store&function=new'"> 
+			<INPUT type="button" name="Close" class="button-primary" value="<?php _e('Add New','ttstore'); ?>" onclick="location.href='admin.php?page=tt-store&option=store&function=new'"> 
 			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Close') ?>" onclick="location.href='admin.php?page=tt-store'"> 
 		</div>
 	</div>
@@ -254,7 +255,7 @@ function store() {
 	<form name="form1" method="post" action="">
 	<?php echo $ttstorehidden; ?>
 		<div id="TB_title">
-			<div id="TB_ajaxWindowTitle"><?php if(isset($multiid)){ esc_attr_e('Edit Store'); } else { esc_attr_e('Create Store'); } ?></div>
+			<div id="TB_ajaxWindowTitle"><?php if(isset($multiid)){ _e('Edit Store','ttstore'); } else { _e('Create Store','ttstore'); } ?></div>
 			<div id="TB_closeAjaxWindow">
 				<a title="Close" id="TB_closeWindowButton" href="admin.php?page=tt-store&option=<?php if(isset($returnpage)){echo "itemselect"; } else {echo "store";}?>">
 					<img src="<?php echo plugins_url( 'images/tb-close.png' , __FILE__ )?>">
@@ -268,20 +269,20 @@ function store() {
 <table width="<?php echo $adminwidth-15; ?>">
 	<tr>
 		<td>
-			<label for="tradetrackername" title="Fill in the name for the store." class="info">
-				<?php _e("Name for Store:", 'tradetracker-storename' ); ?>
+			<label for="tradetrackername" title="<?php _e('Fill in the name for the store.','ttstore'); ?>" class="info">
+				<?php _e("Name for Store:", 'ttstore' ); ?>
 			</label> 
 		</td>
 		<td>
 			<input type="text" name="<?php echo $Tradetracker_multiname_name; ?>" value="<?php if(isset($Tradetracker_multiname_val)) {echo $Tradetracker_multiname_val;} ?>" size="30"> 
 			<?php if(isset($error)){ echo "<font color=\"red\">*</font>"; }?>
-			This cannot start with a number
+			<?php _e('This cannot start with a number','ttstore'); ?>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackersorting" title="It will sort the items on this field." class="info">
-				<?php _e("Order by this field:", 'tradetracker-multisorting' ); ?>
+			<label for="tradetrackersorting" title="<?php _e('It will sort the items on this field.','ttstore'); ?>" class="info">
+				<?php _e("Order by this field:", 'ttstore' ); ?>
 			</label> 
 		</td>
 		<td>
@@ -302,8 +303,8 @@ function store() {
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackerorder" title="How should it be ordered." class="info">
-				<?php _e("Descending or Ascending:", 'tradetracker-multiorder' ); ?>
+			<label for="tradetrackerorder" title="<?php _e('How should it be ordered.','ttstore');?>" class="info">
+				<?php _e("Descending or Ascending:", 'ttstore' ); ?>
 			</label> 
 		</td>
 		<td>
@@ -324,7 +325,7 @@ function store() {
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackerwidth" title="Which layout would you like to use." class="info">
+			<label for="tradetrackerwidth" title="<?php _e('Which layout would you like to use.','ttstore'); ?>" class="info">
 				<?php _e("Layout:", 'tradetracker-multilayout' ); ?>
 			</label> 
 		</td>
@@ -351,14 +352,14 @@ function store() {
 			?>	
 			<tr>
 				<td>
-					<label for="tradetrackerproductpage" title="Do you like to use a product page?" class="info">
+					<label for="tradetrackerproductpage" title="<?php _e('Do you like to use a product page?','ttstore');?>" class="info">
 						<?php _e("Use a productpage:", 'tradetracker-productpage' ); ?> 
 					</label>
 				</td>
 				<td>
-					<input type="radio" name="<?php echo $Tradetracker_multiproductpage_name; ?>" <?php if(isset($Tradetracker_multiproductpage_val) && $Tradetracker_multiproductpage_val=="1") {echo "checked";} ?> value="1"> Yes 
+					<input type="radio" name="<?php echo $Tradetracker_multiproductpage_name; ?>" <?php if(isset($Tradetracker_multiproductpage_val) && $Tradetracker_multiproductpage_val=="1") {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?> 
 					<br>
-					<input type="radio" name="<?php echo $Tradetracker_multiproductpage_name; ?>" <?php if((isset($Tradetracker_multiproductpage_val) && $Tradetracker_multiproductpage_val=="0") || !isset($Tradetracker_multiproductpage_val)){echo "checked";} ?> value="0"> No
+					<input type="radio" name="<?php echo $Tradetracker_multiproductpage_name; ?>" <?php if((isset($Tradetracker_multiproductpage_val) && $Tradetracker_multiproductpage_val=="0") || !isset($Tradetracker_multiproductpage_val)){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 				</td>
 			</tr>
 			<?php
@@ -371,17 +372,17 @@ function store() {
 
 	<tr>
 		<td>
-			<label for="tradetrackerwidth" title="Which feed would you like to use." class="info">
-				<?php _e("Feed:", 'tradetracker-multifeed' ); ?>
+			<label for="tradetrackerwidth" title="<?php _e('Which feed would you like to use.','ttstore'); ?>" class="info">
+				<?php _e("Feed:", 'ttstore' ); ?>
 			</label> 
 		</td>
 		<td>
 			<select width="200" style="width: 200px" name="<?php echo $Tradetracker_multixmlfeed_name; ?>" onchange="toggleOther();">
 <?php
 		if(!isset($$Tradetracker_multixmlfeed_val) || $Tradetracker_multixmlfeed_val == "*"){
-			echo "<option selected=\"selected\" value=\"*\">All feeds</option>";
+			echo "<option selected=\"selected\" value=\"*\">".__('All feeds','ttstore')."</option>";
 		} else {
-			echo "<option value=\"*\">All feeds</option>";
+			echo "<option value=\"*\">".__('All feeds','ttstore')."</option>";
 		}
 		//$xmlfeed=$wpdb->get_results("SELECT xmlfeed FROM ".$ttstoretable." group by xmlfeed");
 		$xmlfeed1 = get_option("Tradetracker_xmlname");
@@ -407,13 +408,13 @@ function toggleOther(){
 
 	<tr>
 		<td valign="top">
-			<label for="tradetrackercategoriesfield" title="Which categories would you like to use?" class="info">
-				<?php _e("Which categories?:", 'tradetracker-categories' ); ?> 
+			<label for="tradetrackercategoriesfield" title="<?php _e('Which categories would you like to use?','ttstore'); ?>" class="info">
+				<?php _e("Which categories?:", 'ttstore' ); ?> 
 			</label>
 		</td>
 		<td>
 			<div id="Save" style="visibility:hidden">
-				You changed the XML Feed, You need to save first before you can select any category.
+				<?php _e('You changed the XML Feed, You need to save first before you can select any category.','ttstore'); ?>
 			</div>
 			<div id="Option" style="visibility:visible">
 
@@ -456,7 +457,7 @@ function toggleOther(){
 
 	<tr>
 		<td>
-			<label for="tradetrackerbuynow" title="What text would you like to use on the button (standard is Buy now)." class="info">
+			<label for="tradetrackerbuynow" title="<?php _e('What text would you like to use on the button (standard is Buy now).','ttstore');?>" class="info">
 				<?php _e("Text on button:", 'tradetracker-buynow' ); ?>
 			</label> 
 		</td>
@@ -466,31 +467,31 @@ function toggleOther(){
 	</tr>
 	<tr>
 		<td>
-			<label for="tradetrackerfont" title="How much items would you like to show." class="info">
-				<?php _e("Amount of items:", 'tradetracker-amount' ); ?> 
+			<label for="tradetrackerfont" title="<?php _e('How much items would you like to show.','ttstore'); ?>" class="info">
+				<?php _e("Amount of items:", 'ttstore' ); ?> 
 			</label> 
 		</td>
 		<td>
 			<input type="text" name="<?php echo $Tradetracker_multiamount_name; ?>" value="<?php if (!isset($Tradetracker_multiamount_val)) {echo "10"; } else {echo $Tradetracker_multiamount_val;} ?>" size="30">
-			<?php if(isset($error)){ echo "<font color=\"red\">*</font>"; }?> use 0 if you don't want a limit at all
+			<?php if(isset($error)){ echo "<font color=\"red\">*</font>"; }?> <?php _e('use 0 if you don\'t want a limit at all','ttstore'); ?>
 		</td>
 	</tr>
 
 	<tr>
 		<td>
-			<label for="tradetrackerlightbox" title="Do you want to use lightbox for the images? You will need an extra plugin for that" class="info">
+			<label for="tradetrackerlightbox" title="<?php _e('Do you want to use lightbox for the images? You will need an extra plugin for that','ttstore'); ?>" class="info">
 				<?php _e("Use Lightbox:", 'tradetracker-lightbox' ); ?> 
 			</label>
 		</td>
 		<td>
-			<input type="radio" name="<?php echo $Tradetracker_multilightbox_name; ?>" <?php if(isset($Tradetracker_multilightbox_val) && $Tradetracker_multilightbox_val=="1") {echo "checked";} ?> value="1"> Yes (<a href="http://wordpress.org/extend/plugins/wp-jquery-lightbox/" target="_blank">You will need this plugin</a>)
+			<input type="radio" name="<?php echo $Tradetracker_multilightbox_name; ?>" <?php if(isset($Tradetracker_multilightbox_val) && $Tradetracker_multilightbox_val=="1") {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore'); ?> (<a href="http://wordpress.org/extend/plugins/wp-jquery-lightbox/" target="_blank"><?php _e('You will need this plugin','ttstore'); ?></a>)
 		</td>
 	</tr>
 	<tr>
 		<td>
 		</td>
 		<td>
-			<input type="radio" name="<?php echo $Tradetracker_multilightbox_name; ?>" <?php if((isset($Tradetracker_multilightbox_val) && $Tradetracker_multilightbox_val=="0") || !isset($Tradetracker_multilightbox_val)){echo "checked";} ?> value="0"> No
+			<input type="radio" name="<?php echo $Tradetracker_multilightbox_name; ?>" <?php if((isset($Tradetracker_multilightbox_val) && $Tradetracker_multilightbox_val=="0") || !isset($Tradetracker_multilightbox_val)){echo "checked";} ?> value="0"> <?php _e('No','ttstore'); ?>
 		</td>
 	</tr>
 </table>
@@ -504,7 +505,7 @@ function toggleOther(){
 					echo $error;
 				}
 			?>
-			<input type="submit" name="Submit" class="button-primary" value="<?php if(isset($multiid)){ esc_attr_e('Save Changes'); } else { esc_attr_e('Create'); } ?>" /> 
+			<input type="submit" name="Submit" class="button-primary" value="<?php if(isset($multiid)){ esc_attr_e('Save Changes'); } else { _e('Create','ttstore'); } ?>" /> 
 			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Close') ?>" onclick="location.href='admin.php?page=tt-store&option=<?php if(isset($returnpage)){echo "itemselect"; } else {echo "store";}?>'"> 
 		</div>
 	</form>

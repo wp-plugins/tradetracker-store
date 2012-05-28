@@ -44,7 +44,7 @@ tinyMCEPopup.onInit.add(TTTiny.init, TTTiny);
 	</script>
 
 <form id="TTShortcode" style="font-size: 13px; text-align: center;">
-Which Store: <select name="store" id="store" style="font-size:13px;">
+<?php _e('Which Store:','ttstore'); ?> <select name="store" id="store" style="font-size:13px;">
 <?php
 	$storeoverview=$wpdb->get_results("SELECT id, multiname FROM ".$ttstoremultitable."");
 	foreach ($storeoverview as $store_val){
@@ -55,8 +55,8 @@ Which Store: <select name="store" id="store" style="font-size:13px;">
 </form>
 <div class="mceActionPanel">
 <div style="margin: 8px auto; text-align: center;padding-bottom: 10px;">
-<input id="apply" type="button" onclick="javascript:TTTiny.insert(TTTiny.e);" title="Insert" value="Insert" name="Insert">
-<input id="cancel" type="button" onclick="tinyMCEPopup.close();" title="Close" value="Close" name="cancel">
+<input id="apply" type="button" onclick="javascript:TTTiny.insert(TTTiny.e);" title="Insert" value="<?php esc_attr_e('Insert') ?>" name="Insert">
+<input id="cancel" type="button" onclick="tinyMCEPopup.close();" title="Close" value="<?php esc_attr_e('Close') ?>" name="cancel">
 </div>
 </div>
 </body>

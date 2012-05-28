@@ -15,7 +15,7 @@ function store_items($used, $winkel, $searching)
 	$Tradetracker_xml = get_option("Tradetracker_xml");
 	if ($Tradetracker_xml == null)
 	{
-		echo "No XML filled in yet please change the settings first.";
+		_e('No XML filled in yet please change the settings first.', 'ttstore');
 	} else {
 		return show_items($used, $winkel, $searching);
 	}
@@ -223,9 +223,10 @@ function show_items($usedhow, $winkelvol, $searching)
 				}
 			}
 			if($extraname != ""){
+				$moretext = __('More info', 'ttstore');
 				$more = "<div class=\"".$storename."store-more\">
 						<img src=\"/wp-content/plugins/tradetracker-store/images/more.png\" style=\"border:0;\" border=\"0\" name=\"img".$i."\" width=\"11\" height=\"13\" border=\"0\" >
-						<a href=\"#first\" onClick=\"shoh('".$i."');\" >More info</a> 
+						<a href=\"#first\" onClick=\"shoh('".$i."');\" >".$moretext."</a> 
 						<div style=\"display: none;\" id=\"".$i."\" > 
 							<table style=\"width:".$widthmore."px;\" width=\"".$widthmore."\">".$extraname."</table>
 						</div>
