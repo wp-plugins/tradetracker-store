@@ -1,17 +1,13 @@
+<?php
+function TTtinymce() {
+?>
 <html>
 <head>
 <title>Select Store</title>
 </head>
 <body>
 <?php
-if (file_exists("./wp-load.php"))
-{
-	require_once("./wp-load.php");
-}
-else
-{
-	require_once("../../../../wp-load.php");
-}
+
 	global $wpdb;
 	global $ttstoremultitable;
 ?>
@@ -61,3 +57,6 @@ tinyMCEPopup.onInit.add(TTTiny.init, TTTiny);
 </div>
 </body>
 </html>
+<?php
+}
+?>

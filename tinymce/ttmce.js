@@ -7,7 +7,7 @@ function tiny_TT() {
 			// Register commands
 			ed.addCommand('mceHighlight', function() {
 				ed.windowManager.open({
-					file : url + '/tinyTT.php',
+					file : '?TTtinymce=yes',
 					width : 300 + parseInt(ed.getLang('highlight.delta_width', 0)),
 					height : 100 + parseInt(ed.getLang('highlight.delta_height', 0)),
 					inline : 1,
