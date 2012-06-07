@@ -124,6 +124,7 @@ function show_items($usedhow, $winkelvol, $searching)
 	global $ttstoremultitable;
 	global $ttstoretable;
 	global $folderhome;
+	global $ttstoreextratable;
 	if ($searching == "1") {
 		$multi=$wpdb->get_results("SELECT buynow, multisorting, multiorder, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
 	} else {
@@ -209,16 +210,14 @@ function show_items($usedhow, $winkelvol, $searching)
 	foreach ($visits as $product){
 		$Tradetracker_extra_val = get_option("Tradetracker_extra");
 		if(!empty($Tradetracker_extra_val)){
-			$extrafield = explode(",",$product->extrafield);
-			$extravalue = explode(",",$product->extravalue);
-			$extras = array_combine($extrafield, $extravalue);
 			$extraname = "";
 			$extravar = "";
-			foreach ($extras as $key => $value) {
+			$extras = $wpdb->get_results("SELECT extravalue, extrafield FROM $ttstoreextratable where productID='".$product->productID."'", ARRAY_A);
+			foreach ($extras as $extra) {
 				$Tradetracker_extra_val = get_option("Tradetracker_extra");
 				if(!empty($Tradetracker_extra_val)){
-					if(in_array($key, $Tradetracker_extra_val, true)) {
-						$extraname .= "<tr><td width=\"50\"><b>".$key."</b></td><td>".$value."</td></tr>";
+					if(in_array($extra[extrafield], $Tradetracker_extra_val, true)) {
+						$extraname .= "<tr><td width=\"50\"><b>".$extra[extrafield]."</b></td><td>".$extra[extravalue]."</td></tr>";
 					}
 				}
 			}
@@ -242,7 +241,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			$urltarget ="";
 			$rel = "";
 		} else {
-			$producturl = $product->productURL;
+			$producturl = htmlspecialchars($product->productURL);
 			$urltarget ="target=\"_blank\"";
 			$rel = "rel=\"nofollow\"";
 		}

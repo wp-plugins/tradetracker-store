@@ -5,6 +5,7 @@ function xmloption(){
 	global $ttstoresubmit;
 	global $ttstorehidden;
 	global $ttstoretable;
+	global $ttstoreextratable;
 
 	//variables for this function
 	$Tradetracker_xmlupdate_name = 'Tradetracker_xmlupdate';
@@ -89,7 +90,10 @@ function xmloption(){
 					</td>
 					<td>
 					<?php
-					$extra = get_option("Tradetracker_xml_extra");
+					$extra = $wpdb->get_results("SELECT extravalue, extrafield FROM $ttstoreextratable group by extrafield", ARRAY_A);
+
+
+					// $extra = get_option("Tradetracker_xml_extra");
 					if(!empty($extra)){
 						echo "<table width=\"400\">";
 						$i="1";
@@ -100,13 +104,13 @@ function xmloption(){
 								echo "<td>";
 							}
 							if(!empty($Tradetracker_extra_val)){
-								if(in_array($extraselect, $Tradetracker_extra_val, true)) {
-									echo "<input type=\"checkbox\" checked=\"yes\" name=\"extra[]\" value=\"".$extraselect."\" />".$extraselect."<br />";
+								if(in_array($extraselect[extrafield], $Tradetracker_extra_val, true)) {
+									echo "<input type=\"checkbox\" checked=\"yes\" name=\"extra[]\" value=\"".$extraselect[extrafield]."\" />".$extraselect[extrafield]."<br />";
 								} else {
-									echo "<input type=\"checkbox\" name=\"extra[]\" value=\"".$extraselect."\" />".$extraselect."<br />";
+									echo "<input type=\"checkbox\" name=\"extra[]\" value=\"".$extraselect[extrafield]."\" />".$extraselect[extrafield]."<br />";
 								}
 							} else {
-									echo "<input type=\"checkbox\" name=\"extra[]\" value=\"".$extraselect."\" />".$extraselect."<br />";
+									echo "<input type=\"checkbox\" name=\"extra[]\" value=\"".$extraselect[extrafield]."\" />".$extraselect[extrafield]."<br />";
 							}
 							if($i=="1"){
 								echo "</td>";

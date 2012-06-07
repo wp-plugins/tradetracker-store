@@ -5,8 +5,9 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	global $processed;
 	global $filenum;
 	global $ttstoretable;
+	global $ttstoreextratable;
 	global $foldersplits;
-
+	update_option("xmldatabasecount", "0" );
 	//prepare database 
 	$xmlfilecount = get_option("xmlfilecount");
 	if ($xmlfeedID == "0" && isset($_GET['xmlfeedID'])){
@@ -18,7 +19,9 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 		delete_option("Tradetracker_importerror");
 		delete_option("Tradetracker_xml_extra");
 		$emptytable = "TRUNCATE TABLE `$ttstoretable`";
+		$emptyextratable = "TRUNCATE TABLE `$ttstoreextratable`";
 		$wpdb->query($emptytable);
+		$wpdb->query($emptyextratable);
 		$directory = dir($foldersplits); 
 		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))
 		{  
@@ -62,40 +65,19 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	$recordnum = "0";
 	$processed = "0";
 	$filenum = "0";
-	$value($xmlfilecount, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
-	fill_database1($xmlfilecount);
-	$xmlfeedID++;
-	$directory = dir($foldersplits); 
-	while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
-		{  
-		if ($item != '.' && $item != '..')
-   		{  
-			$files = glob($foldersplits."/*xml");
-			if(count($files) > 0)
-				{	
-				if (is_array($files)) {
-					foreach($files as $filedel){
-						unlink($filedel); 
-					}
-				}
-			}
-		}  
-	}
-	$directory->close();
-	if ($xmlfilecount < count($Tradetracker_xml)-1){
+
+	if ($xmlfilecount <= count($Tradetracker_xml)-1){
+		$value($xmlfilecount, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
+		fill_database1($xmlfilecount, $xmlcronjob);
+		$xmlfeedID++;
 		$xmlfilecount++;
 		update_option("xmlfilecount", $xmlfilecount );
 		if($xmlcronjob=="0"){
-			$runs = array("5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "80");
-			if (in_array($xmlfilecount, $runs)) {
 ?>
 <script type="text/javascript">
 window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecount=$xmlfilecount&xmlfeedID=$xmlfeedID"; ?>';
 </script>
 <?php
-			} else {
-				xml_updater($xmlfilecount, $xmlfeedID); 
-			}
 		} else {
 				xml_updater($xmlfilecount, $xmlfeedID, "1");
 		}
