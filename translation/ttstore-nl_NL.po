@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-29 00:07-0000\n"
-"PO-Revision-Date: 2012-05-29 00:23-0000\n"
+"POT-Creation-Date: 2012-06-07 00:07-0000\n"
+"PO-Revision-Date: 2012-06-07 00:08-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -133,15 +133,27 @@ msgstr "Foutmelding gedetecteerd in TradeTracker Store plugin, ga naar de <a hre
 msgid "Update Finished:"
 msgstr "Update uitgevoerd:"
 
-#: ../debug.php:211
+#: ../debug.php:213
+msgid "Update has started in the background:"
+msgstr "Update is gestart op de achtergrond:"
+
+#: ../debug.php:221
 msgid "Update now"
 msgstr "Update nu"
 
-#: ../debug.php:217
+#: ../debug.php:222
+msgid "run update in background"
+msgstr "voer update op de achtergrond uit"
+
+#: ../debug.php:223
+msgid "or"
+msgstr "of"
+
+#: ../debug.php:228
 msgid "<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>"
 msgstr "<strong>De volgende XML delen gaven een foutmelding of waren leeg tijdens de laatste import. Mogelijk zijn er geen items van geimporteerd</strong>"
 
-#: ../debug.php:247
+#: ../debug.php:258
 msgid "Is missing the call to <?php wp_head(); ?> which should appear directly before </head>"
 msgstr "Mist de code <?php wp_head(); ?> welke direct voor </head> zou moeten staan."
 
@@ -153,7 +165,7 @@ msgstr "Er is nog geen XML feed ingevuld. Graag dit verhelpen in de settings"
 msgid "More info"
 msgstr "Meer informatie"
 
-#: ../import/database.php:164
+#: ../import/database.php:174
 #, php-format
 msgid "Database filled with %1$s new items on %2$s"
 msgstr "Database gevuld met %1$s nieuwe items op %2$s"
@@ -1065,7 +1077,7 @@ msgstr "Wat wilt u tonen inplaats van de valuta uit de XML feed?"
 msgid "New Currency:"
 msgstr "Nieuwe Valuta:"
 
-#: ../tinymce/tinyTT.php:47
+#: ../tinymce/tinyTT.php:43
 msgid "Which Store:"
 msgstr "Welke winkel:"
 

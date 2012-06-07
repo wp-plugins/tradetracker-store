@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-29 00:21-0000\n"
-"PO-Revision-Date: 2012-05-29 00:22-0000\n"
+"POT-Creation-Date: 2012-06-07 00:08-0000\n"
+"PO-Revision-Date: 2012-06-07 00:08-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -132,15 +132,27 @@ msgstr ""
 msgid "Update Finished:"
 msgstr ""
 
-#: ../debug.php:211
+#: ../debug.php:213
+msgid "Update has started in the background:"
+msgstr ""
+
+#: ../debug.php:221
 msgid "Update now"
 msgstr ""
 
-#: ../debug.php:217
+#: ../debug.php:222
+msgid "run update in background"
+msgstr ""
+
+#: ../debug.php:223
+msgid "or"
+msgstr ""
+
+#: ../debug.php:228
 msgid "<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>"
 msgstr ""
 
-#: ../debug.php:247
+#: ../debug.php:258
 msgid "Is missing the call to <?php wp_head(); ?> which should appear directly before </head>"
 msgstr ""
 
@@ -152,7 +164,7 @@ msgstr ""
 msgid "More info"
 msgstr ""
 
-#: ../import/database.php:164
+#: ../import/database.php:174
 #, php-format
 msgid "Database filled with %1$s new items on %2$s"
 msgstr ""
@@ -1064,7 +1076,7 @@ msgstr ""
 msgid "New Currency:"
 msgstr ""
 
-#: ../tinymce/tinyTT.php:47
+#: ../tinymce/tinyTT.php:43
 msgid "Which Store:"
 msgstr ""
 

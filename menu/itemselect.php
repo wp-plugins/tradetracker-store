@@ -5,6 +5,7 @@ function itemselect() {
 	global $ttstorehidden;
 	global $ttstoremultitable;
 	global $ttstoretable;
+	global $ttstoreextratable;
 	global $folderhome;
 	if(!isset($_GET['function']) || $_GET['function']=="delete" || $_GET['function']=="deleteempty"){
  		if(isset($_GET['function']) && $_GET['function']=="delete") {
@@ -402,20 +403,15 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				echo $product->price;
 				echo "</td><td>";
 				echo $product->currency;
-
-				//$extrafield = str_replace(",", "</b></td><td width=\"1000px\"><b>", "$product->extrafield");
-				//$extravalue = str_replace(",", "</td><td>", "$product->extravalue");
-				$extrafield = explode(",",$product->extrafield);
-				$extravalue = explode(",",$product->extravalue);
-				$extras = array_combine($extrafield, $extravalue);
 				$extraname = "";
-				$extravar = "";
-				foreach ($extras as $key => $value) {
+				$extravar ="";
+				$extras = $wpdb->get_results("SELECT extravalue, extrafield FROM $ttstoreextratable where productID='".$product->productID."'", ARRAY_A);
+				foreach ($extras as $extra) {
 					$Tradetracker_extra_val = get_option("Tradetracker_extra");
 					if(!empty($Tradetracker_extra_val)){
-						if(in_array($key, $Tradetracker_extra_val, true)) {
-							$extraname .= "<td><b>".$key."</b></td>";
-							$extravar .= "<td>".$value."</td>";
+						if(in_array($extra[extrafield], $Tradetracker_extra_val, true)) {
+							$extraname .= "<td><b>".$extra[extrafield]."</b></td>";
+							$extravar .= "<td>".$extra[extravalue]."</td>";
 						}
 					}
 				}

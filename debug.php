@@ -208,8 +208,20 @@ function ttstoreheader() {
 		xml_updater();
 		$update = __('Update Finished:','ttstore');
 	}
+	if(isset($_GET['bgupdate']) && $_GET['bgupdate']=="yes"){
+		wp_clear_scheduled_hook('xmlscheduler');
+		update_option( 'Tradetracker_xml_update' , '' );
+		$update = __('Update has started in the background:','ttstore');
+	}
+	if(isset($_GET['database']) && $_GET['database']=="yes"){
+		if(!isset($_GET['xmldatabasecount'])){
+			update_option("xmldatabasecount", "0" );
+		}
+		fill_database1($_GET['xmlfeedid'], "0");
+	}
 	$updatetext = __('Update now','ttstore');
-	echo "<div class=\"updated\"><p><strong>".$update." ".get_option("Tradetracker_xml_update")." <a href=\"admin.php?page=tt-store&update=yes\">".$updatetext."</a></strong></p></div>";
+	$updatebgtext = __('run update in background','ttstore');
+	echo "<div class=\"updated\"><p><strong>".$update." ".get_option("Tradetracker_xml_update")." <a href=\"admin.php?page=tt-store&update=yes\">".$updatetext."</a> ".__('or', 'ttstore')." <a href=\"admin.php?page=tt-store&bgupdate=yes\">".$updatebgtext."</a></strong></p></div>";
 	$errorfile = get_option("Tradetracker_importerror");
 	if(!empty($errorfile)){
 		$oldvalue = array("\n", "Feedname:", "Splitfile:");

@@ -34,7 +34,7 @@ function parse_recursive(SimpleXMLElement $element, $level = 0)
 }
 
 
-function fill_database1($xmlfeedid)
+function fill_database1($xmlfeedid, $xmlcronjob)
 {
 	global $wpdb; 
 	global $errorfile;
@@ -42,28 +42,40 @@ function fill_database1($xmlfeedid)
 	GLOBAL $extravalue;
 	GLOBAL $counterxml;
 	global $ttstoretable;
+	global $ttstoreextratable;
 	global $foldersplits;
+	$xmlfilecount = get_option("xmlfilecount");
+	$xmlfeedid = get_option("xmlfilecount");
+	$xmldatabasecount = get_option("xmldatabasecount");
+	if($xmldatabasecount == ""){
+		$xmldatabasecount = "0";
+	}
 	$extrafieldarray = get_option('Tradetracker_xml_extra');
 	$files = glob($foldersplits."*xml");
+	$xmlfeed = get_option("Tradetracker_xmlname");	
+	$keys = array_keys($xmlfeed);
+	$key = $keys[$xmlfeedid];
+	$xmlfeed = $xmlfeed[$key];
+	echo "<br /><strong>Importing:</strong>".$xmlfeed;
 	if (is_array($files)) {
-		foreach($files as $filename) {
-			$products = simplexml_load_file($filename);
+		for ( $i="0"; ($i <= 20 && $i <count($files)); $i++) {
+			$filename = $files[$xmldatabasecount];
+			echo ".";
+			if($filename != ""){
+				$products = simplexml_load_file($filename);
 				//$string = file_get_contents($filename, FILE_TEXT);
 				//$products = @simplexml_load_string($string);
-
 				if($products === false)
 				{
-					$xmlfeed = get_option("Tradetracker_xmlname");	
-					$keys = array_keys($xmlfeed);
-					$key = $keys[$xmlfeedid];
-					$xmlfeed = $xmlfeed[$key];
 					$errorxml = libxml_get_last_error();
-					$errorfile = get_option("Tradetracker_importerror");
-					$errorfile .= "". "\n" ."Feedname: ".$xmlfeed;
-					$errorfile .= "". "\n" ."Splitfile: ".$errorxml->file;
-					$errorfile .= "". "\n" ."Error: ".$errorxml->message;
+					if($errorxml->message != 'failed to load external entity ""'){
+						$errorfile = get_option("Tradetracker_importerror");
+						$errorfile .= "". "\n" ."Feedname: ".$xmlfeed;
+						$errorfile .= "". "\n" ."Splitfile: ".$filename;
+						$errorfile .= "". "\n" ."Error: ".$errorxml->message;
+						update_option( "Tradetracker_importerror", $errorfile );
+					}
 					libxml_clear_errors();
-					update_option( "Tradetracker_importerror", $errorfile );
 				}else if ($products->body->p == "The requested product feed could not be generated:"){
 					$xmlfeed = get_option("Tradetracker_xmlname");	
 					$keys = array_keys($xmlfeed);
@@ -75,7 +87,6 @@ function fill_database1($xmlfeedid)
 					$errorfile .= "". "\n" ."Error: Tradetracker cannot create the productfeed. The feed itself is empty";
 					libxml_clear_errors();
 					update_option( "Tradetracker_importerror", $errorfile );
-
 				} else {
 					$xmlfeed = get_option("Tradetracker_xmlname");	
 					$keys = array_keys($xmlfeed);
@@ -107,41 +118,22 @@ function fill_database1($xmlfeedid)
 						$currentpage["price"]=$product->price;
 						$currentpage["currency"]=$product->price['currency'];
 						//parse_recursive($product);
+						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
+						$wpdb->flush();
 						if(get_option("Tradetracker_loadextra")=="1") {
 							foreach($product->children() as $car => $data){
-								if($data->field['name']!=""){
-									if($counterxml=="1"){
-										$extrafield = str_replace(",", "&#44;", $data->field['name']);
-										$extravalue = str_replace(",", "&#44;", $data->field);	
-										$counterxml++;			
-									} else {
-										$extrafield .= ",".str_replace(",", "&#44;", $data->field['name']);
-										$extravalue .= ",".str_replace(",", "&#44;", $data->field);
-										$counterxml++;
+								foreach($data->field as $datachild){
+									if($datachild['name']!=""){
+										$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $datachild['name'],'extravalue' => $datachild ),array('%s','%s','%s'));
+										$wpdb->flush();
 									}
 								}
 							} 
-						} else {
-							$extrafield = "";
-							$extravalue = "";
-						}
-						$currentpage["extrafield"]=$extrafield;
-						$currentpage["extravalue"]=$extravalue;
-						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
-						$wpdb->flush();
-						if(isset($extrafieldarray)){
-							if(is_array($extrafieldarray)){
-								if (!in_array($extrafield, $extrafieldarray)) {
-    									array_push($extrafieldarray, $extrafield);
-								}
-							} else {
-								$extrafieldarray = array($extrafield);
-							}
-						} else {
-							$extrafieldarray = array($extrafield);
 						}
 					}
 				} 
+				$xmldatabasecount++;
+			}
 		}
 	}
 	//$extrafieldarray = array_unique(explode(",",$extrafieldarray));
@@ -169,6 +161,49 @@ function fill_database1($xmlfeedid)
 		$deprecated = ' ';
 		$autoload = 'no';
 		add_option( $option_name, $newvalue, $deprecated, $autoload );
+	}
+	if ($xmldatabasecount < count($files)){
+		update_option("xmldatabasecount", $xmldatabasecount );
+		if($xmlcronjob=="0"){
+?>
+<script type="text/javascript">
+window.location.href='<?php echo "admin.php?page=tt-store&database=yes&xmldatabasecount=$xmldatabasecount&xmlfeedID=$xmlfilecount"; ?>';
+</script>
+<?php
+		} else {
+			fill_database1($xmlfeedid, $xmlcronjob);
+		}
+	} else {
+		$xmlfilecount = get_option("xmlfilecount");
+		$xmlfilecount++;
+		update_option("xmlfilecount", $xmlfilecount );
+		update_option("xmldatabasecount", "0" );
+		$directory = dir($foldersplits); 
+		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
+			{  
+			if ($item != '.' && $item != '..')
+   			{  
+				$files = glob($foldersplits."/*xml");
+				if(count($files) > 0)
+					{	
+					if (is_array($files)) {
+						foreach($files as $filedel){
+							unlink($filedel); 
+						}
+					}
+				}
+			}  
+		}
+		$directory->close();
+		if($xmlcronjob=="0"){
+?>
+<script type="text/javascript">
+window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecount=$xmlfilecount&xmlfeedID=$xmlfilecount"; ?>';
+</script>
+<?php
+		} else {
+			xml_updater($xmlfilecount, $xmlfilecount, "1");
+		}
 	}
 }
 ?>

@@ -1,4 +1,17 @@
 <?php
+if (get_option("TTstoreversion") < "4.1.8"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstoreextratable = $pro_table_prefix."extra";
+	$structureextra = "CREATE TABLE IF NOT EXISTS ".$ttstoreextratable." (
+	id INT(9) NOT NULL AUTO_INCREMENT,
+	productID VARCHAR(36) NOT NULL,
+	extrafield TEXT NOT NULL,
+	extravalue TEXT NOT NULL,
+	UNIQUE KEY id (id));";
+	$wpdb->query($structureextra);
+	update_option("TTstoreversion", "4.1.9" );
+}
 if (get_option("TTstoreversion") == "4.0.22"){
 	update_option("Tradetracker_adminwidth", "1000" );
 	update_option("TTstoreversion", "4.1.2" );
