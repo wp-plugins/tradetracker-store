@@ -253,7 +253,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		if($uselightbox==1){
 			$image = $imageURL;
 			$target = "";	
-			$rel = "rel=\"lightbox[store]\"";
+			$imagerel = "rel=\"lightbox[store]\"";
 		} else {
 			$image = $producturl;
 			$target = $urltarget;
@@ -279,7 +279,7 @@ function show_items($usedhow, $winkelvol, $searching)
 					".$productname."
 				</div>			
 				<div class=\"".$storename."store-image store-image\">
-					<a href=\"".$image."\" ".$rel." ".$target.">
+					<a href=\"".$image."\" ".$rel." ".$imagerel." ".$target.">
 						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" style=\"max-width:".$width."px;max-height:180px;width:auto;height:auto;\"/>
 					</a>
 				</div>
