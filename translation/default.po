@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-07 00:08-0000\n"
-"PO-Revision-Date: 2012-06-07 00:08-0000\n"
+"POT-Creation-Date: 2012-06-11 23:24-0000\n"
+"PO-Revision-Date: 2012-06-11 23:24-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr ""
 #: ../debug.php:38
 #: ../debug.php:85
 #: ../debug.php:91
-#: ../menu/itemselect.php:423
+#: ../menu/itemselect.php:419
 #: ../menu/pluginsettings.php:129
 #: ../menu/pluginsettings.php:158
 #: ../menu/pluginsettings.php:188
@@ -52,7 +52,7 @@ msgstr ""
 #: ../debug.php:44
 #: ../debug.php:48
 #: ../debug.php:80
-#: ../menu/itemselect.php:425
+#: ../menu/itemselect.php:421
 #: ../menu/pluginsettings.php:131
 #: ../menu/pluginsettings.php:160
 #: ../menu/pluginsettings.php:190
@@ -132,27 +132,27 @@ msgstr ""
 msgid "Update Finished:"
 msgstr ""
 
-#: ../debug.php:213
+#: ../debug.php:214
 msgid "Update has started in the background:"
 msgstr ""
 
-#: ../debug.php:221
+#: ../debug.php:222
 msgid "Update now"
 msgstr ""
 
-#: ../debug.php:222
+#: ../debug.php:223
 msgid "run update in background"
 msgstr ""
 
-#: ../debug.php:223
+#: ../debug.php:224
 msgid "or"
 msgstr ""
 
-#: ../debug.php:228
+#: ../debug.php:229
 msgid "<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>"
 msgstr ""
 
-#: ../debug.php:258
+#: ../debug.php:259
 msgid "Is missing the call to <?php wp_head(); ?> which should appear directly before </head>"
 msgstr ""
 
@@ -160,63 +160,63 @@ msgstr ""
 msgid "No XML filled in yet please change the settings first."
 msgstr ""
 
-#: ../front.php:226
+#: ../front.php:263
 msgid "More info"
 msgstr ""
 
-#: ../import/database.php:174
+#: ../import/database.php:156
 #, php-format
 msgid "Database filled with %1$s new items on %2$s"
 msgstr ""
 
-#: ../menu/itemselect.php:13
+#: ../menu/itemselect.php:14
 msgid "deleted all items"
 msgstr ""
 
-#: ../menu/itemselect.php:23
+#: ../menu/itemselect.php:24
 msgid "deleted the items"
 msgstr ""
 
-#: ../menu/itemselect.php:33
+#: ../menu/itemselect.php:34
 msgid "Select items for which store"
 msgstr ""
 
-#: ../menu/itemselect.php:44
+#: ../menu/itemselect.php:45
 msgid "Store Name"
 msgstr ""
 
-#: ../menu/itemselect.php:47
+#: ../menu/itemselect.php:48
 #: ../menu/layout.php:286
 msgid "Edit"
 msgstr ""
 
-#: ../menu/itemselect.php:50
+#: ../menu/itemselect.php:51
 msgid "Select Item"
 msgstr ""
 
-#: ../menu/itemselect.php:53
-#: ../menu/itemselect.php:56
+#: ../menu/itemselect.php:54
+#: ../menu/itemselect.php:57
 msgid "Delete"
 msgstr ""
 
-#: ../menu/itemselect.php:83
+#: ../menu/itemselect.php:84
 msgid "Edit Store"
 msgstr ""
 
-#: ../menu/itemselect.php:87
+#: ../menu/itemselect.php:88
 msgid "Select Items"
 msgstr ""
 
-#: ../menu/itemselect.php:91
+#: ../menu/itemselect.php:92
 #, php-format
 msgid "All %d selected Item(s)"
 msgstr ""
 
-#: ../menu/itemselect.php:96
+#: ../menu/itemselect.php:97
 msgid "items no longer in a feed"
 msgstr ""
 
-#: ../menu/itemselect.php:138
+#: ../menu/itemselect.php:139
 #: ../menu/layout.php:174
 #: ../menu/pluginsettings.php:98
 #: ../menu/premium.php:26
@@ -224,60 +224,60 @@ msgstr ""
 msgid "Settings saved"
 msgstr ""
 
-#: ../menu/itemselect.php:314
+#: ../menu/itemselect.php:315
 msgid "Select the items you want to show"
 msgstr ""
 
-#: ../menu/itemselect.php:336
+#: ../menu/itemselect.php:337
 msgid "Showing products"
 msgstr ""
 
-#: ../menu/itemselect.php:336
-#: ../menu/itemselect.php:339
+#: ../menu/itemselect.php:337
+#: ../menu/itemselect.php:340
 msgid "of"
 msgstr ""
 
-#: ../menu/itemselect.php:339
+#: ../menu/itemselect.php:340
 msgid "Page"
 msgstr ""
 
-#: ../menu/itemselect.php:344
+#: ../menu/itemselect.php:345
 msgid "Results per-page:"
 msgstr ""
 
-#: ../menu/itemselect.php:357
+#: ../menu/itemselect.php:358
 msgid "ProductID"
 msgstr ""
 
-#: ../menu/itemselect.php:359
+#: ../menu/itemselect.php:360
 msgid "Product name"
 msgstr ""
 
-#: ../menu/itemselect.php:361
+#: ../menu/itemselect.php:362
 msgid "XMLFeed"
 msgstr ""
 
-#: ../menu/itemselect.php:363
+#: ../menu/itemselect.php:364
 msgid "Price"
 msgstr ""
 
-#: ../menu/itemselect.php:365
+#: ../menu/itemselect.php:366
 msgid "Currency"
 msgstr ""
 
-#: ../menu/itemselect.php:367
+#: ../menu/itemselect.php:368
 msgid "Extra's"
 msgstr ""
 
-#: ../menu/itemselect.php:444
+#: ../menu/itemselect.php:440
 msgid "Select"
 msgstr ""
 
-#: ../menu/itemselect.php:444
+#: ../menu/itemselect.php:440
 msgid "All"
 msgstr ""
 
-#: ../menu/itemselect.php:444
+#: ../menu/itemselect.php:440
 msgid "None"
 msgstr ""
 
@@ -843,144 +843,156 @@ msgstr ""
 msgid "<br>This is only interesting if you have created a search option on your site (more information can be found <a href=\"http://codex.wordpress.org/Creating_a_Search_Page\">here</a>) <br>You could use the following shortcode or code for your theme to show items related to the keyword the user searched on:<br>Shortcode: [display_search]<br>Or in your theme file: display_search_items();"
 msgstr ""
 
-#: ../menu/store.php:157
+#: ../menu/store.php:165
 msgid "Would you like to edit or add a store?"
 msgstr ""
 
-#: ../menu/store.php:171
+#: ../menu/store.php:179
 msgid "Sorting"
 msgstr ""
 
-#: ../menu/store.php:174
+#: ../menu/store.php:182
 msgid "Order"
 msgstr ""
 
-#: ../menu/store.php:177
+#: ../menu/store.php:185
 msgid "Layout"
 msgstr ""
 
-#: ../menu/store.php:180
+#: ../menu/store.php:188
 msgid "Feed"
 msgstr ""
 
-#: ../menu/store.php:183
+#: ../menu/store.php:191
 msgid "Button Text"
 msgstr ""
 
-#: ../menu/store.php:186
+#: ../menu/store.php:194
 msgid "Items"
 msgstr ""
 
-#: ../menu/store.php:189
+#: ../menu/store.php:197
 msgid "Lightbox"
 msgstr ""
 
-#: ../menu/store.php:216
+#: ../menu/store.php:224
 msgid "All Feeds"
 msgstr ""
 
-#: ../menu/store.php:258
+#: ../menu/store.php:266
 msgid "Create Store"
 msgstr ""
 
-#: ../menu/store.php:272
+#: ../menu/store.php:280
 msgid "Fill in the name for the store."
 msgstr ""
 
-#: ../menu/store.php:273
+#: ../menu/store.php:281
 msgid "Name for Store:"
 msgstr ""
 
-#: ../menu/store.php:279
+#: ../menu/store.php:287
 msgid "This cannot start with a number"
 msgstr ""
 
-#: ../menu/store.php:284
+#: ../menu/store.php:292
 msgid "It will sort the items on this field."
 msgstr ""
 
-#: ../menu/store.php:285
+#: ../menu/store.php:293
 msgid "Order by this field:"
 msgstr ""
 
-#: ../menu/store.php:306
+#: ../menu/store.php:314
 msgid "How should it be ordered."
 msgstr ""
 
-#: ../menu/store.php:307
+#: ../menu/store.php:315
 msgid "Descending or Ascending:"
 msgstr ""
 
-#: ../menu/store.php:328
+#: ../menu/store.php:336
 msgid "Which layout would you like to use."
 msgstr ""
 
-#: ../menu/store.php:329
+#: ../menu/store.php:337
 msgid "Layout:"
 msgstr ""
 
-#: ../menu/store.php:355
+#: ../menu/store.php:363
 msgid "Do you like to use a product page?"
 msgstr ""
 
-#: ../menu/store.php:356
+#: ../menu/store.php:364
 msgid "Use a productpage:"
 msgstr ""
 
-#: ../menu/store.php:375
+#: ../menu/store.php:383
 msgid "Which feed would you like to use."
 msgstr ""
 
-#: ../menu/store.php:376
+#: ../menu/store.php:384
 msgid "Feed:"
 msgstr ""
 
-#: ../menu/store.php:383
-#: ../menu/store.php:385
+#: ../menu/store.php:391
+#: ../menu/store.php:393
 msgid "All feeds"
 msgstr ""
 
-#: ../menu/store.php:411
+#: ../menu/store.php:419
 msgid "Which categories would you like to use?"
 msgstr ""
 
-#: ../menu/store.php:412
+#: ../menu/store.php:420
 msgid "Which categories?:"
 msgstr ""
 
-#: ../menu/store.php:417
+#: ../menu/store.php:425
 msgid "You changed the XML Feed, You need to save first before you can select any category."
 msgstr ""
 
-#: ../menu/store.php:460
+#: ../menu/store.php:468
 msgid "What text would you like to use on the button (standard is Buy now)."
 msgstr ""
 
-#: ../menu/store.php:461
+#: ../menu/store.php:469
 msgid "Text on button:"
 msgstr ""
 
-#: ../menu/store.php:470
+#: ../menu/store.php:478
 msgid "How much items would you like to show."
 msgstr ""
 
-#: ../menu/store.php:471
+#: ../menu/store.php:479
 msgid "Amount of items:"
 msgstr ""
 
-#: ../menu/store.php:476
+#: ../menu/store.php:484
 msgid "use 0 if you don't want a limit at all"
 msgstr ""
 
-#: ../menu/store.php:482
+#: ../menu/store.php:489
+msgid "How much items would you like to show on one page."
+msgstr ""
+
+#: ../menu/store.php:490
+msgid "Amount of items on a single page:"
+msgstr ""
+
+#: ../menu/store.php:495
+msgid "Use 0 if you want to show all items on 1 page"
+msgstr ""
+
+#: ../menu/store.php:501
 msgid "Do you want to use lightbox for the images? You will need an extra plugin for that"
 msgstr ""
 
-#: ../menu/store.php:483
+#: ../menu/store.php:502
 msgid "Use Lightbox:"
 msgstr ""
 
-#: ../menu/store.php:487
+#: ../menu/store.php:506
 msgid "You will need this plugin"
 msgstr ""
 
@@ -1008,71 +1020,71 @@ msgstr ""
 msgid "Update Items"
 msgstr ""
 
-#: ../menu/xmloption.php:75
+#: ../menu/xmloption.php:76
 msgid "Change XML options."
 msgstr ""
 
-#: ../menu/xmloption.php:86
+#: ../menu/xmloption.php:87
 msgid "Which extra fields would you like to use?"
 msgstr ""
 
-#: ../menu/xmloption.php:87
+#: ../menu/xmloption.php:88
 msgid "Which extra fields?:"
 msgstr ""
 
-#: ../menu/xmloption.php:126
+#: ../menu/xmloption.php:130
 msgid "When should it update?, standard is 00:00:00"
 msgstr ""
 
-#: ../menu/xmloption.php:127
+#: ../menu/xmloption.php:131
 msgid "Update time:"
 msgstr ""
 
-#: ../menu/xmloption.php:131
+#: ../menu/xmloption.php:135
 msgid "Time has to be in hh:mm:ss"
 msgstr ""
 
-#: ../menu/xmloption.php:136
+#: ../menu/xmloption.php:140
 msgid "Do you like to use fill in your own currency or get it from the XML?"
 msgstr ""
 
-#: ../menu/xmloption.php:137
+#: ../menu/xmloption.php:141
 msgid "Use your own currency symbol:"
 msgstr ""
 
-#: ../menu/xmloption.php:148
+#: ../menu/xmloption.php:152
 msgid "Do you like to have the currency before or after the price?"
 msgstr ""
 
-#: ../menu/xmloption.php:149
+#: ../menu/xmloption.php:153
 msgid "Location of the currency:"
 msgstr ""
 
-#: ../menu/xmloption.php:153
+#: ../menu/xmloption.php:157
 msgid "After the price"
 msgstr ""
 
-#: ../menu/xmloption.php:155
+#: ../menu/xmloption.php:159
 msgid "Before the price"
 msgstr ""
 
-#: ../menu/xmloption.php:163
+#: ../menu/xmloption.php:167
 msgid "Adjust Currency:"
 msgstr ""
 
-#: ../menu/xmloption.php:168
+#: ../menu/xmloption.php:172
 msgid "Current currency in the XML?"
 msgstr ""
 
-#: ../menu/xmloption.php:169
+#: ../menu/xmloption.php:173
 msgid "XML Currency:"
 msgstr ""
 
-#: ../menu/xmloption.php:173
+#: ../menu/xmloption.php:177
 msgid "What would you like to show instead of the XML currency?"
 msgstr ""
 
-#: ../menu/xmloption.php:174
+#: ../menu/xmloption.php:178
 msgid "New Currency:"
 msgstr ""
 

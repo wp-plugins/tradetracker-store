@@ -16,6 +16,7 @@ function store() {
 	$Tradetracker_multiorder_name = 'Tradetracker_multiorder';
 	$Tradetracker_multilayout_name = 'Tradetracker_multilayout';
 	$Tradetracker_multiamount_name = 'Tradetracker_multiamount';
+	$Tradetracker_multipageamount_name = 'Tradetracker_multipageamount';
 	$Tradetracker_multilightbox_name = 'Tradetracker_multilightbox';
 	$Tradetracker_multixmlfeed_name = 'Tradetracker_multixmlfeed';
 	$Tradetracker_multiproductpage_name = 'Tradetracker_multiproductpage';
@@ -41,7 +42,7 @@ function store() {
 		if(isset($_POST['multiid'])){
 			$multiid = $_POST['multiid'];
 		} 
-		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multisorting, multiorder, multiproductpage, multiname, multilayout, multiamount, multilightbox, categories FROM ".$ttstoremultitable." where id='".$multiid."'");
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multisorting, multiorder, multiproductpage, multiname, multilayout, multiamount, multipageamount, multilightbox, categories FROM ".$ttstoremultitable." where id='".$multiid."'");
 		foreach ($multi as $multi_val){
 			$Tradetracker_buynow_val = $multi_val->buynow;
 			$db_buynow_val = $multi_val->buynow;
@@ -57,6 +58,8 @@ function store() {
 			$db_multilayout_val = $multi_val->multilayout;
 			$Tradetracker_multiamount_val = $multi_val->multiamount;
 			$db_multiamount_val = $multi_val->multiamount;
+			$Tradetracker_multipageamount_val = $multi_val->multipageamount;
+			$db_multipageamount_val = $multi_val->multipageamount;
 			$Tradetracker_multilightbox_val = $multi_val->multilightbox;
 			$db_multilightbox_val = $multi_val->multilightbox;
 			$Tradetracker_categories_val = $multi_val->categories;
@@ -76,6 +79,7 @@ function store() {
         	$Tradetracker_multiorder_val = $_POST[ $Tradetracker_multiorder_name ];
         	$Tradetracker_multilayout_val = $_POST[ $Tradetracker_multilayout_name ];
 		$Tradetracker_multiamount_val = $_POST[ $Tradetracker_multiamount_name ];
+		$Tradetracker_multipageamount_val = $_POST[ $Tradetracker_multipageamount_name ];
 		$Tradetracker_multilightbox_val = $_POST[ $Tradetracker_multilightbox_name ];
 		$Tradetracker_multiproductpage_val = $_POST[ $Tradetracker_multiproductpage_name ];
 		if(isset($_POST[ $Tradetracker_categories_name ])){
@@ -113,6 +117,9 @@ function store() {
 				if ( $db_multiamount_val  != $Tradetracker_multiamount_val) {
 					$query = $wpdb->update( $ttstoremultitable, array( 'multiamount' => $Tradetracker_multiamount_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
 				}
+				if ( $db_multipageamount_val  != $Tradetracker_multipageamount_val) {
+					$query = $wpdb->update( $ttstoremultitable, array( 'multipageamount' => $Tradetracker_multipageamount_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
+				}
  				if ( $db_multilightbox_val  != $Tradetracker_multilightbox_val) {
 					$query = $wpdb->update( $ttstoremultitable, array( 'multilightbox' => $Tradetracker_multilightbox_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
  				}
@@ -131,6 +138,7 @@ function store() {
        	 			$currentpage["multiorder"]=$Tradetracker_multiorder_val;
         			$currentpage["multilayout"]=$Tradetracker_multilayout_val;
         			$currentpage["multiamount"]=$Tradetracker_multiamount_val;
+        			$currentpage["multipageamount"]=$Tradetracker_multipageamount_val;
 				$currentpage["multiitems"]="";
         			$currentpage["multilightbox"]=$Tradetracker_multilightbox_val;
         			$currentpage["multixmlfeed"]=$Tradetracker_multixmlfeed_val;
@@ -474,6 +482,17 @@ function toggleOther(){
 		<td>
 			<input type="text" name="<?php echo $Tradetracker_multiamount_name; ?>" value="<?php if (!isset($Tradetracker_multiamount_val)) {echo "10"; } else {echo $Tradetracker_multiamount_val;} ?>" size="30">
 			<?php if(isset($error)){ echo "<font color=\"red\">*</font>"; }?> <?php _e('use 0 if you don\'t want a limit at all','ttstore'); ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="tradetrackerfont" title="<?php _e('How much items would you like to show on one page.','ttstore'); ?>" class="info">
+				<?php _e("Amount of items on a single page:", 'ttstore' ); ?> 
+			</label> 
+		</td>
+		<td>
+			<input type="text" name="<?php echo $Tradetracker_multipageamount_name; ?>" value="<?php if (!isset($Tradetracker_multipageamount_val)) {echo "10"; } else {echo $Tradetracker_multipageamount_val;} ?>" size="30">
+			<?php if(isset($error)){ echo "<font color=\"red\">*</font>"; }?> <?php _e('Use 0 if you want to show all items on 1 page','ttstore'); ?>
 		</td>
 	</tr>
 

@@ -159,7 +159,7 @@ echo "<div class=\"wrap\">";
 echo "<div class=\"ttstore-adminmenu\">";
 $i=0;
 for ($row = 0; $row < $menuoptioncount; $row++) {
-if($menuarray[$row]["Pricecheck"]=="Free"){
+if(isset($menuarray[$row]["Pricecheck"]) && $menuarray[$row]["Pricecheck"]=="Free"){
 			$price = "<div class=\"module-image\">
 				<img align=\"right\" width=\"71\" height=\"45\" src=\"".$menuarray[$row]["Image"]."\">
 				<p><span class=\"module-image-badge\">".$menuarray[$row]["Price"]."</span></p>

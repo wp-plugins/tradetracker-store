@@ -126,9 +126,9 @@ function show_items($usedhow, $winkelvol, $searching)
 	global $folderhome;
 	global $ttstoreextratable;
 	if ($searching == "1") {
-		$multi=$wpdb->get_results("SELECT buynow, multisorting, multiorder, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
+		$multi=$wpdb->get_results("SELECT buynow, multisorting, multiorder, categories, multixmlfeed, multiname, laywidth, multiitems, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
 	} else {
-		$multi=$wpdb->get_results("SELECT buynow, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiitems, multiamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".$winkelvol."");
+		$multi=$wpdb->get_results("SELECT buynow, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiitems, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".$winkelvol."");
 	}
 	foreach ($multi as $multi_val){	
 		$Tradetracker_amount = $multi_val->multiamount;
@@ -166,12 +166,50 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$buynow= $multi_val->buynow;
 		}
-		if ($multi_val->multiamount == "") {
-			$Tradetracker_amount_i = "LIMIT 12"; 
-		} else if ($multi_val->multiamount == "0") {
-			$Tradetracker_amount_i = "";
+		if($multi_val->multipageamount > "0"){
+			$pages = round($multi_val->multiamount / $multi_val->multipageamount)-1;
+			if(isset($_GET['storepage'])){
+				$currentpage = mysql_real_escape_string($_GET['storepage']);
+				$nextpage = $currentpage * $multi_val->multipageamount;
+				if($multi_val->multiamount <= $nextpage ){
+					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$multi_val->multiamount.""; 
+				} else {
+					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$multi_val->multipageamount.""; 
+				}
+			} else {
+				$currentpage = "0";
+				$nextpage = $currentpage + $multi_val->multipageamount;
+				if($multi_val->multiamount <= $nextpage ){
+					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$multi_val->multiamount.""; 
+				} else {
+					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$multi_val->multipageamount.""; 
+				}
+			}
+			if($pages > "0"){
+				if ($currentpage != 0) { // Don't show back link if current page is first page.
+					$back_page = $currentpage - "1";
+					$pagetext = "<a href=\"?storepage=$back_page\">back</a>\n";			
+				}
+				for ($i=0; $i <= $pages; $i++){
+					if ($i == $currentpage){
+						$pagetext .= "<b>$i</b> \n"; // If current page don't give link, just text.
+					}else{
+						$pagetext .= "<a href=\"?storepage=".$i."\">$i</a> \n";
+					}
+				}
+				if ($currentpage < $pages ) { // If last page don't give next link.
+					$next_page = $currentpage + "1";
+					$pagetext .= "<a href=\"?storepage=$next_page\">next</a>\n";
+				}
+			}
 		} else {
-			$Tradetracker_amount_i = "LIMIT ".$multi_val->multiamount.""; 
+			if ($multi_val->multiamount == "") {
+				$Tradetracker_amount_i = "LIMIT 12"; 
+			} else if ($multi_val->multiamount == "0") {
+				$Tradetracker_amount_i = "";
+			} else {
+				$Tradetracker_amount_i = "LIMIT ".$multi_val->multiamount.""; 
+			}
 		}
 		
 		if( $multi_val->laywidth == "" ){
@@ -216,8 +254,8 @@ function show_items($usedhow, $winkelvol, $searching)
 			foreach ($extras as $extra) {
 				$Tradetracker_extra_val = get_option("Tradetracker_extra");
 				if(!empty($Tradetracker_extra_val)){
-					if(in_array($extra[extrafield], $Tradetracker_extra_val, true)) {
-						$extraname .= "<tr><td width=\"50\"><b>".$extra[extrafield]."</b></td><td>".$extra[extravalue]."</td></tr>";
+					if(in_array($extra['extrafield'], $Tradetracker_extra_val, true)) {
+						$extraname .= "<tr><td width=\"50\"><b>".$extra['extrafield']."</b></td><td>".$extra['extravalue']."</td></tr>";
 					}
 				}
 			}
@@ -257,6 +295,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$image = $producturl;
 			$target = $urltarget;
+			$imagerel = "";
 		}
 		$productname = str_replace("&", "&amp;", $product->name);
 		$productdescription = $product->description;
@@ -307,6 +346,9 @@ function show_items($usedhow, $winkelvol, $searching)
 	$i++;
 	}
 	$storeitems .= "<div class=\"cleared\"></div>";
+	if(isset($pagetext)){
+		$storeitems .= $pagetext;
+	}
 	if(get_option("Tradetracker_showurl")=="1"){
 		$storeitems .= "<div class=\"ttstorelink\"><a target=\"_blank\" href=\"http://wpaffiliatefeed.com\">TradeTracker wordpress plugin</a></div>";
 	}

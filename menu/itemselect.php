@@ -71,6 +71,9 @@ function itemselect() {
 				$result = arrayDiffEmulation($productID, $fivesdrafts);
 				$emptyproductcount = count($result);
 				$emptyitems = implode(",", $result);				
+			} else {
+				$emptyproductcount = "";
+				$emptyitems = "";
 			}
 		}
 ?>
@@ -95,6 +98,7 @@ function itemselect() {
 			<td>
 				<?php if(isset($emptyproductcount) && $emptyproductcount > "0"){ ?>
 					<a href="admin.php?page=tt-store&option=itemselect&function=deleteempty&multiid=<?php echo $layout_val->id; ?>&emptyitems=<?php echo $emptyitems; ?>"><?php echo $emptyproductcount; ?> <?php _e("items no longer in a feed", "ttstore"); ?></a>
+					<?php $emptyproductcount = ""; ?>
 				<?php } ?>
 			</td>
 			<td>

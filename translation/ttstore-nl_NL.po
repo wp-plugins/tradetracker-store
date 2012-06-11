@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-07 00:07-0000\n"
-"PO-Revision-Date: 2012-06-07 00:08-0000\n"
+"POT-Creation-Date: 2012-06-11 23:31-0000\n"
+"PO-Revision-Date: 2012-06-11 23:32-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -133,27 +133,27 @@ msgstr "Foutmelding gedetecteerd in TradeTracker Store plugin, ga naar de <a hre
 msgid "Update Finished:"
 msgstr "Update uitgevoerd:"
 
-#: ../debug.php:213
+#: ../debug.php:214
 msgid "Update has started in the background:"
 msgstr "Update is gestart op de achtergrond:"
 
-#: ../debug.php:221
+#: ../debug.php:222
 msgid "Update now"
 msgstr "Update nu"
 
-#: ../debug.php:222
+#: ../debug.php:223
 msgid "run update in background"
 msgstr "voer update op de achtergrond uit"
 
-#: ../debug.php:223
+#: ../debug.php:224
 msgid "or"
 msgstr "of"
 
-#: ../debug.php:228
+#: ../debug.php:229
 msgid "<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>"
 msgstr "<strong>De volgende XML delen gaven een foutmelding of waren leeg tijdens de laatste import. Mogelijk zijn er geen items van geimporteerd</strong>"
 
-#: ../debug.php:258
+#: ../debug.php:259
 msgid "Is missing the call to <?php wp_head(); ?> which should appear directly before </head>"
 msgstr "Mist de code <?php wp_head(); ?> welke direct voor </head> zou moeten staan."
 
@@ -161,63 +161,63 @@ msgstr "Mist de code <?php wp_head(); ?> welke direct voor </head> zou moeten st
 msgid "No XML filled in yet please change the settings first."
 msgstr "Er is nog geen XML feed ingevuld. Graag dit verhelpen in de settings"
 
-#: ../front.php:226
+#: ../front.php:263
 msgid "More info"
 msgstr "Meer informatie"
 
-#: ../import/database.php:174
+#: ../import/database.php:156
 #, php-format
 msgid "Database filled with %1$s new items on %2$s"
 msgstr "Database gevuld met %1$s nieuwe items op %2$s"
 
-#: ../menu/itemselect.php:13
+#: ../menu/itemselect.php:14
 msgid "deleted all items"
 msgstr "Alle items verwijderd"
 
-#: ../menu/itemselect.php:23
+#: ../menu/itemselect.php:24
 msgid "deleted the items"
 msgstr "Gekozen items verwijderd"
 
-#: ../menu/itemselect.php:33
+#: ../menu/itemselect.php:34
 msgid "Select items for which store"
 msgstr "Selecteer items voor welke winkel"
 
-#: ../menu/itemselect.php:44
+#: ../menu/itemselect.php:45
 msgid "Store Name"
 msgstr "Winkel naam"
 
-#: ../menu/itemselect.php:47
+#: ../menu/itemselect.php:48
 #: ../menu/layout.php:286
 msgid "Edit"
 msgstr "Aanpassen"
 
-#: ../menu/itemselect.php:50
+#: ../menu/itemselect.php:51
 msgid "Select Item"
 msgstr "Selecteer Item"
 
-#: ../menu/itemselect.php:53
-#: ../menu/itemselect.php:56
+#: ../menu/itemselect.php:54
+#: ../menu/itemselect.php:57
 msgid "Delete"
 msgstr "Verwijder"
 
-#: ../menu/itemselect.php:83
+#: ../menu/itemselect.php:87
 msgid "Edit Store"
 msgstr "Pas winkel aan"
 
-#: ../menu/itemselect.php:87
+#: ../menu/itemselect.php:91
 msgid "Select Items"
 msgstr "Selecteer items"
 
-#: ../menu/itemselect.php:91
+#: ../menu/itemselect.php:95
 #, php-format
 msgid "All %d selected Item(s)"
 msgstr "Alle %d geselecteerde item(s)"
 
-#: ../menu/itemselect.php:96
+#: ../menu/itemselect.php:100
 msgid "items no longer in a feed"
 msgstr "items niet meer in een feed"
 
-#: ../menu/itemselect.php:138
+#: ../menu/itemselect.php:143
 #: ../menu/layout.php:174
 #: ../menu/pluginsettings.php:98
 #: ../menu/premium.php:26
@@ -225,48 +225,48 @@ msgstr "items niet meer in een feed"
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
-#: ../menu/itemselect.php:314
+#: ../menu/itemselect.php:319
 msgid "Select the items you want to show"
 msgstr "Selecteer de items die u wilt tonen"
 
-#: ../menu/itemselect.php:336
+#: ../menu/itemselect.php:341
 msgid "Showing products"
 msgstr "Toon product"
 
-#: ../menu/itemselect.php:336
-#: ../menu/itemselect.php:339
+#: ../menu/itemselect.php:341
+#: ../menu/itemselect.php:344
 msgid "of"
 msgstr "van"
 
-#: ../menu/itemselect.php:339
+#: ../menu/itemselect.php:344
 msgid "Page"
 msgstr "Pagina"
 
-#: ../menu/itemselect.php:344
+#: ../menu/itemselect.php:349
 msgid "Results per-page:"
 msgstr "Resultaten per pagina:"
 
-#: ../menu/itemselect.php:357
+#: ../menu/itemselect.php:362
 msgid "ProductID"
 msgstr "ProductID"
 
-#: ../menu/itemselect.php:359
+#: ../menu/itemselect.php:364
 msgid "Product name"
 msgstr "Product naam"
 
-#: ../menu/itemselect.php:361
+#: ../menu/itemselect.php:366
 msgid "XMLFeed"
 msgstr "XMLFeed"
 
-#: ../menu/itemselect.php:363
+#: ../menu/itemselect.php:368
 msgid "Price"
 msgstr "Prijs"
 
-#: ../menu/itemselect.php:365
+#: ../menu/itemselect.php:370
 msgid "Currency"
 msgstr "Valuta"
 
-#: ../menu/itemselect.php:367
+#: ../menu/itemselect.php:372
 msgid "Extra's"
 msgstr "Extra's"
 
@@ -844,144 +844,156 @@ msgstr "Gebruik zelfde instellingen als deze winkel:"
 msgid "<br>This is only interesting if you have created a search option on your site (more information can be found <a href=\"http://codex.wordpress.org/Creating_a_Search_Page\">here</a>) <br>You could use the following shortcode or code for your theme to show items related to the keyword the user searched on:<br>Shortcode: [display_search]<br>Or in your theme file: display_search_items();"
 msgstr "<br>Dit is alleen interessant als u een zoek optie heeft gecreeerd op uw site. (meer informatie kan <a href=\"http://codex.wordpress.org/Creating_a_Search_Page\">hier</a> gevonden worden) <br>U kunt de volgende shortcode of php code gebruiken in uw thema om items te tonen aan de hand van uw zoekwoord <br>Shortcode: [display_search]<br>Of in uw theme bestand: display_search_items();"
 
-#: ../menu/store.php:157
+#: ../menu/store.php:165
 msgid "Would you like to edit or add a store?"
 msgstr "Wilt u de winkel aanpassen of een nieuwe toevoegen?"
 
-#: ../menu/store.php:171
+#: ../menu/store.php:179
 msgid "Sorting"
 msgstr "Sortering"
 
-#: ../menu/store.php:174
+#: ../menu/store.php:182
 msgid "Order"
 msgstr "Volgorde"
 
-#: ../menu/store.php:177
+#: ../menu/store.php:185
 msgid "Layout"
 msgstr "Layout"
 
-#: ../menu/store.php:180
+#: ../menu/store.php:188
 msgid "Feed"
 msgstr "Feed"
 
-#: ../menu/store.php:183
+#: ../menu/store.php:191
 msgid "Button Text"
 msgstr "Tekst op knop"
 
-#: ../menu/store.php:186
+#: ../menu/store.php:194
 msgid "Items"
 msgstr "Items"
 
-#: ../menu/store.php:189
+#: ../menu/store.php:197
 msgid "Lightbox"
 msgstr "Lightbox:"
 
-#: ../menu/store.php:216
+#: ../menu/store.php:224
 msgid "All Feeds"
 msgstr "Alle Feeds"
 
-#: ../menu/store.php:258
+#: ../menu/store.php:266
 msgid "Create Store"
 msgstr "Maak winkel"
 
-#: ../menu/store.php:272
+#: ../menu/store.php:280
 msgid "Fill in the name for the store."
 msgstr "Vul de naam in voor de winkel."
 
-#: ../menu/store.php:273
+#: ../menu/store.php:281
 msgid "Name for Store:"
 msgstr "Naam voor winkel"
 
-#: ../menu/store.php:279
+#: ../menu/store.php:287
 msgid "This cannot start with a number"
 msgstr "Dit mag niet starten met een nummer"
 
-#: ../menu/store.php:284
+#: ../menu/store.php:292
 msgid "It will sort the items on this field."
 msgstr "Het zal de items sorteren op dit veld."
 
-#: ../menu/store.php:285
+#: ../menu/store.php:293
 msgid "Order by this field:"
 msgstr "Sorteren op welk veld:"
 
-#: ../menu/store.php:306
+#: ../menu/store.php:314
 msgid "How should it be ordered."
 msgstr "Hoe moet het worden gesorteerd."
 
-#: ../menu/store.php:307
+#: ../menu/store.php:315
 msgid "Descending or Ascending:"
 msgstr "Oplopend of aflopend:"
 
-#: ../menu/store.php:328
+#: ../menu/store.php:336
 msgid "Which layout would you like to use."
 msgstr "Welke layout wilt u gebruiken."
 
-#: ../menu/store.php:329
+#: ../menu/store.php:337
 msgid "Layout:"
 msgstr "Layout:"
 
-#: ../menu/store.php:355
+#: ../menu/store.php:363
 msgid "Do you like to use a product page?"
 msgstr "Wilt u een productpagina gebruiken?"
 
-#: ../menu/store.php:356
+#: ../menu/store.php:364
 msgid "Use a productpage:"
 msgstr "Gebruik een productpagina:"
 
-#: ../menu/store.php:375
+#: ../menu/store.php:383
 msgid "Which feed would you like to use."
 msgstr "Welke feed wilt u gebruiken?"
 
-#: ../menu/store.php:376
+#: ../menu/store.php:384
 msgid "Feed:"
 msgstr "Feed:"
 
-#: ../menu/store.php:383
-#: ../menu/store.php:385
+#: ../menu/store.php:391
+#: ../menu/store.php:393
 msgid "All feeds"
 msgstr "Alle feeds"
 
-#: ../menu/store.php:411
+#: ../menu/store.php:419
 msgid "Which categories would you like to use?"
 msgstr "Welke extra categorieen wilt u gebruiken?"
 
-#: ../menu/store.php:412
+#: ../menu/store.php:420
 msgid "Which categories?:"
 msgstr "Welke categorieen?:"
 
-#: ../menu/store.php:417
+#: ../menu/store.php:425
 msgid "You changed the XML Feed, You need to save first before you can select any category."
 msgstr "U heeft de XML feed aangepast, u moet het eerst opslaan voor dat u een categorie kan aanpassen."
 
-#: ../menu/store.php:460
+#: ../menu/store.php:468
 msgid "What text would you like to use on the button (standard is Buy now)."
 msgstr "Welke tekst wilt u gebruiken voor de knop (standaard is Buy now)."
 
-#: ../menu/store.php:461
+#: ../menu/store.php:469
 msgid "Text on button:"
 msgstr "Text op de knop:"
 
-#: ../menu/store.php:470
+#: ../menu/store.php:478
 msgid "How much items would you like to show."
 msgstr "Hoeveel items wilt u tonen:"
 
-#: ../menu/store.php:471
+#: ../menu/store.php:479
 msgid "Amount of items:"
 msgstr "Hoeveelheid items:"
 
-#: ../menu/store.php:476
+#: ../menu/store.php:484
 msgid "use 0 if you don't want a limit at all"
 msgstr "Gebruik 0 als u geen limiet wilt gebruiken"
 
-#: ../menu/store.php:482
+#: ../menu/store.php:489
+msgid "How much items would you like to show on one page."
+msgstr "Hoeveel items wilt u tonen op een pagina."
+
+#: ../menu/store.php:490
+msgid "Amount of items on a single page:"
+msgstr "Hoeveelheid items op 1 losse pagina:"
+
+#: ../menu/store.php:495
+msgid "Use 0 if you want to show all items on 1 page"
+msgstr "Gebruik 0 als u alle items op 1 pagina wilt tonen"
+
+#: ../menu/store.php:501
 msgid "Do you want to use lightbox for the images? You will need an extra plugin for that"
 msgstr "Wilt u lightbox gebruiken voor de afbeeldingen? U heeft daar een extra plugin voor nodig"
 
-#: ../menu/store.php:483
+#: ../menu/store.php:502
 msgid "Use Lightbox:"
 msgstr "Lightbox Gebruiken:"
 
-#: ../menu/store.php:487
+#: ../menu/store.php:506
 msgid "You will need this plugin"
 msgstr "u heeft deze plugin nodig"
 
@@ -1009,71 +1021,71 @@ msgstr "XML Aanbieder"
 msgid "Update Items"
 msgstr "Update Items"
 
-#: ../menu/xmloption.php:75
+#: ../menu/xmloption.php:76
 msgid "Change XML options."
 msgstr "Verander XML opties."
 
-#: ../menu/xmloption.php:86
+#: ../menu/xmloption.php:87
 msgid "Which extra fields would you like to use?"
 msgstr "Welke extra velden wilt u tonen?"
 
-#: ../menu/xmloption.php:87
+#: ../menu/xmloption.php:88
 msgid "Which extra fields?:"
 msgstr "Welke extra velden?:"
 
-#: ../menu/xmloption.php:126
+#: ../menu/xmloption.php:130
 msgid "When should it update?, standard is 00:00:00"
 msgstr "Wanneer moet de feed updaten?, standaard is 00:00:00"
 
-#: ../menu/xmloption.php:127
+#: ../menu/xmloption.php:131
 msgid "Update time:"
 msgstr "Update tijd:"
 
-#: ../menu/xmloption.php:131
+#: ../menu/xmloption.php:135
 msgid "Time has to be in hh:mm:ss"
 msgstr "Tijd moet ingevuld worden als hh:mm:ss"
 
-#: ../menu/xmloption.php:136
+#: ../menu/xmloption.php:140
 msgid "Do you like to use fill in your own currency or get it from the XML?"
 msgstr "Wilt u uw eigen ingevulde valuta gebruiken of het van de XML feed gebruiken?"
 
-#: ../menu/xmloption.php:137
+#: ../menu/xmloption.php:141
 msgid "Use your own currency symbol:"
 msgstr "Gebruik uw eigen gekozen valuta sybool:"
 
-#: ../menu/xmloption.php:148
+#: ../menu/xmloption.php:152
 msgid "Do you like to have the currency before or after the price?"
 msgstr "Wilt u de valuta voor of achter de prijs?"
 
-#: ../menu/xmloption.php:149
+#: ../menu/xmloption.php:153
 msgid "Location of the currency:"
 msgstr "Locatie van de valuta:"
 
-#: ../menu/xmloption.php:153
+#: ../menu/xmloption.php:157
 msgid "After the price"
 msgstr "Achter de prijs"
 
-#: ../menu/xmloption.php:155
+#: ../menu/xmloption.php:159
 msgid "Before the price"
 msgstr "Voor de prijs"
 
-#: ../menu/xmloption.php:163
+#: ../menu/xmloption.php:167
 msgid "Adjust Currency:"
 msgstr "Pas Valuta aan:"
 
-#: ../menu/xmloption.php:168
+#: ../menu/xmloption.php:172
 msgid "Current currency in the XML?"
 msgstr "Huidige valutue in de XML?"
 
-#: ../menu/xmloption.php:169
+#: ../menu/xmloption.php:173
 msgid "XML Currency:"
 msgstr "Valuta van de XML:"
 
-#: ../menu/xmloption.php:173
+#: ../menu/xmloption.php:177
 msgid "What would you like to show instead of the XML currency?"
 msgstr "Wat wilt u tonen inplaats van de valuta uit de XML feed?"
 
-#: ../menu/xmloption.php:174
+#: ../menu/xmloption.php:178
 msgid "New Currency:"
 msgstr "Nieuwe Valuta:"
 
