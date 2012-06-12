@@ -4,6 +4,7 @@ global $wpdb;
 global $foldersplits;
 global $foldercache;
 global $ttstoretable;
+global $ttstoreextratable;
 global $ttstorelayouttable;
 global $ttstoremultitable;
 ?>
@@ -104,6 +105,10 @@ global $ttstoremultitable;
 		echo "</strong><br>";
 		_e('Has the wp_head in the header.php', 'ttstore');
 	}
+	echo "<p><strong>";
+	_e('Last MySQL upgrade:', 'ttstore');
+	echo "</strong><br>";
+	echo get_option("TTstoreversion");
 	$storetableoverview = $wpdb->get_results("SHOW COLUMNS FROM ".$ttstoretable."");
 	echo "<p><strong>";
 	_e('Database Table overview: Items', 'ttstore');	
@@ -132,6 +137,23 @@ global $ttstoremultitable;
 	_e('Type', 'ttstore');
 	echo "</strong></td></tr>";
 	foreach ( $multitableoverview as $overview ) 
+	{
+		echo "<tr><td>".$overview->Field."</td>";
+		echo "<td>".$overview->Type."</td></tr>";		
+	}	
+	echo "</table>";
+
+	$extratableoverview = $wpdb->get_results("SHOW COLUMNS FROM ".$ttstoreextratable."");
+	echo "<p><strong>";
+	_e('Database Table overview: Extra', 'ttstore');	
+	echo "</strong>";
+	echo "<table>";
+	echo "<tr><td width=\"200px\"><strong>";
+	_e('Field', 'ttstore');
+	echo "</strong></td><td width=\"200px\"><strong>";
+	_e('Type', 'ttstore');
+	echo "</strong></td></tr>";
+	foreach ( $extratableoverview as $overview ) 
 	{
 		echo "<tr><td>".$overview->Field."</td>";
 		echo "<td>".$overview->Type."</td></tr>";		
