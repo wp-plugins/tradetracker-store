@@ -132,6 +132,7 @@ function show_items($usedhow, $winkelvol, $searching)
 	}
 	foreach ($multi as $multi_val){	
 		$Tradetracker_amount = $multi_val->multiamount;
+		$Tradetracker_productid = $multi_val->multiitems;
 		if($multi_val->multixmlfeed == "*" ){
 			$multixmlfeed = "";
 		} else {
@@ -167,11 +168,33 @@ function show_items($usedhow, $winkelvol, $searching)
 			$buynow= $multi_val->buynow;
 		}
 		if($multi_val->multipageamount > "0"){
-			$pages = round($multi_val->multiamount / $multi_val->multipageamount)-1;
+			if ($Tradetracker_productid == null) 
+			{
+				if ($multi_val->multiamount == "") {
+					$Tradetracker_amount_i = "LIMIT 12"; 
+				} else if ($multi_val->multiamount == "0") {
+					$Tradetracker_amount_i = "";
+				} else {
+					$Tradetracker_amount_i = "LIMIT ".$multi_val->multiamount.""; 
+				}
+				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable." ".$multixmlfeed." ".$categorieselect." ".$Tradetracker_amount_i.""));
+			} else {
+				if ($multi_val->multiamount == "") {
+					$Tradetracker_amount_i = "LIMIT 12"; 
+				} else if ($multi_val->multiamount == "0") {
+					$Tradetracker_amount_i = "";
+				} else {
+					$Tradetracker_amount_i = "LIMIT ".$multi_val->multiamount.""; 
+				}
+				$productID = $Tradetracker_productid;
+				$productID = str_replace(",", "' or productID='", $productID);
+				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable." where productID='".$productID."' ".$Tradetracker_amount_i.""));
+			}
+			$pages = round($totalitems / $multi_val->multipageamount)-1;
 			if(isset($_GET['storepage'])){
 				$currentpage = mysql_real_escape_string($_GET['storepage']);
 				$nextpage = $currentpage * $multi_val->multipageamount;
-				if($multi_val->multiamount <= $nextpage ){
+				if($totalitems <= $nextpage ){
 					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$multi_val->multiamount.""; 
 				} else {
 					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$multi_val->multipageamount.""; 
@@ -179,7 +202,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			} else {
 				$currentpage = "0";
 				$nextpage = $currentpage + $multi_val->multipageamount;
-				if($multi_val->multiamount <= $nextpage ){
+				if($totalitems <= $nextpage ){
 					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$multi_val->multiamount.""; 
 				} else {
 					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$multi_val->multipageamount.""; 
@@ -221,7 +244,6 @@ function show_items($usedhow, $winkelvol, $searching)
 		$multiorder = $multi_val->multiorder;
 		$widthtitle = $width-6;
 		$widthmore = $width-10;
-		$Tradetracker_productid = $multi_val->multiitems;
 		$storename = create_slug($multi_val->multiname);
 		if($multi_val->multilightbox==1){
 			$uselightbox = "1";

@@ -66,18 +66,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 		$filenum = "0";
 		$value($xmlfilecount, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
 		fill_database1($xmlfilecount, $xmlcronjob);
-		$xmlfeedID++;
-		$xmlfilecount++;
-		update_option("xmlfilecount", $xmlfilecount );
-		if($xmlcronjob=="0"){
-?>
-<script type="text/javascript">
-window.location.href='<?php echo "admin.php?page=tt-store&update=yes&xmlfilecount=$xmlfilecount&xmlfeedID=$xmlfeedID"; ?>';
-</script>
-<?php
-		} else {
-				xml_updater($xmlfilecount, $xmlfeedID, "1");
-		}
+
 	} else {
 		update_option("xmlfilecount", "0" );
 		$errorfile = get_option("Tradetracker_importerror");
