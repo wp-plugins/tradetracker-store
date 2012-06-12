@@ -1,9 +1,11 @@
 <?php
 function parse_recursive(SimpleXMLElement $element, $level = 0)
 {	
+	global $wpdb;
 	GLOBAL $extrafield;
 	GLOBAL $extravalue;
 	GLOBAL $counterxml;
+	global $ttstoreextratable;
 	$indent = str_repeat("\t", $level); // determine how much we'll indent
 	$value = trim((string) $element); // get the value and trim any whitespace from the start and end
 	$attributes = $element->attributes(); // get all attributes
@@ -11,16 +13,8 @@ function parse_recursive(SimpleXMLElement $element, $level = 0)
         if(count($children) == 0 && !empty($value)) 
 	{       
 		if($element->getName()=="field"){
-			if($counterxml=="1"){
-				$extrafield = str_replace(",", "&#44;", $attributes);
-				$extravalue = str_replace(",", "&#44;", $element);	
-				$counterxml++;			
-			} else {
-				$extrafield .= ",".str_replace(",", "&#44;", $attributes);
-				$extravalue .= ",".str_replace(",", "&#44;", $element);
-				$counterxml++;
-			}
-
+			$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $attributes,'extravalue' => $element ),array('%s','%s','%s'));
+			$wpdb->flush();
 		}      
 	}
 	
@@ -117,18 +111,10 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						$currentpage["description"]=strip_tags($product->description);
 						$currentpage["price"]=$product->price;
 						$currentpage["currency"]=$product->price['currency'];
-						//parse_recursive($product);
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
 						$wpdb->flush();
 						if(get_option("Tradetracker_loadextra")=="1") {
-							foreach($product->children() as $car => $data){
-								foreach($data->field as $datachild){
-									if($datachild['name']!=""){
-										$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $datachild['name'],'extravalue' => $datachild ),array('%s','%s','%s'));
-										$wpdb->flush();
-									}
-								}
-							} 
+							parse_recursive($product);
 						}
 					}
 				} 
