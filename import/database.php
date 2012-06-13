@@ -114,7 +114,12 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
 						$wpdb->flush();
 						if(get_option("Tradetracker_loadextra")=="1") {
-							parse_recursive($product);
+							foreach($product->additional->children() as $datachild){
+								if($datachild['name']!=""){
+									$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $datachild['name'],'extravalue' => $datachild ),array('%s','%s','%s'));
+									$wpdb->flush();
+								}
+							} 
 						}
 					}
 				} 
@@ -126,16 +131,6 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	//$remove_null_number = true;
 	//$extrafieldarray = remove_array_empty_values($extrafieldarray, $remove_null_number);
 
-	$option_name = 'Tradetracker_xml_extra' ;
-	$newvalue = $extrafieldarray;
-
-	if ( get_option( $option_name ) != $newvalue ) {
-		update_option( $option_name, $newvalue );
-	} else {
-		$deprecated = '';
-		$autoload = 'no';
-		add_option( $option_name, $newvalue, $deprecated, $autoload );
-	}
 	$item_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoretable;" ) );
 	$currentupdate = date('Y-m-d H:i:s');
 	$option_name = 'Tradetracker_xml_update' ;
