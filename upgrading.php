@@ -7,7 +7,7 @@ if (get_option("TTstoreversion") == "4.1.9"){
 	update_option("TTstoreversion", "4.1.11" );
 }
 
-if (get_option("TTstoreversion") == "4.1.2" || get_option("TTstoreversion") < "4.1" ){
+if (get_option("TTstoreversion") == "4.1.2"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
 	$ttstoreextratable = $pro_table_prefix."extra";
