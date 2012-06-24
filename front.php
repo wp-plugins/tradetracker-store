@@ -325,8 +325,10 @@ function show_items($usedhow, $winkelvol, $searching)
 		//$productdescription = str_replace("&", "&amp;", $productdescription);
 		if(get_option("Tradetracker_currency")=="1") {
 			$array = get_option("Tradetracker_newcur");
-			$key = $product->currency; 
-			$currency = $array[$key]; 
+			$key = $product->currency;
+			if(isset($key)){
+				$currency = $array[$key];
+			} 
 		} else {
 			$currency = $product->currency;
 		}

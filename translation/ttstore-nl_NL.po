@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-12 12:55-0000\n"
-"PO-Revision-Date: 2012-06-12 12:55-0000\n"
+"POT-Creation-Date: 2012-06-25 00:12-0000\n"
+"PO-Revision-Date: 2012-06-25 00:12-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,15 +23,15 @@ msgstr "Debug"
 msgid "Needed to import XML Feed"
 msgstr "Nodig om XML Feed te importeren"
 
-#: ../debug.php:31
-#: ../debug.php:43
-msgid "Curl enabled:"
-msgstr "Curl ingeschakeld:"
-
 #: ../debug.php:33
 #: ../debug.php:39
-#: ../debug.php:86
-#: ../debug.php:92
+msgid "allow_url_fopen enabled:"
+msgstr "allow_url_fopen ingeschakeld:"
+
+#: ../debug.php:35
+#: ../debug.php:48
+#: ../debug.php:91
+#: ../debug.php:97
 #: ../menu/itemselect.php:423
 #: ../menu/pluginsettings.php:129
 #: ../menu/pluginsettings.php:158
@@ -45,14 +45,43 @@ msgstr "Curl ingeschakeld:"
 msgid "Yes"
 msgstr "Ja"
 
-#: ../debug.php:37
-#: ../debug.php:47
-msgid "allow_url_fopen enabled:"
-msgstr "allow_url_fopen ingeschakeld:"
+#: ../debug.php:41
+#: ../debug.php:54
+msgid "No, please change the import method <a href=\"admin.php?page=tt-store&option=pluginsettings\">here</a>"
+msgstr "Nee, graag de import methode <a href=\"admin.php?page=tt-store&option=pluginsettings\">hier</a> veranderen"
 
-#: ../debug.php:45
-#: ../debug.php:49
-#: ../debug.php:81
+#: ../debug.php:46
+#: ../debug.php:52
+msgid "Curl enabled:"
+msgstr "Curl ingeschakeld:"
+
+#: ../debug.php:59
+msgid "Needed to write XML file"
+msgstr "Nodig om een XML bestand te maken"
+
+#: ../debug.php:62
+#: ../debug.php:70
+#, php-format
+msgid "%s is writable."
+msgstr "%s is schrijfbaar"
+
+#: ../debug.php:66
+#: ../debug.php:74
+#, php-format
+msgid "%s is not writable. Please CHMOD 777 it."
+msgstr "%s is niet schrijfbaar. Graag CHMOD 777 op deze map toepassen"
+
+#: ../debug.php:79
+msgid "Needed to write XML to database"
+msgstr "Nodig om XML bestand naar database te schrijven"
+
+#: ../debug.php:84
+#: ../debug.php:89
+#: ../debug.php:95
+msgid "Simplexml installed:"
+msgstr "Simplexml geinstalleerd:"
+
+#: ../debug.php:86
 #: ../menu/itemselect.php:425
 #: ../menu/pluginsettings.php:131
 #: ../menu/pluginsettings.php:160
@@ -66,104 +95,78 @@ msgstr "allow_url_fopen ingeschakeld:"
 msgid "No"
 msgstr "Nee"
 
-#: ../debug.php:54
-msgid "Needed to write XML file"
-msgstr "Nodig om een XML bestand te maken"
-
-#: ../debug.php:57
-#: ../debug.php:65
-#, php-format
-msgid "%s is writable."
-msgstr "%s is schrijfbaar"
-
-#: ../debug.php:61
-#: ../debug.php:69
-#, php-format
-msgid "%s is not writable. Please CHMOD 777 it."
-msgstr "%s is niet schrijfbaar. Graag CHMOD 777 op deze map toepassen"
-
-#: ../debug.php:74
-msgid "Needed to write XML to database"
-msgstr "Nodig om XML bestand naar database te schrijven"
-
-#: ../debug.php:79
-#: ../debug.php:84
-#: ../debug.php:90
-msgid "Simplexml installed:"
-msgstr "Simplexml geinstalleerd:"
-
-#: ../debug.php:98
-#: ../debug.php:104
+#: ../debug.php:103
+#: ../debug.php:109
 msgid "Your active theme"
 msgstr "Uw actieve thema"
 
-#: ../debug.php:106
+#: ../debug.php:111
 msgid "Has the wp_head in the header.php"
 msgstr "heeft de wp_head in de header.php"
 
-#: ../debug.php:109
+#: ../debug.php:114
 msgid "Last MySQL upgrade:"
 msgstr "Laatste MySQL upgrade:"
 
-#: ../debug.php:114
+#: ../debug.php:119
 msgid "Database Table overview: Items"
 msgstr "Database tabel overzicht: Items"
 
-#: ../debug.php:118
-#: ../debug.php:135
-#: ../debug.php:152
-#: ../debug.php:169
+#: ../debug.php:123
+#: ../debug.php:140
+#: ../debug.php:157
+#: ../debug.php:174
 msgid "Field"
 msgstr "Veld"
 
-#: ../debug.php:120
-#: ../debug.php:137
-#: ../debug.php:154
-#: ../debug.php:171
+#: ../debug.php:125
+#: ../debug.php:142
+#: ../debug.php:159
+#: ../debug.php:176
 msgid "Type"
 msgstr "Type"
 
-#: ../debug.php:131
+#: ../debug.php:136
 msgid "Database Table overview: Store"
 msgstr "Database tabel overzicht: Store"
 
-#: ../debug.php:148
+#: ../debug.php:153
 msgid "Database Table overview: Extra"
 msgstr "Database tabel overzicht: Extra"
 
-#: ../debug.php:165
+#: ../debug.php:170
 msgid "Database Table overview: Layout"
 msgstr "Database tabel overzicht: Layout"
 
-#: ../debug.php:217
+#: ../debug.php:227
 msgid "Error detected in TradeTracker Store plugin, please see <a href=admin.php?page=tt-store&option=debug>debug page</a>"
 msgstr "Foutmelding gedetecteerd in TradeTracker Store plugin, ga naar de <a href=admin.php?page=tt-store&option=debug>debug pagina</a> voor meer informatie"
 
-#: ../debug.php:231
+#: ../debug.php:241
 msgid "Update Finished:"
 msgstr "Update uitgevoerd:"
 
-#: ../debug.php:236
+#: ../debug.php:246
 msgid "Update has started in the background:"
 msgstr "Update is gestart op de achtergrond:"
 
-#: ../debug.php:244
+#: ../debug.php:254
 msgid "Update now"
 msgstr "Update nu"
 
-#: ../debug.php:245
+#: ../debug.php:255
 msgid "run update in background"
 msgstr "voer update op de achtergrond uit"
 
-#: ../debug.php:246
+#: ../debug.php:256
 msgid "or"
 msgstr "of"
 
-#: ../debug.php:251
+#: ../debug.php:261
 msgid "<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>"
 msgstr "<strong>De volgende XML delen gaven een foutmelding of waren leeg tijdens de laatste import. Mogelijk zijn er geen items van geimporteerd</strong>"
 
-#: ../debug.php:281
+#: ../debug.php:291
 msgid "Is missing the call to <?php wp_head(); ?> which should appear directly before </head>"
 msgstr "Mist de code <?php wp_head(); ?> welke direct voor </head> zou moeten staan."
 
@@ -171,11 +174,11 @@ msgstr "Mist de code <?php wp_head(); ?> welke direct voor </head> zou moeten st
 msgid "No XML filled in yet please change the settings first."
 msgstr "Er is nog geen XML feed ingevuld. Graag dit verhelpen in de settings"
 
-#: ../front.php:263
+#: ../front.php:285
 msgid "More info"
 msgstr "Meer informatie"
 
-#: ../import/database.php:142
+#: ../import/database.php:137
 #, php-format
 msgid "Database filled with %1$s new items on %2$s"
 msgstr "Database gevuld met %1$s nieuwe items op %2$s"
@@ -1118,14 +1121,6 @@ msgstr "Zorg er voor dat deze winkel maar 1 item toont. Dit kunt u doen door <a 
 #, fuzzy
 #~ msgid "settings saved."
 #~ msgstr "Instellingen opgeslagen"
-
-#~ msgid ""
-#~ "Error detected in TradeTracker Store plugin, please see <a href=\"admin."
-#~ "php?page=tt-store&option=debug\">debug page</a>"
-#~ msgstr ""
-#~ "Foutmelding gedetecteerd in TradeTracker Store plugin, ga naar de <a href="
-#~ "\"admin.php?page=tt-store&option=debug\">debug pagina</a> voor meer "
-#~ "informatie"
 
 #~ msgid ""
 #~ "Error detected in TradeTracker Store plugin, please see <a href=\\\"admin."

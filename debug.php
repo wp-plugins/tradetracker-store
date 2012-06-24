@@ -27,12 +27,8 @@ global $ttstoremultitable;
 	echo "<strong>";
 	_e('Needed to import XML Feed', 'ttstore');
 	echo "</strong><br>";
-	if (function_exists('curl_init')) {
-		_e('Curl enabled:', 'ttstore'); 
-		echo " ";
-		_e('Yes', 'ttstore');
-		echo "<br>";
-	} else {
+
+	if (get_option('Tradetracker_importtool')=="1"){
 		if (ini_get('allow_url_fopen') == true) {
 			_e('allow_url_fopen enabled:', 'ttstore'); 
 			echo " ";
@@ -40,16 +36,25 @@ global $ttstoremultitable;
 			echo "<br>";
 		} else {
 			echo "<font color=red>";
-			_e('Curl enabled:', 'ttstore'); 
-			echo " ";
-			_e('No', 'ttstore');
-			echo "<br>";
 			_e('allow_url_fopen enabled:', 'ttstore'); 
 			echo " ";
-			_e('No', 'ttstore');
+			_e('No, please change the import method <a href="admin.php?page=tt-store&option=pluginsettings">here</a>', 'ttstore');
 			echo "</font><br>";
 		}
-	}
+	} else if (get_option('Tradetracker_importtool')=="2" || get_option('Tradetracker_importtool')=="3") {
+		if (function_exists('curl_init')) {
+			_e('Curl enabled:', 'ttstore'); 
+			echo " ";
+			_e('Yes', 'ttstore');
+			echo "<br>";
+		} else {
+			echo "<font color=red>";
+			_e('Curl enabled:', 'ttstore'); 
+			echo " ";
+			_e('No, please change the import method <a href="admin.php?page=tt-store&option=pluginsettings">here</a>', 'ttstore');
+			echo "</font><br>";
+		}
+	} 
 	echo "<p><strong>";
 	_e('Needed to write XML file', 'ttstore');	
 	echo "</strong><br>";
@@ -193,8 +198,13 @@ function ttstoreerrordetect($show) {
 	$foldercache = plugin_dir_path( __FILE__ )."cache/";
 
 	$tterror = "no";
-	if (!function_exists('curl_init')) {
+
+	if (get_option('Tradetracker_importtool')=="1"){
 		if (ini_get('allow_url_fopen') == false) {
+			$tterror="yes";
+		}
+	} else if (get_option('Tradetracker_importtool')=="2" || get_option('Tradetracker_importtool')=="3") {
+		if (!function_exists('curl_init')) {
 			$tterror="yes";
 		}
 	} 

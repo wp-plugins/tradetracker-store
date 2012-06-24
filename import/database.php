@@ -113,13 +113,13 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						$currentpage["currency"]=$product->price['currency'];
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
 						$wpdb->flush();
-						if(get_option("Tradetracker_loadextra")=="1") {
+						if(get_option("Tradetracker_loadextra")=="1" && $product->additional && ($product->additional != '')) {
 							foreach($product->additional->children() as $datachild){
 								if($datachild['name']!=""){
 									$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $datachild['name'],'extravalue' => $datachild ),array('%s','%s','%s'));
-									$wpdb->flush();
 								}
-							} 
+							}
+							$wpdb->flush();
 						}
 					}
 				} 
@@ -176,6 +176,7 @@ window.location.href='<?php echo "admin.php?page=tt-store&database=yes&xmldataba
 			}  
 		}
 		$directory->close();
+
 		if($xmlcronjob=="0"){
 ?>
 <script type="text/javascript">
