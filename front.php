@@ -190,14 +190,19 @@ function show_items($usedhow, $winkelvol, $searching)
 				$productID = str_replace(",", "' or productID='", $productID);
 				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable." where productID='".$productID."' ".$Tradetracker_amount_i.""));
 			}
-			$pages = round($totalitems / $multi_val->multipageamount)-1;
-			if(isset($_GET['storepage'])){
-				$currentpage = mysql_real_escape_string($_GET['storepage']);
+			if(isset($_GET['ipp'])){
+				$itemsperpage = mysql_real_escape_string($_GET['ipp']);
+			} else {
+				$itemsperpage = $multi_val->multipageamount;
+			}
+			$pages = round($totalitems / $itemsperpage)-1;
+			if(isset($_GET['tsp'])){
+				$currentpage = mysql_real_escape_string($_GET['tsp']);
 				$nextpage = $currentpage * $multi_val->multipageamount;
 				if($totalitems <= $nextpage ){
 					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$multi_val->multiamount.""; 
 				} else {
-					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$multi_val->multipageamount.""; 
+					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$itemsperpage.""; 
 				}
 			} else {
 				$currentpage = "0";
@@ -205,24 +210,24 @@ function show_items($usedhow, $winkelvol, $searching)
 				if($totalitems <= $nextpage ){
 					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$multi_val->multiamount.""; 
 				} else {
-					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$multi_val->multipageamount.""; 
+					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$itemsperpage.""; 
 				}
 			}
 			if($pages > "0"){
 				if ($currentpage != 0) { // Don't show back link if current page is first page.
 					$back_page = $currentpage - "1";
-					$pagetext = "<a href=\"?storepage=$back_page\">back</a>\n";			
+					$pagetext = "<a href=\"?ipp=".$itemsperpage."&tsp=$back_page\">back</a>\n";			
 				}
 				for ($i=0; $i <= $pages; $i++){
 					if ($i == $currentpage){
 						$pagetext .= "<b>$i</b> \n"; // If current page don't give link, just text.
 					}else{
-						$pagetext .= "<a href=\"?storepage=".$i."\">$i</a> \n";
+						$pagetext .= "<a href=\"?ipp=".$itemsperpage."&tsp=".$i."\">$i</a> \n";
 					}
 				}
 				if ($currentpage < $pages ) { // If last page don't give next link.
 					$next_page = $currentpage + "1";
-					$pagetext .= "<a href=\"?storepage=$next_page\">next</a>\n";
+					$pagetext .= "<a href=\"?ipp=".$itemsperpage."&tsp=".$next_page."\">next</a>\n";
 				}
 			}
 		} else {
