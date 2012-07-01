@@ -180,7 +180,7 @@ function show_items($usedhow, $winkelvol, $searching)
 				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable." ".$multixmlfeed." ".$categorieselect." ".$Tradetracker_amount_i.""));
 			} else {
 				if ($multi_val->multiamount == "") {
-					$Tradetracker_amount_i = "LIMIT 12"; 
+					$Tradetracker_amount_i = "LIMIT 12";
 				} else if ($multi_val->multiamount == "0") {
 					$Tradetracker_amount_i = "";
 				} else {
@@ -200,7 +200,7 @@ function show_items($usedhow, $winkelvol, $searching)
 				$currentpage = mysql_real_escape_string($_GET['tsp']);
 				$nextpage = $currentpage * $multi_val->multipageamount;
 				if($totalitems <= $nextpage ){
-					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$multi_val->multiamount.""; 
+					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$totalitems.""; 
 				} else {
 					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$itemsperpage.""; 
 				}
@@ -208,7 +208,7 @@ function show_items($usedhow, $winkelvol, $searching)
 				$currentpage = "0";
 				$nextpage = $currentpage + $multi_val->multipageamount;
 				if($totalitems <= $nextpage ){
-					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$multi_val->multiamount.""; 
+					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$totalitems.""; 
 				} else {
 					$Tradetracker_amount_i = "LIMIT ".$currentpage.", ".$itemsperpage.""; 
 				}
