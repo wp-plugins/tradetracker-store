@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-25 00:12-0000\n"
-"PO-Revision-Date: 2012-06-25 00:12-0000\n"
+"POT-Creation-Date: 2012-07-04 00:01-0000\n"
+"PO-Revision-Date: 2012-07-04 00:01-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../debug.php:18
-#: ../menu/menu.php:137
+#: ../menu/menu.php:139
 msgid "Debug"
 msgstr "Debug"
 
@@ -174,7 +174,15 @@ msgstr "Mist de code <?php wp_head(); ?> welke direct voor </head> zou moeten st
 msgid "No XML filled in yet please change the settings first."
 msgstr "Er is nog geen XML feed ingevuld. Graag dit verhelpen in de settings"
 
-#: ../front.php:285
+#: ../front.php:219
+msgid "back"
+msgstr "vorige"
+
+#: ../front.php:230
+msgid "next"
+msgstr "volgende"
+
+#: ../front.php:290
 msgid "More info"
 msgstr "Meer informatie"
 
@@ -233,8 +241,7 @@ msgstr "items niet meer in een feed"
 #: ../menu/itemselect.php:143
 #: ../menu/layout.php:174
 #: ../menu/pluginsettings.php:98
-#: ../menu/premium.php:26
-#: ../menu/search.php:28
+#: ../menu/premium.php:25
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
@@ -464,206 +471,206 @@ msgstr "Lettertype kleur:"
 msgid "Create"
 msgstr "Maak"
 
-#: ../menu/menu.php:43
+#: ../menu/menu.php:45
 msgid "Productfeed has been entered"
 msgstr "Productfeed is toegevoegd"
 
-#: ../menu/menu.php:43
+#: ../menu/menu.php:45
 msgid "No productfeed has been entered"
 msgstr "Er is geen productfeed toegevoegd"
 
-#: ../menu/menu.php:44
+#: ../menu/menu.php:46
 msgid "You created at least one layout"
 msgstr "U heeft op zijn minst 1 layout gecreeerd"
 
-#: ../menu/menu.php:44
+#: ../menu/menu.php:46
 msgid "You did not create a layout yet. You can only use the basic layout now"
 msgstr "U heeft nog geen layout gecreeerd. U kunt nu alleen de basic layout gebruiken"
 
-#: ../menu/menu.php:45
+#: ../menu/menu.php:47
 msgid "You created at least one store"
 msgstr "U heeft op zijn minst 1 winkel gemaakt"
 
-#: ../menu/menu.php:45
+#: ../menu/menu.php:47
 msgid "You did not create a store yet. You can only use the basic store now"
 msgstr "U heeft nog geen winkel gecreeerd. U kunt nu alleen de basic winkel gebruiken"
 
-#: ../menu/menu.php:47
+#: ../menu/menu.php:49
 msgid "Errors in the plugin"
 msgstr "Foutmeldingen in de plugin"
 
-#: ../menu/menu.php:49
+#: ../menu/menu.php:51
 msgid "No errors in the plugin"
 msgstr "Geen foutmeldingen in de plugin"
 
-#: ../menu/menu.php:52
+#: ../menu/menu.php:54
 msgid "No premium content enabled"
 msgstr "Geen premium content geactiveerd"
 
-#: ../menu/menu.php:54
+#: ../menu/menu.php:56
 msgid "Premium content has been enabled"
 msgstr "Premium content is geactiveerd"
 
-#: ../menu/menu.php:58
+#: ../menu/menu.php:60
 msgid "Add/Edit XMLFeeds"
 msgstr "Voeg of pas XML Feed aan"
 
-#: ../menu/menu.php:61
-#: ../menu/menu.php:71
-#: ../menu/menu.php:81
-#: ../menu/menu.php:91
-#: ../menu/menu.php:101
-#: ../menu/menu.php:111
-#: ../menu/menu.php:121
-#: ../menu/menu.php:140
+#: ../menu/menu.php:63
+#: ../menu/menu.php:73
+#: ../menu/menu.php:83
+#: ../menu/menu.php:93
+#: ../menu/menu.php:103
+#: ../menu/menu.php:113
+#: ../menu/menu.php:123
+#: ../menu/menu.php:142
 msgid "Free"
 msgstr "Gratis"
 
-#: ../menu/menu.php:62
+#: ../menu/menu.php:64
 msgid "Add new or edit existing XML feeds here."
 msgstr "Voeg hier nieuwe of pas huidige XML feed aan."
 
-#: ../menu/menu.php:63
+#: ../menu/menu.php:65
 msgid "<h3>Adding or editing XMLFeeds</h3><p>This will give you the following options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML Feed a name so you can recognize it<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href=\"http://tc.tradetracker.net/?c=27&m=0&a=48684&r=register&u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>"
 msgstr "<h3>Voeg of pas XMLFeeds aan</h3><p>Dit geeft u de volgende opties:<br>- Toevoegen van meerdere XML feeds. Met <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> kan u zelfs andere netweren dan Tradetracker toevoegen<br>- Je XML Feed een naam geven zodat je het kan herkennen<br> U moet registreren op <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> of <a href=\"http://tc.tradetracker.net/?c=27&m=0&a=48684&r=register&u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>"
 
-#: ../menu/menu.php:68
+#: ../menu/menu.php:70
 msgid "Change XMLFeed options"
 msgstr "Verander XMLFeed opties"
 
-#: ../menu/menu.php:72
+#: ../menu/menu.php:74
 msgid "Adjust XMLFeed options like import time and extra field selection."
 msgstr "Verander XMLFeed opties zoals importeer tijd en selecteer de extre velden."
 
-#: ../menu/menu.php:73
+#: ../menu/menu.php:75
 msgid "<h3>Changing XML Options</h3><p>This will give you the following options:<br>- Select the extra fields you like to use<br>- What time the XML feed should update<br>- Adjust currency symbol<br>- Location of the currency</p>"
 msgstr "<h3>Verander XML Opties</h3><p>Dit geeft u de volgende opties:<br>- Selecteer welke extra velden u wilt gebruiken<br>- Welke tijd de XML feed moet updaten<br>- Verander de valuta symbool<br>- Plaats van de valuta</p>"
 
-#: ../menu/menu.php:78
+#: ../menu/menu.php:80
 msgid "Add/Edit Layouts"
 msgstr "Voeg of pas layouts aan"
 
-#: ../menu/menu.php:82
+#: ../menu/menu.php:84
 msgid "This will give you the abillity to add and edit the layout."
 msgstr "Dit geeft u de mogelijkheid om layouts toe te voegen of aan te passen."
 
-#: ../menu/menu.php:83
+#: ../menu/menu.php:85
 msgid "<h3>Adding or Editing Layouts</h3><p>You can adjust the following layout settings:<br>- Adjust the width of an item box<br>- Adjust the font<br>- Adjust the fontsize<br>- Adjust the background of the image, footer and title<br>- Adjust the border color<br>- Adjust the font color<br>- Adjust the button font color<br><strong>Important: The basic layout can never be editted</strong></p>"
 msgstr "<h3>Aanpassen of layout toevoegen</h3><p>U kunt de volgende instellingen aanpassen:<br>- Pas de breedte aan van een item box<br>- Pas lettertype aan<br>- Pas lettertype grootte aan<br>- Pas achtergrond kleur van afbeelding, footer en titel aan<br>- Pas rand kleur aan<br>- Pas lettertype kleur aan<br>- Pas kleur van lettertype op knop aan<br><strong>Belangrijk: De basic layout kan nooit worden aangepast</strong></p>"
 
-#: ../menu/menu.php:88
+#: ../menu/menu.php:90
 msgid "Add/Edit Stores"
 msgstr "Voeg of pas winkels aan"
 
-#: ../menu/menu.php:92
+#: ../menu/menu.php:94
 msgid "Here you can create different stores. This will give you the abbility to use different settings for every store."
 msgstr "Hier kan u verschillende winkels creeeren. Dit geeft u de mogelijkheid om verschillende instellingen te kiezen."
 
-#: ../menu/menu.php:93
+#: ../menu/menu.php:95
 msgid "<h3>Adding or Editing Stores</h3><p>You can adjust the following store settings:<br>- Adjust on which fields the items are sorted<br>- Select the layout to use for a store<br>- Select which feed you want to use for a store<br>- Select which categories you would like to show in the store<br>- Adjust the text on the button<br>- Choose the amount of items that should be shown<br>- Choose to use lightbox<br><strong>Important: The basic store can never be editted</strong></p>"
 msgstr "<h3>Aanpassen of creeeren van winkels</h3><p>U kunt de volgende winkel instellingen aanpassen:<br>- Aanpassen op welk veld items gesorteerd zijn<br>- Selecteren welke layout gebruikt moet worden voor deze winkel<br>- Selecteer welke feed u wilt gebruiken voor uw winkel<br>- Selecteer welke categorie u wilt tonen in de winkel<br>- Pas de tekst op de knop<br>- Kies het aantal items dat getoond moeten worden<br>- Kies om lightbox te gebruiken<br><strong>Belangrijk: The basic store kan nooit worden aangepast</strong></p>"
 
-#: ../menu/menu.php:98
+#: ../menu/menu.php:100
 msgid "Item Selection"
 msgstr "Item Selectie"
 
-#: ../menu/menu.php:102
+#: ../menu/menu.php:104
 msgid "Here you can select the items you would like to show."
 msgstr "Selecteer hier de items die u wilt tonen."
 
-#: ../menu/menu.php:103
+#: ../menu/menu.php:105
 msgid "<h3>Item selection</h3><p>This will give you the following options:<br>- Select all items you would like to show on the site.<br>- <strong>If you don't select any item it will display all items in the selected feed/category</strong></p>"
 msgstr "<h3>Item selectie</h3><p>Dit geeft u de volgende opties:<br>- Selecteer alle items die u wilt tonen op de site.<br>- <strong>Als u geen items selecteerd zal het elke item in de geselecteerde feed/categorie tonen</strong></p>"
 
-#: ../menu/menu.php:108
+#: ../menu/menu.php:110
 msgid "Search Settings"
 msgstr "Zoek Instellingen"
 
-#: ../menu/menu.php:112
+#: ../menu/menu.php:114
 msgid "Here you can set the settings for the search results."
 msgstr "Hier kunt u de instellingen aanpassen voor de zoek resultaten."
 
-#: ../menu/menu.php:113
+#: ../menu/menu.php:115
 msgid "<h3>Search Settings</h3><p>This will show options on you wordpress search results page</p>"
 msgstr "<h3>Zoek instellingen</h3><p>Dit zal u de opties tonen op uw Wordpress zoek resultaten pagina</p>"
 
-#: ../menu/menu.php:118
+#: ../menu/menu.php:120
 msgid "Plugin Settings"
 msgstr "Plugin Instellingen"
 
-#: ../menu/menu.php:122
+#: ../menu/menu.php:124
 msgid "Here you can set the settings for the plugin itself."
 msgstr "Hier kunt u de instellingen van de plugin zelf aanpassen."
 
-#: ../menu/menu.php:123
+#: ../menu/menu.php:125
 msgid "<h3>Plugin Settings</h3><p>This will give you the following options:<br>- Get an email when import fails<br>- Decide if you want to import extra fields. If you don't use extra fields it is better to disable them.<br>- Decide how high the admin menu can be<br>- Select which options should be removed when plugin is deactivated. (when you remove the plugin all settings will be also removed)</p>"
 msgstr "<h3>Plugin instellingen</h3><p>Dit geeft u de volgende opties:<br>- Krijg een email wanneer een import faalt<br>- Kies of u extra velden wilt importeren. Als u geen extra velden gebruikt kunt u het beter uitzetten.<br>- Kies hoe hoog het admin menu moet zijn<br>- Selecteer welke opties moeten worden verwijderd wanneer plugin wordt uitgezet. (Wanner u de plugin verwijderd worden alle instellingen verwijderd)</p>"
 
-#: ../menu/menu.php:128
+#: ../menu/menu.php:130
 msgid "Premium Addons"
 msgstr "Premium Addons"
 
-#: ../menu/menu.php:130
+#: ../menu/menu.php:132
 msgid "4,99 each"
 msgstr "4,99 elk"
 
-#: ../menu/menu.php:131
+#: ../menu/menu.php:133
 msgid "Here you can see what addons are available."
 msgstr "Hier kunt u zien welke addons beschikbaar zijn."
 
-#: ../menu/menu.php:132
+#: ../menu/menu.php:134
 msgid "<h3>Premium Addons</h3><p>You can buy the following productfeed addons:<br>- Daisycon productfeed<br>- Zanox productfeed<br>- Cleafs productfeed<br>- Tradedoubler productfeed<br>- Paidonresult productfeed<br>- M4n productfeed<br>- Bol productfeed<br>- Belboon productfeed<br>- Affiliatewindow productfeed<br>- Avangate productfeed</p><br><p>You can buy the following function addons:<br>- Add a productpage</p>"
 msgstr "<h3>Premium Addons</h3><p>U kunt hier de volgende productfeed addons kopen:<br>- Daisycon productfeed<br>- Zanox productfeed<br>- Cleafs productfeed<br>- Tradedoubler productfeed<br>- Paidonresult productfeed<br>- M4n productfeed<br>- Bol productfeed<br>- Belboon productfeed<br>- Affiliatewindow productfeed<br>- Avangate productfeed</p><br><p>U kunt de volgende functie addons kopen:<br>- Voeg een productpage toe</p>"
 
-#: ../menu/menu.php:141
+#: ../menu/menu.php:143
 msgid "This will tell you if there are any errors in the plugin."
 msgstr "Dit zal u vertellen of er foutmeldingen zijn in de plugin."
 
-#: ../menu/menu.php:142
+#: ../menu/menu.php:144
 msgid "<h3>Debugging</h3><p>You can see if the following is working properly:<br>- Splits and Cache folder is writable<br>- Curl function enabled<br>- Simplexml function enabled<br>- wp_head enabled in your theme</p>"
 msgstr "<h3>Debugging</h3><p>U kunt hier zien of de volgende dingen correct werken:<br>- Splits en Cache map is schrijfbaar<br>- Curl functie beschikbaar<br>- Simplexml functie beschikbaar<br>- wp_head enabled in uw theme</p>"
 
-#: ../menu/menu.php:174
+#: ../menu/menu.php:176
 msgid "Learn More"
 msgstr "Lees Meer"
 
-#: ../menu/menu.php:175
+#: ../menu/menu.php:177
 msgid "Settings"
 msgstr "Instellingen"
 
-#: ../menu/menu.php:207
+#: ../menu/menu.php:209
 msgid "Donate"
 msgstr "Donatie"
 
-#: ../menu/menu.php:209
+#: ../menu/menu.php:211
 msgid "This plugin is made in my spare time. If you really like this plugin and it helped to improve the income of your site and you are willing to show me some of the gratitude:"
 msgstr "Deze plugin is gemaakt in mijn vrije tijd. Als deze plugin het makkelijker gemaakt heeft om geld te verdienen met uw affiliate site en u wilt me graag bedanken:"
 
-#: ../menu/menu.php:217
+#: ../menu/menu.php:219
 msgid "Like this on facebook"
 msgstr "Like dit op Facebook"
 
-#: ../menu/menu.php:221
+#: ../menu/menu.php:223
 msgid "Sites using this plugin"
 msgstr "Sites die gebruik maken van de plugin"
 
-#: ../menu/menu.php:240
+#: ../menu/menu.php:242
 msgid "Your Site here?"
 msgstr "Uw Site hier?"
 
-#: ../menu/menu.php:242
+#: ../menu/menu.php:244
 msgid "if you want Your site here please use Tt Store Feedback and let me know"
 msgstr "Als u wilt dat uw site hier komt te staan neem dan contact met me op"
 
-#: ../menu/menu.php:244
+#: ../menu/menu.php:246
 msgid "Rate the plugin"
 msgstr "Geef een waardering"
 
-#: ../menu/menu.php:246
+#: ../menu/menu.php:248
 msgid "if you like this plugin please go to <a href=\"http://wordpress.org/extend/plugins/tradetracker-store/\" target=\"_blank\">here</a> and give it a rating and vote for yes if the plugin works."
 msgstr "Als u deze plugin handig vind ga dan alsjeblieft naar <a href=\"http://wordpress.org/extend/plugins/tradetracker-store/\" target=\"_blank\">deze pagina</a> en vul een rating in."
 
-#: ../menu/menu.php:248
+#: ../menu/menu.php:250
 msgid "News"
 msgstr "Nieuws"
 
@@ -804,40 +811,40 @@ msgstr "Zouden alle andere instellingen verwijderd moeten worden"
 msgid "Remove all other settings:"
 msgstr "Verwijder alle andere instellingen:"
 
-#: ../menu/premium.php:38
+#: ../menu/premium.php:37
 msgid "Insert the addon apikeys."
 msgstr "Vul in de addon APIKeys"
 
-#: ../menu/premium.php:47
+#: ../menu/premium.php:46
 msgid "Add extra productfeed providers"
 msgstr "Voeg extra productfeed aanbieders toe"
 
-#: ../menu/premium.php:54
-#: ../menu/premium.php:84
+#: ../menu/premium.php:53
+#: ../menu/premium.php:83
 msgid "Accepted"
 msgstr "Geaccepteerd"
 
-#: ../menu/premium.php:56
-#: ../menu/premium.php:58
-#: ../menu/premium.php:86
-#: ../menu/premium.php:88
+#: ../menu/premium.php:55
+#: ../menu/premium.php:57
+#: ../menu/premium.php:85
+#: ../menu/premium.php:87
 #, php-format
 msgid "buy an APIKey for %1$s <a href=\"%2$s\" target=\"_blank\">here</a>"
 msgstr "Koop een APIKey voor %1$s <a href=\"%2$s\" target=\"_blank\">hier</a>"
 
-#: ../menu/premium.php:64
-#: ../menu/premium.php:94
+#: ../menu/premium.php:63
+#: ../menu/premium.php:93
 #, php-format
 msgid "If you bought an API key to use %s please fill it in here."
 msgstr "Als u een API key gekocht hebt om %s te gebruiken kunt u dat hier invullen"
 
-#: ../menu/premium.php:65
-#: ../menu/premium.php:95
+#: ../menu/premium.php:64
+#: ../menu/premium.php:94
 #, php-format
 msgid "%s APIKey:"
 msgstr "%s APIKey:"
 
-#: ../menu/premium.php:77
+#: ../menu/premium.php:76
 msgid "Add extra functions"
 msgstr "Voeg extra functies toe"
 

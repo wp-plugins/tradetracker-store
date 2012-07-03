@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 function arrayDiffEmulation($arrayFrom, $arrayAgainst)
 {
 	$arrayAgainst = array_flip($arrayAgainst);
@@ -55,7 +55,7 @@ function news_updater(){
 		curl_close($ch);
 		fclose($fp);
 	}
-	$news_file = 'http://wpaffiliatefeed.com/feed/';
+	$news_file = 'http://wpaffiliatefeed.com/category/news/feed/';
 	if (function_exists('curl_init')) {
 		$ch = curl_init($news_file);
 		$fp = fopen($foldercache."news.xml", "w");
@@ -65,7 +65,16 @@ function news_updater(){
 		curl_close($ch);
 		fclose($fp);
 	}
-
+	$releaselog_file = 'http://wpaffiliatefeed.com/category/releaselog/feed/';
+	if (function_exists('curl_init')) {
+		$ch = curl_init($releaselog_file);
+		$fp = fopen($foldercache."releaselog.xml", "w");
+		curl_setopt($ch, CURLOPT_FILE, $fp);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_exec($ch);
+		curl_close($ch);
+		fclose($fp);
+	}
 }
 function isTime($time){	
 	return preg_match("#([0-1]{1}[0-9]{1}|[2]{1}[0-3]{1}):[0-5]{1}[0-9]{1}#", $time);

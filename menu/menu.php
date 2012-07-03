@@ -5,6 +5,8 @@ function ttstore_menu() {
 	add_menu_page('Tradetracker Store', 'TT Store', 'manage_options', 'tt-store', 'ttstore_options');
 	$ttstoreadmincss = add_submenu_page('tt-store', 'Tradetracker Store setup', 'Setup', 'manage_options', 'tt-store', 'ttstore_options');
 	add_submenu_page('tt-store', 'Tradetracker Store FAQ', 'FAQ', 'manage_options', 'tt-store-faq', 'ttstore_faq');
+	add_submenu_page('tt-store', 'Tradetracker Store Releaselog', 'Releaselog', 'manage_options', 'tt-store-rllog', 'ttstore_rllog');
+	add_submenu_page('tt-store', 'Tradetracker Store News', 'News', 'manage_options', 'tt-store-news', 'ttstore_news');
 	add_action( "admin_print_scripts-$ttstoreadmincss", 'ttstore_admin_css' );
 }
 function ttstore_admin_css() {

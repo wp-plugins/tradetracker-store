@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-25 00:12-0000\n"
-"PO-Revision-Date: 2012-06-25 00:12-0000\n"
+"POT-Creation-Date: 2012-07-04 00:01-0000\n"
+"PO-Revision-Date: 2012-07-04 00:01-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 
 #: ../debug.php:18
-#: ../menu/menu.php:137
+#: ../menu/menu.php:139
 msgid "Debug"
 msgstr ""
 
@@ -173,7 +173,15 @@ msgstr ""
 msgid "No XML filled in yet please change the settings first."
 msgstr ""
 
-#: ../front.php:285
+#: ../front.php:219
+msgid "back"
+msgstr ""
+
+#: ../front.php:230
+msgid "next"
+msgstr ""
+
+#: ../front.php:290
 msgid "More info"
 msgstr ""
 
@@ -232,8 +240,7 @@ msgstr ""
 #: ../menu/itemselect.php:143
 #: ../menu/layout.php:174
 #: ../menu/pluginsettings.php:98
-#: ../menu/premium.php:26
-#: ../menu/search.php:28
+#: ../menu/premium.php:25
 msgid "Settings saved"
 msgstr ""
 
@@ -463,206 +470,206 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: ../menu/menu.php:43
+#: ../menu/menu.php:45
 msgid "Productfeed has been entered"
 msgstr ""
 
-#: ../menu/menu.php:43
+#: ../menu/menu.php:45
 msgid "No productfeed has been entered"
 msgstr ""
 
-#: ../menu/menu.php:44
+#: ../menu/menu.php:46
 msgid "You created at least one layout"
 msgstr ""
 
-#: ../menu/menu.php:44
+#: ../menu/menu.php:46
 msgid "You did not create a layout yet. You can only use the basic layout now"
 msgstr ""
 
-#: ../menu/menu.php:45
+#: ../menu/menu.php:47
 msgid "You created at least one store"
 msgstr ""
 
-#: ../menu/menu.php:45
+#: ../menu/menu.php:47
 msgid "You did not create a store yet. You can only use the basic store now"
 msgstr ""
 
-#: ../menu/menu.php:47
+#: ../menu/menu.php:49
 msgid "Errors in the plugin"
 msgstr ""
 
-#: ../menu/menu.php:49
+#: ../menu/menu.php:51
 msgid "No errors in the plugin"
 msgstr ""
 
-#: ../menu/menu.php:52
+#: ../menu/menu.php:54
 msgid "No premium content enabled"
 msgstr ""
 
-#: ../menu/menu.php:54
+#: ../menu/menu.php:56
 msgid "Premium content has been enabled"
 msgstr ""
 
-#: ../menu/menu.php:58
+#: ../menu/menu.php:60
 msgid "Add/Edit XMLFeeds"
 msgstr ""
 
-#: ../menu/menu.php:61
-#: ../menu/menu.php:71
-#: ../menu/menu.php:81
-#: ../menu/menu.php:91
-#: ../menu/menu.php:101
-#: ../menu/menu.php:111
-#: ../menu/menu.php:121
-#: ../menu/menu.php:140
+#: ../menu/menu.php:63
+#: ../menu/menu.php:73
+#: ../menu/menu.php:83
+#: ../menu/menu.php:93
+#: ../menu/menu.php:103
+#: ../menu/menu.php:113
+#: ../menu/menu.php:123
+#: ../menu/menu.php:142
 msgid "Free"
 msgstr ""
 
-#: ../menu/menu.php:62
+#: ../menu/menu.php:64
 msgid "Add new or edit existing XML feeds here."
 msgstr ""
 
-#: ../menu/menu.php:63
+#: ../menu/menu.php:65
 msgid "<h3>Adding or editing XMLFeeds</h3><p>This will give you the following options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML Feed a name so you can recognize it<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href=\"http://tc.tradetracker.net/?c=27&m=0&a=48684&r=register&u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>"
 msgstr ""
 
-#: ../menu/menu.php:68
+#: ../menu/menu.php:70
 msgid "Change XMLFeed options"
 msgstr ""
 
-#: ../menu/menu.php:72
+#: ../menu/menu.php:74
 msgid "Adjust XMLFeed options like import time and extra field selection."
 msgstr ""
 
-#: ../menu/menu.php:73
+#: ../menu/menu.php:75
 msgid "<h3>Changing XML Options</h3><p>This will give you the following options:<br>- Select the extra fields you like to use<br>- What time the XML feed should update<br>- Adjust currency symbol<br>- Location of the currency</p>"
 msgstr ""
 
-#: ../menu/menu.php:78
+#: ../menu/menu.php:80
 msgid "Add/Edit Layouts"
 msgstr ""
 
-#: ../menu/menu.php:82
+#: ../menu/menu.php:84
 msgid "This will give you the abillity to add and edit the layout."
 msgstr ""
 
-#: ../menu/menu.php:83
+#: ../menu/menu.php:85
 msgid "<h3>Adding or Editing Layouts</h3><p>You can adjust the following layout settings:<br>- Adjust the width of an item box<br>- Adjust the font<br>- Adjust the fontsize<br>- Adjust the background of the image, footer and title<br>- Adjust the border color<br>- Adjust the font color<br>- Adjust the button font color<br><strong>Important: The basic layout can never be editted</strong></p>"
 msgstr ""
 
-#: ../menu/menu.php:88
+#: ../menu/menu.php:90
 msgid "Add/Edit Stores"
 msgstr ""
 
-#: ../menu/menu.php:92
+#: ../menu/menu.php:94
 msgid "Here you can create different stores. This will give you the abbility to use different settings for every store."
 msgstr ""
 
-#: ../menu/menu.php:93
+#: ../menu/menu.php:95
 msgid "<h3>Adding or Editing Stores</h3><p>You can adjust the following store settings:<br>- Adjust on which fields the items are sorted<br>- Select the layout to use for a store<br>- Select which feed you want to use for a store<br>- Select which categories you would like to show in the store<br>- Adjust the text on the button<br>- Choose the amount of items that should be shown<br>- Choose to use lightbox<br><strong>Important: The basic store can never be editted</strong></p>"
 msgstr ""
 
-#: ../menu/menu.php:98
+#: ../menu/menu.php:100
 msgid "Item Selection"
 msgstr ""
 
-#: ../menu/menu.php:102
+#: ../menu/menu.php:104
 msgid "Here you can select the items you would like to show."
 msgstr ""
 
-#: ../menu/menu.php:103
+#: ../menu/menu.php:105
 msgid "<h3>Item selection</h3><p>This will give you the following options:<br>- Select all items you would like to show on the site.<br>- <strong>If you don't select any item it will display all items in the selected feed/category</strong></p>"
 msgstr ""
 
-#: ../menu/menu.php:108
+#: ../menu/menu.php:110
 msgid "Search Settings"
 msgstr ""
 
-#: ../menu/menu.php:112
+#: ../menu/menu.php:114
 msgid "Here you can set the settings for the search results."
 msgstr ""
 
-#: ../menu/menu.php:113
+#: ../menu/menu.php:115
 msgid "<h3>Search Settings</h3><p>This will show options on you wordpress search results page</p>"
 msgstr ""
 
-#: ../menu/menu.php:118
+#: ../menu/menu.php:120
 msgid "Plugin Settings"
 msgstr ""
 
-#: ../menu/menu.php:122
+#: ../menu/menu.php:124
 msgid "Here you can set the settings for the plugin itself."
 msgstr ""
 
-#: ../menu/menu.php:123
+#: ../menu/menu.php:125
 msgid "<h3>Plugin Settings</h3><p>This will give you the following options:<br>- Get an email when import fails<br>- Decide if you want to import extra fields. If you don't use extra fields it is better to disable them.<br>- Decide how high the admin menu can be<br>- Select which options should be removed when plugin is deactivated. (when you remove the plugin all settings will be also removed)</p>"
 msgstr ""
 
-#: ../menu/menu.php:128
+#: ../menu/menu.php:130
 msgid "Premium Addons"
 msgstr ""
 
-#: ../menu/menu.php:130
+#: ../menu/menu.php:132
 msgid "4,99 each"
 msgstr ""
 
-#: ../menu/menu.php:131
+#: ../menu/menu.php:133
 msgid "Here you can see what addons are available."
 msgstr ""
 
-#: ../menu/menu.php:132
+#: ../menu/menu.php:134
 msgid "<h3>Premium Addons</h3><p>You can buy the following productfeed addons:<br>- Daisycon productfeed<br>- Zanox productfeed<br>- Cleafs productfeed<br>- Tradedoubler productfeed<br>- Paidonresult productfeed<br>- M4n productfeed<br>- Bol productfeed<br>- Belboon productfeed<br>- Affiliatewindow productfeed<br>- Avangate productfeed</p><br><p>You can buy the following function addons:<br>- Add a productpage</p>"
 msgstr ""
 
-#: ../menu/menu.php:141
+#: ../menu/menu.php:143
 msgid "This will tell you if there are any errors in the plugin."
 msgstr ""
 
-#: ../menu/menu.php:142
+#: ../menu/menu.php:144
 msgid "<h3>Debugging</h3><p>You can see if the following is working properly:<br>- Splits and Cache folder is writable<br>- Curl function enabled<br>- Simplexml function enabled<br>- wp_head enabled in your theme</p>"
 msgstr ""
 
-#: ../menu/menu.php:174
+#: ../menu/menu.php:176
 msgid "Learn More"
 msgstr ""
 
-#: ../menu/menu.php:175
+#: ../menu/menu.php:177
 msgid "Settings"
 msgstr ""
 
-#: ../menu/menu.php:207
+#: ../menu/menu.php:209
 msgid "Donate"
 msgstr ""
 
-#: ../menu/menu.php:209
+#: ../menu/menu.php:211
 msgid "This plugin is made in my spare time. If you really like this plugin and it helped to improve the income of your site and you are willing to show me some of the gratitude:"
 msgstr ""
 
-#: ../menu/menu.php:217
+#: ../menu/menu.php:219
 msgid "Like this on facebook"
 msgstr ""
 
-#: ../menu/menu.php:221
+#: ../menu/menu.php:223
 msgid "Sites using this plugin"
 msgstr ""
 
-#: ../menu/menu.php:240
+#: ../menu/menu.php:242
 msgid "Your Site here?"
 msgstr ""
 
-#: ../menu/menu.php:242
+#: ../menu/menu.php:244
 msgid "if you want Your site here please use Tt Store Feedback and let me know"
 msgstr ""
 
-#: ../menu/menu.php:244
+#: ../menu/menu.php:246
 msgid "Rate the plugin"
 msgstr ""
 
-#: ../menu/menu.php:246
+#: ../menu/menu.php:248
 msgid "if you like this plugin please go to <a href=\"http://wordpress.org/extend/plugins/tradetracker-store/\" target=\"_blank\">here</a> and give it a rating and vote for yes if the plugin works."
 msgstr ""
 
-#: ../menu/menu.php:248
+#: ../menu/menu.php:250
 msgid "News"
 msgstr ""
 
@@ -803,40 +810,40 @@ msgstr ""
 msgid "Remove all other settings:"
 msgstr ""
 
-#: ../menu/premium.php:38
+#: ../menu/premium.php:37
 msgid "Insert the addon apikeys."
 msgstr ""
 
-#: ../menu/premium.php:47
+#: ../menu/premium.php:46
 msgid "Add extra productfeed providers"
 msgstr ""
 
-#: ../menu/premium.php:54
-#: ../menu/premium.php:84
+#: ../menu/premium.php:53
+#: ../menu/premium.php:83
 msgid "Accepted"
 msgstr ""
 
-#: ../menu/premium.php:56
-#: ../menu/premium.php:58
-#: ../menu/premium.php:86
-#: ../menu/premium.php:88
+#: ../menu/premium.php:55
+#: ../menu/premium.php:57
+#: ../menu/premium.php:85
+#: ../menu/premium.php:87
 #, php-format
 msgid "buy an APIKey for %1$s <a href=\"%2$s\" target=\"_blank\">here</a>"
+msgstr ""
+
+#: ../menu/premium.php:63
+#: ../menu/premium.php:93
+#, php-format
+msgid "If you bought an API key to use %s please fill it in here."
 msgstr ""
 
 #: ../menu/premium.php:64
 #: ../menu/premium.php:94
 #, php-format
-msgid "If you bought an API key to use %s please fill it in here."
-msgstr ""
-
-#: ../menu/premium.php:65
-#: ../menu/premium.php:95
-#, php-format
 msgid "%s APIKey:"
 msgstr ""
 
-#: ../menu/premium.php:77
+#: ../menu/premium.php:76
 msgid "Add extra functions"
 msgstr ""
 

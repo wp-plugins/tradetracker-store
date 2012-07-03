@@ -216,7 +216,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			if($pages > "0"){
 				if ($currentpage != 0) { // Don't show back link if current page is first page.
 					$back_page = $currentpage - "1";
-					$pagetext = "<a href=\"?ipp=".$itemsperpage."&tsp=$back_page\">back</a>\n";			
+					$pagetext = "<a href=\"?ipp=".$itemsperpage."&tsp=$back_page\">".__('back','ttstore')."</a>\n";			
 				}
 				for ($i=0; $i <= $pages; $i++){
 					if ($i == $currentpage){
@@ -227,7 +227,7 @@ function show_items($usedhow, $winkelvol, $searching)
 				}
 				if ($currentpage < $pages ) { // If last page don't give next link.
 					$next_page = $currentpage + "1";
-					$pagetext .= "<a href=\"?ipp=".$itemsperpage."&tsp=".$next_page."\">next</a>\n";
+					$pagetext .= "<a href=\"?ipp=".$itemsperpage."&tsp=".$next_page."\">".__('next','ttstore')."</a>\n";
 				}
 			}
 		} else {
