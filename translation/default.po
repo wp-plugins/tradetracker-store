@@ -1,0 +1,1126 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TTstore\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-04 00:01-0000\n"
+"PO-Revision-Date: 2012-07-04 00:01-0000\n"
+"Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../debug.php:18
+#: ../menu/menu.php:139
+msgid "Debug"
+msgstr ""
+
+#: ../debug.php:28
+msgid "Needed to import XML Feed"
+msgstr ""
+
+#: ../debug.php:33
+#: ../debug.php:39
+msgid "allow_url_fopen enabled:"
+msgstr ""
+
+#: ../debug.php:35
+#: ../debug.php:48
+#: ../debug.php:91
+#: ../debug.php:97
+#: ../menu/itemselect.php:423
+#: ../menu/pluginsettings.php:129
+#: ../menu/pluginsettings.php:158
+#: ../menu/pluginsettings.php:188
+#: ../menu/pluginsettings.php:220
+#: ../menu/pluginsettings.php:237
+#: ../menu/pluginsettings.php:249
+#: ../menu/pluginsettings.php:261
+#: ../menu/pluginsettings.php:273
+#: ../menu/pluginsettings.php:285
+msgid "Yes"
+msgstr ""
+
+#: ../debug.php:41
+#: ../debug.php:54
+msgid "No, please change the import method <a href=\"admin.php?page=tt-store&option=pluginsettings\">here</a>"
+msgstr ""
+
+#: ../debug.php:46
+#: ../debug.php:52
+msgid "Curl enabled:"
+msgstr ""
+
+#: ../debug.php:59
+msgid "Needed to write XML file"
+msgstr ""
+
+#: ../debug.php:62
+#: ../debug.php:70
+#, php-format
+msgid "%s is writable."
+msgstr ""
+
+#: ../debug.php:66
+#: ../debug.php:74
+#, php-format
+msgid "%s is not writable. Please CHMOD 777 it."
+msgstr ""
+
+#: ../debug.php:79
+msgid "Needed to write XML to database"
+msgstr ""
+
+#: ../debug.php:84
+#: ../debug.php:89
+#: ../debug.php:95
+msgid "Simplexml installed:"
+msgstr ""
+
+#: ../debug.php:86
+#: ../menu/itemselect.php:425
+#: ../menu/pluginsettings.php:131
+#: ../menu/pluginsettings.php:160
+#: ../menu/pluginsettings.php:190
+#: ../menu/pluginsettings.php:222
+#: ../menu/pluginsettings.php:239
+#: ../menu/pluginsettings.php:251
+#: ../menu/pluginsettings.php:263
+#: ../menu/pluginsettings.php:275
+#: ../menu/pluginsettings.php:287
+msgid "No"
+msgstr ""
+
+#: ../debug.php:103
+#: ../debug.php:109
+msgid "Your active theme"
+msgstr ""
+
+#: ../debug.php:111
+msgid "Has the wp_head in the header.php"
+msgstr ""
+
+#: ../debug.php:114
+msgid "Last MySQL upgrade:"
+msgstr ""
+
+#: ../debug.php:119
+msgid "Database Table overview: Items"
+msgstr ""
+
+#: ../debug.php:123
+#: ../debug.php:140
+#: ../debug.php:157
+#: ../debug.php:174
+msgid "Field"
+msgstr ""
+
+#: ../debug.php:125
+#: ../debug.php:142
+#: ../debug.php:159
+#: ../debug.php:176
+msgid "Type"
+msgstr ""
+
+#: ../debug.php:136
+msgid "Database Table overview: Store"
+msgstr ""
+
+#: ../debug.php:153
+msgid "Database Table overview: Extra"
+msgstr ""
+
+#: ../debug.php:170
+msgid "Database Table overview: Layout"
+msgstr ""
+
+#: ../debug.php:227
+msgid "Error detected in TradeTracker Store plugin, please see <a href=admin.php?page=tt-store&option=debug>debug page</a>"
+msgstr ""
+
+#: ../debug.php:241
+msgid "Update Finished:"
+msgstr ""
+
+#: ../debug.php:246
+msgid "Update has started in the background:"
+msgstr ""
+
+#: ../debug.php:254
+msgid "Update now"
+msgstr ""
+
+#: ../debug.php:255
+msgid "run update in background"
+msgstr ""
+
+#: ../debug.php:256
+msgid "or"
+msgstr ""
+
+#: ../debug.php:261
+msgid "<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>"
+msgstr ""
+
+#: ../debug.php:291
+msgid "Is missing the call to <?php wp_head(); ?> which should appear directly before </head>"
+msgstr ""
+
+#: ../front.php:18
+msgid "No XML filled in yet please change the settings first."
+msgstr ""
+
+#: ../front.php:219
+msgid "back"
+msgstr ""
+
+#: ../front.php:230
+msgid "next"
+msgstr ""
+
+#: ../front.php:290
+msgid "More info"
+msgstr ""
+
+#: ../import/database.php:137
+#, php-format
+msgid "Database filled with %1$s new items on %2$s"
+msgstr ""
+
+#: ../menu/itemselect.php:14
+msgid "deleted all items"
+msgstr ""
+
+#: ../menu/itemselect.php:24
+msgid "deleted the items"
+msgstr ""
+
+#: ../menu/itemselect.php:34
+msgid "Select items for which store"
+msgstr ""
+
+#: ../menu/itemselect.php:45
+msgid "Store Name"
+msgstr ""
+
+#: ../menu/itemselect.php:48
+#: ../menu/layout.php:286
+msgid "Edit"
+msgstr ""
+
+#: ../menu/itemselect.php:51
+msgid "Select Item"
+msgstr ""
+
+#: ../menu/itemselect.php:54
+#: ../menu/itemselect.php:57
+msgid "Delete"
+msgstr ""
+
+#: ../menu/itemselect.php:87
+msgid "Edit Store"
+msgstr ""
+
+#: ../menu/itemselect.php:91
+msgid "Select Items"
+msgstr ""
+
+#: ../menu/itemselect.php:95
+#, php-format
+msgid "All %d selected Item(s)"
+msgstr ""
+
+#: ../menu/itemselect.php:100
+msgid "items no longer in a feed"
+msgstr ""
+
+#: ../menu/itemselect.php:143
+#: ../menu/layout.php:174
+#: ../menu/pluginsettings.php:98
+#: ../menu/premium.php:25
+msgid "Settings saved"
+msgstr ""
+
+#: ../menu/itemselect.php:319
+msgid "Select the items you want to show"
+msgstr ""
+
+#: ../menu/itemselect.php:341
+msgid "Showing products"
+msgstr ""
+
+#: ../menu/itemselect.php:341
+#: ../menu/itemselect.php:344
+msgid "of"
+msgstr ""
+
+#: ../menu/itemselect.php:344
+msgid "Page"
+msgstr ""
+
+#: ../menu/itemselect.php:349
+msgid "Results per-page:"
+msgstr ""
+
+#: ../menu/itemselect.php:362
+msgid "ProductID"
+msgstr ""
+
+#: ../menu/itemselect.php:364
+msgid "Product name"
+msgstr ""
+
+#: ../menu/itemselect.php:366
+msgid "XMLFeed"
+msgstr ""
+
+#: ../menu/itemselect.php:368
+msgid "Price"
+msgstr ""
+
+#: ../menu/itemselect.php:370
+msgid "Currency"
+msgstr ""
+
+#: ../menu/itemselect.php:372
+msgid "Extra's"
+msgstr ""
+
+#: ../menu/itemselect.php:444
+msgid "Select"
+msgstr ""
+
+#: ../menu/itemselect.php:444
+msgid "All"
+msgstr ""
+
+#: ../menu/itemselect.php:444
+msgid "None"
+msgstr ""
+
+#: ../menu/layout.php:87
+#: ../menu/layout.php:91
+#: ../menu/layout.php:95
+#: ../menu/layout.php:99
+#: ../menu/layout.php:103
+#: ../menu/layout.php:107
+#: ../menu/layout.php:111
+#: ../menu/layout.php:115
+#: ../menu/layout.php:119
+msgid "Empty fields filled with default value"
+msgstr ""
+
+#: ../menu/layout.php:193
+msgid "Would you like to edit or add a layout?"
+msgstr ""
+
+#: ../menu/layout.php:207
+msgid "Colors:"
+msgstr ""
+
+#: ../menu/layout.php:212
+msgid "Name"
+msgstr ""
+
+#: ../menu/layout.php:215
+msgid "Width"
+msgstr ""
+
+#: ../menu/layout.php:218
+#: ../menu/layout.php:233
+msgid "Font"
+msgstr ""
+
+#: ../menu/layout.php:221
+msgid "Fontsize"
+msgstr ""
+
+#: ../menu/layout.php:224
+msgid "Title"
+msgstr ""
+
+#: ../menu/layout.php:227
+msgid "Image"
+msgstr ""
+
+#: ../menu/layout.php:230
+msgid "Footer"
+msgstr ""
+
+#: ../menu/layout.php:236
+msgid "Border"
+msgstr ""
+
+#: ../menu/layout.php:239
+msgid "Button"
+msgstr ""
+
+#: ../menu/layout.php:242
+msgid "Button font"
+msgstr ""
+
+#: ../menu/layout.php:295
+msgid "Add New"
+msgstr ""
+
+#: ../menu/layout.php:312
+msgid "Edit layout"
+msgstr ""
+
+#: ../menu/layout.php:312
+msgid "Create layout"
+msgstr ""
+
+#: ../menu/layout.php:327
+msgid "Fill in the name for the layout."
+msgstr ""
+
+#: ../menu/layout.php:328
+msgid "Name for Layout:"
+msgstr ""
+
+#: ../menu/layout.php:338
+msgid "Fill in which width you want 1 item to have."
+msgstr ""
+
+#: ../menu/layout.php:339
+msgid "Store width:"
+msgstr ""
+
+#: ../menu/layout.php:350
+msgid "Fill in which font you want to use. Standard font is Verdana."
+msgstr ""
+
+#: ../menu/layout.php:351
+msgid "Font:"
+msgstr ""
+
+#: ../menu/layout.php:362
+msgid "Fill in which size the font should be. Standard is 10"
+msgstr ""
+
+#: ../menu/layout.php:363
+msgid "Fontsize:"
+msgstr ""
+
+#: ../menu/layout.php:373
+msgid "What color would you like to use for your title background."
+msgstr ""
+
+#: ../menu/layout.php:374
+msgid "Title background color:"
+msgstr ""
+
+#: ../menu/layout.php:379
+msgid "(use hex code including #. Like: #000000)"
+msgstr ""
+
+#: ../menu/layout.php:385
+msgid "What color would you like to use for your image background."
+msgstr ""
+
+#: ../menu/layout.php:386
+msgid "Image background color:"
+msgstr ""
+
+#: ../menu/layout.php:396
+msgid "What color would you like to use for your footer background."
+msgstr ""
+
+#: ../menu/layout.php:397
+msgid "Footer background color:"
+msgstr ""
+
+#: ../menu/layout.php:406
+msgid "What color would you like to use for the border."
+msgstr ""
+
+#: ../menu/layout.php:407
+msgid "Border color:"
+msgstr ""
+
+#: ../menu/layout.php:416
+msgid "What color would you like to use for the button."
+msgstr ""
+
+#: ../menu/layout.php:417
+msgid "Button color:"
+msgstr ""
+
+#: ../menu/layout.php:426
+msgid "What font color would you like to use for the button."
+msgstr ""
+
+#: ../menu/layout.php:427
+msgid "Button Font color:"
+msgstr ""
+
+#: ../menu/layout.php:436
+msgid "What font color would you like to use."
+msgstr ""
+
+#: ../menu/layout.php:437
+msgid "Font color:"
+msgstr ""
+
+#: ../menu/layout.php:455
+msgid "Create"
+msgstr ""
+
+#: ../menu/menu.php:45
+msgid "Productfeed has been entered"
+msgstr ""
+
+#: ../menu/menu.php:45
+msgid "No productfeed has been entered"
+msgstr ""
+
+#: ../menu/menu.php:46
+msgid "You created at least one layout"
+msgstr ""
+
+#: ../menu/menu.php:46
+msgid "You did not create a layout yet. You can only use the basic layout now"
+msgstr ""
+
+#: ../menu/menu.php:47
+msgid "You created at least one store"
+msgstr ""
+
+#: ../menu/menu.php:47
+msgid "You did not create a store yet. You can only use the basic store now"
+msgstr ""
+
+#: ../menu/menu.php:49
+msgid "Errors in the plugin"
+msgstr ""
+
+#: ../menu/menu.php:51
+msgid "No errors in the plugin"
+msgstr ""
+
+#: ../menu/menu.php:54
+msgid "No premium content enabled"
+msgstr ""
+
+#: ../menu/menu.php:56
+msgid "Premium content has been enabled"
+msgstr ""
+
+#: ../menu/menu.php:60
+msgid "Add/Edit XMLFeeds"
+msgstr ""
+
+#: ../menu/menu.php:63
+#: ../menu/menu.php:73
+#: ../menu/menu.php:83
+#: ../menu/menu.php:93
+#: ../menu/menu.php:103
+#: ../menu/menu.php:113
+#: ../menu/menu.php:123
+#: ../menu/menu.php:142
+msgid "Free"
+msgstr ""
+
+#: ../menu/menu.php:64
+msgid "Add new or edit existing XML feeds here."
+msgstr ""
+
+#: ../menu/menu.php:65
+msgid "<h3>Adding or editing XMLFeeds</h3><p>This will give you the following options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML Feed a name so you can recognize it<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href=\"http://tc.tradetracker.net/?c=27&m=0&a=48684&r=register&u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>"
+msgstr ""
+
+#: ../menu/menu.php:70
+msgid "Change XMLFeed options"
+msgstr ""
+
+#: ../menu/menu.php:74
+msgid "Adjust XMLFeed options like import time and extra field selection."
+msgstr ""
+
+#: ../menu/menu.php:75
+msgid "<h3>Changing XML Options</h3><p>This will give you the following options:<br>- Select the extra fields you like to use<br>- What time the XML feed should update<br>- Adjust currency symbol<br>- Location of the currency</p>"
+msgstr ""
+
+#: ../menu/menu.php:80
+msgid "Add/Edit Layouts"
+msgstr ""
+
+#: ../menu/menu.php:84
+msgid "This will give you the abillity to add and edit the layout."
+msgstr ""
+
+#: ../menu/menu.php:85
+msgid "<h3>Adding or Editing Layouts</h3><p>You can adjust the following layout settings:<br>- Adjust the width of an item box<br>- Adjust the font<br>- Adjust the fontsize<br>- Adjust the background of the image, footer and title<br>- Adjust the border color<br>- Adjust the font color<br>- Adjust the button font color<br><strong>Important: The basic layout can never be editted</strong></p>"
+msgstr ""
+
+#: ../menu/menu.php:90
+msgid "Add/Edit Stores"
+msgstr ""
+
+#: ../menu/menu.php:94
+msgid "Here you can create different stores. This will give you the abbility to use different settings for every store."
+msgstr ""
+
+#: ../menu/menu.php:95
+msgid "<h3>Adding or Editing Stores</h3><p>You can adjust the following store settings:<br>- Adjust on which fields the items are sorted<br>- Select the layout to use for a store<br>- Select which feed you want to use for a store<br>- Select which categories you would like to show in the store<br>- Adjust the text on the button<br>- Choose the amount of items that should be shown<br>- Choose to use lightbox<br><strong>Important: The basic store can never be editted</strong></p>"
+msgstr ""
+
+#: ../menu/menu.php:100
+msgid "Item Selection"
+msgstr ""
+
+#: ../menu/menu.php:104
+msgid "Here you can select the items you would like to show."
+msgstr ""
+
+#: ../menu/menu.php:105
+msgid "<h3>Item selection</h3><p>This will give you the following options:<br>- Select all items you would like to show on the site.<br>- <strong>If you don't select any item it will display all items in the selected feed/category</strong></p>"
+msgstr ""
+
+#: ../menu/menu.php:110
+msgid "Search Settings"
+msgstr ""
+
+#: ../menu/menu.php:114
+msgid "Here you can set the settings for the search results."
+msgstr ""
+
+#: ../menu/menu.php:115
+msgid "<h3>Search Settings</h3><p>This will show options on you wordpress search results page</p>"
+msgstr ""
+
+#: ../menu/menu.php:120
+msgid "Plugin Settings"
+msgstr ""
+
+#: ../menu/menu.php:124
+msgid "Here you can set the settings for the plugin itself."
+msgstr ""
+
+#: ../menu/menu.php:125
+msgid "<h3>Plugin Settings</h3><p>This will give you the following options:<br>- Get an email when import fails<br>- Decide if you want to import extra fields. If you don't use extra fields it is better to disable them.<br>- Decide how high the admin menu can be<br>- Select which options should be removed when plugin is deactivated. (when you remove the plugin all settings will be also removed)</p>"
+msgstr ""
+
+#: ../menu/menu.php:130
+msgid "Premium Addons"
+msgstr ""
+
+#: ../menu/menu.php:132
+msgid "4,99 each"
+msgstr ""
+
+#: ../menu/menu.php:133
+msgid "Here you can see what addons are available."
+msgstr ""
+
+#: ../menu/menu.php:134
+msgid "<h3>Premium Addons</h3><p>You can buy the following productfeed addons:<br>- Daisycon productfeed<br>- Zanox productfeed<br>- Cleafs productfeed<br>- Tradedoubler productfeed<br>- Paidonresult productfeed<br>- M4n productfeed<br>- Bol productfeed<br>- Belboon productfeed<br>- Affiliatewindow productfeed<br>- Avangate productfeed</p><br><p>You can buy the following function addons:<br>- Add a productpage</p>"
+msgstr ""
+
+#: ../menu/menu.php:143
+msgid "This will tell you if there are any errors in the plugin."
+msgstr ""
+
+#: ../menu/menu.php:144
+msgid "<h3>Debugging</h3><p>You can see if the following is working properly:<br>- Splits and Cache folder is writable<br>- Curl function enabled<br>- Simplexml function enabled<br>- wp_head enabled in your theme</p>"
+msgstr ""
+
+#: ../menu/menu.php:176
+msgid "Learn More"
+msgstr ""
+
+#: ../menu/menu.php:177
+msgid "Settings"
+msgstr ""
+
+#: ../menu/menu.php:209
+msgid "Donate"
+msgstr ""
+
+#: ../menu/menu.php:211
+msgid "This plugin is made in my spare time. If you really like this plugin and it helped to improve the income of your site and you are willing to show me some of the gratitude:"
+msgstr ""
+
+#: ../menu/menu.php:219
+msgid "Like this on facebook"
+msgstr ""
+
+#: ../menu/menu.php:223
+msgid "Sites using this plugin"
+msgstr ""
+
+#: ../menu/menu.php:242
+msgid "Your Site here?"
+msgstr ""
+
+#: ../menu/menu.php:244
+msgid "if you want Your site here please use Tt Store Feedback and let me know"
+msgstr ""
+
+#: ../menu/menu.php:246
+msgid "Rate the plugin"
+msgstr ""
+
+#: ../menu/menu.php:248
+msgid "if you like this plugin please go to <a href=\"http://wordpress.org/extend/plugins/tradetracker-store/\" target=\"_blank\">here</a> and give it a rating and vote for yes if the plugin works."
+msgstr ""
+
+#: ../menu/menu.php:250
+msgid "News"
+msgstr ""
+
+#: ../menu/pluginsettings.php:111
+msgid "Change plugin options."
+msgstr ""
+
+#: ../menu/pluginsettings.php:122
+msgid "If you want to create your own CSS file."
+msgstr ""
+
+#: ../menu/pluginsettings.php:123
+msgid "Do you want to use a CSS file.:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:125
+msgid "If you enable this you won't be able to use add/delete layout. You can however use your own css file."
+msgstr ""
+
+#: ../menu/pluginsettings.php:136
+msgid "Where is the CSS file located"
+msgstr ""
+
+#: ../menu/pluginsettings.php:137
+msgid "Full url to the CSS file:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:143
+#, php-format
+msgid "Make sure this is not saved in the plugins folder. Cause that will be overwritten with an update. For an example go to <a href=\"%s\" target=\"_blank\">here</a>"
+msgstr ""
+
+#: ../menu/pluginsettings.php:153
+msgid "Do you like to get an email when XML feeds are not imported?"
+msgstr ""
+
+#: ../menu/pluginsettings.php:154
+msgid "Get email when import fails:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:165
+msgid "Which tool should be used to import XML?"
+msgstr ""
+
+#: ../menu/pluginsettings.php:166
+msgid "Which import tool:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:171
+msgid "Fopen (most reliable)"
+msgstr ""
+
+#: ../menu/pluginsettings.php:175
+msgid "Curl/Fwrite (can run out of memory)"
+msgstr ""
+
+#: ../menu/pluginsettings.php:177
+msgid "Curl (sometimes causes issues)"
+msgstr ""
+
+#: ../menu/pluginsettings.php:183
+msgid "Load the extra fields in the database, if you don't use extra fields it is smarter to disable them here"
+msgstr ""
+
+#: ../menu/pluginsettings.php:184
+msgid "Import extra fields:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:190
+msgid "(Can prevent timeouts, But then you cannot show extra fields)"
+msgstr ""
+
+#: ../menu/pluginsettings.php:195
+msgid "What height should the admin menu be?, standard is 460"
+msgstr ""
+
+#: ../menu/pluginsettings.php:196
+msgid "Admin menu height:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:205
+msgid "What width should the admin menu be?, standard is 1000"
+msgstr ""
+
+#: ../menu/pluginsettings.php:206
+msgid "Admin menu width:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:215
+msgid "Show url to plugin website in the source of the site"
+msgstr ""
+
+#: ../menu/pluginsettings.php:216
+msgid "Show url to plugin website in the source:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:228
+msgid "What should happen when you deactivate the plugin:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:232
+msgid "Should all layouts be removed"
+msgstr ""
+
+#: ../menu/pluginsettings.php:233
+msgid "Remove all layouts:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:244
+msgid "Should all stores be removed"
+msgstr ""
+
+#: ../menu/pluginsettings.php:245
+msgid "Remove all stores:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:256
+msgid "Should all products be removed"
+msgstr ""
+
+#: ../menu/pluginsettings.php:257
+msgid "Remove all products:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:268
+msgid "Should all XML settings be removed"
+msgstr ""
+
+#: ../menu/pluginsettings.php:269
+msgid "Remove all XML settings:"
+msgstr ""
+
+#: ../menu/pluginsettings.php:280
+msgid "Should all other settings be removed"
+msgstr ""
+
+#: ../menu/pluginsettings.php:281
+msgid "Remove all other settings:"
+msgstr ""
+
+#: ../menu/premium.php:37
+msgid "Insert the addon apikeys."
+msgstr ""
+
+#: ../menu/premium.php:46
+msgid "Add extra productfeed providers"
+msgstr ""
+
+#: ../menu/premium.php:53
+#: ../menu/premium.php:83
+msgid "Accepted"
+msgstr ""
+
+#: ../menu/premium.php:55
+#: ../menu/premium.php:57
+#: ../menu/premium.php:85
+#: ../menu/premium.php:87
+#, php-format
+msgid "buy an APIKey for %1$s <a href=\"%2$s\" target=\"_blank\">here</a>"
+msgstr ""
+
+#: ../menu/premium.php:63
+#: ../menu/premium.php:93
+#, php-format
+msgid "If you bought an API key to use %s please fill it in here."
+msgstr ""
+
+#: ../menu/premium.php:64
+#: ../menu/premium.php:94
+#, php-format
+msgid "%s APIKey:"
+msgstr ""
+
+#: ../menu/premium.php:76
+msgid "Add extra functions"
+msgstr ""
+
+#: ../menu/search.php:40
+msgid "Search Settings."
+msgstr ""
+
+#: ../menu/search.php:51
+msgid "Use the same settings as used for this store."
+msgstr ""
+
+#: ../menu/search.php:52
+msgid "Use same setting as this Store:"
+msgstr ""
+
+#: ../menu/search.php:76
+msgid "<br>This is only interesting if you have created a search option on your site (more information can be found <a href=\"http://codex.wordpress.org/Creating_a_Search_Page\">here</a>) <br>You could use the following shortcode or code for your theme to show items related to the keyword the user searched on:<br>Shortcode: [display_search]<br>Or in your theme file: display_search_items();"
+msgstr ""
+
+#: ../menu/store.php:165
+msgid "Would you like to edit or add a store?"
+msgstr ""
+
+#: ../menu/store.php:179
+msgid "Sorting"
+msgstr ""
+
+#: ../menu/store.php:182
+msgid "Order"
+msgstr ""
+
+#: ../menu/store.php:185
+msgid "Layout"
+msgstr ""
+
+#: ../menu/store.php:188
+msgid "Feed"
+msgstr ""
+
+#: ../menu/store.php:191
+msgid "Button Text"
+msgstr ""
+
+#: ../menu/store.php:194
+msgid "Items"
+msgstr ""
+
+#: ../menu/store.php:197
+msgid "Lightbox"
+msgstr ""
+
+#: ../menu/store.php:224
+msgid "All Feeds"
+msgstr ""
+
+#: ../menu/store.php:266
+msgid "Create Store"
+msgstr ""
+
+#: ../menu/store.php:280
+msgid "Fill in the name for the store."
+msgstr ""
+
+#: ../menu/store.php:281
+msgid "Name for Store:"
+msgstr ""
+
+#: ../menu/store.php:287
+msgid "This cannot start with a number"
+msgstr ""
+
+#: ../menu/store.php:292
+msgid "It will sort the items on this field."
+msgstr ""
+
+#: ../menu/store.php:293
+msgid "Order by this field:"
+msgstr ""
+
+#: ../menu/store.php:314
+msgid "How should it be ordered."
+msgstr ""
+
+#: ../menu/store.php:315
+msgid "Descending or Ascending:"
+msgstr ""
+
+#: ../menu/store.php:336
+msgid "Which layout would you like to use."
+msgstr ""
+
+#: ../menu/store.php:337
+msgid "Layout:"
+msgstr ""
+
+#: ../menu/store.php:363
+msgid "Do you like to use a product page?"
+msgstr ""
+
+#: ../menu/store.php:364
+msgid "Use a productpage:"
+msgstr ""
+
+#: ../menu/store.php:383
+msgid "Which feed would you like to use."
+msgstr ""
+
+#: ../menu/store.php:384
+msgid "Feed:"
+msgstr ""
+
+#: ../menu/store.php:391
+#: ../menu/store.php:393
+msgid "All feeds"
+msgstr ""
+
+#: ../menu/store.php:419
+msgid "Which categories would you like to use?"
+msgstr ""
+
+#: ../menu/store.php:420
+msgid "Which categories?:"
+msgstr ""
+
+#: ../menu/store.php:425
+msgid "You changed the XML Feed, You need to save first before you can select any category."
+msgstr ""
+
+#: ../menu/store.php:468
+msgid "What text would you like to use on the button (standard is Buy now)."
+msgstr ""
+
+#: ../menu/store.php:469
+msgid "Text on button:"
+msgstr ""
+
+#: ../menu/store.php:478
+msgid "How much items would you like to show."
+msgstr ""
+
+#: ../menu/store.php:479
+msgid "Amount of items:"
+msgstr ""
+
+#: ../menu/store.php:484
+msgid "use 0 if you don't want a limit at all"
+msgstr ""
+
+#: ../menu/store.php:489
+msgid "How much items would you like to show on one page."
+msgstr ""
+
+#: ../menu/store.php:490
+msgid "Amount of items on a single page:"
+msgstr ""
+
+#: ../menu/store.php:495
+msgid "Use 0 if you want to show all items on 1 page"
+msgstr ""
+
+#: ../menu/store.php:501
+msgid "Do you want to use lightbox for the images? You will need an extra plugin for that"
+msgstr ""
+
+#: ../menu/store.php:502
+msgid "Use Lightbox:"
+msgstr ""
+
+#: ../menu/store.php:506
+msgid "You will need this plugin"
+msgstr ""
+
+#: ../menu/xmlfeed.php:50
+msgid "Settings saved, click Update Items when all feeds are added"
+msgstr ""
+
+#: ../menu/xmlfeed.php:65
+msgid "Add or Edit XML feeds."
+msgstr ""
+
+#: ../menu/xmlfeed.php:76
+msgid "Link to XML"
+msgstr ""
+
+#: ../menu/xmlfeed.php:79
+msgid "XML Name"
+msgstr ""
+
+#: ../menu/xmlfeed.php:82
+msgid "XML Provider"
+msgstr ""
+
+#: ../menu/xmlfeed.php:148
+msgid "Update Items"
+msgstr ""
+
+#: ../menu/xmloption.php:76
+msgid "Change XML options."
+msgstr ""
+
+#: ../menu/xmloption.php:87
+msgid "Which extra fields would you like to use?"
+msgstr ""
+
+#: ../menu/xmloption.php:88
+msgid "Which extra fields?:"
+msgstr ""
+
+#: ../menu/xmloption.php:130
+msgid "When should it update?, standard is 00:00:00"
+msgstr ""
+
+#: ../menu/xmloption.php:131
+msgid "Update time:"
+msgstr ""
+
+#: ../menu/xmloption.php:135
+msgid "Time has to be in hh:mm:ss"
+msgstr ""
+
+#: ../menu/xmloption.php:140
+msgid "Do you like to use fill in your own currency or get it from the XML?"
+msgstr ""
+
+#: ../menu/xmloption.php:141
+msgid "Use your own currency symbol:"
+msgstr ""
+
+#: ../menu/xmloption.php:152
+msgid "Do you like to have the currency before or after the price?"
+msgstr ""
+
+#: ../menu/xmloption.php:153
+msgid "Location of the currency:"
+msgstr ""
+
+#: ../menu/xmloption.php:157
+msgid "After the price"
+msgstr ""
+
+#: ../menu/xmloption.php:159
+msgid "Before the price"
+msgstr ""
+
+#: ../menu/xmloption.php:167
+msgid "Adjust Currency:"
+msgstr ""
+
+#: ../menu/xmloption.php:172
+msgid "Current currency in the XML?"
+msgstr ""
+
+#: ../menu/xmloption.php:173
+msgid "XML Currency:"
+msgstr ""
+
+#: ../menu/xmloption.php:177
+msgid "What would you like to show instead of the XML currency?"
+msgstr ""
+
+#: ../menu/xmloption.php:178
+msgid "New Currency:"
+msgstr ""
+
+#: ../tinymce/tinyTT.php:43
+msgid "Which Store:"
+msgstr ""
+
+#: ../widget/widget.php:7
+msgid "Select the items to show in the widget"
+msgstr ""
+
+#: ../widget/widget.php:57
+msgid "Which store would you like to show:"
+msgstr ""
+
+#: ../widget/widget.php:71
+msgid "Make sure this store will only show one item. Either by limiting the amount of items <a href=\"wp-admin/admin.php?page=tt-store&option=store\">here</a> or by only selecting one item <a href=\"wp-admin/admin.php?page=tt-store&option=itemselect\">here</a>"
+msgstr ""
+
