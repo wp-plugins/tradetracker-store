@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: RPG84
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J3UBRGHKXSAWC
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=97K9JBA7Z2K7Q
 Tags: tradetracker, store, productfeed, affiliate, daisycon, zanox, cleafs, tradedoubler, paidonresults, M4N, xml productfeed
 Requires at least: 2.0.1
 Tested up to: 3.4.2
@@ -44,7 +44,7 @@ Full changelog on http://wpaffiliatefeed.com/category/releaselog/
 
 == Upgrade Notice == 
 = 4.5.1 = 
-This version is needed to get the new Tradetracker feeds working. Special thanks to Mark for his fixes in regards of the new feeds.
+This version is needed to get the new Tradetracker feeds working
 
 = 4.1.1 =
 Deleting of stores, better error messages for failed import
