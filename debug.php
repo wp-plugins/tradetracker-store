@@ -7,6 +7,8 @@ global $ttstoretable;
 global $ttstoreextratable;
 global $ttstorelayouttable;
 global $ttstoremultitable;
+global $ttstoreitemtable;
+global $ttstorexmltable;
 ?>
 <?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
 <?php $adminheight = get_option("Tradetracker_adminheight"); ?>
@@ -183,6 +185,47 @@ global $ttstoremultitable;
 	echo "</table>";
 
 
+	$itemtableoverview = $wpdb->get_results("SHOW COLUMNS FROM ".$ttstoreitemtable."");
+	echo "<p><strong>";
+	_e('Database Table overview: Item', 'ttstore');	
+	echo "</strong>";
+	echo "<table>";
+	echo "<tr><td width=\"200px\"><strong>";
+	_e('Field', 'ttstore');
+	echo "</strong></td><td width=\"200px\"><strong>";
+	_e('Type', 'ttstore');
+	echo "</strong></td></tr>";
+	foreach ( $itemtableoverview as $overview ) 
+	{
+		echo "<tr><td>".$overview->Field."</td>";
+		echo "<td>".$overview->Type."</td></tr>";		
+	}	
+	echo "</table>";
+
+	$xmltableoverview = $wpdb->get_results("SHOW COLUMNS FROM ".$ttstorexmltable."");
+	echo "<p><strong>";
+	_e('Database Table overview: XML', 'ttstore');	
+	echo "</strong>";
+	echo "<table>";
+	echo "<tr><td width=\"200px\"><strong>";
+	_e('Field', 'ttstore');
+	echo "</strong></td><td width=\"200px\"><strong>";
+	_e('Type', 'ttstore');
+	echo "</strong></td></tr>";
+	foreach ( $xmltableoverview as $overview ) 
+	{
+		echo "<tr><td>".$overview->Field."</td>";
+		echo "<td>".$overview->Type."</td></tr>";		
+	}	
+	echo "</table>";
+	$ttmemoryusage = get_option("Tradetracker_memoryusage");
+	echo "<p><strong>";
+	_e('Memory usage last import', 'ttstore');	
+	echo "</strong>";
+	echo "<p>";
+	echo $ttmemoryusage;
+	
+
 ?>
 		</div>
 		<div id="ttstoreboxbottom">
@@ -240,6 +283,9 @@ function ttstoreheader() {
 		xml_updater();
 		$update = __('Update Finished:','ttstore');
 	}
+	if(isset($_GET['errordel']) && $_GET['errordel']=="yes"){
+		delete_option("Tradetracker_importerror");
+	}
 	if(isset($_GET['bgupdate']) && $_GET['bgupdate']=="yes"){
 		wp_clear_scheduled_hook('xmlscheduler');
 		update_option( 'Tradetracker_xml_update' , '' );
@@ -260,7 +306,7 @@ function ttstoreheader() {
 		$newvalue = array("<br>", "<strong>Feedname:</strong>", "<strong>Splitfile:</strong>");
 		$osmessage =  __('<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>','ttstore');
 		$osmessage .= str_replace($oldvalue,$newvalue,$errorfile);
-		echo "<div class='error'>".$osmessage."</div>";
+		echo "<div class='error'>".$osmessage." <a href=\"admin.php?page=tt-store&errordel=yes\">Close</a></div>";
 	}
 }
 add_action( 'init', 'test_head_footer_init' );

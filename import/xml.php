@@ -6,6 +6,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	global $filenum;
 	global $ttstoretable;
 	global $ttstoreextratable;
+	global $ttstorexmltable;
 	global $foldersplits;
 	update_option("xmldatabasecount", "0" );
 	//prepare database 
@@ -17,6 +18,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 		premium_updater();
 		news_updater();
 		delete_option("Tradetracker_importerror");
+		delete_option("Tradetracker_memoryusage");	
 		delete_option("Tradetracker_xml_extra");
 		$emptytable = "TRUNCATE TABLE `$ttstoretable`";
 		$emptyextratable = "TRUNCATE TABLE `$ttstoreextratable`";
@@ -53,18 +55,20 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	//get xml details from database
 	$Tradetracker_xml = get_option("Tradetracker_xml");
 	$Tradetracker_xmlname = get_option("Tradetracker_xmlname");
-
-
+	$loadxmlfeeds = $wpdb->get_results("select id, xmlfeed, xmlprovider from ".$ttstorexmltable."", ARRAY_A);
 	//check if splits directory is empty else empty it
-	if ($xmlfilecount <= count($Tradetracker_xml)-1){
-		$keys = array_keys($Tradetracker_xml);
-		$key = $keys[$xmlfilecount];
-		$value = $Tradetracker_xml[$key];
-		$file = $Tradetracker_xml;
+	if ($xmlfilecount <= count($loadxmlfeeds)-1){
+		echo "<br /><strong>Memory Usage before import:</strong>".convert(memory_get_peak_usage());
+		$ttmemoryusage = get_option("Tradetracker_memoryusage");
+		$ttmemoryusage .= "<br/><strong>Memory Usage before import:</strong>".convert(memory_get_peak_usage());
+		update_option( "Tradetracker_memoryusage", $ttmemoryusage );
+		$key = $loadxmlfeeds[$xmlfilecount]['xmlfeed'];
+		$value = $loadxmlfeeds[$xmlfilecount]['xmlprovider'];
+		$xmlfeedid = $loadxmlfeeds[$xmlfilecount]['id'];
 		$recordnum = "0";
 		$processed = "0";
 		$filenum = "0";
-		$value($xmlfilecount, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
+		$value($xmlfeedid, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
 		fill_database1($xmlfilecount, $xmlcronjob);
 
 	} else {

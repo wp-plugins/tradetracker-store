@@ -6,6 +6,7 @@ function store() {
 	global $ttstoresubmit;
 	global $ttstorehidden;
 	global $ttstoremultitable;
+	global $ttstorexmltable;
 	global $ttstorelayouttable;
 	global $ttstoretable;
 
@@ -29,7 +30,6 @@ function store() {
 		$returnpage = "1";
 	}
 	if(isset($_GET['delete'])){
-		echo "ik detecteer dit wel";
 		if($_GET['delete']>"1"){
 			$wpdb->query($wpdb->prepare("DELETE FROM ".$ttstoremultitable." WHERE `id` = ".$_GET['delete'].""));
 		}
@@ -221,7 +221,7 @@ function store() {
 					<?php echo $store_val->layname; ?>
 				</td>
 				<td>
-					<?php if ($store_val->multixmlfeed == "*"){_e('All Feeds','ttstore');} else { $xmlfeed = get_option("Tradetracker_xmlname"); echo $xmlfeed[$store_val->multixmlfeed]; }?>
+					<?php if ($store_val->multixmlfeed == "*"){_e('All Feeds','ttstore');} else { $xmlfeed=$wpdb->get_var( $wpdb->prepare("SELECT xmlname FROM ".$ttstorexmltable." where id=".$store_val->multixmlfeed."")); echo $xmlfeed; }?>
 				</td>
 				<td>
 					<?php echo $store_val->buynow; ?>
@@ -392,13 +392,13 @@ function store() {
 		} else {
 			echo "<option value=\"*\">".__('All feeds','ttstore')."</option>";
 		}
-		//$xmlfeed=$wpdb->get_results("SELECT xmlfeed FROM ".$ttstoretable." group by xmlfeed");
-		$xmlfeed1 = get_option("Tradetracker_xmlname");
-		foreach ($xmlfeed1 as $key => $value) {
-			if($Tradetracker_multixmlfeed_val != "*" && $Tradetracker_multixmlfeed_val == $key) {
-				echo "<option selected=\"selected\" value=\"".$key."\">".$value."</option>";
+		$xmlfeed=$wpdb->get_results("SELECT xmlname, id FROM ".$ttstorexmltable."");
+		//$xmlfeed1 = get_option("Tradetracker_xmlname");
+		foreach ($xmlfeed as $xml) {
+			if($Tradetracker_multixmlfeed_val != "*" && $Tradetracker_multixmlfeed_val == $xml->id) {
+				echo "<option selected=\"selected\" value=\"".$xml->id."\">".$xml->xmlname."</option>";
 			} else {
-				echo "<option value=\"".$key."\">".$value."</option>";
+				echo "<option value=\"".$xml->id."\">".$xml->xmlname."</option>";
 			}
 		}
 ?>
@@ -436,17 +436,17 @@ function toggleOther(){
 			if(!empty($categorie)){
 				echo "<table width=\"400\">";
 				$i="1";
-				$xmlfeedname = get_option('Tradetracker_xmlname');
+				$xmlfeedname = $wpdb->get_results("select id, xmlname FROM ".$ttstorexmltable."", OBJECT_K);
 				foreach($categorie as $categorieselect) {
 					echo "<tr><td>";
 					if(is_serialized($Tradetracker_categories_val)){
 						if(in_array($categorieselect->categorieid, unserialize($Tradetracker_categories_val), true)) {
-							echo "<input type=\"checkbox\" checked=\"yes\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]." - ".$categorieselect->categorie."<br />";
+							echo "<input type=\"checkbox\" checked=\"yes\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]->xmlname." - ".$categorieselect->categorie."<br />";
 						} else {
-							echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]." - ".$categorieselect->categorie."<br />";
+							echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]->xmlname." - ".$categorieselect->categorie."<br />";
 						}
 					} else {
-						echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]." - ".$categorieselect->categorie."<br />";
+						echo "<input type=\"checkbox\" name=\"".$Tradetracker_categories_name."[]\" value=\"".$categorieselect->categorieid."\" />".$xmlfeedname[$categorieselect->xmlfeed]->xmlname." - ".$categorieselect->categorie."<br />";
 					}
 					echo "</td></tr>";
 				}

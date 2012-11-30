@@ -5,6 +5,8 @@
 	$ttstoretable = PRO_TABLE_PREFIX."store";
 	$ttstorelayouttable = PRO_TABLE_PREFIX."layout";
 	$ttstoremultitable = PRO_TABLE_PREFIX."multi";
+	$ttstoreitemtable = PRO_TABLE_PREFIX."item";
+	$ttstorexmltable = PRO_TABLE_PREFIX."xml";
 	wp_clear_scheduled_hook('xml_update');
 	$structure = "drop table if exists $ttstoretable";
 	$wpdb->query($structure);
@@ -12,6 +14,10 @@
 	$wpdb->query($structure2); 
 	$structure3 = "drop table if exists $ttstoremultitable";
 	$wpdb->query($structure3); 
+	$structure4 = "drop table if exists $ttstoreitemtable";
+	$wpdb->query($structure4); 
+	$structure5 = "drop table if exists $ttstorexmltable";
+	$wpdb->query($structure5); 
 	delete_option("Tradetracker_xml");
 	delete_option("Tradetracker_xmlname");
 	delete_option("Tradetracker_xmlupdate");

@@ -1,4 +1,80 @@
 <?php
+if (get_option("TTstoreversion") <= "4.5.0" && get_option("TTstoreversion") >= "4.1.11"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstoreitemtable = $pro_table_prefix."item";
+	$ttstorexmltable = $pro_table_prefix."xml";
+	$ttstoremultitable = $pro_table_prefix."multi";
+	$structureitem = "CREATE TABLE IF NOT EXISTS ".$ttstoreitemtable." (
+		id INT(9) NOT NULL AUTO_INCREMENT,
+		storeID INT(100),
+		productID VARCHAR(36) NOT NULL,
+		UNIQUE KEY id (id)
+	);";
+	$wpdb->query($structureitem);
+	$itemlist = $wpdb->get_results('SELECT id, multiitems FROM `'.$ttstoremultitable.'` where multiitems <> ""');
+	foreach ($itemlist as $items){
+		$item = explode(',',$items->multiitems);		
+		foreach ($item as $itemoverview){
+			$wpdb->insert( 
+				$ttstoreitemtable, 
+				array( 
+					storeID => $items->id, 
+					productID => $itemoverview 
+				), 
+				array( 
+					'%d', 
+					'%s' 
+				) 
+			);
+		}
+	}
+	$structurexml = "CREATE TABLE IF NOT EXISTS ".$ttstorexmltable." (
+		id INT(9) NOT NULL AUTO_INCREMENT,
+		xmlfeed VARCHAR(1000) NOT NULL,
+		xmlname VARCHAR(100) NOT NULL,
+		xmlprovider VARCHAR(100) NOT NULL,
+		xmltitle VARCHAR(100) NOT NULL,
+		xmlimage VARCHAR(100) NOT NULL,
+		xmldescription VARCHAR(100) NOT NULL,
+		xmlprice VARCHAR(100) NOT NULL,
+		UNIQUE KEY id (id)
+	);";
+	$wpdb->query($structurexml);
+	//variables for this function
+	$Tradetracker_xml_name = 'Tradetracker_xml';
+	$Tradetracker_xmlname_name = 'Tradetracker_xmlname';
+
+	//filling variables from database
+	$Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
+	$Tradetracker_xmlname_val = get_option( $Tradetracker_xmlname_name );
+	$i="0";
+	if($Tradetracker_xml_val != ""){
+		$file = $Tradetracker_xml_val;
+		foreach($file as $key => $value) {
+			echo "<tr><td>";
+			if($key !=""){
+				$wpdb->insert( 
+					$ttstorexmltable, 
+					array( 
+						xmlfeed => $key, 
+						xmlname => $Tradetracker_xmlname_val[$i],
+						xmlprovider => $value
+					), 
+					array( 
+						'%s',
+						'%s',
+						'%s' 
+					) 
+				);
+				$i++;
+			}
+		}
+	}
+
+	update_option("TTstoreversion", "4.5.1" );
+}
+
 if (get_option("TTstoreversion") == "4.1.9"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

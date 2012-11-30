@@ -23,10 +23,34 @@ function TTtinymce() {
 	insert: function createTTShortcode(e) {
 		//Create gallery Shortcode
 		var store = $('#store').val();
-
-		var output = '[display_multi ';
+		var output = '[display_filter ';
 		if(store) {
-			output += 'store="'+store+'" ';
+			output += 'store="'+store+'"';
+		}
+		output += ']';
+		output += '[display_pages ';
+		if(store) {
+			output += 'store="'+store+'"';
+		}
+		output += ']';
+		output += '[user_pages ';
+		if(store) {
+			output += 'store="'+store+'"';
+		}
+		output += ']<div class="cleared"></div>';
+		output += '[display_multi ';
+		if(store) {
+			output += 'store="'+store+'"';
+		}
+		output += ']<div class="cleared"></div>';
+		output += '[display_pages ';
+		if(store) {
+			output += 'store="'+store+'"';
+		}
+		output += ']';
+		output += '[user_pages ';
+		if(store) {
+			output += 'store="'+store+'"';
 		}
 		output += ']';
 

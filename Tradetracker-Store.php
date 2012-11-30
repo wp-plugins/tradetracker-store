@@ -2,14 +2,17 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 4.1.17
+Version: 4.5.1
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
 */
 if (file_exists(plugin_dir_path( __FILE__ )."functions.php")) {
 include(plugin_dir_path( __FILE__ )."functions.php");
-loadpremium();
+$manualpremium = get_option("Tradetracker_manualpremium");
+if(empty($manualpremium) || $manualpremium != "1"){
+	loadpremium();
+}
 }
 include('front.php');
 include('menu/xmlfeed.php');
@@ -42,7 +45,9 @@ $ttstorehidden = "<input type=\"hidden\" name=\"".$ttstoresubmit."\" value=\"Y\"
 $ttstoretable = PRO_TABLE_PREFIX."store";
 $ttstorelayouttable = PRO_TABLE_PREFIX."layout";
 $ttstoremultitable = PRO_TABLE_PREFIX."multi";
+$ttstoreitemtable = PRO_TABLE_PREFIX."item";
 $ttstoreextratable = $pro_table_prefix."extra";
+$ttstorexmltable = $pro_table_prefix."xml";
 $foldersplits = plugin_dir_path( __FILE__ )."splits/";
 $foldercache = plugin_dir_path( __FILE__ )."cache/";
 $folderhome = plugin_dir_path( __FILE__ );
@@ -70,8 +75,10 @@ add_action( 'xmlscheduler', 'runxmlupdater' );
 
 
 function runxmlupdatercheck() {
+	global $ttstorexmltable;
+	global $wpdb;
+	$Tradetracker_xml = $wpdb->get_results("select id, xmlfeed, xmlprovider from ".$ttstorexmltable."", ARRAY_A);
 	$xmlfilecount = get_option("xmlfilecount");
-	$Tradetracker_xml = get_option("Tradetracker_xml");
 	if ($xmlfilecount !="0" && $xmlfilecount < count($Tradetracker_xml)-1){
 		wp_schedule_single_event(time()+700, 'xml_updater_check');
 		xml_updater("0","0","1");
@@ -96,6 +103,8 @@ global $wpdb;
 $ttstoretable = PRO_TABLE_PREFIX."store";
 $ttstorelayouttable = PRO_TABLE_PREFIX."layout";
 $ttstoremultitable = PRO_TABLE_PREFIX."multi";
+$ttstoreitemtable = PRO_TABLE_PREFIX."item";
+$ttstorexmltable = PRO_TABLE_PREFIX."xml";
 if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
     $structure = "CREATE TABLE IF NOT EXISTS ".$ttstoretable." (
 	id INT(9) NOT NULL AUTO_INCREMENT,
@@ -194,6 +203,26 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 	}
 	  // Populate table
 	}
+	$structureitem = "CREATE TABLE IF NOT EXISTS ".$ttstoreitemtable." (
+		id INT(9) NOT NULL AUTO_INCREMENT,
+		storeID INT(100),
+		productID VARCHAR(36) NOT NULL,
+		UNIQUE KEY id (id)
+	);";
+	$wpdb->query($structureitem);
+
+	$structurexml = "CREATE TABLE IF NOT EXISTS ".$ttstorexmltable." (
+		id INT(9) NOT NULL AUTO_INCREMENT,
+		xmlfeed VARCHAR(1000) NOT NULL,
+		xmlname VARCHAR(100) NOT NULL,
+		xmlprovider VARCHAR(100) NOT NULL,
+		xmltitle VARCHAR(100) NOT NULL,
+		xmlimage VARCHAR(100) NOT NULL,
+		xmldescription VARCHAR(100) NOT NULL,
+		xmlprice VARCHAR(100) NOT NULL,
+		UNIQUE KEY id (id)
+	);";
+	$wpdb->query($structurexml);
 }
 
 //delete databases when uninstalling
@@ -203,6 +232,8 @@ function tradetracker_store_uninstall()
 	global $ttstoretable;
 	global $ttstorelayouttable;
 	global $ttstoremultitable;
+	global $ttstoreitemtable;
+	global $ttstorexmltable;
 	wp_clear_scheduled_hook('xml_update');
 	if(get_option("Tradetracker_removeproducts")=="1"){
 		$structure = "drop table if exists $ttstoretable";
@@ -215,8 +246,13 @@ function tradetracker_store_uninstall()
 	if(get_option("Tradetracker_removestores")=="1"){
 		$structure3 = "drop table if exists $ttstoremultitable";
 		$wpdb->query($structure3); 
+		$structure4 = "drop table if exists $ttstoreitemtable";
+		$wpdb->query($structure4); 
+
 	}
 	if(get_option("Tradetracker_removexml")=="1"){
+		$structure5 = "drop table if exists $ttstorexmltable";
+		$wpdb->query($structure5);
 		delete_option("Tradetracker_xml");
 		delete_option("Tradetracker_xmlname");
 		delete_option("Tradetracker_xmlupdate");

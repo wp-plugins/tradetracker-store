@@ -48,8 +48,28 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
     			$buffer = stream_get_line($handle, 100000, "</product>"); 
 			$recordnum++;
 			$processed++;
+			if(preg_match('/<images>(.+?)\<\/images>/is', $buffer, $matches)){
+				$buffer = str_replace($matches[0], $matches[1], $buffer);
+			}
+			if(preg_match('/<price>(.+?)urrency>(.+?)\<\/price>/is', $buffer, $matches)){
+				$buffer = str_replace($matches[0], "<price currency=\"".$matches[2]."</price>", $buffer);
+				if(preg_match('/<\/currency>(.+?)amount>(.+?)\<\/price>/is', $buffer, $matches)){
+					$buffer = str_replace($matches[0], "\">".$matches[2]."</price>", $buffer);
+				}
+				if(preg_match('/<\/amount>(.+?)\/price>/is', $buffer, $matches)){
+					$buffer = str_replace($matches[0], "</price>", $buffer);
+				}
+			}
+			if(preg_match('/<image>(.+?)\<\/image>/is', $buffer, $matches)){
+				$buffer = str_replace($matches[0], "<imageURL>".$matches[1]."</imageURL>", $buffer);
+			}
+			if(preg_match('/<URL>(.+?)\<\/URL>/is', $buffer, $matches)){
+				$buffer = str_replace($matches[0], "<productURL>".$matches[1]."</productURL>", $buffer);
+			}
 			fwrite($exportfile, $buffer);
 			if(preg_match('/<product>/i', $buffer)){
+				fwrite($exportfile,"<xmlfile>$xmlfeedID</xmlfile></product>");
+			}elseif(preg_match('/<product ID/i', $buffer)){
 				fwrite($exportfile,"<xmlfile>$xmlfeedID</xmlfile></product>");
 			}
 			if ($recordnum>$chunksize) {

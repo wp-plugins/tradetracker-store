@@ -4,23 +4,25 @@ function itemselect() {
 	global $ttstoresubmit;
 	global $ttstorehidden;
 	global $ttstoremultitable;
+	global $ttstoreitemtable;
 	global $ttstoretable;
 	global $ttstoreextratable;
+	global $ttstorexmltable;
 	global $folderhome;
 	if(!isset($_GET['function']) || $_GET['function']=="delete" || $_GET['function']=="deleteempty"){
  		if(isset($_GET['function']) && $_GET['function']=="delete") {
 			$multiid = $_GET['multiid'];
-			$query = $wpdb->update( $ttstoremultitable, array( 'multiitems' => ""), array( 'id' => $multiid), array( '%s'), array( '%s'), array( '%d' ) );
+			$query = "DELETE FROM `".$ttstoreitemtable."` WHERE `".$ttstoreitemtable."`.`storeID` = ".$multiid."";
+			$wpdb->query($query);
 			$deleted = __("deleted all items", "ttstore");
 		} 
  		if(isset($_GET['function']) && $_GET['function']=="deleteempty") {
 			$multiid = $_GET['multiid'];
-			$itemsid = explode(",",$_GET['emptyitems']);
-			$currentitems = $wpdb->get_col("SELECT multiitems FROM ".$ttstoremultitable." where id=".$multiid."");
-			$currentitems = explode(",",$currentitems[0]);
-			$result = arrayDiffEmulation($currentitems, $itemsid);
-			$result = implode(",",$result);
-			$query = $wpdb->update( $ttstoremultitable, array( 'multiitems' => $result), array( 'id' => $multiid), array( '%s'), array( '%s'), array( '%d' ) );
+			$itemsid = explode(",", $_GET['emptyitems']);
+			foreach($itemsid as $item){
+				$query = "DELETE FROM `".$ttstoreitemtable."` WHERE `".$ttstoreitemtable."`.`productID` = '".$item."'";
+				$wpdb->query($query);
+			}
 			$deleted = __("deleted the items", "ttstore");
 		} 
 ?>
@@ -60,22 +62,21 @@ function itemselect() {
 			</td>
 		</tr>
 <?php
-		$layoutedit=$wpdb->get_results("SELECT id, multiname, multiitems FROM ".$ttstoremultitable."");
+		$layoutedit=$wpdb->get_results("SELECT ".$ttstoremultitable.".id, multiname, multiitems, count(".$ttstoreitemtable.".id) as totalitems FROM ".$ttstoremultitable." left join ".$ttstoreitemtable." on ".$ttstoremultitable.".id = ".$ttstoreitemtable.".storeID group by storeID, multiname order by ".$ttstoremultitable.".id");
 		foreach ($layoutedit as $layout_val){
-		if($layout_val->multiitems != "" ) {
-			$productID = $layout_val->multiitems;
-			$productID = explode(",",$productID);
-			$productcount = count($productID);
-			if($productcount > "0" ){
-				$fivesdrafts = $wpdb->get_col("SELECT productID FROM $ttstoretable");
-				$result = arrayDiffEmulation($productID, $fivesdrafts);
-				$emptyproductcount = count($result);
-				$emptyitems = implode(",", $result);				
+			if($layout_val->totalitems > "0" ){
+				$nonexisting=$wpdb->get_results('SELECT DISTINCT '.$ttstoreitemtable.'.productID FROM '.$ttstoreitemtable.' WHERE '.$ttstoreitemtable.'.productID NOT IN ( SELECT '.$ttstoretable.'.productID FROM '.$ttstoretable.') and storeID = "'.$layout_val->id.'"');
+				$productcount = $layout_val->totalitems;
+				$emptyproductcount = count($nonexisting);
+				$result = array();
+				foreach($nonexisting as $term){
+					$result[] = $term->productID;
+				}
+				$emptyitems = implode(",", $result);
 			} else {
 				$emptyproductcount = "";
 				$emptyitems = "";
 			}
-		}
 ?>
 
 		<tr>
@@ -130,22 +131,38 @@ function itemselect() {
 		$multiid = $_GET['multiid'];
 	if( isset($_POST[ $ttstoresubmit ]) && $_POST[ $ttstoresubmit ] == 'Y' ) {
 		$Tradetracker_items = $_POST['item'];
-		$Tradetracker_items = implode(",", $Tradetracker_items);
+		$query = "DELETE FROM `".$ttstoreitemtable."` WHERE `".$ttstoreitemtable."`.`storeID` = ".$multiid."";
+		$wpdb->query($query);
 		if($_POST['itemsother']!="")
 		{
-			$Tradetracker_items = $Tradetracker_items.",".$_POST['itemsother'];
+			$itemsother = explode(",",$_POST['itemsother']);
+			$Tradetracker_items = array_merge($Tradetracker_items, $itemsother);
 		}
-		if ( $multiitems != $Tradetracker_items ) 
-		{ 
-			$query = $wpdb->update( $ttstoremultitable, array( 'multiitems' => $Tradetracker_items), array( 'id' => $multiid), array( '%s'), array( '%s'), array( '%d' ) );
-			$multiitems = $Tradetracker_items;
-  		}
+		foreach ($Tradetracker_items as $itemoverview){
+			$wpdb->insert( 
+				$ttstoreitemtable, 
+				array( 
+					storeID => $multiid, 
+					productID => $itemoverview 
+				), 
+				array( 
+					'%d', 
+					'%s' 
+				) 
+			);
+		}
 		$savedmessage = __("Settings saved", "ttstore");
 		$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 	}
-		$layoutedit=$wpdb->get_results("SELECT id, multixmlfeed, multiitems, multiname, categories FROM ".$ttstoremultitable." where id=".$multiid."");
+		$layoutedit=$wpdb->get_results("SELECT ".$ttstoremultitable.".id, multixmlfeed, multiitems, multiname, categories, count(".$ttstoreitemtable.".id) as totalitems FROM ".$ttstoremultitable." left join ".$ttstoreitemtable." on ".$ttstoremultitable.".id = ".$ttstoreitemtable.".storeID where ".$ttstoremultitable.".id='".$multiid."' group by storeID, multiname");
 		foreach ($layoutedit as $layout_val){
-			$multiitems = $layout_val->multiitems;
+			if($layout_val->totalitems >0){
+				$multiitems=$wpdb->get_results("SELECT ".$ttstoreitemtable.".productID FROM ".$ttstoreitemtable." where ".$ttstoreitemtable.".storeID = ".$layout_val->id."");
+				$productID = array();
+				foreach($multiitems as $term){
+					$productID[] = $term->productID;
+				}	
+			}
 			$multiname = $layout_val->multiname;
 			if($layout_val->multixmlfeed == "*" ){
 				$multixmlfeed = "";
@@ -198,7 +215,8 @@ function itemselect() {
 	if(isset($_GET['search']) && $_GET['search'] !=""){
 		$keyword = $_GET['search'];
 		$searchlink = "&search=".$keyword;
-		$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable." where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed."");
+		echo "SELECT * FROM ".$ttstoretable." left join ".$ttstoreextratable." on ".$ttstoreextratable.".productID = ".$ttstoretable.".productID and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID";
+		//$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable." left join ".$ttstoreextratable." on ".$ttstoreextratable.".productID = ".$ttstoretable.".productID and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
 	} else {
 		$searchlink = "";
 		$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable." ".$multixmlfeed." ".$categorieselect."");
@@ -384,9 +402,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				$array2 .= ",".$product->productID."";
 				echo "<tr style=\"".$tdbgcolor.";\"><td>";
 
-				$productID = $multiitems;
-				$productID = explode(",",$productID);
-				if(in_array($product->productID, $productID, true))
+				if(!empty($productID) && in_array($product->productID, $productID, true))
 				{
 					echo "<input type=\"checkbox\" checked=\"yes\" name=\"item[]\" value=".$product->productID." />";
 				} else {
@@ -402,7 +418,8 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				echo "</td><td><span class=\"link1\"><a href=\"javascript: void(0)\">";
 				echo $product->name;
 				echo "<span><img src=\"".$imageURL."\" width=\"400px\"></span></a></span></td><td>";
-				echo $xmlfeedname[$product->xmlfeed];
+				$xmlfeed=$wpdb->get_var( $wpdb->prepare("SELECT xmlname FROM ".$ttstorexmltable." where id=".$product->xmlfeed."")); 
+				echo $xmlfeed;
 				echo "</td><td>";
 				echo $product->price;
 				echo "</td><td>";
@@ -432,7 +449,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				}
 
 			}
-		if(!empty($array2)){
+		if(!empty($array2) && !empty($productID)){
 			$array1 = $productID;
 			$array2 = explode(",", $array2);
 			$result = array_diff($array1, $array2);

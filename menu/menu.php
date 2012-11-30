@@ -62,7 +62,7 @@ $menuarray = array( array( 'Title' => __("Add/Edit XMLFeeds","ttstore"),
                       'Pricecheck' => "Free", 
                       'Price' => __("Free","ttstore"), 
                       'Shortdesc' => __("Add new or edit existing XML feeds here.","ttstore"), 
-                      'Longdesc' => __("<h3>Adding or editing XMLFeeds</h3><p>This will give you the following options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML Feed a name so you can recognize it<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href=\"http://tc.tradetracker.net/?c=27&m=0&a=48684&r=register&u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>","ttstore"), 
+                      'Longdesc' => __("<h3>Adding or editing XMLFeeds</h3><p>This will give you the following options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML Feed a name so you can recognize it<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href=\"http://tc.tradetracker.net/?c=27&amp;m=39673&amp;a=48684&amp;r=&amp;u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>","ttstore"), 
                       'Name' => "xmlfeedmore",
                       'Link' => "xmlfeed",		
                       'Vink' => $tradetracker_xml_done
@@ -211,14 +211,14 @@ echo "</div>";
 		<?php _e("This plugin is made in my spare time. If you really like this plugin and it helped to improve the income of your site and you are willing to show me some of the gratitude:","ttstore"); ?>
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 			<input type="hidden" name="cmd" value="_s-xclick">
-			<input type="hidden" name="hosted_button_id" value="J3UBRGHKXSAWC">
-			<input type="image" src="https://www.paypalobjects.com/nl_NL/NL/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal, de veilige en complete manier van online betalen.">
-			<img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
+			<input type="hidden" name="hosted_button_id" value="97K9JBA7Z2K7Q">
+			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 		</form>
 	</p>
 	<h3><?php _e("Like this on facebook","ttstore"); ?></h3>
 	<p>
-	<iframe src="http://www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FWpaffiliatefeed%2F243951359002776&amp;width=180&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=false&amp;appId=126016140831179" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:180px; height:258px;"></iframe>
+	<iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FWpaffiliatefeed%2F203825303083826&amp;width=180&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=false" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:180px; height:258px;" ></iframe>
 	</p>
 	<h3><?php _e("Sites using this plugin","ttstore"); ?></h3>
 
