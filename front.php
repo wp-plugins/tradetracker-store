@@ -12,7 +12,7 @@ function TTstore_scripts() {
 	wp_enqueue_script( 'jquery-filter', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js');
 }       
 	
-add_action('init', 'TTstore_scripts'); 
+add_action('wp_enqueue_scripts', 'TTstore_scripts'); 
 
 function store_items($used, $winkel, $searching)
 {
