@@ -178,7 +178,7 @@ window.location.href='<?php echo "admin.php?page=tt-store&database=yes&xmldataba
 		update_option("xmlfilecount", $xmlfilecount );
 		update_option("xmldatabasecount", "0" );
 		$directory = dir($foldersplits); 
-		/*
+		
 		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
 			{  
 			if ($item != '.' && $item != '..')
@@ -195,7 +195,7 @@ window.location.href='<?php echo "admin.php?page=tt-store&database=yes&xmldataba
 			}  
 		}
 		$directory->close();
-		*/
+		
 
 		if($xmlcronjob=="0"){
 ?>
