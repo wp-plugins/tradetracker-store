@@ -434,7 +434,7 @@ function show_items($usedhow, $winkelvol, $searching)
 				}
 				$productID = $Tradetracker_productid;
 				$productID = str_replace(",", "' or productID='", $productID);
-				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and productID='".$productID."' ".$priceselectcur." ".$Tradetracker_amount_i.""));
+				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and ".$ttstoretable.".productID='".$productID."' ".$priceselectcur." ".$Tradetracker_amount_i.""));
 			}
 			if(isset($_GET['ipp']) && $_GET['ipp']>"0"){
 				$itemsperpage = mysql_real_escape_string($_GET['ipp']);
@@ -497,7 +497,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$productID = $Tradetracker_productid;
 			$productID = str_replace(",", "' or productID='", $productID);
-			$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and productID='".$productID."' ".$priceselectcur." ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
+			$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and ".$ttstoretable.".productID='".$productID."' ".$priceselectcur." ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
 		}
 	}
 	$storeitems = "";

@@ -1,4 +1,17 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.6"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstorecattable = $pro_table_prefix."cat";
+	$ttstoretable = $pro_table_prefix."store";
+	$ttstoreitemtable = $pro_table_prefix."item";
+	$ttstoreextratable = $pro_table_prefix."extra";
+	$wpdb->query("ALTER TABLE `".$ttstorecattable."` ADD INDEX ( `productID` ) ");
+	$wpdb->query("ALTER TABLE `".$ttstoretable."` ADD INDEX ( `productID` ) ");
+	$wpdb->query("ALTER TABLE `".$ttstoreitemtable."` ADD INDEX ( `productID` ) ");
+	$wpdb->query("ALTER TABLE `".$ttstoreextratable."` ADD INDEX ( `productID` ) ");
+	update_option("TTstoreversion", "4.5.7" );
+}
 if (get_option("TTstoreversion") == "4.5.4"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
@@ -11,7 +24,6 @@ if (get_option("TTstoreversion") == "4.5.4"){
 		categorie VARCHAR(100) NOT NULL,
 		UNIQUE KEY catid (catid)
 	);";
-	echo $structurecat;
 	$wpdb->query($structurecat);
 	wp_clear_scheduled_hook('xmlscheduler');
 	update_option("TTstoreversion", "4.5.6" );

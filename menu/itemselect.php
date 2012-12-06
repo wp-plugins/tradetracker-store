@@ -66,7 +66,7 @@ function itemselect() {
 		$layoutedit=$wpdb->get_results("SELECT ".$ttstoremultitable.".id, multiname, multiitems, count(".$ttstoreitemtable.".id) as totalitems FROM ".$ttstoremultitable." left join ".$ttstoreitemtable." on ".$ttstoremultitable.".id = ".$ttstoreitemtable.".storeID group by storeID, multiname order by ".$ttstoremultitable.".id");
 		foreach ($layoutedit as $layout_val){
 			if($layout_val->totalitems > "0" ){
-				$nonexisting=$wpdb->get_results('select t1.productID from '.$ttstoreitemtable.' t1 left join '.$ttstoretable.' t2 on t1.productID = t2.productID and t1.storeID = "'.$layout_val->id.'" where t2.productID is null');
+				$nonexisting=$wpdb->get_results('select t1.productID from '.$ttstoreitemtable.' t1 left join '.$ttstoretable.' t2 on t1.productID = t2.productID  where t1.storeID = "'.$layout_val->id.'" and t2.productID is null group by t1.productID');
 				$productcount = $layout_val->totalitems;
 				$emptyproductcount = count($nonexisting);
 				$result = array();
@@ -216,10 +216,10 @@ function itemselect() {
 	if(isset($_GET['search']) && $_GET['search'] !=""){
 		$keyword = $_GET['search'];
 		$searchlink = "&search=".$keyword;
-		$countquery=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." left join ".$ttstoreextratable." on ".$ttstoreextratable.".productID = ".$ttstoretable.".productID and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
+		$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." left join ".$ttstoreextratable." on ".$ttstoreextratable.".productID = ".$ttstoretable.".productID and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
 	} else {
 		$searchlink = "";
-		$countquery=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect."");
+		$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect."");
 	}
 	$numrows = $wpdb->num_rows;
 	$pages = intval($numrows/$limit); // Number of results pages.
