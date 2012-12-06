@@ -23,6 +23,7 @@ global $ttstorelayouttable;
 global $ttstoremultitable;
 global $menuarray;
 global $foldercache;
+global $ttstorexmltable;
 ?>
 <?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
 
@@ -42,7 +43,7 @@ if(isset($_GET['option'])){
 		$option();
 	}
 }
-$tradetracker_xml = get_option("Tradetracker_xml"); if(is_array($tradetracker_xml) and !empty($tradetracker_xml)) {$tradetracker_xml_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("Productfeed has been entered","ttstore")."\" alt=\"".__("Productfeed has been entered","ttstore")."\"></div>";} else {$tradetracker_xml_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("No productfeed has been entered","ttstore")."\" alt=\"".__("No productfeed has been entered","ttstore")."\"></div>";} 
+$tradetracker_xml = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstorexmltable;" ) ); if($tradetracker_xml>0) {$tradetracker_xml_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("Productfeed has been entered","ttstore")."\" alt=\"".__("Productfeed has been entered","ttstore")."\"></div>";} else {$tradetracker_xml_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("No productfeed has been entered","ttstore")."\" alt=\"".__("No productfeed has been entered","ttstore")."\"></div>";} 
 $tradetracker_layoutcount = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstorelayouttable;" ) ); if($tradetracker_layoutcount>="2") {$layout_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("You created at least one layout","ttstore")."\" alt=\"".__("You created at least one layout","ttstore")."\"></div>";} else {$layout_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("You did not create a layout yet. You can only use the basic layout now","ttstore")."\" alt=\"".__("You did not create a layout yet. You can only use the basic layout now","ttstore")."\"></div>";} 
 $tradetracker_storecount = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoremultitable;" ) ); if($tradetracker_storecount>="2") {$store_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/vinkje.png' , __FILE__ )."\" title=\"".__("You created at least one store","ttstore")."\" alt=\"".__("You created at least one store","ttstore")."\"></div>";} else {$store_done = "<div class=\"ttstore-filled\"><img src=\"".plugins_url( 'images/kruisje.png' , __FILE__ )."\" title=\"".__("You did not create a store yet. You can only use the basic store now","ttstore")."\" alt=\"".__("You did not create a store yet. You can only use the basic store now","ttstore")."\"></div>";} 
 if(ttstoreerrordetect("yes")=="yes"){
