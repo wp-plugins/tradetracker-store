@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 4.5.3
+Version: 4.5.4
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -48,6 +48,7 @@ $ttstoremultitable = PRO_TABLE_PREFIX."multi";
 $ttstoreitemtable = PRO_TABLE_PREFIX."item";
 $ttstoreextratable = $pro_table_prefix."extra";
 $ttstorexmltable = $pro_table_prefix."xml";
+$ttstorecattable = $pro_table_prefix."cat";
 $foldersplits = plugin_dir_path( __FILE__ )."splits/";
 $foldercache = plugin_dir_path( __FILE__ )."cache/";
 $folderhome = plugin_dir_path( __FILE__ );
@@ -105,6 +106,8 @@ $ttstorelayouttable = PRO_TABLE_PREFIX."layout";
 $ttstoremultitable = PRO_TABLE_PREFIX."multi";
 $ttstoreitemtable = PRO_TABLE_PREFIX."item";
 $ttstorexmltable = PRO_TABLE_PREFIX."xml";
+$ttstorecattable = $pro_table_prefix."cat";
+$ttstoreextratable = $pro_table_prefix."extra";
 if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
     $structure = "CREATE TABLE IF NOT EXISTS ".$ttstoretable." (
 	id INT(9) NOT NULL AUTO_INCREMENT,
@@ -115,8 +118,6 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 	price DECIMAL(10,2) NOT NULL,
 	currency VARCHAR(10) NOT NULL,
 	xmlfeed VARCHAR(10) NOT NULL,
-	categorieid VARCHAR(32) NOT NULL,
-	categorie longtext NOT NULL,
 	description text,
 	extrafield text,
 	extravalue text,
@@ -223,6 +224,23 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 		UNIQUE KEY id (id)
 	);";
 	$wpdb->query($structurexml);
+
+	$structurecat = "CREATE TABLE IF NOT EXISTS ".$ttstorecattable." (
+		id INT(9) NOT NULL AUTO_INCREMENT,
+		productID VARCHAR(100) NOT NULL,
+		categorieid VARCHAR(100) NOT NULL,
+		categorie VARCHAR(100) NOT NULL,
+		UNIQUE KEY id (id)
+	);";
+	$wpdb->query($structurecat);
+
+	$structureextra = "CREATE TABLE IF NOT EXISTS ".$ttstoreextratable." (
+	catid INT(9) NOT NULL AUTO_INCREMENT,
+	productID VARCHAR(36) NOT NULL,
+	extrafield TEXT NOT NULL,
+	extravalue TEXT NOT NULL,
+	UNIQUE KEY id (id));";
+	$wpdb->query($structureextra);
 }
 
 //delete databases when uninstalling

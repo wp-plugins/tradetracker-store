@@ -8,6 +8,7 @@ function itemselect() {
 	global $ttstoretable;
 	global $ttstoreextratable;
 	global $ttstorexmltable;
+	global $ttstorecattable;
 	global $folderhome;
 	if(!isset($_GET['function']) || $_GET['function']=="delete" || $_GET['function']=="deleteempty"){
  		if(isset($_GET['function']) && $_GET['function']=="delete") {
@@ -65,7 +66,7 @@ function itemselect() {
 		$layoutedit=$wpdb->get_results("SELECT ".$ttstoremultitable.".id, multiname, multiitems, count(".$ttstoreitemtable.".id) as totalitems FROM ".$ttstoremultitable." left join ".$ttstoreitemtable." on ".$ttstoremultitable.".id = ".$ttstoreitemtable.".storeID group by storeID, multiname order by ".$ttstoremultitable.".id");
 		foreach ($layoutedit as $layout_val){
 			if($layout_val->totalitems > "0" ){
-				$nonexisting=$wpdb->get_results('SELECT DISTINCT '.$ttstoreitemtable.'.productID FROM '.$ttstoreitemtable.' WHERE '.$ttstoreitemtable.'.productID NOT IN ( SELECT '.$ttstoretable.'.productID FROM '.$ttstoretable.') and storeID = "'.$layout_val->id.'"');
+				$nonexisting=$wpdb->get_results('select t1.productID from '.$ttstoreitemtable.' t1 left join '.$ttstoretable.' t2 on t1.productID = t2.productID and t1.storeID = "'.$layout_val->id.'" where t2.productID is null');
 				$productcount = $layout_val->totalitems;
 				$emptyproductcount = count($nonexisting);
 				$result = array();
@@ -171,7 +172,7 @@ function itemselect() {
 				$multixmlfeed = "";
 				$searchxmlfeed = "";
 			} else {
-				$multixmlfeed = "where xmlfeed = ".$layout_val->multixmlfeed." ";
+				$multixmlfeed = "and xmlfeed = ".$layout_val->multixmlfeed." ";
 				$searchxmlfeed = " and xmlfeed = ".$layout_val->multixmlfeed." ";
 			}
 			$i="1";
@@ -180,7 +181,7 @@ function itemselect() {
 				foreach ($categories as $categories){
 					if($i == "1" ) {
 						if($multixmlfeed == ""){
-							$categorieselect = " where (categorieid = \"".$categories."\"";
+							$categorieselect = " and (categorieid = \"".$categories."\"";
 							$searchcategorieselect = " and (categorieid = \"".$categories."\"";
 						}else {
 							$categorieselect = " and (categorieid = \"".$categories."\"";
@@ -215,11 +216,10 @@ function itemselect() {
 	if(isset($_GET['search']) && $_GET['search'] !=""){
 		$keyword = $_GET['search'];
 		$searchlink = "&search=".$keyword;
-		echo "SELECT * FROM ".$ttstoretable." left join ".$ttstoreextratable." on ".$ttstoreextratable.".productID = ".$ttstoretable.".productID and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID";
-		//$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable." left join ".$ttstoreextratable." on ".$ttstoreextratable.".productID = ".$ttstoretable.".productID and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
+		$countquery=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." left join ".$ttstoreextratable." on ".$ttstoreextratable.".productID = ".$ttstoretable.".productID and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
 	} else {
 		$searchlink = "";
-		$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable." ".$multixmlfeed." ".$categorieselect."");
+		$countquery=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect."");
 	}
 	$numrows = $wpdb->num_rows;
 	$pages = intval($numrows/$limit); // Number of results pages.
@@ -371,9 +371,9 @@ function selectToggle(toggle, form) {
 <?php
 if(isset($_GET['search']) && $_GET['search']!=""){
 	$keyword = $_GET['search'];
-	$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable." where (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+	$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
 } else {
-	$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable." ".$multixmlfeed." ".$categorieselect." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+	$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
 }
 	echo "<table width=\"<?php echo $adminwidth-15; ?>\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
 		echo "<tr><td width=\"200\">";

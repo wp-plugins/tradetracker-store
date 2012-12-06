@@ -1,4 +1,22 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.1"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstorecattable = $pro_table_prefix."cat";
+	$ttstoretable = $pro_table_prefix."store";
+	$structurecat = "CREATE TABLE IF NOT EXISTS ".$ttstorecattable." (
+		catid INT(9) NOT NULL AUTO_INCREMENT,
+		productID VARCHAR(100) NOT NULL,
+		categorieid VARCHAR(100) NOT NULL,
+		categorie VARCHAR(100) NOT NULL,
+		UNIQUE KEY id (id)
+	);";
+	$wpdb->query($structurecat);
+	$wpdb->query("ALTER TABLE `".$ttstoretable."` DROP `categorieid`");
+	$wpdb->query("ALTER TABLE `".$ttstoretable."` DROP `categorie`");
+	wp_clear_scheduled_hook('xmlscheduler');
+	update_option("TTstoreversion", "4.5.4" );
+}
 if (get_option("TTstoreversion") <= "4.5.0" && get_option("TTstoreversion") >= "4.1.11"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

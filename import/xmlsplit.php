@@ -100,8 +100,8 @@ function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recor
 	$xmldatadelimiter = "productFeed";
 	$xmlstring =''."\n";
 	$xmlstring.="<$xmldatadelimiter>\n";
-	$delivered = array("product ", "id=\"", "\" delete=\"false\">");
-	$needed   = array("product>", "<productID>", "</productID>");
+	//$delivered = array("product ", "id=\"", "\" delete=\"false\">");
+	//$needed   = array("product>", "<productID>", "</productID>");
 	if (function_exists('curl_init')) {
 		$ch = curl_init($xmlfile);
 		$fp = fopen($folderhome."/cache/cache.xml", "w");
@@ -129,6 +129,9 @@ function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recor
 					$buffer = str_replace("<field name=\"".$matches[1][$i]."\" value=\"".$matches[2][$i]."\" />", "<field name=\"".$matches[1][$i]."\">".$matches[2][$i]."</field>", $buffer);
 					$i++;
 				}
+			}
+			if(preg_match('/<product (.+?)\">/is', $buffer, $matches)){
+					$buffer = str_replace($matches[0], "<product>", $buffer);
 			}
 			if(preg_match('/\<categories\>/i', $buffer)){
 				$buffer = str_replace("<categories>", "<categories><category path=\"" . $categoriename . "\">".$categoriename."</category>", $buffer);

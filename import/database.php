@@ -42,6 +42,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	global $ttstoretable;
 	global $ttstoreextratable;
 	global $ttstorexmltable;
+	global $ttstorecattable;
 	global $foldersplits;
 	$xmlfilecount = get_option("xmlfilecount");
 	$xmlfeedid = get_option("xmlfilecount");
@@ -104,13 +105,15 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						$currentpage["name"]=$product->name;
 						$currentpage["imageURL"]=$product->imageURL;
 						if($product->categories->category==""){
-							$currentpage["categorie"]="empty category";
-							$currentpage["categorieid"]=md5($xmlfeed[$xmlfeednumber][0]."empty category");
+							$wpdb->insert($ttstorecattable ,array('productID' => $productID,'categorie' => "empty category",'categorieid' => md5($xmlfeed[$xmlfeednumber][0]."empty category") ),array('%s','%s','%s'));
 						} else {
-							$categories = $product->categories->category;
-							$categories = str_replace(array('(',')'), '', $categories);
-							$currentpage["categorie"]=$categories;
-							$currentpage["categorieid"]=md5($categories);
+							foreach($product->categories->children() as $catchild){
+								$categories = $catchild['path'];
+								$categories = str_replace(array('(',')'), '', $categories);
+								if($catchild['path']!=""){
+									$wpdb->insert($ttstorecattable ,array('productID' => $productID,'categorie' => $categories,'categorieid' => md5($categories) ),array('%s','%s','%s'));
+								}
+							}
 						}				
 						$currentpage["imageURL"]=$product->imageURL;
 						$currentpage["productURL"]=$product->productURL;

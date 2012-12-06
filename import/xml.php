@@ -7,6 +7,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	global $ttstoretable;
 	global $ttstoreextratable;
 	global $ttstorexmltable;
+	global $ttstorecattable;
 	global $foldersplits;
 	update_option("xmldatabasecount", "0" );
 	//prepare database 
@@ -22,8 +23,10 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 		delete_option("Tradetracker_xml_extra");
 		$emptytable = "TRUNCATE TABLE `$ttstoretable`";
 		$emptyextratable = "TRUNCATE TABLE `$ttstoreextratable`";
+		$emptycattable = "TRUNCATE TABLE `$ttstorecattable`";
 		$wpdb->query($emptytable);
 		$wpdb->query($emptyextratable);
+		$wpdb->query($emptycattable);
 		$directory = dir($foldersplits); 
 		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))
 		{  

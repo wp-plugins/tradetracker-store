@@ -27,12 +27,15 @@ function xmlfeed(){
 		$Tradetracker_xmlconv_val = $_POST['xmlfeedconv'];
 		$Tradetracker_xmlname_val = $_POST['xmlname'];
 
-       	 	$currentpage["xmlfeed"]=$Tradetracker_xml_val;
-       	 	$currentpage["xmlprovider"]=$Tradetracker_xmlconv_val;
-       	 	$currentpage["xmlname"]=$Tradetracker_xmlname_val;
-        	$wpdb->insert( $ttstorexmltable, $currentpage);
-		$multiid = $wpdb->insert_id;
+		if(!empty($Tradetracker_xml_val)){
+
+       	 		$currentpage["xmlfeed"]=$Tradetracker_xml_val;
+       	 		$currentpage["xmlprovider"]=$Tradetracker_xmlconv_val;
+       	 		$currentpage["xmlname"]=$Tradetracker_xmlname_val;
+        		$wpdb->insert( $ttstorexmltable, $currentpage);
+			$multiid = $wpdb->insert_id;
 		
+		}
 
 	        //put an settings updated message on the screen
 		$savedmessage = __("Feed added, click Update Items when all feeds are added", "ttstore");

@@ -9,6 +9,7 @@ function store() {
 	global $ttstorexmltable;
 	global $ttstorelayouttable;
 	global $ttstoretable;
+	global $ttstorecattable;
 
 	//variables for this function
 	$Tradetracker_buynow_name = 'Tradetracker_buynow';
@@ -430,9 +431,9 @@ function toggleOther(){
 		if((isset($Tradetracker_multixmlfeed_val) && $Tradetracker_multixmlfeed_val == "*") || !isset($Tradetracker_multixmlfeed_val) ){
 			$multixmlfeed = "";
 		} else {
-			$multixmlfeed = "where xmlfeed = '".$Tradetracker_multixmlfeed_val."' ";
+			$multixmlfeed = "and xmlfeed = '".$Tradetracker_multixmlfeed_val."' ";
 		}
-			$categorie = $wpdb->get_results('SELECT categorie, xmlfeed, categorieid FROM '.$ttstoretable.' '.$multixmlfeed.' group by xmlfeed, categorie ORDER BY xmlfeed, `'.$ttstoretable.'`.`categorie` ASC', OBJECT);
+			$categorie = $wpdb->get_results('SELECT '.$ttstorecattable.'.categorie, xmlfeed, '.$ttstorecattable.'.categorieid FROM '.$ttstoretable.', '.$ttstorecattable.' where '.$ttstorecattable.'.productID = '.$ttstoretable.'.productID '.$multixmlfeed.' group by xmlfeed, categorie ORDER BY xmlfeed, `'.$ttstorecattable.'`.`categorie` ASC', OBJECT);
 			if(!empty($categorie)){
 				echo "<table width=\"400\">";
 				$i="1";
