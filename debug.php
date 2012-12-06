@@ -230,7 +230,7 @@ global $ttstorecattable;
 	echo "</strong></td><td width=\"200px\"><strong>";
 	_e('Type', 'ttstore');
 	echo "</strong></td></tr>";
-	foreach ( $xmltableoverview as $overview ) 
+	foreach ( $cattableoverview as $overview ) 
 	{
 		echo "<tr><td>".$overview->Field."</td>";
 		echo "<td>".$overview->Type."</td></tr>";		
