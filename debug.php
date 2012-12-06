@@ -9,6 +9,7 @@ global $ttstorelayouttable;
 global $ttstoremultitable;
 global $ttstoreitemtable;
 global $ttstorexmltable;
+global $ttstorecattable;
 ?>
 <?php $adminwidth = get_option("Tradetracker_adminwidth"); ?>
 <?php $adminheight = get_option("Tradetracker_adminheight"); ?>
@@ -218,6 +219,24 @@ global $ttstorexmltable;
 		echo "<td>".$overview->Type."</td></tr>";		
 	}	
 	echo "</table>";
+
+	$cattableoverview = $wpdb->get_results("SHOW COLUMNS FROM ".$ttstorecattable."");
+	echo "<p><strong>";
+	_e('Database Table overview: CAT', 'ttstore');	
+	echo "</strong>";
+	echo "<table>";
+	echo "<tr><td width=\"200px\"><strong>";
+	_e('Field', 'ttstore');
+	echo "</strong></td><td width=\"200px\"><strong>";
+	_e('Type', 'ttstore');
+	echo "</strong></td></tr>";
+	foreach ( $xmltableoverview as $overview ) 
+	{
+		echo "<tr><td>".$overview->Field."</td>";
+		echo "<td>".$overview->Type."</td></tr>";		
+	}	
+	echo "</table>";
+
 	$ttmemoryusage = get_option("Tradetracker_memoryusage");
 	echo "<p><strong>";
 	_e('Memory usage last import', 'ttstore');	
