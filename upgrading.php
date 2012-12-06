@@ -1,5 +1,5 @@
 <?php
-if (get_option("TTstoreversion") == "4.5.1"){
+if (get_option("TTstoreversion") == "4.5.4"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
 	$ttstorecattable = $pro_table_prefix."cat";
@@ -9,9 +9,20 @@ if (get_option("TTstoreversion") == "4.5.1"){
 		productID VARCHAR(100) NOT NULL,
 		categorieid VARCHAR(100) NOT NULL,
 		categorie VARCHAR(100) NOT NULL,
-		UNIQUE KEY id (id)
+		UNIQUE KEY catid (catid)
 	);";
+	echo $structurecat;
 	$wpdb->query($structurecat);
+	wp_clear_scheduled_hook('xmlscheduler');
+	update_option("TTstoreversion", "4.5.6" );
+}
+
+
+if (get_option("TTstoreversion") == "4.5.1"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstorecattable = $pro_table_prefix."cat";
+	$ttstoretable = $pro_table_prefix."store";
 	$wpdb->query("ALTER TABLE `".$ttstoretable."` DROP `categorieid`");
 	$wpdb->query("ALTER TABLE `".$ttstoretable."` DROP `categorie`");
 	wp_clear_scheduled_hook('xmlscheduler');
