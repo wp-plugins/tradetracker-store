@@ -433,7 +433,7 @@ function show_items($usedhow, $winkelvol, $searching)
 					$Tradetracker_amount_i = "LIMIT ".$multi_val->multiamount.""; 
 				}
 				$productID = $Tradetracker_productid;
-				$productID = str_replace(",", "' or productID='", $productID);
+				$productID = str_replace(",", "' or ".$ttstoretable.".productID='", $productID);
 				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and ".$ttstoretable.".productID='".$productID."' ".$priceselectcur." ".$Tradetracker_amount_i.""));
 			}
 			if(isset($_GET['ipp']) && $_GET['ipp']>"0"){
