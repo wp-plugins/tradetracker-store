@@ -280,7 +280,7 @@ function show_ttpages($winkelvol)
 				} else {
 					$Tradetracker_amount_i = "LIMIT ".$multi_val->multiamount.""; 
 				}
-				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ".$priceselect." ".$Tradetracker_amount_i.""));
+				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ".$priceselect." group by ".$ttstoretable.".productID ".$Tradetracker_amount_i.""));
 			} else {
 				if ($multi_val->multiamount == "") {
 					$Tradetracker_amount_i = "LIMIT 12";
@@ -291,7 +291,7 @@ function show_ttpages($winkelvol)
 				} else {
 					$Tradetracker_amount_i = "LIMIT ".$multi_val->multiamount.""; 
 				}
-				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$priceselect." ".$Tradetracker_amount_i.""));
+				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$priceselect." group by ".$ttstoretable.".productID ".$Tradetracker_amount_i.""));
 			}
 			if(isset($_GET['ipp']) && $_GET['ipp']>"0"){
 				$itemsperpage = mysql_real_escape_string($_GET['ipp']);
@@ -423,7 +423,7 @@ function show_items($usedhow, $winkelvol, $searching)
 				} else {
 					$Tradetracker_amount_i = "LIMIT ".$multi_val->multiamount.""; 
 				}
-				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ".$priceselect." ".$Tradetracker_amount_i.""));
+				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ".$priceselect." group by ".$ttstoretable.".productID ".$Tradetracker_amount_i.""));
 			} else {
 				if ($multi_val->multiamount == "") {
 					$Tradetracker_amount_i = "LIMIT 12";
@@ -434,7 +434,7 @@ function show_items($usedhow, $winkelvol, $searching)
 				}
 				$productID = $Tradetracker_productid;
 				$productID = str_replace(",", "' or ".$ttstoretable.".productID='", $productID);
-				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (".$ttstoretable.".productID='".$productID."') ".$priceselectcur." ".$Tradetracker_amount_i.""));
+				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (".$ttstoretable.".productID='".$productID."') ".$priceselectcur." group by ".$ttstoretable.".productID ".$Tradetracker_amount_i.""));
 			}
 			if(isset($_GET['ipp']) && $_GET['ipp']>"0"){
 				$itemsperpage = mysql_real_escape_string($_GET['ipp']);
@@ -489,15 +489,15 @@ function show_items($usedhow, $winkelvol, $searching)
 	if ($searching == "1") {
 		$term = mysql_real_escape_string(get_search_query());
 		$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and `name` LIKE '%$term%' or `description` LIKE '%$term%' ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
-		echo "SELECT * FROM ".$ttstoretable." WHERE `name` LIKE '%$term%' or `description` LIKE '%$term%' ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."";
+		echo "SELECT * FROM ".$ttstoretable." WHERE `name` LIKE '%$term%' or `description` LIKE '%$term%' group by ".$ttstoretable.".productID ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."";
 	} else {
 		if (!isset($Tradetracker_productid) || $Tradetracker_productid == null) 
 		{
-			$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ".$priceselect." ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
+			$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ".$priceselect." group by ".$ttstoretable.".productID ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
 		} else {
 			$productID = $Tradetracker_productid;
 			$productID = str_replace(",", "' or ".$ttstoretable.".productID='", $productID);
-			$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (".$ttstoretable.".productID='".$productID."') ".$priceselectcur." ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
+			$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (".$ttstoretable.".productID='".$productID."') ".$priceselectcur." group by ".$ttstoretable.".productID ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
 		}
 	}
 	$storeitems = "";
