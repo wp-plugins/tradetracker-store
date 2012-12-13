@@ -9,7 +9,7 @@ if(get_option('tt_premium_provider')=="") {
 function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum, $processed, $xmldatadelimiter, $xmlitemdelimiter){
 	GLOBAL $filenum;
 	global $folderhome;
-	$chunksize=500;
+	$chunksize=250;
 	$recordnum = 1; 
 	GLOBAL $processed;
 	GLOBAL $errorfile;

@@ -148,7 +148,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	//$remove_null_number = true;
 	//$extrafieldarray = remove_array_empty_values($extrafieldarray, $remove_null_number);
 
-	$item_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstoretable;" ) );
+	$item_count = $wpdb->get_var("SELECT COUNT(*) FROM $ttstoretable;");
 	$currentupdate = date('Y-m-d H:i:s');
 	$option_name = 'Tradetracker_xml_update' ;
 	$newvalue = sprintf(__('Database filled with %1$s new items on %2$s','ttstore'), $item_count, $currentupdate);

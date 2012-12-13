@@ -5,11 +5,9 @@
 */
 
 function TTstore_scripts() { 
-
-	wp_deregister_script('jquery');   
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'ttstoreexpand-script', WP_PLUGIN_URL . '/tradetracker-store/js/expand.js');
-	wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
-	wp_enqueue_script( 'jquery-filter', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js');
+	wp_enqueue_script( 'jquery-filter', 'http://code.jquery.com/ui/1.9.2/jquery-ui.js');
 }       
 	
 add_action('wp_enqueue_scripts', 'TTstore_scripts'); 
@@ -18,7 +16,7 @@ function store_items($used, $winkel, $searching)
 {
 	global $wpdb;
 	global $ttstorexmltable;
-	$wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $ttstorexmltable;" ) ); 
+	$wpdb->get_var( "SELECT COUNT(*) FROM $ttstorexmltable;" ); 
 	if($tradetracker_xml>0)	
 	{
 		_e('No XML filled in yet please change the settings first.', 'ttstore');
@@ -173,7 +171,7 @@ function show_ttfilter($winkelvol)
 	global $ttstoremultitable;
 	global $ttstoreitemtable;
 	global $ttstoretable;
-	$max_price = $wpdb->get_var( $wpdb->prepare( "SELECT MAX(price) FROM $ttstoretable;" ) );
+	$max_price = $wpdb->get_var( "SELECT MAX(price) FROM $ttstoretable;"  );
 	$max_price = round($max_price+1);
 	if(isset($_GET['ipp'])){
 		$ipp = $_GET['ipp'];
@@ -188,7 +186,8 @@ function show_ttfilter($winkelvol)
 		$max_pricecur = $max_price;
 	}
 	$filter = "<style>#demo-frame > div.demo { padding: 10px !important; };</style>";
-	$filter .= "<script>
+	$filter .= "<script type='text/javascript'>
+	jQuery(document).ready(function($) {  
 	$(function() {
 		$( \"#slider-range\" ).slider({
 			range: true,
@@ -206,7 +205,7 @@ location.href = '?ipp=".$ipp."&tsp=0&pmin=' + ui.values[0] + '&pmax=' + ui.value
 		});
 		$( \"#amount\" ).val( \"\u20AC\" + $( \"#slider-range\" ).slider( \"values\", 0 ) +
 			\" - \u20AC\" + $( \"#slider-range\" ).slider( \"values\", 1 ) );
-	});
+	})});
 	</script>
 <div class=\"demo\">
 

@@ -68,7 +68,7 @@
 				?>
 			</select>
 		</p>
-		<?php _e('Make sure this store will only show one item. Either by limiting the amount of items <a href="wp-admin/admin.php?page=tt-store&option=store">here</a> or by only selecting one item <a href="wp-admin/admin.php?page=tt-store&option=itemselect">here</a>','ttstore'); ?>
+		<?php _e('Make sure this store will only show one item. Either by limiting the amount of items <a href="admin.php?page=tt-store&option=store">here</a> or by only selecting one item <a href="admin.php?page=tt-store&option=itemselect">here</a>','ttstore'); ?>
 
         <?php }
  
