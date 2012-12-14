@@ -6,8 +6,9 @@
 
 function TTstore_scripts() { 
 	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script('jquery-ui-slider');
+
 	wp_enqueue_script( 'ttstoreexpand-script', WP_PLUGIN_URL . '/tradetracker-store/js/expand.js');
-	wp_enqueue_script( 'jquery-filter', 'http://code.jquery.com/ui/1.9.2/jquery-ui.js');
 }       
 	
 add_action('wp_enqueue_scripts', 'TTstore_scripts'); 

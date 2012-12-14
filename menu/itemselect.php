@@ -418,7 +418,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				echo "</td><td><span class=\"link1\"><a href=\"javascript: void(0)\">";
 				echo $product->name;
 				echo "<span><img src=\"".$imageURL."\" width=\"400px\"></span></a></span></td><td>";
-				$xmlfeed=$wpdb->get_var( $wpdb->prepare("SELECT xmlname FROM ".$ttstorexmltable." where id=".$product->xmlfeed."")); 
+				$xmlfeed=$wpdb->get_var("SELECT xmlname FROM ".$ttstorexmltable." where id=".$product->xmlfeed.""); 
 				echo $xmlfeed;
 				echo "</td><td>";
 				echo $product->price;
