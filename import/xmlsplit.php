@@ -48,6 +48,9 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
     			$buffer = stream_get_line($handle, 100000, "</product>"); 
 			$recordnum++;
 			$processed++;
+			$buffer = str_replace("<productFeed", "<products", $buffer);
+			$buffer = str_replace("</productFeed", "</products", $buffer);
+
 			if(preg_match('/<images>(.+?)\<\/images>/is', $buffer, $matches)){
 				$buffer = str_replace($matches[0], $matches[1], $buffer);
 			}
