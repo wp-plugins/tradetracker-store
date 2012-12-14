@@ -32,7 +32,7 @@ function store() {
 	}
 	if(isset($_GET['delete'])){
 		if($_GET['delete']>"1"){
-			$wpdb->query($wpdb->prepare("DELETE FROM ".$ttstoremultitable." WHERE `id` = ".$_GET['delete'].""));
+			$wpdb->query("DELETE FROM ".$ttstoremultitable." WHERE `id` = ".$_GET['delete']."");
 		}
 	}
 	//filling variables from database when editting
@@ -222,7 +222,7 @@ function store() {
 					<?php echo $store_val->layname; ?>
 				</td>
 				<td>
-					<?php if ($store_val->multixmlfeed == "*"){_e('All Feeds','ttstore');} else { $xmlfeed=$wpdb->get_var( $wpdb->prepare("SELECT xmlname FROM ".$ttstorexmltable." where id=".$store_val->multixmlfeed."")); echo $xmlfeed; }?>
+					<?php if ($store_val->multixmlfeed == "*"){_e('All Feeds','ttstore');} else { $xmlfeed=$wpdb->get_var("SELECT xmlname FROM ".$ttstorexmltable." where id=".$store_val->multixmlfeed.""); echo $xmlfeed; }?>
 				</td>
 				<td>
 					<?php echo $store_val->buynow; ?>
