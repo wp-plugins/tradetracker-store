@@ -1,4 +1,6 @@
 <?php
+
+
 if (get_option("TTstoreversion") == "4.5.6"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
@@ -98,11 +100,13 @@ if (get_option("TTstoreversion") <= "4.5.0" && get_option("TTstoreversion") >= "
 				$wpdb->insert( 
 					$ttstorexmltable, 
 					array( 
+						id => $i,
 						xmlfeed => $key, 
 						xmlname => $Tradetracker_xmlname_val[$i],
 						xmlprovider => $value
 					), 
 					array( 
+						'%s',
 						'%s',
 						'%s',
 						'%s' 
