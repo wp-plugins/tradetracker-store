@@ -1,6 +1,14 @@
 <?php
 
 
+if (get_option("TTstoreversion") == "4.5.7"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttxmltable = $pro_table_prefix."xml";
+	$wpdb->query("ALTER TABLE `".$ttxmltable."` CHANGE `xmlfeed` `xmlfeed` VARCHAR( 10000 ) NOT NULL");
+	update_option("TTstoreversion", "4.5.15" );
+}
+
 if (get_option("TTstoreversion") == "4.5.6"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
@@ -74,7 +82,7 @@ if (get_option("TTstoreversion") <= "4.5.0" && get_option("TTstoreversion") >= "
 	}
 	$structurexml = "CREATE TABLE IF NOT EXISTS ".$ttstorexmltable." (
 		id INT(9) NOT NULL AUTO_INCREMENT,
-		xmlfeed VARCHAR(1000) NOT NULL,
+		xmlfeed VARCHAR(10000) NOT NULL,
 		xmlname VARCHAR(100) NOT NULL,
 		xmlprovider VARCHAR(100) NOT NULL,
 		xmltitle VARCHAR(100) NOT NULL,
