@@ -1,5 +1,5 @@
 <?php
-function debug() {
+function ttdebug() {
 global $wpdb;
 global $foldersplits;
 global $foldercache;
@@ -328,7 +328,7 @@ function ttstoreheader() {
 		echo "<div class='error'>".$osmessage." <a href=\"admin.php?page=tt-store&errordel=yes\">Close</a></div>";
 	}
 }
-add_action( 'init', 'test_head_footer_init' );
+//add_action( 'init', 'test_head_footer_init' );
 function test_head_footer_init() {
 	// Hook in at admin_init to perform the check for wp_head and wp_footer
 	add_action( 'admin_init', 'check_head_footer' );

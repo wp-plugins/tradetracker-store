@@ -107,13 +107,24 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						if($product->categories->category==""){
 							$wpdb->insert($ttstorecattable ,array('productID' => $productID,'categorie' => "empty category",'categorieid' => md5($xmlfeed[$xmlfeednumber][0]."empty category") ),array('%s','%s','%s'));
 						} else {
+							$querycat = "";
+							$i="1";
+							$totalcat = count($product->categories->children());
 							foreach($product->categories->children() as $catchild){
 								$categories = $catchild['path'];
 								$categories = str_replace(array('(',')'), '', $categories);
 								if($catchild['path']!=""){
-									$wpdb->insert($ttstorecattable ,array('productID' => $productID,'categorie' => $categories,'categorieid' => md5($categories) ),array('%s','%s','%s'));
+									if($i == $totalcat){
+										$querycat .= "('".$productID."', '".str_replace("'","''", $categories)."', '".md5($categories)."')";
+									} else {
+										$querycat .= "('".$productID."', '".str_replace("'","''", $categories)."', '".md5($categories)."'),";
+									}
+									//$wpdb->insert($ttstorecattable ,array('productID' => $productID,'categorie' => $categories,'categorieid' => md5($categories) ),array('%s','%s','%s'));
 								}
+								$i++;
 							}
+							$wpdb->query("INSERT INTO ".$ttstorecattable." (productID, categorie, categorieid) VALUES ".$querycat.";");
+							$wpdb->flush();
 						}				
 						$currentpage["imageURL"]=$product->imageURL;
 						$currentpage["productURL"]=$product->productURL;
@@ -123,19 +134,39 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
 						$wpdb->flush();
 						if(get_option("Tradetracker_loadextra")=="1" && $product->additional && ($product->additional != '')) {
+							$queryextra = "";
+							$i="1";
+							$totalextra = count($product->additional->children());
 							foreach($product->additional->children() as $datachild){
 								if($datachild['name']!=""){
-									$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $datachild['name'],'extravalue' => $datachild ),array('%s','%s','%s'));
+									if($i == $totalextra){
+										$queryextra .= "('".$productID."', '".$datachild['name']."', '".str_replace("'","''", $datachild)."')";
+									} else {
+										$queryextra .= "('".$productID."', '".$datachild['name']."', '".str_replace("'","''", $datachild)."'),";
+									}
+									//$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $datachild['name'],'extravalue' => $datachild ),array('%s','%s','%s'));
 								}
+								$i++;
 							}
+							$wpdb->query("INSERT INTO ".$ttstoreextratable." (productID, extrafield, extravalue) VALUES ".$queryextra.";");
 							$wpdb->flush();
 						}
 						if(get_option("Tradetracker_loadextra")=="1" && $product->properties && ($product->properties != '')) {
+							$queryextra = "";
+							$i="1";
+							$totalextra = count($product->properties->children());
 							foreach($product->properties->children() as $datachild){
 								if($datachild['name']!=""){
-									$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $datachild['name'],'extravalue' => $datachild->value ),array('%s','%s','%s'));
+									if($i == $totalextra){
+										$queryextra .= "('".$productID."', '".$datachild['name']."', '".str_replace("'","''", $datachild->value)."')";
+									} else {
+										$queryextra .= "('".$productID."', '".$datachild['name']."', '".str_replace("'","''", $datachild->value)."'),";
+									}
+									//$wpdb->insert($ttstoreextratable ,array('productID' => $productID,'extrafield' => $datachild['name'],'extravalue' => $datachild->value ),array('%s','%s','%s'));
 								}
+								$i++;
 							}
+							$wpdb->query("INSERT INTO ".$ttstoreextratable." (productID, extrafield, extravalue) VALUES ".$queryextra.";");
 							$wpdb->flush();
 						}
 					}
@@ -181,6 +212,8 @@ window.location.href='<?php echo "admin.php?page=tt-store&database=yes&xmldataba
 		update_option("xmlfilecount", $xmlfilecount );
 		update_option("xmldatabasecount", "0" );
 		$directory = dir($foldersplits); 
+
+
 		
 		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
 			{  

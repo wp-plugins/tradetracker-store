@@ -143,8 +143,8 @@ $menuarray = array( array( 'Title' => __("Add/Edit XMLFeeds","ttstore"),
                       'Price' => __("Free","ttstore"), 
                       'Shortdesc' => __("This will tell you if there are any errors in the plugin.","ttstore"), 
                       'Longdesc' => __("<h3>Debugging</h3><p>You can see if the following is working properly:<br>- Splits and Cache folder is writable<br>- Curl function enabled<br>- Simplexml function enabled<br>- wp_head enabled in your theme</p>","ttstore"), 
-                      'Name' => "debug",
-                      'Link' => "debug",		
+                      'Name' => "ttdebug",
+                      'Link' => "ttdebug",		
                       'Vink' => $debug_done
                     )
              );
