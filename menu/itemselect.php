@@ -492,7 +492,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 		</div>
 	</div>
 </div>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+
 
 <?php
 

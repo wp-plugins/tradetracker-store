@@ -11,7 +11,7 @@ function TTtinymce() {
 	global $wpdb;
 	global $ttstoremultitable;
 ?>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="<?php bloginfo('wpurl'); ?>/wp-includes/js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="<?php bloginfo('wpurl'); ?>/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
 	<script type="text/javascript">
 		var TTTiny = {
@@ -22,7 +22,7 @@ function TTtinymce() {
 	},
 	insert: function createTTShortcode(e) {
 		//Create gallery Shortcode
-		var store = $('#store').val();
+		var store = jQuery('#store').val();
 		var output = '[display_filter ';
 		if(store) {
 			output += 'store="'+store+'"';

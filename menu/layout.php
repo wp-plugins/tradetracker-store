@@ -457,11 +457,12 @@ function layout() {
 		</div>
 	</form>
 	</div>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+
 <SCRIPT>
+	jQuery(document).ready(function($) {  
 $('.target').change(function() {
 $('#ttstoreboxlayout').load("<?php echo plugins_url( 'showlayout.php' , __FILE__ )?>", {layoutname:$('#layoutname').val(),layoutwidth:$('#layoutwidth').val(),layoutfontsize:$('#layoutfontsize').val(),layoutfont:$('#layoutfont').val(),layoutcolortitle:$('#layoutcolortitle').val(),layoutcolorimagebg:$('#layoutcolorimagebg').val(),layoutcolorfooter:$('#layoutcolorfooter').val(),layoutcolorborder:$('#layoutcolorborder').val(),layoutcolorbutton:$('#layoutcolorbutton').val(),layoutcolorbuttonfont:$('#layoutcolorbuttonfont').val(),layoutcolorfont:$('#layoutcolorfont').val() });
-});
+})});
 </SCRIPT>
 </div>
 <?php
