@@ -104,6 +104,13 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						$currentpage["xmlfeed"]=$product->xmlfile;		
 						$currentpage["name"]=$product->name;
 						$currentpage["imageURL"]=$product->imageURL;
+						$currentpage["imageURL"]=$product->imageURL;
+						$currentpage["productURL"]=$product->productURL;
+						$currentpage["description"]=strip_tags($product->description);
+						$currentpage["price"]=$product->price;
+						$currentpage["currency"]=$product->price['currency'];
+						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
+						$wpdb->flush();
 						if($product->categories->category==""){
 							$wpdb->insert($ttstorecattable ,array('productID' => $productID,'categorie' => "empty category",'categorieid' => md5($xmlfeed[$xmlfeednumber][0]."empty category") ),array('%s','%s','%s'));
 						} else {
@@ -125,14 +132,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 							}
 							$wpdb->query("INSERT INTO ".$ttstorecattable." (productID, categorie, categorieid) VALUES ".$querycat.";");
 							$wpdb->flush();
-						}				
-						$currentpage["imageURL"]=$product->imageURL;
-						$currentpage["productURL"]=$product->productURL;
-						$currentpage["description"]=strip_tags($product->description);
-						$currentpage["price"]=$product->price;
-						$currentpage["currency"]=$product->price['currency'];
-						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values
-						$wpdb->flush();
+						}	
 						if(get_option("Tradetracker_loadextra")=="1" && $product->additional && ($product->additional != '')) {
 							$queryextra = "";
 							$i="1";
@@ -211,17 +211,12 @@ window.location.href='<?php echo "admin.php?page=tt-store&database=yes&xmldataba
 		$xmlfilecount++;
 		update_option("xmlfilecount", $xmlfilecount );
 		update_option("xmldatabasecount", "0" );
+
 		$directory = dir($foldersplits); 
-
-
-		
-		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))  
-			{  
-			if ($item != '.' && $item != '..')
-   			{  
+		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty))){  
+			if ($item != '.' && $item != '..'){  
 				$files = glob($foldersplits."/*xml");
-				if(count($files) > 0)
-					{	
+				if(count($files) > 0){	
 					if (is_array($files)) {
 						foreach($files as $filedel){
 							unlink($filedel); 
@@ -231,8 +226,6 @@ window.location.href='<?php echo "admin.php?page=tt-store&database=yes&xmldataba
 			}  
 		}
 		$directory->close();
-		
-
 		if($xmlcronjob=="0"){
 ?>
 <script type="text/javascript">

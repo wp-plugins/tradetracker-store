@@ -531,10 +531,15 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$more = "<div class=\"".$storename."store-more\"></div>";
 		}
+		$outpage = get_option('Tradetracker_outpageURL');
 		if($multiproductpage == "1" ){
 			$producturl = "".get_option("Tradetracker_productpageURL")."?ttproductid=".$product->productID."";
 			$urltarget ="";
 			$rel = "";
+		} elseif (isset($outpage) && !empty($outpage)){
+			$producturl = "".$outpage."?id=".$product->productID."";
+			$urltarget ="target=\"_blank\"";
+			$rel = "";		
 		} else {
 			$producturl = htmlspecialchars($product->productURL);
 			$urltarget ="target=\"_blank\"";

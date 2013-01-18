@@ -139,6 +139,9 @@ function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recor
 			if(preg_match('/\<categories\>/i', $buffer)){
 				$buffer = str_replace("<categories>", "<categories><category path=\"" . $categoriename . "\">".$categoriename."</category>", $buffer);
 			}
+			if(preg_match('/<category name(.+?)\/\>/i', $buffer, $matches)){
+				$buffer = str_replace($matches[0], "", $buffer);
+			}
 			fwrite($exportfile, $buffer);
 			if(!preg_match('/<\/'.$xmldatadelimiter.'>/i', $buffer)){
 				fwrite($exportfile, "<xmlfile>$xmlfeedID</xmlfile>");

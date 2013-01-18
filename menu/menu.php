@@ -7,6 +7,14 @@ function ttstore_menu() {
 	add_submenu_page('tt-store', 'Tradetracker Store FAQ', 'FAQ', 'manage_options', 'tt-store-faq', 'ttstore_faq');
 	add_submenu_page('tt-store', 'Tradetracker Store Releaselog', 'Releaselog', 'manage_options', 'tt-store-rllog', 'ttstore_rllog');
 	add_submenu_page('tt-store', 'Tradetracker Store News', 'News', 'manage_options', 'tt-store-news', 'ttstore_news');
+	$provider = get_option('tt_premium_function');
+	if(!empty($provider)){
+		foreach($provider as $providers) {
+			if($providers == "statistics"){ 
+				add_submenu_page('tt-store', 'Tradetracker Store Stats', 'Stats', 'manage_options', 'tt-store-stats', 'ttstore_stats');
+			}
+		}
+	}
 	add_action( "admin_print_scripts-".$ttstoreadmincss, 'ttstore_admin_css' );
 }
 function ttstore_admin_css() {
@@ -153,6 +161,9 @@ $menuarray = array( array( 'Title' => __("Add/Edit XMLFeeds","ttstore"),
 		foreach($provider as $providers) {
 			if($providers == "productpage"){ 
 				newmenupremium();
+			}
+			if($providers == "statistics"){ 
+				newmenupremiumstats();
 			}
 		}
 	}
