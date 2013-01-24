@@ -9,7 +9,7 @@ if(get_option('tt_premium_provider')=="") {
 function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum, $processed, $xmldatadelimiter, $xmlitemdelimiter){
 	GLOBAL $filenum;
 	global $folderhome;
-	$chunksize=250;
+	$chunksize=100;
 	$recordnum = 1; 
 	GLOBAL $processed;
 	GLOBAL $errorfile;
@@ -94,7 +94,7 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 }
 function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum, $processed, $xmldatadelimiter, $xmlitemdelimiter){
 	GLOBAL $filenum;
-	$chunksize=500;
+	$chunksize=100;
 	$recordnum = 1; 
 	GLOBAL $processed;
 	global $folderhome;

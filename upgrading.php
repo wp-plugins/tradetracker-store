@@ -264,7 +264,7 @@ if (get_option("TTstoreversion") == "4.0"){
 	update_option("Tradetracker_adminheight", "460" );
 	update_option("TTstoreversion", "4.0.4" );
 }
-if (get_option("TTstoreversion") < "4.0" || get_option("TTstoreversion") == ""){
+if (get_option("TTstoreversion") < "4.0"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
 	$ttstorelayouttable = $pro_table_prefix."layout";
@@ -305,9 +305,9 @@ if (get_option("TTstoreversion") < "4.0" || get_option("TTstoreversion") == ""){
 	$structuremulti = "CREATE TABLE IF NOT EXISTS $ttstoremultitable (
         id INT(9) NOT NULL AUTO_INCREMENT,
 	multiname VARCHAR(100) NOT NULL,
-	multisorting VARCHAR(100) NOT NULL,
-	multiorder VARCHAR(4) NOT NULL DEFAULT 'rand()',
-	multilayout INT(10) NOT NULL DEFAULT 'asc',
+	multisorting VARCHAR(100) NOT NULL DEFAULT 'rand()',
+	multiorder VARCHAR(4) NOT NULL DEFAULT 'asc',
+	multilayout INT(10) NOT NULL,
         multiitems VARCHAR(10000) NOT NULL,
         multiamount int(3) NOT NULL,
 	multilightbox VARCHAR(1) NOT NULL,
