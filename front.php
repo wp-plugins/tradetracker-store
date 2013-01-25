@@ -243,13 +243,13 @@ function show_ttpages($winkelvol)
 			foreach ($categories as $categories){
 				if($i == "1" ) {
 					if($multixmlfeed == ""){
-						$categorieselect = " and (categorieid = \"".$categories."\"";
+						$categorieselect = " and (".$ttstorecattable.".categorieid = \"".$categories."\"";
 					}else {
-						$categorieselect = " and (categorieid = \"".$categories."\"";
+						$categorieselect = " and (".$ttstorecattable.".categorieid = \"".$categories."\"";
 					}
 				$i = "2";
 				} else {
-						$categorieselect .= " or categorieid = \"".$categories."\"";
+						$categorieselect .= " or ".$ttstorecattable.".categorieid = \"".$categories."\"";
 				}
 			}
 			$categorieselect .= ") ";
@@ -381,13 +381,13 @@ function show_items($usedhow, $winkelvol, $searching)
 			foreach ($categories as $categories){
 				if($i == "1" ) {
 					if($multixmlfeed == ""){
-						$categorieselect = " and (categorieid = \"".$categories."\"";
+						$categorieselect = " and (".$ttstorecattable.".categorieid = \"".$categories."\"";
 					}else {
-						$categorieselect = " and (categorieid = \"".$categories."\"";
+						$categorieselect = " and (".$ttstorecattable.".categorieid = \"".$categories."\"";
 					}
 				$i = "2";
 				} else {
-						$categorieselect .= " or categorieid = \"".$categories."\"";
+						$categorieselect .= " or ".$ttstorecattable.".categorieid = \"".$categories."\"";
 				}
 			}
 			$categorieselect .= ") ";
@@ -476,6 +476,9 @@ function show_items($usedhow, $winkelvol, $searching)
 			$width= $multi_val->laywidth;
 		}
 		$multisorting = $multi_val->multisorting;
+		if(isset($multisorting) && $multisorting=="categorie"){
+			$multisorting = $ttstorecattable.".".$multisorting;
+		}
 		$multiorder = $multi_val->multiorder;
 		$widthtitle = $width-6;
 		$widthmore = $width-10;
