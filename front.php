@@ -492,7 +492,7 @@ function show_items($usedhow, $winkelvol, $searching)
 
 	if ($searching == "1") {
 		$term = mysql_real_escape_string(get_search_query());
-		$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and `name` LIKE '%$term%' or `description` LIKE '%$term%' group by ".$ttstoretable.".productID ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
+		$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and MATCH(name,description) AGAINST ('$term') group by ".$ttstoretable.".productID ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
 	} else {
 		if (!isset($Tradetracker_productid) || $Tradetracker_productid == null) 
 		{
