@@ -358,6 +358,7 @@ function store() {
 	if(!empty($provider)){
 		foreach($provider as $providers) {
 			if($providers == "productpage"){ 
+				$productpage="1";
 			?>	
 			<tr>
 				<td>
@@ -372,9 +373,10 @@ function store() {
 				</td>
 			</tr>
 			<?php
-			} else {
-				echo "<input type=\"hidden\" name=\"".$Tradetracker_multiproductpage_name."\" value=\"".$Tradetracker_multiproductpage_val."\">";
 			}
+		}
+		if (!isset($productpage)){
+				echo "<input type=\"hidden\" name=\"".$Tradetracker_multiproductpage_name."\" value=\"".$Tradetracker_multiproductpage_val."\">";
 		}
 	}
 ?>

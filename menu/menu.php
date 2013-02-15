@@ -160,10 +160,24 @@ $menuarray = array( array( 'Title' => __("Add/Edit XMLFeeds","ttstore"),
 	if(!empty($provider)){
 		foreach($provider as $providers) {
 			if($providers == "productpage"){ 
-				newmenupremium();
+				if(function_exists('newmenupremium')) {
+					newmenupremium();
+				}
 			}
 			if($providers == "statistics"){ 
-				newmenupremiumstats();
+				if(function_exists('newmenupremiumstats')) {
+					newmenupremiumstats();
+				}
+			}
+		}
+	}
+	$afprovider = get_option('tt_premium_provider');
+	if(!empty($afprovider)){
+		foreach($afprovider as $afproviders) {
+			if($afproviders == "bol_Coupons"){ 
+				if(function_exists('newmenupremiumbol')) {
+					newmenupremiumbol();
+				}
 			}
 		}
 	}
