@@ -1,4 +1,28 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.21"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstoremultitable = $pro_table_prefix."multi";
+	$ttstorexmltable = $pro_table_prefix."xml";
+	$ttstorecattable = $pro_table_prefix."cat";
+	$ttstoretable = $pro_table_prefix."store";	
+
+	$itemlist = $wpdb->get_results('SELECT id, categories FROM `'.$ttstoremultitable.'`');
+	foreach ($itemlist as $items){
+		$categories = $items->categories;
+		$categorieoverview = unserialize($categories);
+		$newcategorie = array();
+		foreach ($categorieoverview as $categorie){
+			$feedname = $wpdb->get_row('SELECT '.$ttstorexmltable.'.xmlname,'.$ttstorecattable.'.categorie FROM `'.$ttstoremultitable.'`,`'.$ttstorexmltable.'`,`'.$ttstorecattable.'`,`'.$ttstoretable.'` where '.$ttstorecattable.'.categorieid="'.$categorie.'" and '.$ttstorecattable.'.productid='.$ttstoretable.'.productid and '.$ttstoretable.'.xmlfeed = '.$ttstorexmltable.'.id limit 0, 1');
+			array_push($newcategorie, md5($feedname->xmlname."".$feedname->categorie));
+		}
+		$newcategorie = serialize($newcategorie);
+		$query = $wpdb->update( $ttstoremultitable, array( 'categories' =>  $newcategorie), array( 'id' => $items->id), array( '%s'), array( '%s'), array( '%d' ) );
+	}
+	wp_clear_scheduled_hook('xmlscheduler');
+	update_option("TTstoreversion", "4.5.23" );
+}
+
 
 if (get_option("TTstoreversion") == "4.5.15"){
 	global $wpdb;
