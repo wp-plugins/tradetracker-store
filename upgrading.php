@@ -8,6 +8,12 @@ if (get_option("TTstoreversion") == "4.5.21"){
 	$ttstoretable = $pro_table_prefix."store";	
 	$totalstores = $itemlist = $wpdb->get_results('SELECT id, categories FROM `'.$ttstoremultitable.'`');
 	$amountstores = count($totalstores);
+	$try = get_option("TTstoretries");
+	if(isset($try) && !empty($try)){
+
+	} else {
+		$try = "1";
+	}
 	$amountdone = get_option("TTstoreamountdone");
 	if(isset($amountdone) && !empty($amountdone)){
 
@@ -15,20 +21,26 @@ if (get_option("TTstoreversion") == "4.5.21"){
 		$amountdone = "1";
 	}
 	if($amountdone <= $amountstores){
-		$itemlist = $wpdb->get_results('SELECT id, categories FROM `'.$ttstoremultitable.'` limit '.$amountdone.',1');
-		foreach ($itemlist as $items){
-			$categories = $items->categories;
-			$categorieoverview = unserialize($categories);
-			$newcategorie = array();
-			foreach ($categorieoverview as $categorie){
-				$feedname = $wpdb->get_row('SELECT '.$ttstorexmltable.'.xmlname,'.$ttstorecattable.'.categorie FROM `'.$ttstoremultitable.'`,`'.$ttstorexmltable.'`,`'.$ttstorecattable.'`,`'.$ttstoretable.'` where '.$ttstorecattable.'.categorieid="'.$categorie.'" and '.$ttstorecattable.'.productid='.$ttstoretable.'.productid and '.$ttstoretable.'.xmlfeed = '.$ttstorexmltable.'.id limit 0, 1');
-				if(isset($feedname->xmlname) && !empty($feedname->xmlname)){
-					array_push($newcategorie, md5($feedname->xmlname."".$feedname->categorie));
+		$try++;
+		update_option("TTstoretries", $try );
+		if($try < 3){
+			$itemlist = $wpdb->get_results('SELECT id, categories FROM `'.$ttstoremultitable.'` limit '.$amountdone.',1');
+			foreach ($itemlist as $items){
+				$categories = $items->categories;
+				$categorieoverview = unserialize($categories);
+				$newcategorie = array();
+				foreach ($categorieoverview as $categorie){
+					$feedname = $wpdb->get_row('SELECT '.$ttstorexmltable.'.xmlname,'.$ttstorecattable.'.categorie FROM `'.$ttstoremultitable.'`,`'.$ttstorexmltable.'`,`'.$ttstorecattable.'`,`'.$ttstoretable.'` where '.$ttstorecattable.'.categorieid="'.$categorie.'" and '.$ttstorecattable.'.productid='.$ttstoretable.'.productid and '.$ttstoretable.'.xmlfeed = '.$ttstorexmltable.'.id limit 0, 1');
+					if(isset($feedname->xmlname) && !empty($feedname->xmlname)){
+						array_push($newcategorie, md5($feedname->xmlname."".$feedname->categorie));
+					}
 				}
+				$newcategorie = serialize($newcategorie);
+				$query = $wpdb->update( $ttstoremultitable, array( 'categories' =>  $newcategorie), array( 'id' => $items->id), array( '%s'), array( '%s'), array( '%d' ) );
 			}
-			$newcategorie = serialize($newcategorie);
-			$query = $wpdb->update( $ttstoremultitable, array( 'categories' =>  $newcategorie), array( 'id' => $items->id), array( '%s'), array( '%s'), array( '%d' ) );
 		}
+		$try="1";
+		update_option("TTstoretries", $try );
 		$amountdone++;
 		update_option("TTstoreamountdone", $amountdone );
 	} else {
