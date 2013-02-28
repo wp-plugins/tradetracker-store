@@ -46,6 +46,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	global $foldersplits;
 	$xmlfilecount = get_option("xmlfilecount");
 	$xmlfeedid = get_option("xmlfilecount");
+	$newcategory = get_option("TTnewcategory");
 	$xmldatabasecount = get_option("xmldatabasecount");
 	if($xmldatabasecount == ""){
 		$xmldatabasecount = "0";
@@ -122,9 +123,17 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 								$categories = str_replace(array('(',')'), '', $categories);
 								if($catchild['path']!=""){
 									if($i == $totalcat){
-										$querycat .= "('".$productID."', '".str_replace("'","''", $categories)."', '".md5($xmlfeed[$xmlfeednumber][0]."".$categories)."')";
+										if (isset($newcategory) && $newcategory == "1"){ 
+											$querycat .= "('".$productID."', '".str_replace("'","''", $categories)."', '".md5($xmlfeed[$xmlfeednumber][0]."".$categories)."')";
+										} else {
+											$querycat .= "('".$productID."', '".str_replace("'","''", $categories)."', '".md5($categories)."')";
+										}
 									} else {
-										$querycat .= "('".$productID."', '".str_replace("'","''", $categories)."', '".md5($xmlfeed[$xmlfeednumber][0]."".$categories)."'),";
+										if (isset($newcategory) && $newcategory == "1"){ 
+											$querycat .= "('".$productID."', '".str_replace("'","''", $categories)."', '".md5($xmlfeed[$xmlfeednumber][0]."".$categories)."'),";
+										} else {
+											$querycat .= "('".$productID."', '".str_replace("'","''", $categories)."', '".md5($categories)."'),";
+										}
 									}
 									//$wpdb->insert($ttstorecattable ,array('productID' => $productID,'categorie' => $categories,'categorieid' => md5($categories) ),array('%s','%s','%s'));
 								}

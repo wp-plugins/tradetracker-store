@@ -19,6 +19,7 @@ function pluginsettings(){
 	$Tradetracker_showurl_name = 'Tradetracker_showurl';
 	$Tradetracker_usecss_name = 'Tradetracker_usecss';
 	$Tradetracker_csslink_name = 'Tradetracker_csslink';
+	$Tradetracker_TTnewcategory_name = 'TTnewcategory';
 
 
 	//filling variables from database
@@ -35,6 +36,7 @@ function pluginsettings(){
 	$Tradetracker_showurl_val = get_option( $Tradetracker_showurl_name );
 	$Tradetracker_usecss_val = get_option( $Tradetracker_usecss_name );
 	$Tradetracker_csslink_val = get_option( $Tradetracker_csslink_name );
+	$Tradetracker_TTnewcategory_val = get_option( $Tradetracker_TTnewcategory_name );
 
 
 
@@ -53,6 +55,7 @@ function pluginsettings(){
 		$Tradetracker_showurl_val = $_POST[ $Tradetracker_showurl_name ];
 		$Tradetracker_usecss_val = $_POST[ $Tradetracker_usecss_name ];
 		$Tradetracker_csslink_val = $_POST[ $Tradetracker_csslink_name ];
+		$Tradetracker_TTnewcategory_val = $_POST[ $Tradetracker_TTnewcategory_name ];
 
 		if ( get_option("Tradetracker_debugemail")  != $Tradetracker_debugemail_val) {
 			update_option( $Tradetracker_debugemail_name, $Tradetracker_debugemail_val );
@@ -93,6 +96,9 @@ function pluginsettings(){
 		if ( get_option("Tradetracker_csslink")  != $Tradetracker_csslink_val) {
 			update_option( $Tradetracker_csslink_name, $Tradetracker_csslink_val );
 		}
+		if ( get_option("TTnewcategory")  != $Tradetracker_TTnewcategory_val) {
+			update_option( $Tradetracker_TTnewcategory_name, $Tradetracker_TTnewcategory_val );
+		}
 
 	        //put an settings updated message on the screen
 		$savedmessage = __("Settings saved", "ttstore");
@@ -117,6 +123,26 @@ function pluginsettings(){
 		</div>
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
 			<table width="<?php echo $adminwidth-15; ?>">
+				<tr>
+					<td width="400px">
+						<label for="tradetrackerusenewcategorye" title="<?php _e('Do you want to use new category structure.','ttstore');?>" class="info">
+							<?php _e("Do you want to use new category structure.:", 'ttstore' ); ?> 
+							<br />
+							<?php _e('If you change this you will have to manually reselect all categories for all your stores.','ttstore');?>
+						</label>
+					</td>
+					<td>
+						<input type="radio" name="<?php echo $Tradetracker_TTnewcategory_name; ?>" <?php if($Tradetracker_TTnewcategory_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore');?>
+						<br>
+						<input type="radio" name="<?php echo $Tradetracker_TTnewcategory_name; ?>" <?php if($Tradetracker_TTnewcategory_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore');?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<hr />
+					</td>
+				</tr>
+
 				<tr>
 					<td width="400px">
 						<label for="tradetrackerusecss" title="<?php _e('If you want to create your own CSS file.','ttstore');?>" class="info">

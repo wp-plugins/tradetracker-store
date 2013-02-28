@@ -13,6 +13,9 @@ function xmlfeed(){
 	//filling variables from database
 	$Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
 	$Tradetracker_xmlname_val = get_option( $Tradetracker_xmlname_name );
+	$TTedit = $_GET['edit'];
+
+	
 	if(isset($_GET['delete'])){
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $ttstorexmltable WHERE id = %d",$_GET['delete'] ));
 		$savedmessage = __("Feed deleted", "ttstore");
@@ -21,20 +24,48 @@ function xmlfeed(){
 
 	//see if form has been submitted
 	if( isset($_POST[ $ttstoresubmit ]) && $_POST[ $ttstoresubmit ] == 'Y' ) {
+		if(isset($_POST['xmlfeedid']) && !empty($_POST['xmlfeedid'])){
+			$Tradetracker_xmlid_val = $_POST['xmlfeedid'];
+			$Tradetracker_xml_val = $_POST['xmlfeed'];
+			$Tradetracker_xmlconv_val = $_POST['xmlfeedconv'];
+			$Tradetracker_xmlname_val = $_POST['xmlname'];	
+			if(!empty($Tradetracker_xml_val)){
+				$wpdb->update( 
+					''.$ttstorexmltable.'', 
+					array( 
+						'xmlfeed' => ''.$Tradetracker_xml_val.'',	
+						'xmlprovider' => ''.$Tradetracker_xmlconv_val.'',
+						'xmlname' => ''.$Tradetracker_xmlname_val.''
+					), 
+					array( 'id' => ''.$Tradetracker_xmlid_val.'' ), 
+					array( 
+						'%s',
+						'%s',
+						'%s'
+					), 
+					array( '%d' ) 
+				);
+				?>
+<script type="text/javascript">
+<!--
+window.location = "admin.php?page=tt-store&option=xmlfeed"
+//-->
+</script>
 
-		//get posted data
-		$Tradetracker_xml_val = $_POST['xmlfeed'];
-		$Tradetracker_xmlconv_val = $_POST['xmlfeedconv'];
-		$Tradetracker_xmlname_val = $_POST['xmlname'];
-
-		if(!empty($Tradetracker_xml_val)){
-
-       	 		$currentpage["xmlfeed"]=$Tradetracker_xml_val;
-       	 		$currentpage["xmlprovider"]=$Tradetracker_xmlconv_val;
-       	 		$currentpage["xmlname"]=$Tradetracker_xmlname_val;
-        		$wpdb->insert( $ttstorexmltable, $currentpage);
-			$multiid = $wpdb->insert_id;
-		
+				<?php
+			}			
+		} else {
+			//get posted data
+			$Tradetracker_xml_val = $_POST['xmlfeed'];
+			$Tradetracker_xmlconv_val = $_POST['xmlfeedconv'];
+			$Tradetracker_xmlname_val = $_POST['xmlname'];
+			if(!empty($Tradetracker_xml_val)){
+	       	 		$currentpage["xmlfeed"]=$Tradetracker_xml_val;
+       		 		$currentpage["xmlprovider"]=$Tradetracker_xmlconv_val;
+       		 		$currentpage["xmlname"]=$Tradetracker_xmlname_val;
+       		 		$wpdb->insert( $ttstorexmltable, $currentpage);
+				$multiid = $wpdb->insert_id;
+			}
 		}
 
 	        //put an settings updated message on the screen
@@ -77,7 +108,7 @@ function xmlfeed(){
 					<strong><?php _e("XML Provider","ttstore"); ?></strong>
 				</td>
 				<td>
-					<strong><?php // _e("Edit","ttstore"); ?></strong>
+					<strong><?php  _e("Edit","ttstore"); ?></strong>
 				</td>
 				<td>
 					<strong><?php _e("Delete","ttstore"); ?></strong>
@@ -94,7 +125,7 @@ function xmlfeed(){
 						echo "</td><td>";
 						echo $xml->xmlprovider;	
 						echo "</td><td>";
-						// echo "<a href=\"admin.php?page=tt-store&option=xmlfeed&edit=".$xml->id."\">".__("Edit","ttstore")."</a>";
+						echo "<a href=\"admin.php?page=tt-store&option=xmlfeed&edit=".$xml->id."\">".__("Edit","ttstore")."</a>";
 						echo "</td><td>";
 						echo "<a href=\"admin.php?page=tt-store&option=xmlfeed&delete=".$xml->id."\">".__("Delete","ttstore")."</a>";
 						echo "</td></tr>";				
@@ -115,6 +146,31 @@ function xmlfeed(){
 					</td>
 				</tr>
 				<?php
+				if(isset($TTedit)&&!empty($TTedit)){
+					$oldfeed = $wpdb->get_row("SELECT xmlfeed, xmlname, xmlprovider, id FROM ".$ttstorexmltable." where id='$TTedit'");
+					echo "<tr><td>";
+					echo "<input type=\"text\" name=\"xmlfeed\" value=\"".$oldfeed->xmlfeed."\" size=\"50\">";
+					echo "</td><td>";
+					echo "<input type=\"text\" name=\"xmlname\" value=\"".$oldfeed->xmlname."\" size=\"20\">";
+					echo "</td><td>";
+					echo "<input type=\"hidden\" name=\"xmlfeedid\" value=\"".$oldfeed->id."\" size=\"40\">";
+
+					if(get_option('tt_premium_provider')=="") {
+						echo "<input type=\"hidden\" name=\"xmlfeedconv\" value=\"tradetracker\" size=\"40\">";
+					} else {
+						echo "<select name=\"xmlfeedconv\" width=\"120\" style=\"width: 120px\">";
+						$provider = get_option('tt_premium_provider');
+						foreach($provider as $providers) {
+							if($providers == $oldfeed->xmlprovider){
+								echo "<option value=\"".$providers."\" selected=\"selected\">".$providers."</option>";
+							} else {
+								echo "<option value=\"".$providers."\">".$providers."</option>";
+							}
+						}
+						echo "</select>";
+					}
+
+				} else {
 					echo "<tr><td>";
 					echo "<input type=\"text\" name=\"xmlfeed\" value=\"\" size=\"50\">";
 					echo "</td><td>";
@@ -130,6 +186,8 @@ function xmlfeed(){
 						}
 						echo "</select>";
 					}
+
+				}
 					?>			
 				</td>
 			</tr>

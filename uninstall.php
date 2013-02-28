@@ -27,6 +27,7 @@
 	$wpdb->query($structure7); 
 	$structure8 = "drop table if exists $ttstorestatstable";
 	$wpdb->query($structure8); 
+	delete_option("TTnewcategory", "1" );
 	delete_option("Tradetracker_xml");
 	delete_option("Tradetracker_xmlname");
 	delete_option("Tradetracker_xmlupdate");
