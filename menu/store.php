@@ -22,6 +22,7 @@ function store() {
 	$Tradetracker_multilightbox_name = 'Tradetracker_multilightbox';
 	$Tradetracker_multixmlfeed_name = 'Tradetracker_multixmlfeed';
 	$Tradetracker_multiproductpage_name = 'Tradetracker_multiproductpage';
+	$Tradetracker_multimaxprice_name = 'Tradetracker_multimaxprice';
 	$Tradetracker_categories_name = 'Tradetracker_categories';
 	$readonlylock = "no";
 	if(isset($_GET['return'])){
@@ -43,7 +44,7 @@ function store() {
 		if(isset($_POST['multiid'])){
 			$multiid = $_POST['multiid'];
 		} 
-		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multisorting, multiorder, multiproductpage, multiname, multilayout, multiamount, multipageamount, multilightbox, categories FROM ".$ttstoremultitable." where id='".$multiid."'");
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multisorting, multiorder,multimaxprice, multiproductpage, multiname, multilayout, multiamount, multipageamount, multilightbox, categories FROM ".$ttstoremultitable." where id='".$multiid."'");
 		foreach ($multi as $multi_val){
 			$Tradetracker_buynow_val = $multi_val->buynow;
 			$db_buynow_val = $multi_val->buynow;
@@ -67,6 +68,9 @@ function store() {
 			$db_categories_val = $multi_val->categories;
 			$Tradetracker_multiproductpage_val = $multi_val->multiproductpage;
 			$db_multiproductpage_val = $multi_val->multiproductpage;
+
+			$Tradetracker_multimaxprice_val = $multi_val->multimaxprice;
+			$db_multimaxprice_val = $multi_val->multimaxprice;
 		}
 
 	}
@@ -83,6 +87,7 @@ function store() {
 		$Tradetracker_multipageamount_val = $_POST[ $Tradetracker_multipageamount_name ];
 		$Tradetracker_multilightbox_val = $_POST[ $Tradetracker_multilightbox_name ];
 		$Tradetracker_multiproductpage_val = $_POST[ $Tradetracker_multiproductpage_name ];
+		$Tradetracker_multimaxprice_val = $_POST[ $Tradetracker_multimaxprice_name ];
 		if(isset($_POST[ $Tradetracker_categories_name ])){
 			$Tradetracker_categories_val = serialize($_POST[ $Tradetracker_categories_name ]);
 		} else {
@@ -124,6 +129,9 @@ function store() {
  				if ( $db_multilightbox_val  != $Tradetracker_multilightbox_val) {
 					$query = $wpdb->update( $ttstoremultitable, array( 'multilightbox' => $Tradetracker_multilightbox_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
  				}
+ 				if ( $db_multimaxprice_val  != $Tradetracker_multimaxprice_val) {
+					$query = $wpdb->update( $ttstoremultitable, array( 'multimaxprice' => $Tradetracker_multimaxprice_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
+ 				}
 				if ( $db_multiproductpage_val  != $Tradetracker_multiproductpage_val) {
 					$query = $wpdb->update( $ttstoremultitable, array( 'multiproductpage' => $Tradetracker_multiproductpage_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
  				}
@@ -142,6 +150,7 @@ function store() {
         			$currentpage["multipageamount"]=$Tradetracker_multipageamount_val;
 				$currentpage["multiitems"]="";
         			$currentpage["multilightbox"]=$Tradetracker_multilightbox_val;
+        			$currentpage["multimaxprice"]=$Tradetracker_multimaxprice_val;
         			$currentpage["multixmlfeed"]=$Tradetracker_multixmlfeed_val;
         			$currentpage["multiproductpage"]=$Tradetracker_multiproductpage_val;
         			$currentpage["categories"]=$Tradetracker_categories_val;
@@ -496,6 +505,17 @@ function toggleOther(){
 		<td>
 			<input type="text" name="<?php echo $Tradetracker_multipageamount_name; ?>" value="<?php if (!isset($Tradetracker_multipageamount_val)) {echo "10"; } else {echo $Tradetracker_multipageamount_val;} ?>" size="30">
 			<?php if(isset($error)){ echo "<font color=\"red\">*</font>"; }?> <?php _e('Use 0 if you want to show all items on 1 page','ttstore'); ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="tradetrackerfont" title="<?php _e('Max price shown in slider.','ttstore'); ?>" class="info">
+				<?php _e("Max price shown for slider:", 'ttstore' ); ?> 
+			</label> 
+		</td>
+		<td>
+			<input type="text" name="<?php echo $Tradetracker_multimaxprice_name; ?>" value="<?php if (!isset($Tradetracker_multimaxprice_val)) {echo "0"; } else {echo $Tradetracker_multimaxprice_val;} ?>" size="30">
+			<?php if(isset($error)){ echo "<font color=\"red\">*</font>"; }?> <?php _e('use 0 if you don\'t want a pricelimit at all','ttstore'); ?>
 		</td>
 	</tr>
 

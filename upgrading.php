@@ -1,4 +1,12 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.25"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstoremultitable = $pro_table_prefix."multi";
+	$wpdb->query("ALTER TABLE `".$ttstoremultitable."` ADD `multimaxprice` INT(6) NOT NULL DEFAULT '0'");
+	update_option("TTstoreversion", "4.5.26" );
+}
+
 if (get_option("TTstoreversion") == "4.5.23"){
 	$TTnewcategory = get_option( 'TTnewcategory', '1' );
 	update_option("TTnewcategory", $TTnewcategory );

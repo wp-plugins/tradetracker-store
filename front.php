@@ -172,8 +172,11 @@ function show_ttfilter($winkelvol)
 	global $ttstoremultitable;
 	global $ttstoreitemtable;
 	global $ttstoretable;
-	$max_price = $wpdb->get_var( "SELECT MAX(price) FROM $ttstoretable;"  );
-	$max_price = round($max_price+1);
+	$max_price = $wpdb->get_var( "SELECT multimaxprice FROM $ttstoremultitable where id='".$winkelvol."';"  );
+	if ($max_price == "0") {
+		$max_price = $wpdb->get_var( "SELECT MAX(price) FROM $ttstoretable;"  );
+		$max_price = round($max_price+1);
+	}
 	if(isset($_GET['ipp'])){
 		$ipp = $_GET['ipp'];
 	} else {
@@ -228,7 +231,7 @@ function show_ttpages($winkelvol)
 	global $ttstoreitemtable;
 	global $ttstoretable;
 	global $ttstorecattable;
-	$multi=$wpdb->get_results("SELECT multiamount, multiitems, multipageamount, categories, multixmlfeed, count(".$ttstoreitemtable.".id) as totalitems FROM ".$ttstoremultitable." left join ".$ttstoreitemtable." on ".$ttstoremultitable.".id = ".$ttstoreitemtable.".storeID where ".$ttstoremultitable.".id=".$winkelvol." group by storeID, multiname");
+	$multi=$wpdb->get_results("SELECT multiamount, multiitems, multipageamount, categories, multixmlfeed, multimaxprice, count(".$ttstoreitemtable.".id) as totalitems FROM ".$ttstoremultitable." left join ".$ttstoreitemtable." on ".$ttstoremultitable.".id = ".$ttstoreitemtable.".storeID where ".$ttstoremultitable.".id=".$winkelvol." group by storeID, multiname");
 	foreach ($multi as $multi_val){	
 		$Tradetracker_productid = $multi_val->totalitems;
 		$Tradetracker_amount = $multi_val->multiamount;
@@ -258,6 +261,7 @@ function show_ttpages($winkelvol)
 		}
 		if(isset($_GET['pmin']) && isset($_GET['pmax'])){
 			if($multixmlfeed == ""){
+				
 				if($categorieselect == ""){
 					$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
 				} else {
@@ -266,6 +270,10 @@ function show_ttpages($winkelvol)
 			} else {
 				$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
 			}
+		} else if ( $multi_val->multimaxprice > "0" )  {
+
+			$priceselect = " and price > '0' and price < ".$multi_val->multimaxprice."";
+
 		} else {
 			$priceselect = "";
 		}
@@ -317,18 +325,24 @@ function show_ttpages($winkelvol)
 				$pagetext ="";
 				if ($currentpage != 0) { // Don't show back link if current page is first page.
 					$back_page = $currentpage - "1";
-					$pagetext = "<a href=\"?ipp=".$itemsperpage."&tsp=".$back_page."".$min_price."".$max_pricecur."\">".__('back','ttstore')."</a>\n";			
+					$pagetext = "<a class=\"ttbackpage\" href=\"?ipp=".$itemsperpage."&tsp=".$back_page."".$min_price."".$max_pricecur."\">".__('back','ttstore')."</a>\n";			
 				}
 				for ($i=0; $i <= $pages; $i++){
 					if ($i == $currentpage){
 						$pagetext .= "<b>$i</b> \n"; // If current page don't give link, just text.
 					}else{
-						$pagetext .= "<a href=\"?ipp=".$itemsperpage."&tsp=".$i."".$min_price."".$max_pricecur."\">$i</a> \n";
+						if ($currentpage <= $i-5){
+							$pagetext .= "<a class=\"ttmorethan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$min_price."".$max_pricecur."\">$i</a> \n";
+						} else if ($currentpage >= $i+5){ 
+							$pagetext .= "<a class=\"ttlessthan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$min_price."".$max_pricecur."\">$i</a> \n";
+						} else {
+							$pagetext .= "<a class=\"ttinbetween\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$min_price."".$max_pricecur."\">$i</a> \n";
+						}
 					}
 				}
 				if ($currentpage < $pages ) { // If last page don't give next link.
 					$next_page = $currentpage + "1";
-					$pagetext .= "<a href=\"?ipp=".$itemsperpage."&tsp=".$next_page."".$min_price."".$max_pricecur."\">".__('next','ttstore')."</a>\n";
+					$pagetext .= "<a class=\"ttnextpage\" href=\"?ipp=".$itemsperpage."&tsp=".$next_page."".$min_price."".$max_pricecur."\">".__('next','ttstore')."</a>\n";
 				}
 			}
 		}
@@ -351,9 +365,9 @@ function show_items($usedhow, $winkelvol, $searching)
 	global $pagetext;
 	$wpdb->show_errors();
 	if ($searching == "1") {
-		$multi=$wpdb->get_results("SELECT buynow, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
+		$multi=$wpdb->get_results("SELECT buynow, multimaxprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
 	} else {
-		$multi=$wpdb->get_results("SELECT buynow, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".$winkelvol."");
+		$multi=$wpdb->get_results("SELECT buynow, multimaxprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".$winkelvol."");
 	}
 	foreach ($multi as $multi_val){	
 		$Tradetracker_amount = $multi_val->multiamount;
@@ -405,6 +419,10 @@ function show_items($usedhow, $winkelvol, $searching)
 				$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
 			}
 			$priceselectcur = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
+		}else if ( $multi_val->multimaxprice > "0" )  {
+
+			$priceselect = " and price > '0' and price < ".$multi_val->multimaxprice."";
+
 		} else {
 			$priceselect = "";
 			$priceselectcur = "";

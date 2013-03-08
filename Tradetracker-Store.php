@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 4.5.25
+Version: 4.5.26
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -172,6 +172,7 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 	multilightbox VARCHAR(1) NOT NULL,
 	multixmlfeed VARCHAR(10) NOT NULL,
 	multiproductpage VARCHAR(1) NOT NULL,
+	multimaxprice int(6) NOT NULL DEFAULT '0',
 	categories longtext NOT NULL,
 	buynow TEXT NOT NULL,
 	UNIQUE KEY id (id)

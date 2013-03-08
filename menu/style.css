@@ -31,7 +31,11 @@
 .button.regular, .buttons a.regular {color: #000000;}
 .buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #000000;}
 .buttons a.regular:active {background-color: #FFFFFF;border: 1px solid #65B9C1;color: #000000;}
-
+.ttbackpage { }
+.ttlessthan5 { }
+.ttinbetween { } 
+.ttmorethan5 { } 
+.ttnextpage { } 
 
 /*-------------------------------------------------------------------------------------------*/
 /* This is everything to show the basic store. If you want to adjust it to make it work for  */
@@ -63,3 +67,8 @@
 .basicbutton.regular, .basicbuttons a.regular {color: #000000;}
 .basicbuttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #000000;}
 .basicbuttons a.regular:active {background-color: #FFFFFF;border: 1px solid #65B9C1;color: #000000;}
+.ttbackpage { }
+.ttlessthan5 { }
+.ttinbetween { } 
+.ttmorethan5 { } 
+.ttnextpage { } 
