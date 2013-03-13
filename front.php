@@ -32,13 +32,17 @@ add_action('wp_head', 'header_css_style');
 
 function header_css_style() {
 	global $wpdb;
+	$ttslidertheme = get_option("Tradetracker_slidertheme");
+	if($ttslidertheme == ""){
+		$ttslidertheme = "base";
+	}
 	if(get_option("Tradetracker_usecss") == "1"){
 		echo "<link rel=\"stylesheet\" href=\"".get_option('Tradetracker_csslink')."\" type=\"text/css\" />";
-  		echo "<link href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\"/>";
+  		echo "<link href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/".$ttslidertheme."/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\"/>";
 
 
 	} else {
-  		echo "<link href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\"/>";
+  		echo "<link href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/".$ttslidertheme."/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\"/>";
 	$style="";
 	global $ttstorelayouttable;
 	global $ttstoremultitable;
@@ -120,7 +124,7 @@ function header_css_style() {
 		
 	}
 	$style .= "\n.cleared {border: medium none;clear: both;float: none;font-size: 1px;margin: 0;padding: 0;}";
-	$style .= "\n.ttstorelink a { display:none; }";
+	$style .= "\n.ttstorelink a { font-size:0px; }";
 	$style .= "</style>";
 	echo $style;
 	}
@@ -641,6 +645,7 @@ function show_items($usedhow, $winkelvol, $searching)
 	if(get_option("Tradetracker_showurl")=="1"){
 		$storeitems .= "<div class=\"ttstorelink\"><a target=\"_blank\" href=\"http://wpaffiliatefeed.com\">TradeTracker wordpress plugin</a></div>";
 	}
+		$storeitems .= "<!-- These items are shown using the TradeTracker Store plugin - http://wpaffiliatefeed.com -->";
 	if ($usedhow == 1){
 		return $storeitems;
 	}

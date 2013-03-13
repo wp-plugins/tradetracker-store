@@ -1,4 +1,11 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.26"){
+	if ( get_option("Tradetracker_usecss") != "1" ){
+		update_option("Tradetracker_showurl", "1" );
+	}
+	update_option("Tradetracker_slidertheme", "base");
+	update_option("TTstoreversion", "4.5.27" );
+}
 if (get_option("TTstoreversion") == "4.5.25"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

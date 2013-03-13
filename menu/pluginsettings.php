@@ -20,6 +20,7 @@ function pluginsettings(){
 	$Tradetracker_usecss_name = 'Tradetracker_usecss';
 	$Tradetracker_csslink_name = 'Tradetracker_csslink';
 	$Tradetracker_TTnewcategory_name = 'TTnewcategory';
+	$Tradetracker_slidertheme_name = 'Tradetracker_slidertheme';
 
 
 	//filling variables from database
@@ -37,6 +38,7 @@ function pluginsettings(){
 	$Tradetracker_usecss_val = get_option( $Tradetracker_usecss_name );
 	$Tradetracker_csslink_val = get_option( $Tradetracker_csslink_name );
 	$Tradetracker_TTnewcategory_val = get_option( $Tradetracker_TTnewcategory_name );
+	$Tradetracker_slidertheme_val = get_option( $Tradetracker_slidertheme_name );
 
 
 
@@ -56,6 +58,7 @@ function pluginsettings(){
 		$Tradetracker_usecss_val = $_POST[ $Tradetracker_usecss_name ];
 		$Tradetracker_csslink_val = $_POST[ $Tradetracker_csslink_name ];
 		$Tradetracker_TTnewcategory_val = $_POST[ $Tradetracker_TTnewcategory_name ];
+		$Tradetracker_slidertheme_val = $_POST[ $Tradetracker_slidertheme_name ];
 
 		if ( get_option("Tradetracker_debugemail")  != $Tradetracker_debugemail_val) {
 			update_option( $Tradetracker_debugemail_name, $Tradetracker_debugemail_val );
@@ -99,6 +102,9 @@ function pluginsettings(){
 		if ( get_option("TTnewcategory")  != $Tradetracker_TTnewcategory_val) {
 			update_option( $Tradetracker_TTnewcategory_name, $Tradetracker_TTnewcategory_val );
 		}
+		if ( get_option("Tradetracker_slidertheme")  != $Tradetracker_slidertheme_val) {
+			update_option( $Tradetracker_slidertheme_name, $Tradetracker_slidertheme_val );
+		}
 
 	        //put an settings updated message on the screen
 		$savedmessage = __("Settings saved", "ttstore");
@@ -126,7 +132,7 @@ function pluginsettings(){
 				<tr>
 					<td width="400px">
 						<label for="tradetrackerusenewcategorye" title="<?php _e('Do you want to use new category structure.','ttstore');?>" class="info">
-							<?php _e("Do you want to use new category structure.:", 'ttstore' ); ?> 
+							<?php _e("Do you want to use new category structure:", 'ttstore' ); ?> 
 							<br />
 							<?php _e('If you change this you will have to manually reselect all categories for all your stores.','ttstore');?>
 						</label>
@@ -135,6 +141,50 @@ function pluginsettings(){
 						<input type="radio" name="<?php echo $Tradetracker_TTnewcategory_name; ?>" <?php if($Tradetracker_TTnewcategory_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore');?>
 						<br>
 						<input type="radio" name="<?php echo $Tradetracker_TTnewcategory_name; ?>" <?php if($Tradetracker_TTnewcategory_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore');?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<hr />
+					</td>
+				</tr>
+
+				<tr>
+					<td width="400px">
+						<label for="tradetrackerslidertheme" title="<?php _e('Choose the theme of the price slider.','ttstore');?>" class="info">
+							<?php _e("Choose the theme of the price slider:", 'ttstore' ); ?> 
+							<br />
+							<?php _e('You can preview them by going to Gallery on http://jqueryui.com/themeroller/.','ttstore');?>
+						</label>
+					</td>
+					<td>
+						<select name="<?php echo $Tradetracker_slidertheme_name; ?>">
+							<option <?php if($Tradetracker_slidertheme_val == "base") { echo "selected=\"selected\""; } ?> value="base">Base</option>
+							<option <?php if($Tradetracker_slidertheme_val == "ui-lightness") { echo "selected=\"selected\""; } ?> value="ui-lightness">Ui Lightness</option>
+							<option <?php if($Tradetracker_slidertheme_val == "ui-darkness") { echo "selected=\"selected\""; } ?> value="ui-darkness">Ui Darkness</option>
+							<option <?php if($Tradetracker_slidertheme_val == "smoothness") { echo "selected=\"selected\""; } ?> value="smoothness">Smoothness</option>
+							<option <?php if($Tradetracker_slidertheme_val == "start") { echo "selected=\"selected\""; } ?> value="start">Start</option>
+							<option <?php if($Tradetracker_slidertheme_val == "redmond") { echo "selected=\"selected\""; } ?> value="redmond">Redmond</option>
+							<option <?php if($Tradetracker_slidertheme_val == "sunny") { echo "selected=\"selected\""; } ?> value="sunny">Sunny</option>
+							<option <?php if($Tradetracker_slidertheme_val == "overcast") { echo "selected=\"selected\""; } ?> value="overcast">Overcast</option>
+							<option <?php if($Tradetracker_slidertheme_val == "le-frog") { echo "selected=\"selected\""; } ?> value="le-frog">Le Frog</option>
+							<option <?php if($Tradetracker_slidertheme_val == "flick") { echo "selected=\"selected\""; } ?> value="flick">Flick</option>
+							<option <?php if($Tradetracker_slidertheme_val == "pepper-grinder") { echo "selected=\"selected\""; } ?> value="pepper-grinder">Pepper Grinder</option>
+							<option <?php if($Tradetracker_slidertheme_val == "eggplant") { echo "selected=\"selected\""; } ?> value="eggplant">Eggplant</option>
+							<option <?php if($Tradetracker_slidertheme_val == "dark-hive") { echo "selected=\"selected\""; } ?> value="dark-hive">Dark Hive</option>
+							<option <?php if($Tradetracker_slidertheme_val == "cupertino") { echo "selected=\"selected\""; } ?> value="cupertino">Cupertino</option>
+							<option <?php if($Tradetracker_slidertheme_val == "south-street") { echo "selected=\"selected\""; } ?> value="south-street">South Street</option>
+							<option <?php if($Tradetracker_slidertheme_val == "blitzer") { echo "selected=\"selected\""; } ?> value="blitzer">Blitzer</option>
+							<option <?php if($Tradetracker_slidertheme_val == "humanity") { echo "selected=\"selected\""; } ?> value="humanity">Humanity</option>
+							<option <?php if($Tradetracker_slidertheme_val == "hot-sneaks") { echo "selected=\"selected\""; } ?> value="hot-sneaks">Hot Sneaks</option>
+							<option <?php if($Tradetracker_slidertheme_val == "excite-bike") { echo "selected=\"selected\""; } ?> value="excite-bike">Excite Bike</option>
+							<option <?php if($Tradetracker_slidertheme_val == "vader") { echo "selected=\"selected\""; } ?> value="vader">Vader</option>
+							<option <?php if($Tradetracker_slidertheme_val == "dot-luv") { echo "selected=\"selected\""; } ?> value="dot-luv">Dot Luv</option>
+							<option <?php if($Tradetracker_slidertheme_val == "mint-choc") { echo "selected=\"selected\""; } ?> value="mint-choc">Mint Choc</option>
+							<option <?php if($Tradetracker_slidertheme_val == "black-tie") { echo "selected=\"selected\""; } ?> value="black-tie">Black Tie</option>
+							<option <?php if($Tradetracker_slidertheme_val == "trontastic") { echo "selected=\"selected\""; } ?> value="trontastic">Trontastic</option>
+							<option <?php if($Tradetracker_slidertheme_val == "swanky-purse") { echo "selected=\"selected\""; } ?> value="swanky-purse">Swanky Purse</option>
+						</select>
 					</td>
 				</tr>
 				<tr>
