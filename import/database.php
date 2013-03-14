@@ -63,14 +63,14 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	//$keys = array_keys($xmlfeed);
 	//$key = $keys[$xmlfeedid];
 	//$xmlfeed = $xmlfeed[$key];
-	echo "<br /><strong>Importing:</strong>".$xmlfeed[$xmlfeednumber][0];
+	echo "<br /><strong>Importing: </strong>".$xmlfeed[$xmlfeednumber][0];
+	echo "<br /><strong>File: </strong>".$files[$xmldatabasecount];
 		$ttmemoryusage = get_option("Tradetracker_memoryusage");
 		$ttmemoryusage .= "<br/><strong>Importing:</strong>".$xmlfeed[$xmlfeednumber][0];
 		update_option( "Tradetracker_memoryusage", $ttmemoryusage );
 	if (is_array($files)) {
-		for ( $i="0"; ($i <= 10 && $i <count($files)); $i++) {
+		for ( $i="0"; ($i <= 2 && $i <count($files)); $i++) {
 			$filename = $files[$xmldatabasecount];
-			echo ".";
 			if($filename != ""){
 				$products = simplexml_load_file($filename);
 				//$string = file_get_contents($filename, FILE_TEXT);
@@ -86,6 +86,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						update_option( "Tradetracker_importerror", $errorfile );
 					}
 					libxml_clear_errors();
+					echo " - Error";
 				}else if ($products->body->p == "The requested product feed could not be generated:"){
 					$errorxml = libxml_get_last_error();
 					$errorfile = get_option("Tradetracker_importerror");
@@ -93,7 +94,9 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 					$errorfile .= "". "\n" ."Error: Tradetracker cannot create the productfeed. The feed itself is empty";
 					libxml_clear_errors();
 					update_option( "Tradetracker_importerror", $errorfile );
+					echo " - Error";
 				} else {
+					echo " - Done";
 					foreach($products as $product) // loop through our items
 					{
 						$counterxml = "1";
