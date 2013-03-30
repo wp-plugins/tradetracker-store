@@ -27,7 +27,9 @@ So remember: This plugin will not give you the ability to sell you own stuff. It
 
 == Frequently Asked Questions ==
 = Do you have an example ? =
-You can see the plugin in action on: http://www.freekidscolorpages.com/store/blu-rays/
+You can see the plugin in action on: http://www.debesteschoenen.nl
+This site also uses the Statistics addon (the page you see before being redirected)
+
 
 = Have you gotten any questions yet? =
 
