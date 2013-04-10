@@ -1,4 +1,12 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.27"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$tttable = $pro_table_prefix."store";
+	$wpdb->query("ALTER TABLE `".$tttable."` ENGINE = MYISAM");
+	$wpdb->query("ALTER TABLE `".$tttable."` ADD FULLTEXT (`name` ,`description`)");
+	update_option("TTstoreversion", "4.5.29" );
+}
 if (get_option("TTstoreversion") == "4.5.26"){
 	if ( get_option("Tradetracker_usecss") != "1" ){
 		update_option("Tradetracker_showurl", "1" );
