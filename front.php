@@ -132,16 +132,24 @@ function header_css_style() {
 function show_ttuserpages($winkelvol)
 {
 	if(isset($_GET['ipp'])){
-		$itemsperpage = $_GET['ipp'];
+		if(is_numeric($_GET['ipp'])){
+			$itemsperpage = $_GET['ipp'];
+		} else {
+			$itemsperpage = "0";
+		}
 	} else {
 		$itemsperpage = "0";
 	}
 	$userperpage = "<form action=\"\" method=\"get\" name=\"itemsperpage\" >";
 	if(isset($_GET['pmax'])){
-		$userperpage .= "<input type=\"hidden\" value=\"".$_GET['pmax']."\" name=\"pmax\">";
+		if(is_numeric($_GET['pmax'])){
+			$userperpage .= "<input type=\"hidden\" value=\"".$_GET['pmax']."\" name=\"pmax\">";
+		}
 	}
 	if(isset($_GET['pmin'])){
-		$userperpage .= "<input type=\"hidden\" value=\"".$_GET['pmin']."\" name=\"pmin\">";
+		if(is_numeric($_GET['pmin'])){
+			$userperpage .= "<input type=\"hidden\" value=\"".$_GET['pmin']."\" name=\"pmin\">";
+		}
 	}
 	$userperpage .= __('Items per page:','ttstore');
 	$userperpage .= "<select name=\"ipp\" onchange=\"this.form.submit();\">";
@@ -182,13 +190,22 @@ function show_ttfilter($winkelvol)
 		$max_price = round($max_price+1);
 	}
 	if(isset($_GET['ipp'])){
-		$ipp = $_GET['ipp'];
+		if(is_numeric($_GET['ipp'])){
+			$ipp = $_GET['ipp'];
+		} else {
+			$ipp = "10";
+		}
 	} else {
 		$ipp = "10";
 	}
 	if(isset($_GET['pmin']) && isset($_GET['pmax'])){
-		$min_price = $_GET['pmin'];
-		$max_pricecur = $_GET['pmax'];
+		if(is_numeric($_GET['pmin']) && is_numer($_GET['pmax'])){
+			$min_price = $_GET['pmin'];
+			$max_pricecur = $_GET['pmax'];
+		} else {
+			$min_price = "0";
+			$max_pricecur = $max_price;
+		}
 	} else {
 		$min_price = "0";
 		$max_pricecur = $max_price;
@@ -263,7 +280,7 @@ function show_ttpages($winkelvol)
 		} else {
 			$categorieselect = "";
 		}
-		if(isset($_GET['pmin']) && isset($_GET['pmax'])){
+		if(isset($_GET['pmin']) && isset($_GET['pmax']) && is_numeric($_GET['pmin']) && is_numeric($_GET['pmax'])){
 			if($multixmlfeed == ""){
 				
 				if($categorieselect == ""){
@@ -282,7 +299,7 @@ function show_ttpages($winkelvol)
 			$priceselect = "";
 		}
 
-		if($multi_val->multipageamount > "0" || isset($_GET['ipp'])){
+		if($multi_val->multipageamount > "0" || (isset($_GET['ipp']) && is_numeric($_GET['ipp']) )){
 			if ($Tradetracker_productid == "0") 
 			{
 				if ($multi_val->multiamount == "") {
@@ -305,20 +322,20 @@ function show_ttpages($winkelvol)
 				}
 				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$priceselect." group by ".$ttstoretable.".productID ".$Tradetracker_amount_i.""));
 			}
-			if(isset($_GET['ipp']) && $_GET['ipp']>"0"){
+			if(isset($_GET['ipp']) && is_numeric($_GET['ipp']) && $_GET['ipp']>"0"){
 				$itemsperpage = mysql_real_escape_string($_GET['ipp']);
 			} else {
 				$itemsperpage = $multi_val->multipageamount;
 			}
 			$pages = round($totalitems / $itemsperpage)-1;
-			if(isset($_GET['tsp'])){
+			if(isset($_GET['tsp']) && is_numeric($_GET['tsp'])){
 				$currentpage = mysql_real_escape_string($_GET['tsp']);
 				$nextpage = $currentpage * $multi_val->multipageamount;
 			} else {
 				$currentpage = "0";
 				$nextpage = $currentpage + $multi_val->multipageamount;
 			}
-			if(isset($_GET['pmin']) && isset($_GET['pmax'])){
+			if(isset($_GET['pmin']) && isset($_GET['pmax']) && is_numeric($_GET['pmin']) && is_numeric($_GET['pmax'])){
 				$min_price = "&pmin=".$_GET['pmin'];
 				$max_pricecur = "&pmax=".$_GET['pmax'];
 			} else {
@@ -412,7 +429,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$categorieselect = "";
 		}
-		if(isset($_GET['pmin']) && isset($_GET['pmax'])){
+		if(isset($_GET['pmin']) && isset($_GET['pmax']) && is_numeric($_GET['pmin']) && is_numeric($_GET['pmax'])){
 			if($multixmlfeed == ""){
 				if($categorieselect == ""){
 					$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
@@ -436,7 +453,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$buynow= $multi_val->buynow;
 		}
-		if($multi_val->multipageamount > "0" || isset($_GET['ipp'])){
+		if($multi_val->multipageamount > "0" || (isset($_GET['ipp']) && is_numerict($_GET['ipp']))){
 			if (!isset($Tradetracker_productid) || $Tradetracker_productid == null) 
 			{
 				if ($multi_val->multiamount == "") {
@@ -459,13 +476,13 @@ function show_items($usedhow, $winkelvol, $searching)
 				$productID = str_replace(",", "' or ".$ttstoretable.".productID='", $productID);
 				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (".$ttstoretable.".productID='".$productID."') ".$priceselectcur." group by ".$ttstoretable.".productID ".$Tradetracker_amount_i.""));
 			}
-			if(isset($_GET['ipp']) && $_GET['ipp']>"0"){
+			if(isset($_GET['ipp']) && is_numeric($_GET['ipp']) && $_GET['ipp']>"0"){
 				$itemsperpage = mysql_real_escape_string($_GET['ipp']);
 			} else {
 				$itemsperpage = $multi_val->multipageamount;
 			}
 			$pages = round($totalitems / $itemsperpage)-1;
-			if(isset($_GET['tsp'])){
+			if(isset($_GET['tsp']) && is_numeric($_GET['tsp'])){
 				$currentpage = mysql_real_escape_string($_GET['tsp']);
 				$nextpage = $currentpage * $multi_val->multipageamount;
 				if($totalitems <= $nextpage ){
