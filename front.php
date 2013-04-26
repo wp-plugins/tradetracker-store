@@ -199,7 +199,7 @@ function show_ttfilter($winkelvol)
 		$ipp = "10";
 	}
 	if(isset($_GET['pmin']) && isset($_GET['pmax'])){
-		if(is_numeric($_GET['pmin']) && is_numer($_GET['pmax'])){
+		if(is_numeric($_GET['pmin']) && is_numeric($_GET['pmax'])){
 			$min_price = $_GET['pmin'];
 			$max_pricecur = $_GET['pmax'];
 		} else {
