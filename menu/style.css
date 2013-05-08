@@ -1,0 +1,74 @@
+/*-------------------------------------------------------------------------------------------*/
+/* This is to nicely align everything below the store items */
+/*-------------------------------------------------------------------------------------------*/
+
+.cleared {border: medium none;clear: both;float: none;font-size: 1px;margin: 0;padding: 0;}
+
+/*-------------------------------------------------------------------------------------------*/
+/* This is everything to show the store. If you want to adjust it to make it work for        */
+/* a specific store see exmple below this one						     */
+/*-------------------------------------------------------------------------------------------*/
+.store-outerbox{width:250px;color:#000000;font-family:verdana;float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #65B9C1;position:relative;}
+.store-titel{width:244px;background-color:#ececed;color:#000000;float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}
+.store-image{width:250px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:#FFFFFF;}
+.store-image img{display: block;border:0px;margin: auto;}
+.store-footer{width:250px;background-color:#ececed;float:left;position:relative;min-height:137px;}
+.store-description{width:244px;color:#000000;position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}
+.store-more{min-height:20px; width:244px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}
+.store-more img{margin:0px !important;}
+.store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}
+.store-price table {height:29px;width:79px;background-color: #ececed !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}
+.store-price table tr {padding: 1px !important;}
+.store-price table tr td {padding: 1px !important;}
+.store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}
+.store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }
+.store-price {background-color: #65B9C1 !important;}
+.buttons a, .buttons button {background-color: #65B9C1;border: 1px solid #65B9C1;bottom: 0;color: #000000;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}
+.buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}
+.buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}
+.:first-child + html button[type] {padding: 4px 10px 3px 7px;}
+.buttons button img, .buttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}
+.button.regular, .buttons a.regular {color: #000000;}
+.buttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #000000;}
+.buttons a.regular:active {background-color: #FFFFFF;border: 1px solid #65B9C1;color: #000000;}
+.ttbackpage { }
+.ttlessthan5 { }
+.ttinbetween { } 
+.ttmorethan5 { } 
+.ttnextpage { } 
+
+/*-------------------------------------------------------------------------------------------*/
+/* This is everything to show the basic store. If you want to adjust it to make it work for  */
+/* your own stores change basic to your store name. So if you named your store test1 the     */
+/* code below becomes .test1store-outerbox you will have to do this for every store you have */
+/*-------------------------------------------------------------------------------------------*/
+
+
+.basicstore-outerbox{width:250px;color:#000000;font-family:verdana;float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px #65B9C1;position:relative;}
+.basicstore-titel{width:244px;background-color:#ececed;color:#000000;float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}
+.basicstore-image{width:250px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:#FFFFFF;}
+.basicstore-image img{display: block;border:0px;margin: auto;}
+.basicstore-footer{width:250px;background-color:#ececed;float:left;position:relative;min-height:137px;}
+.basicstore-description{width:244px;color:#000000;position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}
+.basicstore-more{min-height:20px; width:244px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}
+.basicstore-more img{margin:0px !important;}
+.basicstore-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}
+.basicstore-price table {height:29px;width:79px;background-color: #ececed !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}
+.basicstore-price table tr {padding: 1px !important;}
+.basicstore-price table tr td {padding: 1px !important;}
+.basicstore-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}
+.basicstore-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }
+.basicstore-price {background-color: #65B9C1 !important;}
+.basicbuttons a, .basicbuttons button {background-color: #65B9C1;border: 1px solid #65B9C1;bottom: 0;color: #000000;cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}
+.basicbuttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}
+.basicbuttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}
+.basic:first-child + html button[type] {padding: 4px 10px 3px 7px;}
+.basicbuttons button img, .basicbuttons a img {border: medium none;margin: 0 3px -3px 0 !important;padding: 0;}
+.basicbutton.regular, .basicbuttons a.regular {color: #000000;}
+.basicbuttons a.regular:hover, button.regular:hover {background-color: #4E4E4E;border: 1px solid #4E4E4E;color: #000000;}
+.basicbuttons a.regular:active {background-color: #FFFFFF;border: 1px solid #65B9C1;color: #000000;}
+.ttbackpage { }
+.ttlessthan5 { }
+.ttinbetween { } 
+.ttmorethan5 { } 
+.ttnextpage { } 
