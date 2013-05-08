@@ -453,7 +453,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$buynow= $multi_val->buynow;
 		}
-		if($multi_val->multipageamount > "0" || (isset($_GET['ipp']) && is_numerict($_GET['ipp']))){
+		if($multi_val->multipageamount > "0" || (isset($_GET['ipp']) && is_numeric($_GET['ipp']))){
 			if (!isset($Tradetracker_productid) || $Tradetracker_productid == null) 
 			{
 				if ($multi_val->multiamount == "") {
