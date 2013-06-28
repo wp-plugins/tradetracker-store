@@ -34,16 +34,46 @@ function convert($size)
 
 function fill_database1($xmlfeedid, $xmlcronjob)
 {
-	global $wpdb; 
+	global $wpdb;
+	if(!isset($wpdb) || empty($wpdb)){
+		tt_log_me("TT Database: wpdb not loaded");
+	}
 	global $errorfile;
+	if(!isset($errorfile) || empty($errorfile)){
+		tt_log_me("TT Database: errorfile not loaded");
+	}
 	GLOBAL $extrafield;
+	if(!isset($extrafield) || empty($extrafield)){
+		tt_log_me("TT Database: extrafield not loaded");
+	}
 	GLOBAL $extravalue;
+	if(!isset($extravalue) || empty($extravalue)){
+		tt_log_me("TT Database: extravalue not loaded");
+	}
 	GLOBAL $counterxml;
+	if(!isset($counterxml) || empty($counterxml)){
+		tt_log_me("TT Database: counterxml not loaded");
+	}
 	global $ttstoretable;
+	if(!isset($ttstoretable) || empty($ttstoretable)){
+		tt_log_me("TT Database: ttstoretable not loaded");
+	}
 	global $ttstoreextratable;
+	if(!isset($ttstoreextratable) || empty($ttstoreextratable)){
+		tt_log_me("TT Database: ttstoreextratable not loaded");
+	}
 	global $ttstorexmltable;
+	if(!isset($ttstorexmltable) || empty($ttstorexmltable)){
+		tt_log_me("TT Database: ttstorexmltable not loaded");
+	}
 	global $ttstorecattable;
+	if(!isset($ttstorecattable) || empty($ttstorecattable)){
+		tt_log_me("TT Database: ttstorecattable not loaded");
+	}
 	global $foldersplits;
+	if(!isset($foldersplits) || empty($foldersplits)){
+		tt_log_me("TT Database: foldersplits not loaded");
+	}
 	$xmlfilecount = get_option("xmlfilecount");
 	$xmlfeedid = get_option("xmlfilecount");
 	$newcategory = get_option("TTnewcategory");
@@ -52,6 +82,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 		$xmldatabasecount = "0";
 	}
 	$extrafieldarray = get_option('Tradetracker_xml_extra');
+
 	$files = glob($foldersplits."*xml");
 	if(isset($xmlfeedid)){
 		$xmlfeednumber = $xmlfeedid;
@@ -68,7 +99,9 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 		$ttmemoryusage = get_option("Tradetracker_memoryusage");
 		$ttmemoryusage .= "<br/><strong>Importing:</strong>".$xmlfeed[$xmlfeednumber][0];
 		update_option( "Tradetracker_memoryusage", $ttmemoryusage );
+		tt_log_me("TT Database: After memory usage");
 	if (is_array($files)) {
+		tt_log_me("TT Database: Files is array");
 		for ( $i="0"; ($i <= 2 && $i <count($files)); $i++) {
 			$filename = $files[$xmldatabasecount];
 			if($filename != ""){
@@ -87,6 +120,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 					}
 					libxml_clear_errors();
 					echo " - Error";
+					tt_log_me("TT Database: Error 1");
 				}else if ($products->body->p == "The requested product feed could not be generated:"){
 					$errorxml = libxml_get_last_error();
 					$errorfile = get_option("Tradetracker_importerror");
@@ -95,8 +129,10 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 					libxml_clear_errors();
 					update_option( "Tradetracker_importerror", $errorfile );
 					echo " - Error";
+					tt_log_me("TT Database: Error 2");
 				} else {
 					echo " - Done";
+					tt_log_me("TT Database: No error");
 					foreach($products as $product) // loop through our items
 					{
 						$counterxml = "1";
@@ -110,7 +146,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						$currentpage["imageURL"]=$product->imageURL;
 						$currentpage["imageURL"]=$product->imageURL;
 						$currentpage["productURL"]=$product->productURL;
-						$currentpage["description"]=strip_tags($product->description);
+						$currentpage["description"]=strip_tags(htmlspecialchars_decode($product->description));
 						$currentpage["price"]=$product->price;
 						$currentpage["currency"]=$product->price['currency'];
 						$wpdb->insert( $ttstoretable, $currentpage);//insert the captured values

@@ -1,4 +1,15 @@
 <?php
+function tt_log_me($message) {
+	if (WP_DEBUG === true) {
+		if(WP_DEBUG_LOG === true){
+        		if (is_array($message) || is_object($message)) {
+           			error_log(print_r($message, true));
+			} else {
+				error_log($message);
+			}
+		}
+	}
+}
 function arrayDiffEmulation($arrayFrom, $arrayAgainst)
 {
 	$arrayAgainst = array_flip($arrayAgainst);
