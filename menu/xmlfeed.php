@@ -13,8 +13,9 @@ function xmlfeed(){
 	//filling variables from database
 	$Tradetracker_xml_val = get_option( $Tradetracker_xml_name );
 	$Tradetracker_xmlname_val = get_option( $Tradetracker_xmlname_name );
-	$TTedit = $_GET['edit'];
-
+	if(isset($_GET['edit'])){
+		$TTedit = $_GET['edit'];
+	}
 	
 	if(isset($_GET['delete'])){
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $ttstorexmltable WHERE id = %d",$_GET['delete'] ));
@@ -63,6 +64,10 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 	       	 		$currentpage["xmlfeed"]=$Tradetracker_xml_val;
        		 		$currentpage["xmlprovider"]=$Tradetracker_xmlconv_val;
        		 		$currentpage["xmlname"]=$Tradetracker_xmlname_val;
+       		 		$currentpage["xmltitle"]=" ";
+       		 		$currentpage["xmlimage"]= " ";
+       		 		$currentpage["xmldescription"]= " ";
+       		 		$currentpage["xmlprice"]= " ";
        		 		$wpdb->insert( $ttstorexmltable, $currentpage);
 				$multiid = $wpdb->insert_id;
 			}

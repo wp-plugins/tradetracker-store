@@ -530,8 +530,11 @@ function show_items($usedhow, $winkelvol, $searching)
 	}
 
 	if ($searching == "1") {
+		if(!empty($multisorting)){
+			$multisorting = ", ".$multisorting;
+		}
 		$term = mysql_real_escape_string(get_search_query());
-		$visits=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and MATCH(name,description) AGAINST ('$term') group by ".$ttstoretable.".productID ORDER BY ".$multisorting." ".$multiorder." ".$Tradetracker_amount_i."");
+		$visits=$wpdb->get_results("SELECT *, MATCH(name,description) AGAINST ('$term' IN BOOLEAN MODE) as relevance FROM ".$ttstoretable.", ".$ttstorecattable."  where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and MATCH(name,description) AGAINST ('$term' IN BOOLEAN MODE) group by ".$ttstoretable.".productID ORDER BY relevance DESC ".$Tradetracker_amount_i."");
 	} else {
 		if (!isset($Tradetracker_productid) || $Tradetracker_productid == null) 
 		{
