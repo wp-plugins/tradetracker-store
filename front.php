@@ -605,7 +605,8 @@ function show_items($usedhow, $winkelvol, $searching)
 			$target = $urltarget;
 			$imagerel = "";
 		}
-		$productname = str_replace("&", "&amp;", $product->name);
+		$productname = html_entity_decode($product->name);
+		$productname = str_replace("&", "&amp;", $productname);
 		$productdescription = $product->description;
 		//$productdescription = mb_convert_encoding($product->description, "UTF-8");
 		//$productdescription = str_replace("&", "&amp;", $productdescription);
