@@ -216,7 +216,7 @@ function itemselect() {
 	if(isset($_GET['search']) && $_GET['search'] !=""){
 		$keyword = $_GET['search'];
 		$searchlink = "&search=".$keyword;
-		$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." left join ".$ttstoreextratable." on ".$ttstoreextratable.".productID = ".$ttstoretable.".productID and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword') or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
+		$countquery=$wpdb->get_results("SELECT * FROM (".$ttstoretable.", ".$ttstorecattable.") left join ".$ttstoreextratable." on (".$ttstoreextratable.".`productID` = ".$ttstoretable.".`productID`) and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword'  IN BOOLEAN MODE) or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
 	} else {
 		$searchlink = "";
 		$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." group by ".$ttstoretable.".productID");
@@ -371,7 +371,7 @@ function selectToggle(toggle, form) {
 <?php
 if(isset($_GET['search']) && $_GET['search']!=""){
 	$keyword = $_GET['search'];
-	$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (`name` LIKE '%$keyword%' or `description` LIKE '%$keyword%' or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID ORDER BY ".$order." ASC  LIMIT ".$currentpage.", ".$limit."");
+	$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword'  IN BOOLEAN MODE) or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID ORDER BY ".$order." ASC  LIMIT ".$currentpage.", ".$limit."");
 } else {
 	$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." group by ".$ttstoretable.".productID ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
 }
