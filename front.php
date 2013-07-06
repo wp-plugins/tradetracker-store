@@ -605,7 +605,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			$target = $urltarget;
 			$imagerel = "";
 		}
-		$productname = html_entity_decode($product->name);
+		$productname = html_entity_decode($product->name, ENT_QUOTES,'UTF-8');
 		$productname = str_replace("&", "&amp;", $productname);
 		$productdescription = $product->description;
 		//$productdescription = mb_convert_encoding($product->description, "UTF-8");
@@ -700,7 +700,6 @@ function display_store_items_short()
 {
 	return store_items(1, 0, 0);
 }
-	
 function display_store_items()
 {
 	return store_items(2, 0, 0);
