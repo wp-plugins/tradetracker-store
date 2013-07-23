@@ -327,7 +327,7 @@ function show_ttpages($winkelvol)
 			} else {
 				$itemsperpage = $multi_val->multipageamount;
 			}
-			$pages = round($totalitems / $itemsperpage)-1;
+			$pages = ceil($totalitems / $itemsperpage)-1;
 			if(isset($_GET['tsp']) && is_numeric($_GET['tsp'])){
 				$currentpage = mysql_real_escape_string($_GET['tsp']);
 				$nextpage = $currentpage * $multi_val->multipageamount;
@@ -481,7 +481,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			} else {
 				$itemsperpage = $multi_val->multipageamount;
 			}
-			$pages = round($totalitems / $itemsperpage)-1;
+			$pages = ceil($totalitems / $itemsperpage)-1;
 			if(isset($_GET['tsp']) && is_numeric($_GET['tsp'])){
 				$currentpage = mysql_real_escape_string($_GET['tsp']);
 				$nextpage = $currentpage * $multi_val->multipageamount;
