@@ -99,7 +99,7 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
 			<table width="<?php echo $adminwidth-15; ?>">
 			<?php
-				$xmlfeed=$wpdb->get_results("SELECT xmlfeed, xmlname, xmlprovider, id FROM ".$ttstorexmltable."");
+				$xmlfeed=$wpdb->get_results("SELECT xmlfeed, xmlname, xmlprovider, id FROM ".$ttstorexmltable." order by xmlname");
 				if(count($xmlfeed)>0){
 			?>
 			<tr>

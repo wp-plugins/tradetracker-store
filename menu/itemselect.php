@@ -263,9 +263,9 @@ span.link1 a:hover span {
 	display: block; 
     	position: absolute; 
     	margin-top: 10px; 
-    	margin-left: -100px; 
-	max-width:700px;
-	max-height:700px;
+    	margin-left: 500px; 
+	max-width:500px;
+	max-height:500px;
 	padding: 5px; 
     	z-index: 1001; 
     	color: #000000; 

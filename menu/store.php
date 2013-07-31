@@ -160,8 +160,15 @@ function store() {
 				$wpdb->print_error();
 			}
 			//put an settings updated message on the screen
-			$savedmessage = __("Settings saved", "ttstore");
-			$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
+			if (isset($_POST['Submitclose'])) {
+				if(isset($returnpage)){$exitlink = "admin.php?page=tt-store&option=itemselect"; } else {$exitlink = "admin.php?page=tt-store&option=store";}
+				header('Location: '.$exitlink);
+    				exit;
+
+			} else {
+				$savedmessage = __("Settings saved", "ttstore");
+				$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
+			}
 		}
 	}
 	if(!isset($_GET['function'])){
@@ -548,6 +555,9 @@ function toggleOther(){
 				}
 			?>
 			<input type="submit" name="Submit" class="button-primary" value="<?php if(isset($multiid)){ esc_attr_e('Save Changes'); } else { _e('Create','ttstore'); } ?>" /> 
+			<?php if(isset($multiid)){ ?>
+			<input type="submit" name="Submitclose" class="button-primary" value="<?php esc_attr_e('Save Changes and close'); ?>" />
+			<?php } ?>
 			<INPUT type="button" name="Close" class="button-secondary" value="<?php esc_attr_e('Close') ?>" onclick="location.href='admin.php?page=tt-store&option=<?php if(isset($returnpage)){echo "itemselect"; } else {echo "store";}?>'"> 
 		</div>
 	</form>
