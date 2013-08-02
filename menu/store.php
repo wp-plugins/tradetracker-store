@@ -162,8 +162,11 @@ function store() {
 			//put an settings updated message on the screen
 			if (isset($_POST['Submitclose'])) {
 				if(isset($returnpage)){$exitlink = "admin.php?page=tt-store&option=itemselect"; } else {$exitlink = "admin.php?page=tt-store&option=store";}
-				header('Location: '.$exitlink);
-    				exit;
+				?>
+				<script type="text/javascript">
+					window.location.href='<?php echo $exitlink; ?>';
+				</script>
+				<?php
 
 			} else {
 				$savedmessage = __("Settings saved", "ttstore");
@@ -564,6 +567,6 @@ function toggleOther(){
 	</div>
 </div>
 <?php
-	}	
+	}
 }
 ?>

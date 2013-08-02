@@ -7,11 +7,21 @@
 function TTstore_scripts() { 
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script('jquery-ui-slider');
-
 	wp_enqueue_script( 'ttstoreexpand-script', WP_PLUGIN_URL . '/tradetracker-store/js/expand.js');
-}       
+
+	$ttslidertheme = get_option("Tradetracker_slidertheme");
+	if($ttslidertheme == ""){
+		$ttslidertheme = "base";
+	}
+	if(get_option("Tradetracker_usecss") == "1"){
+		wp_register_style( 'tt_store_css', get_option('Tradetracker_csslink'));
+		wp_enqueue_style( 'tt_store_css');
+	} 
+	wp_register_style( 'tt_slider_css', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/".$ttslidertheme."/jquery-ui.css");
+	wp_enqueue_style( 'tt_slider_css');
+}      
 	
-add_action('wp_enqueue_scripts', 'TTstore_scripts'); 
+add_action('wp_enqueue_scripts', 'TTstore_scripts');
 
 function store_items($used, $winkel, $searching)
 {
@@ -37,12 +47,12 @@ function header_css_style() {
 		$ttslidertheme = "base";
 	}
 	if(get_option("Tradetracker_usecss") == "1"){
-		echo "<link rel=\"stylesheet\" href=\"".get_option('Tradetracker_csslink')."\" type=\"text/css\" />";
-  		echo "<link href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/".$ttslidertheme."/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\"/>";
+		//echo "<link rel=\"stylesheet\" href=\"".get_option('Tradetracker_csslink')."\" type=\"text/css\" />";
+  		//echo "<link href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/".$ttslidertheme."/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\"/>";
 
 
 	} else {
-  		echo "<link href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/".$ttslidertheme."/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\"/>";
+  		//echo "<link href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/".$ttslidertheme."/jquery-ui.css\" rel=\"stylesheet\" type=\"text/css\"/>";
 	$style="";
 	global $ttstorelayouttable;
 	global $ttstoremultitable;
