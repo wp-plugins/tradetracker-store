@@ -558,6 +558,11 @@ function show_items($usedhow, $winkelvol, $searching)
 	$storeitems = "";
 	$i="1";
 	foreach ($visits as $product){
+
+		
+
+
+
 		$Tradetracker_extra_val = get_option("Tradetracker_extra");
 		if(!empty($Tradetracker_extra_val)){
 			$extraname = "";
@@ -615,6 +620,7 @@ function show_items($usedhow, $winkelvol, $searching)
 			$target = $urltarget;
 			$imagerel = "";
 		}
+
 		$productname = html_entity_decode($product->name, ENT_QUOTES,'UTF-8');
 		$productname = str_replace("&", "&amp;", $productname);
 		$productdescription = $product->description;
@@ -640,10 +646,16 @@ function show_items($usedhow, $winkelvol, $searching)
 		}else {
 			$price = $currency." ".$product->price;
 		}
+		if(function_exists(showproviderlogo)){
+		$logo = showproviderlogo($product->xmlfeed, $storename);
+		} else {
+		$logo = "";
+		}
 		$storeitems .= "<div class=\"".$storename."store-outerbox store-outerbox\">
 				<div class=\"".$storename."store-titel store-titel\">
 					".$productname."
-				</div>			
+				</div>	
+				".$logo."
 				<div class=\"".$storename."store-image store-image\">
 					<a href=\"".$image."\" ".$rel." ".$imagerel." ".$target.">
 						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" style=\"max-width:".$width."px;max-height:180px;width:auto;height:auto;\"/>

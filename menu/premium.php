@@ -76,7 +76,7 @@ function premium() {
 		<tr><td colspan="2"><hr><b><?php _e('Add extra functions','ttstore'); ?></b></td></tr>
 	<?php
 		$i="50";
-		$providers = array('ProductPages'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=7','Statistics'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=17' );
+		$providers = array('ProductPages'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=7','Statistics'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=17','Providerlogo'=> 'http://shop.wpaffiliatefeed.com/index.php?main_page=product_info&cPath=1&products_id=18' );
 		foreach ($providers as $key => $value){
 		$update = get_option('Tradetracker_premiumaccepted');
 			if($update[$key]== "1") {

@@ -169,6 +169,11 @@ $menuarray = array( array( 'Title' => __("Add/Edit XMLFeeds","ttstore"),
 					newmenupremiumstats();
 				}
 			}
+			if($providers == "providerlogo"){ 
+				if(function_exists('newmenupremiumproviderlogo')) {
+					newmenupremiumproviderlogo();
+				}
+			}
 		}
 	}
 	$afprovider = get_option('tt_premium_provider');
