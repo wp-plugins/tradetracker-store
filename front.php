@@ -651,6 +651,11 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 		$logo = "";
 		}
+		if(function_exists(ttextraquery)){
+		$ttextraquery = ttextraquery($product->xmlfeed, $storename);
+		} else {
+		$ttextraquery = "";
+		}
 		$storeitems .= "<div class=\"".$storename."store-outerbox store-outerbox\">
 				<div class=\"".$storename."store-titel store-titel\">
 					".$productname."
@@ -681,6 +686,7 @@ function show_items($usedhow, $winkelvol, $searching)
 						</table>
 					</div>
 				</div>
+				".$ttextraquery."
 			</div>";
 	$i++;
 	}
