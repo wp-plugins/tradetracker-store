@@ -193,6 +193,9 @@ function store() {
 		<table width="<?php echo $adminwidth-15; ?>">
 			<tr>
 				<td>
+					<strong><?php _e('ID','ttstore'); ?></strong>
+				</td>
+				<td>
 					<strong><?php _e('Store Name','ttstore'); ?></strong>
 				</td>
 				<td>
@@ -228,6 +231,9 @@ function store() {
 		foreach ($storeedit as $store_val){
 ?>
 			<tr>
+				<td>
+					<?php echo $store_val->id; ?>
+				</td>
 				<td>
 					<?php echo $store_val->multiname; ?>
 				</td>

@@ -168,11 +168,11 @@ function itemselect() {
 			if($layout_val->multixmlfeed == "*" ){
 				$multixmlfeed = "";
 				$searchxmlfeed = "";
-			}elseif($layout_val->multixmlfeed == "" ){
-				$multixmlfeed = "";
-				$searchxmlfeed = "";
-			} else {
-				$multixmlfeed = "and xmlfeed = ".$layout_val->multixmlfeed." ";
+				}elseif($layout_val->multixmlfeed == "" ){
+					$multixmlfeed = "";
+					$searchxmlfeed = "";
+				} else {
+					$multixmlfeed = "and xmlfeed = ".$layout_val->multixmlfeed." ";
 				$searchxmlfeed = " and xmlfeed = ".$layout_val->multixmlfeed." ";
 			}
 			$i="1";
@@ -219,7 +219,12 @@ function itemselect() {
 		$countquery=$wpdb->get_results("SELECT * FROM (".$ttstoretable.", ".$ttstorecattable.") left join ".$ttstoreextratable." on (".$ttstoreextratable.".`productID` = ".$ttstoretable.".`productID`) and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword'  IN BOOLEAN MODE) or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
 	} else {
 		$searchlink = "";
-		$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." group by ".$ttstoretable.".productID");
+		if($_GET['selected']=="yes"){
+			$products = '"' . implode('","', $productID) . '"';;
+			$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where (".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect.") and ".$ttstoretable.".productID IN (".$products.") group by ".$ttstoretable.".productID");
+		} else {
+			$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." group by ".$ttstoretable.".productID");
+		}
 	}
 	$numrows = $wpdb->num_rows;
 	$pages = intval($numrows/$limit); // Number of results pages.
@@ -373,15 +378,26 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 	$keyword = $_GET['search'];
 	$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword'  IN BOOLEAN MODE) or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID ORDER BY ".$order." ASC  LIMIT ".$currentpage.", ".$limit."");
 } else {
-	$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." group by ".$ttstoretable.".productID ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+	if($_GET['selected']=="yes"){
+		$products = '"' . implode('","', $productID) . '"';;
+		$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where (".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ) and ".$ttstoretable.".productID IN (".$products.") group by ".$ttstoretable.".productID ORDER BY ".$order." ASC");
+	} else {
+		$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." group by ".$ttstoretable.".productID ORDER BY ".$order." ASC LIMIT ".$currentpage.", ".$limit."");
+	}
 }
 	echo "<table width=\"<?php echo $adminwidth-15; ?>\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
-		echo "<tr><td width=\"200\">";
+		echo "<tr><td width=\"20\">";
+			if($_GET['selected']==""){
+			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=".$order."&selected=yes\">"; _e('Selected', 'ttstore'); echo "</a></b>";
+			} else {
+			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."\">"; _e('Selected', 'ttstore'); echo "</a></b>";
+			}
+		echo "</td><td width=\"200\">";
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=productID\">"; _e('ProductID', 'ttstore'); echo "</a></b>";
 		echo "</td><td width=\"435\">";
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=name\">"; _e('Product name', 'ttstore'); echo "</a></b>";
-		echo "</td><td width=\"200\">";
-			echo "<b>"; _e('XMLFeed', 'ttstore'); echo "</b>";
+		echo "</td><td width=\"180\">";
+			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=xmlfeed\">"; _e('XMLFeed', 'ttstore'); echo "</a></b>";
 		echo "</td><td width=\"50\">";
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=price\">"; _e('Price', 'ttstore'); echo "</a></b>";
 		echo "</td><td width=\"65\">";
@@ -401,12 +417,51 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				}
 				$array2 .= ",".$product->productID."";
 				echo "<tr style=\"".$tdbgcolor.";\"><td>";
-
+			if($_GET['selected']=="yes"){
 				if(!empty($productID) && in_array($product->productID, $productID, true))
 				{
-					echo "<input type=\"checkbox\" checked=\"yes\" name=\"item[]\" value=".$product->productID." />";
+					echo "<input type=\"checkbox\" checked=\"yes\" name=\"item[]\" value=".$product->productID." /></td><td>";
+					$xmlfeedname = get_option('Tradetracker_xmlname');
+					echo $product->productID;
+					echo "</td><td><span class=\"link1\"><a href=\"javascript: void(0)\">";
+					echo $product->name;
+					echo "<span><img src=\"".$imageURL."\" width=\"400px\"></span></a></span></td><td>";
+					$xmlfeed=$wpdb->get_var("SELECT xmlname FROM ".$ttstorexmltable." where id=".$product->xmlfeed.""); 
+					echo $xmlfeed;
+					echo "</td><td>";
+					echo $product->price;
+					echo "</td><td>";
+					echo $product->currency;
+					$extraname = "";
+					$extravar ="";
+					$extras = $wpdb->get_results("SELECT extravalue, extrafield FROM $ttstoreextratable where productID='".$product->productID."'", ARRAY_A);
+					foreach ($extras as $extra) {
+						$Tradetracker_extra_val = get_option("Tradetracker_extra");
+						if(!empty($Tradetracker_extra_val)){
+							if(in_array($extra[extrafield], $Tradetracker_extra_val, true)) {
+								$extraname .= "<td><b>".$extra[extrafield]."</b></td>";
+								$extravar .= "<td>".$extra[extravalue]."</td>";
+							}
+						}
+					}
+					if($extraname != ""){
+						echo "</td><td><span class=\"link\"><a href=\"javascript: void(0)\">"; _e("Yes", "ttstore"); echo "<span><table><tr>".$extraname."</tr><tr>".$extravar."</tr></table> </span></a></span></td></tr>";
+					} else {
+						echo "</td><td>"; _e("No", "ttstore"); echo "</td></tr>";
+					}
+					unset($extras);
+					if ($colors == "1"){
+						$colors++;
+					} else {
+						$colors--;
+					}
+				}
+			} else {
+				if(!empty($productID) && in_array($product->productID, $productID, true))
+				{
+					echo "<input type=\"checkbox\" checked=\"yes\" name=\"item[]\" value=".$product->productID." /></td><td>";
 				} else {
-					echo "<input type=\"checkbox\" name=\"item[]\" value=".$product->productID." />";
+					echo "<input type=\"checkbox\" name=\"item[]\" value=".$product->productID." /></td><td>";
 				}
 				if($product->imageURL==""){
 					$imageURL = plugins_url( 'images/No_image.png' , __FILE__ );
@@ -448,6 +503,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 					$colors--;
 				}
 
+			}
 			}
 		if(!empty($array2) && !empty($productID)){
 			$array1 = $productID;
