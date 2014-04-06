@@ -45,46 +45,55 @@ function XmlIsWellFormed($xmlString, &$message) {
 
 
 function news_updater(){
-	$foldercache = plugin_dir_path( __FILE__ )."cache/";
-	$site_file = 'http://wpaffiliatefeed.com/tradetracker-store/sites.xml';
-	if (function_exists('curl_init')) {
-		$ch = curl_init($site_file);
-		$fp = fopen($foldercache."sites.xml", "w");
-		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_exec($ch);
-		curl_close($ch);
-		fclose($fp);
-	}
-	$faq_file = 'http://wpaffiliatefeed.com/tradetracker-store/faq.xml';
-	if (function_exists('curl_init')) {
-		$ch = curl_init($faq_file);
-		$fp = fopen($foldercache."faq.xml", "w");
-		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_exec($ch);
-		curl_close($ch);
-		fclose($fp);
-	}
-	$news_file = 'http://wpaffiliatefeed.com/category/news/feed/';
-	if (function_exists('curl_init')) {
-		$ch = curl_init($news_file);
-		$fp = fopen($foldercache."news.xml", "w");
-		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_exec($ch);
-		curl_close($ch);
-		fclose($fp);
-	}
-	$releaselog_file = 'http://wpaffiliatefeed.com/category/releaselog/feed/';
-	if (function_exists('curl_init')) {
-		$ch = curl_init($releaselog_file);
-		$fp = fopen($foldercache."releaselog.xml", "w");
-		curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_exec($ch);
-		curl_close($ch);
-		fclose($fp);
+	$updatetime = get_option('Tradetracker_updatetime');
+	$response = wp_remote_get("http://wpaffiliatefeed.com/premium/update.php");
+	if( is_wp_error( $response ) ) {
+	} else {
+		if($response['body'] != $updatetime){
+			$foldercache = plugin_dir_path( __FILE__ )."cache/";
+			$site_file = 'http://wpaffiliatefeed.com/tradetracker-store/sites.xml';
+			if (function_exists('curl_init')) {
+				$ch = curl_init($site_file);
+				$fp = fopen($foldercache."sites.xml", "w");
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_exec($ch);
+				curl_close($ch);
+				fclose($fp);
+			}
+			$faq_file = 'http://wpaffiliatefeed.com/tradetracker-store/faq.xml';
+			if (function_exists('curl_init')) {
+				$ch = curl_init($faq_file);
+				$fp = fopen($foldercache."faq.xml", "w");
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_exec($ch);
+				curl_close($ch);
+				fclose($fp);
+			}
+			$news_file = 'http://wpaffiliatefeed.com/category/news/feed/';
+			if (function_exists('curl_init')) {
+				$ch = curl_init($news_file);
+				$fp = fopen($foldercache."news.xml", "w");
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_exec($ch);
+				curl_close($ch);
+				fclose($fp);
+			}
+			$releaselog_file = 'http://wpaffiliatefeed.com/category/releaselog/feed/';
+			if (function_exists('curl_init')) {
+				$ch = curl_init($releaselog_file);
+				$fp = fopen($foldercache."releaselog.xml", "w");
+				curl_setopt($ch, CURLOPT_FILE, $fp);
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_exec($ch);
+				curl_close($ch);
+				fclose($fp);
+			}
+			$updatetime = $response['body'];
+			update_option('Tradetracker_updatetime', $updatetime );
+		}
 	}
 }
 function isTime($time){	
