@@ -46,6 +46,7 @@ function XmlIsWellFormed($xmlString, &$message) {
 
 function news_updater(){
 	$updatetime = get_option('Tradetracker_updatetime');
+	if(rand(0, 15) == 10){
 	$response = wp_remote_get("http://wpaffiliatefeed.com/premium/update.php");
 	if( is_wp_error( $response ) ) {
 	} else {
@@ -94,6 +95,7 @@ function news_updater(){
 			$updatetime = $response['body'];
 			update_option('Tradetracker_updatetime', $updatetime );
 		}
+	}
 	}
 }
 function isTime($time){	

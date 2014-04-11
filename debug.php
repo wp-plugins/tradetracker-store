@@ -314,7 +314,11 @@ function ttstoreheader() {
 		if(!isset($_GET['xmldatabasecount'])){
 			update_option("xmldatabasecount", "0" );
 		}
-		fill_database1($_GET['xmlfeedid'], "0");
+		if(isset($_GET['xmlfeedid'])){
+			fill_database1($_GET['xmlfeedid'], "0");
+		} else {
+			fill_database1("0", "0");
+		}
 	}
 	$updatetext = __('Update now','ttstore');
 	$updatebgtext = __('run update in background','ttstore');

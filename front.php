@@ -27,8 +27,8 @@ function store_items($used, $winkel, $searching)
 {
 	global $wpdb;
 	global $ttstorexmltable;
-	$wpdb->get_var( "SELECT COUNT(*) FROM $ttstorexmltable;" ); 
-	if($tradetracker_xml>0)	
+	$tradetracker_xml = $wpdb->get_var( "SELECT COUNT(*) FROM $ttstorexmltable;" ); 
+	if($tradetracker_xml==0)	
 	{
 		_e('No XML filled in yet please change the settings first.', 'ttstore');
 	} else {
@@ -453,6 +453,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		}else if ( $multi_val->multimaxprice > "0" )  {
 
 			$priceselect = " and price > '0' and price < ".$multi_val->multimaxprice."";
+			$priceselectcur = "";
 
 		} else {
 			$priceselect = "";

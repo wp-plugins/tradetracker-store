@@ -511,9 +511,10 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 			$result = array_diff($array1, $array2);
 			if(isset($result)){
 				$result = implode(",", $result);
+				echo "<input type=\"hidden\" name=\"itemsother\" value=\"".$result."\" />";
 			}
 		}
-			echo "<input type=\"hidden\" name=\"itemsother\" value=\"".$result."\" />";
+			
 	echo "<tr><td colspan=\"5\">"; _e("Select", "ttstore"); echo " <a href=\"javascript:selectToggle(true, 'form2');\">"; _e("All", "ttstore"); echo "</a> | <a href=\"javascript:selectToggle(false, 'form2');\">"; _e("None", "ttstore"); echo "</a></td></tr>";
 	echo "</table>";
 	echo "<table width=\"<?php echo $adminwidth-15; ?>\"><tr><td>";
