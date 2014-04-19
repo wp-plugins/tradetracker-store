@@ -294,12 +294,12 @@ function show_ttpages($winkelvol)
 			if($multixmlfeed == ""){
 				
 				if($categorieselect == ""){
-					$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
+					$priceselect = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 				} else {
-					$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
+					$priceselect = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 				}
 			} else {
-				$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
+				$priceselect = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 			}
 		} else if ( $multi_val->multimaxprice > "0" )  {
 
@@ -333,13 +333,13 @@ function show_ttpages($winkelvol)
 				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$priceselect." group by ".$ttstoretable.".productID ".$Tradetracker_amount_i.""));
 			}
 			if(isset($_GET['ipp']) && is_numeric($_GET['ipp']) && $_GET['ipp']>"0"){
-				$itemsperpage = mysql_real_escape_string($_GET['ipp']);
+				$itemsperpage = $_GET['ipp'];
 			} else {
 				$itemsperpage = $multi_val->multipageamount;
 			}
 			$pages = ceil($totalitems / $itemsperpage)-1;
 			if(isset($_GET['tsp']) && is_numeric($_GET['tsp'])){
-				$currentpage = mysql_real_escape_string($_GET['tsp']);
+				$currentpage = $_GET['tsp'];
 				$nextpage = $currentpage * $multi_val->multipageamount;
 			} else {
 				$currentpage = "0";
@@ -442,14 +442,14 @@ function show_items($usedhow, $winkelvol, $searching)
 		if(isset($_GET['pmin']) && isset($_GET['pmax']) && is_numeric($_GET['pmin']) && is_numeric($_GET['pmax'])){
 			if($multixmlfeed == ""){
 				if($categorieselect == ""){
-					$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
+					$priceselect = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 				} else {
-					$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
+					$priceselect = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 				}
 			} else {
-				$priceselect = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
+				$priceselect = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 			}
-			$priceselectcur = " and price > ".mysql_real_escape_string($_GET['pmin'])." and price < ".mysql_real_escape_string($_GET['pmax'])."";
+			$priceselectcur = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 		}else if ( $multi_val->multimaxprice > "0" )  {
 
 			$priceselect = " and price > '0' and price < ".$multi_val->multimaxprice."";
@@ -488,13 +488,13 @@ function show_items($usedhow, $winkelvol, $searching)
 				$totalitems=count($wpdb->get_results("SELECT id FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (".$ttstoretable.".productID='".$productID."') ".$priceselectcur." group by ".$ttstoretable.".productID ".$Tradetracker_amount_i.""));
 			}
 			if(isset($_GET['ipp']) && is_numeric($_GET['ipp']) && $_GET['ipp']>"0"){
-				$itemsperpage = mysql_real_escape_string($_GET['ipp']);
+				$itemsperpage = $_GET['ipp'];
 			} else {
 				$itemsperpage = $multi_val->multipageamount;
 			}
 			$pages = ceil($totalitems / $itemsperpage)-1;
 			if(isset($_GET['tsp']) && is_numeric($_GET['tsp'])){
-				$currentpage = mysql_real_escape_string($_GET['tsp']);
+				$currentpage = $_GET['tsp'];
 				$nextpage = $currentpage * $multi_val->multipageamount;
 				if($totalitems <= $nextpage ){
 					$Tradetracker_amount_i = "LIMIT ".$nextpage.", ".$totalitems.""; 
@@ -544,8 +544,8 @@ function show_items($usedhow, $winkelvol, $searching)
 		if(!empty($multisorting)){
 			$multisorting = ", ".$multisorting;
 		}
-		$term = mysql_real_escape_string(get_search_query());
-		$visits=$wpdb->get_results("SELECT *, MATCH(name,description) AGAINST ('$term' IN BOOLEAN MODE) as relevance FROM ".$ttstoretable.", ".$ttstorecattable."  where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and MATCH(name,description) AGAINST ('$term' IN BOOLEAN MODE) group by ".$ttstoretable.".productID ORDER BY relevance DESC ".$Tradetracker_amount_i."");
+		$term = get_search_query();
+		$visits=$wpdb->get_results($wpdb->prepare("SELECT *, MATCH(name,description) AGAINST ('%s' IN BOOLEAN MODE) as relevance FROM ".$ttstoretable.", ".$ttstorecattable."  where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and MATCH(name,description) AGAINST ('%s' IN BOOLEAN MODE) group by ".$ttstoretable.".productID ORDER BY relevance DESC ".$Tradetracker_amount_i."", $term,$term));
 	} else {
 		if (!isset($Tradetracker_productid) || $Tradetracker_productid == null) 
 		{

@@ -15,7 +15,7 @@ global $ttstorecattable;
 <?php $adminheight = get_option("Tradetracker_adminheight"); ?>
 
 <div  id="TB_overlay" class="TB_overlayBG"></div>
-<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;width: <?php echo $adminwidth; ?>px;">
+<div id="TB_window1" style="left: auto;margin-left: auto;margin-right: auto; margin-top: 0;right: auto;top: 48px;visibility: visible;z-index:100051;width: <?php echo $adminwidth; ?>px;">
 	<div id="ttstorebox">
 		<div id="TB_title">
 			<div id="TB_ajaxWindowTitle"><?php _e('Debug', 'ttstore'); ?></div>
