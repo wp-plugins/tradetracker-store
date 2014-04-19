@@ -396,11 +396,10 @@ function show_items($usedhow, $winkelvol, $searching)
 	global $pagetext;
 	$wpdb->show_errors();
 	if ($searching == "1") {
-		$multi=$wpdb->get_results("SELECT buynow, multimaxprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
+		$multi_val=$wpdb->get_row("SELECT buynow, multimaxprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
 	} else {
-		$multi=$wpdb->get_results("SELECT buynow, multimaxprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".$winkelvol."");
+		$multi_val=$wpdb->get_row("SELECT buynow, multimaxprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".$winkelvol."");
 	}
-	foreach ($multi as $multi_val){	
 		$Tradetracker_amount = $multi_val->multiamount;
 		$nonexisting = $wpdb->get_results("SELECT productID from ".$ttstoreitemtable." where storeID = ".$winkelvol."");
 		if(count($nonexisting)>0){
@@ -538,7 +537,6 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$uselightbox = "0";
 		}
-	}
 
 	if ($searching == "1") {
 		if(!empty($multisorting)){
@@ -559,11 +557,6 @@ function show_items($usedhow, $winkelvol, $searching)
 	$storeitems = "";
 	$i="1";
 	foreach ($visits as $product){
-
-		
-
-
-
 		$Tradetracker_extra_val = get_option("Tradetracker_extra");
 		if(!empty($Tradetracker_extra_val)){
 			$extraname = "";
@@ -647,12 +640,12 @@ function show_items($usedhow, $winkelvol, $searching)
 		}else {
 			$price = $currency." ".$product->price;
 		}
-		if(function_exists(showproviderlogo)){
+		if(function_exists('showproviderlogo')){
 		$logo = showproviderlogo($product->xmlfeed, $storename);
 		} else {
 		$logo = "";
 		}
-		if(function_exists(ttextraquery)){
+		if(function_exists('ttextraquery')){
 		$ttextraquery = ttextraquery($product->xmlfeed, $storename);
 		} else {
 		$ttextraquery = "";

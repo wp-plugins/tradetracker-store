@@ -1,4 +1,36 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.29"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$tttable = $pro_table_prefix."store";
+	$tttableextra = $pro_table_prefix."extra";
+	$tttablecat = $pro_table_prefix."cat";
+	delete_option("Tradetracker_importerror");
+	delete_option("Tradetracker_memoryusage");	
+	delete_option("Tradetracker_xml_extra");
+	$wpdb->query("TRUNCATE TABLE `$tttable`");
+	$wpdb->query("TRUNCATE TABLE `$tttableextra`");
+	$wpdb->query("TRUNCATE TABLE `$tttablecat`");
+	$item_count = $wpdb->get_var("SELECT COUNT(*) FROM $ttstoretable;");
+	$currentupdate = date('Y-m-d H:i:s');
+	$option_name = 'Tradetracker_xml_update' ;
+	$newvalue = sprintf(__('Database filled with %1$s new items on %2$s','ttstore'), $item_count, $currentupdate);
+
+	if ( get_option( $option_name ) != $newvalue ) {
+		update_option( $option_name, $newvalue );
+	} else {
+		$deprecated = ' ';
+		$autoload = 'no';
+		add_option( $option_name, $newvalue, $deprecated, $autoload );
+	}
+	$wpdb->query("ALTER TABLE `".$tttablecat."` ADD INDEX(`productID`)");
+	$wpdb->query("ALTER TABLE `".$tttablecat."` ADD INDEX(`categorieid`)");
+	$wpdb->query("ALTER TABLE `".$tttable."` ADD INDEX(`productID`)");
+	$wpdb->query("ALTER TABLE `".$tttableextra."` ADD INDEX(`productID`)");
+	wp_clear_scheduled_hook('xmlscheduler');
+	update_option("TTstoreversion", "4.5.48" );
+}
+
 if (get_option("TTstoreversion") == "4.5.27"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
