@@ -1,4 +1,12 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.48"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstoremultitable = $pro_table_prefix."multi";
+	$wpdb->query("ALTER TABLE `".$ttstoremultitable."` ADD `multicurrency` TEXT(8)");
+	update_option("TTstoreversion", "4.5.49" );
+}
+
 if (get_option("TTstoreversion") == "4.5.29"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

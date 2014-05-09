@@ -23,6 +23,7 @@ function store() {
 	$Tradetracker_multixmlfeed_name = 'Tradetracker_multixmlfeed';
 	$Tradetracker_multiproductpage_name = 'Tradetracker_multiproductpage';
 	$Tradetracker_multimaxprice_name = 'Tradetracker_multimaxprice';
+	$Tradetracker_multicurrency_name = 'Tradetracker_multicurrency';
 	$Tradetracker_categories_name = 'Tradetracker_categories';
 	$readonlylock = "no";
 	if(isset($_GET['return'])){
@@ -44,7 +45,7 @@ function store() {
 		if(isset($_POST['multiid'])){
 			$multiid = $_POST['multiid'];
 		} 
-		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multisorting, multiorder,multimaxprice, multiproductpage, multiname, multilayout, multiamount, multipageamount, multilightbox, categories FROM ".$ttstoremultitable." where id='".$multiid."'");
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multisorting, multiorder,multimaxprice, multicurrency, multiproductpage, multiname, multilayout, multiamount, multipageamount, multilightbox, categories FROM ".$ttstoremultitable." where id='".$multiid."'");
 		foreach ($multi as $multi_val){
 			$Tradetracker_buynow_val = $multi_val->buynow;
 			$db_buynow_val = $multi_val->buynow;
@@ -71,6 +72,8 @@ function store() {
 
 			$Tradetracker_multimaxprice_val = $multi_val->multimaxprice;
 			$db_multimaxprice_val = $multi_val->multimaxprice;
+			$Tradetracker_multicurrency_val = $multi_val->multicurrency;
+			$db_multicurrency_val = $multi_val->multicurrency;
 		}
 
 	}
@@ -88,6 +91,7 @@ function store() {
 		$Tradetracker_multilightbox_val = $_POST[ $Tradetracker_multilightbox_name ];
 		$Tradetracker_multiproductpage_val = $_POST[ $Tradetracker_multiproductpage_name ];
 		$Tradetracker_multimaxprice_val = $_POST[ $Tradetracker_multimaxprice_name ];
+		$Tradetracker_multicurrency_val = $_POST[ $Tradetracker_multicurrency_name ];
 		if(isset($_POST[ $Tradetracker_categories_name ])){
 			$Tradetracker_categories_val = serialize($_POST[ $Tradetracker_categories_name ]);
 		} else {
@@ -132,6 +136,9 @@ function store() {
  				if ( $db_multimaxprice_val  != $Tradetracker_multimaxprice_val) {
 					$query = $wpdb->update( $ttstoremultitable, array( 'multimaxprice' => $Tradetracker_multimaxprice_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
  				}
+ 				if ( $db_multicurrency_val  != $Tradetracker_multicurrency_val) {
+					$query = $wpdb->update( $ttstoremultitable, array( 'multicurrency' => $Tradetracker_multicurrency_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
+ 				}
 				if ( $db_multiproductpage_val  != $Tradetracker_multiproductpage_val) {
 					$query = $wpdb->update( $ttstoremultitable, array( 'multiproductpage' => $Tradetracker_multiproductpage_val), array( 'id' => $_POST['multiid']), array( '%s'), array( '%s'), array( '%d' ) );
  				}
@@ -151,6 +158,7 @@ function store() {
 				$currentpage["multiitems"]="";
         			$currentpage["multilightbox"]=$Tradetracker_multilightbox_val;
         			$currentpage["multimaxprice"]=$Tradetracker_multimaxprice_val;
+        			$currentpage["multicurrency"]=$Tradetracker_multicurrency_val;
         			$currentpage["multixmlfeed"]=$Tradetracker_multixmlfeed_val;
         			$currentpage["multiproductpage"]=$Tradetracker_multiproductpage_val;
         			$currentpage["categories"]=$Tradetracker_categories_val;
@@ -532,6 +540,29 @@ function toggleOther(){
 		<td>
 			<input type="text" name="<?php echo $Tradetracker_multimaxprice_name; ?>" value="<?php if (!isset($Tradetracker_multimaxprice_val)) {echo "0"; } else {echo $Tradetracker_multimaxprice_val;} ?>" size="30">
 			<?php if(isset($error)){ echo "<font color=\"red\">*</font>"; }?> <?php _e('use 0 if you don\'t want a pricelimit at all','ttstore'); ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label for="tradetrackercurrency" title="<?php _e('Which currency should the price filter show.','ttstore');?>" class="info">
+				<?php _e("Which currency for pricefilter:", 'ttstore' ); ?>
+			</label> 
+		</td>
+		<td>
+			<select width="200" style="width: 200px" name="<?php echo $Tradetracker_multicurrency_name; ?>">
+<?php
+		$currency=array('u20AC','u0024', 'u20a4', 'u007A');
+		foreach ($currency as $currency_val){
+			$curdisplay = str_replace('u','&#x',$currency_val). ";";
+			if(isset($Tradetracker_multicurrency_val) && $currency_val == $Tradetracker_multicurrency_val) {
+				echo "<option selected=\"selected\" value=\"".$currency_val."\">$curdisplay </option>";
+			} else {
+				echo "<option value=\"".$currency_val."\">$curdisplay </option>";
+			}
+		}
+		
+?>
+			</select>		
 		</td>
 	</tr>
 

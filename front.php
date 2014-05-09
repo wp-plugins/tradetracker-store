@@ -195,6 +195,13 @@ function show_ttfilter($winkelvol)
 	global $ttstoreitemtable;
 	global $ttstoretable;
 	$max_price = $wpdb->get_var( "SELECT multimaxprice FROM $ttstoremultitable where id='".$winkelvol."';"  );
+	$price_cur = $wpdb->get_var( "SELECT multicurrency FROM $ttstoremultitable where id='".$winkelvol."';"  );
+	if ($price_cur == ""){
+		$price_cur = "\u20AC";
+	} else {
+		$price_cur = "\\".$price_cur;
+	}
+
 	if ($max_price == "0") {
 		$max_price = $wpdb->get_var( "SELECT MAX(price) FROM $ttstoretable;"  );
 		$max_price = round($max_price+1);
@@ -230,7 +237,7 @@ function show_ttfilter($winkelvol)
 			max: ".$max_price.",
 			values: [ ".$min_price.", ".$max_pricecur." ],
 			slide: function( event, ui ) {
-				$( \"#amount\" ).val( \"\u20AC\" + ui.values[ 0 ] + \" - \u20AC\" + ui.values[ 1 ] );
+				$( \"#amount\" ).val( \"".$price_cur."\" + ui.values[ 0 ] + \" - \u20AC\" + ui.values[ 1 ] );
 			}, change: function(event, ui) { 
 
 
@@ -238,8 +245,8 @@ location.href = '?ipp=".$ipp."&tsp=0&pmin=' + ui.values[0] + '&pmax=' + ui.value
     
      }
 		});
-		$( \"#amount\" ).val( \"\u20AC\" + $( \"#slider-range\" ).slider( \"values\", 0 ) +
-			\" - \u20AC\" + $( \"#slider-range\" ).slider( \"values\", 1 ) );
+		$( \"#amount\" ).val( \"".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 0 ) +
+			\" - ".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 1 ) );
 	})});
 	</script>
 <div class=\"demo\">
