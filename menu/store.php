@@ -551,7 +551,7 @@ function toggleOther(){
 		<td>
 			<select width="200" style="width: 200px" name="<?php echo $Tradetracker_multicurrency_name; ?>">
 <?php
-		$currency=array('u20AC','u0024', 'u20a4', 'u007A');
+		$currency=array('u20AC','u0024', 'u20a4', 'u007Au0142');
 		foreach ($currency as $currency_val){
 			$curdisplay = str_replace('u','&#x',$currency_val). ";";
 			if(isset($Tradetracker_multicurrency_val) && $currency_val == $Tradetracker_multicurrency_val) {

@@ -199,7 +199,7 @@ function show_ttfilter($winkelvol)
 	if ($price_cur == ""){
 		$price_cur = "\u20AC";
 	} else {
-		$price_cur = "\\".$price_cur;
+		$price_cur = str_replace("u","\u",$price_cur);
 	}
 
 	if ($max_price == "0") {
