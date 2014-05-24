@@ -195,6 +195,8 @@ function show_ttfilter($winkelvol)
 	global $ttstoreitemtable;
 	global $ttstoretable;
 	$max_price = $wpdb->get_var( "SELECT multimaxprice FROM $ttstoremultitable where id='".$winkelvol."';"  );
+	$min_price = $wpdb->get_var( "SELECT multiminprice FROM $ttstoremultitable where id='".$winkelvol."';"  );
+	$min_pricecur = $min_price;
 	$price_cur = $wpdb->get_var( "SELECT multicurrency FROM $ttstoremultitable where id='".$winkelvol."';"  );
 	if ($price_cur == ""){
 		$price_cur = "\u20AC";
@@ -220,11 +222,11 @@ function show_ttfilter($winkelvol)
 			$min_price = $_GET['pmin'];
 			$max_pricecur = $_GET['pmax'];
 		} else {
-			$min_price = "0";
+			$min_price = $min_price;
 			$max_pricecur = $max_price;
 		}
 	} else {
-		$min_price = "0";
+		$min_price = $min_price;
 		$max_pricecur = $max_price;
 	}
 	$filter = "<style>#demo-frame > div.demo { padding: 10px !important; };</style>";
@@ -233,7 +235,7 @@ function show_ttfilter($winkelvol)
 	$(function() {
 		$( \"#slider-range\" ).slider({
 			range: true,
-			min: 0,
+			min: ".$min_pricecur.",
 			max: ".$max_price.",
 			values: [ ".$min_price.", ".$max_pricecur." ],
 			slide: function( event, ui ) {
@@ -269,7 +271,7 @@ function show_ttpages($winkelvol)
 	global $ttstoreitemtable;
 	global $ttstoretable;
 	global $ttstorecattable;
-	$multi=$wpdb->get_results("SELECT multiamount, multiitems, multipageamount, categories, multixmlfeed, multimaxprice, count(".$ttstoreitemtable.".id) as totalitems FROM ".$ttstoremultitable." left join ".$ttstoreitemtable." on ".$ttstoremultitable.".id = ".$ttstoreitemtable.".storeID where ".$ttstoremultitable.".id=".$winkelvol." group by storeID, multiname");
+	$multi=$wpdb->get_results("SELECT multiamount, multiitems, multipageamount, categories, multixmlfeed, multimaxprice, multiminprice, count(".$ttstoreitemtable.".id) as totalitems FROM ".$ttstoremultitable." left join ".$ttstoreitemtable." on ".$ttstoremultitable.".id = ".$ttstoreitemtable.".storeID where ".$ttstoremultitable.".id=".$winkelvol." group by storeID, multiname");
 	foreach ($multi as $multi_val){	
 		$Tradetracker_productid = $multi_val->totalitems;
 		$Tradetracker_amount = $multi_val->multiamount;
@@ -308,10 +310,12 @@ function show_ttpages($winkelvol)
 			} else {
 				$priceselect = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 			}
-		} else if ( $multi_val->multimaxprice > "0" )  {
-
-			$priceselect = " and price > '0' and price < ".$multi_val->multimaxprice."";
-
+		} else if ( $multi_val->multimaxprice > "0" || $multi_val->multiminprice > "0")  {
+			if ( $multi_val->multiminprice >= $multi_val->multimaxprice) {
+				$priceselect = " and price >= ".$multi_val->multiminprice." ";
+			} else {
+				$priceselect = " and price >= ".$multi_val->multiminprice." and price < ".$multi_val->multimaxprice."";
+			}
 		} else {
 			$priceselect = "";
 		}
@@ -403,9 +407,9 @@ function show_items($usedhow, $winkelvol, $searching)
 	global $pagetext;
 	$wpdb->show_errors();
 	if ($searching == "1") {
-		$multi_val=$wpdb->get_row("SELECT buynow, multimaxprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
+		$multi_val=$wpdb->get_row("SELECT buynow, multimaxprice, multiminprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".get_option("Tradetracker_searchlayout")."");
 	} else {
-		$multi_val=$wpdb->get_row("SELECT buynow, multimaxprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".$winkelvol."");
+		$multi_val=$wpdb->get_row("SELECT buynow, multimaxprice, multiminprice, multisorting, multiorder, categories, multixmlfeed, multiproductpage, multiname, laywidth, multiamount, multipageamount, multilightbox FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id and ".$ttstoremultitable.".id=".$winkelvol."");
 	}
 		$Tradetracker_amount = $multi_val->multiamount;
 		$nonexisting = $wpdb->get_results("SELECT productID from ".$ttstoreitemtable." where storeID = ".$winkelvol."");
@@ -456,11 +460,13 @@ function show_items($usedhow, $winkelvol, $searching)
 				$priceselect = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
 			}
 			$priceselectcur = " and price > ".$_GET['pmin']." and price < ".$_GET['pmax']."";
-		}else if ( $multi_val->multimaxprice > "0" )  {
-
-			$priceselect = " and price > '0' and price < ".$multi_val->multimaxprice."";
+		} else if ( $multi_val->multimaxprice > "0" || $multi_val->multiminprice > "0")  {
+			if ( $multi_val->multiminprice >= $multi_val->multimaxprice) {
+				$priceselect = " and price >= ".$multi_val->multiminprice." ";
+			} else {
+				$priceselect = " and price >= ".$multi_val->multiminprice." and price < ".$multi_val->multimaxprice."";
+			}
 			$priceselectcur = "";
-
 		} else {
 			$priceselect = "";
 			$priceselectcur = "";
