@@ -246,12 +246,12 @@ function show_ttfilter($winkelvol)
 				}, change: function(event, ui) { 
 					location.href = '?ipp=".$ipp."&tsp=0&pmin=' + ui.values[0] + '&pmax=' + ui.values[1] ; 
 	     			}
-			}).draggable();
+			});
 			$( \"#amount\" ).val( \"".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 0 ) +
 				\" - ".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 1 )
 			);
 		})
-	});
+	}).draggable();
 	</script>
 <div class=\"demo\">
 
