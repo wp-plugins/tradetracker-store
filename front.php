@@ -5,9 +5,12 @@
 */
 
 function TTstore_scripts() { 
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script('jquery-ui-slider');
-	wp_enqueue_script( 'ttstoreexpand-script', WP_PLUGIN_URL . '/tradetracker-store/js/expand.js');
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_script( 'jquery-ui' );
+	wp_enqueue_script( 'jquery-ui-slider');
+        wp_enqueue_script( 'jquery-touch-punch' );
+	wp_register_script( 'ttstoreexpand-script', WP_PLUGIN_URL . '/tradetracker-store/js/expand.js', '', '', true);
+	wp_enqueue_script( 'ttstoreexpand-script');
 
 	$ttslidertheme = get_option("Tradetracker_slidertheme");
 	if($ttslidertheme == ""){
@@ -232,24 +235,23 @@ function show_ttfilter($winkelvol)
 	$filter = "<style>#demo-frame > div.demo { padding: 10px !important; };</style>";
 	$filter .= "<script type='text/javascript'>
 	jQuery(document).ready(function($) {  
-	$(function() {
-		$( \"#slider-range\" ).slider({
-			range: true,
-			min: ".$min_pricecur.",
-			max: ".$max_price.",
-			values: [ ".$min_price.", ".$max_pricecur." ],
-			slide: function( event, ui ) {
-				$( \"#amount\" ).val( \"".$price_cur."\" + ui.values[ 0 ] + \" - \u20AC\" + ui.values[ 1 ] );
-			}, change: function(event, ui) { 
-
-
-location.href = '?ipp=".$ipp."&tsp=0&pmin=' + ui.values[0] + '&pmax=' + ui.values[1] ; 
-    
-     }
-		});
-		$( \"#amount\" ).val( \"".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 0 ) +
-			\" - ".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 1 ) );
-	})});
+		$(function() {
+			$( \"#slider-range\" ).slider({
+				range: true,
+				min: ".$min_pricecur.",
+				max: ".$max_price.",
+				values: [ ".$min_price.", ".$max_pricecur." ],
+				slide: function( event, ui ) {
+					$( \"#amount\" ).val( \"".$price_cur."\" + ui.values[ 0 ] + \" - \u20AC\" + ui.values[ 1 ] );
+				}, change: function(event, ui) { 
+					location.href = '?ipp=".$ipp."&tsp=0&pmin=' + ui.values[0] + '&pmax=' + ui.values[1] ; 
+	     			}
+			}).draggable();
+			$( \"#amount\" ).val( \"".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 0 ) +
+				\" - ".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 1 )
+			);
+		})
+	});
 	</script>
 <div class=\"demo\">
 
