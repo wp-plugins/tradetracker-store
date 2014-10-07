@@ -1,4 +1,11 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.51"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$tttable = $pro_table_prefix."store";
+	$wpdb->query("ALTER TABLE `".$tttable."` CHANGE `imageURL` `imageURL` VARCHAR(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL");
+	update_option("TTstoreversion", "4.5.54" );
+}
 if (get_option("TTstoreversion") == "4.5.49"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

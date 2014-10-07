@@ -3,8 +3,8 @@ Contributors: RPG84
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=97K9JBA7Z2K7Q
 Tags: tradetracker, store, productfeed, affiliate, daisycon, zanox, cleafs, tradedoubler, paidonresults, M4N, xml productfeed
 Requires at least: 2.0.1
-Tested up to: 3.9.2
-Stable tag: 4.5.53
+Tested up to: 4
+Stable tag: 4.5.54
 
 A plugin that lets you import an XML productfeed from TradeTracker. 
 
