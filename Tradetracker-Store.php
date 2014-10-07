@@ -120,7 +120,7 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 	id INT(9) NOT NULL AUTO_INCREMENT,
 	productID VARCHAR(36) NOT NULL,
 	name VARCHAR(80) NOT NULL,
-	imageURL VARCHAR(200) NOT NULL,
+	imageURL VARCHAR(300) NOT NULL,
 	productURL VARCHAR(1000) NOT NULL,
 	price DECIMAL(10,2) NOT NULL,
 	currency VARCHAR(10) NOT NULL,
