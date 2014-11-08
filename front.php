@@ -142,6 +142,51 @@ function header_css_style() {
 	echo $style;
 	}
 }
+function show_ttusersort($winkelvol)
+{
+	if(isset($_GET['multiorder'])){
+		$multiorder = $_GET['multiorder'];		
+	} else {
+		$multiorder = "";
+	}
+	$userperpage = "<form action=\"\" method=\"get\" class=\"pricesort\" name=\"pricesort\" >";
+	if(isset($_GET['pmax'])){
+		if(is_numeric($_GET['pmax'])){
+			$userperpage .= "<input type=\"hidden\" value=\"".$_GET['pmax']."\" name=\"pmax\">";
+		}
+	}
+	if(isset($_GET['pmin'])){
+		if(is_numeric($_GET['pmin'])){
+			$userperpage .= "<input type=\"hidden\" value=\"".$_GET['pmin']."\" name=\"pmin\">";
+		}
+	}
+	if(isset($_GET['ipp'])){
+		if(is_numeric($_GET['ipp'])){
+			$userperpage .= "<input type=\"hidden\" value=\"".$_GET['ipp']."\" name=\"ipp\">";
+		}
+	}
+	$userperpage .= "<input type=\"hidden\" value=\"price\" name=\"multisorting\">";
+	$userperpage .= __('Sort:','ttstore');
+	$userperpage .= "<select name=\"multiorder\" onchange=\"this.form.submit();\">";
+	$userperpage .= "<option name=\"\"> </option>";
+	$userperpage .= "<option name=\"desc\""; 
+	if($multiorder == "desc"){ 
+		$userperpage .= "selected"; 
+	} 
+	$userperpage .= " value =\"desc\">";
+	$userperpage .= __('price (high to low)','ttstore');
+	$userperpage .= "</option>";
+	$userperpage .= "<option name=\"asc\""; 
+	if($multiorder == "desc"){ 
+		$userperpage .= "selected"; 
+	} 
+	$userperpage .= " value =\"asc\">";
+	$userperpage .= __('price (low to high)','ttstore');
+	$userperpage .= "</option>";
+	$userperpage .= "</select>";
+	$userperpage .= "</form>";
+	return $userperpage;
+}
 function show_ttuserpages($winkelvol)
 {
 	if(isset($_GET['ipp'])){
@@ -153,7 +198,7 @@ function show_ttuserpages($winkelvol)
 	} else {
 		$itemsperpage = "0";
 	}
-	$userperpage = "<form action=\"\" method=\"get\" name=\"itemsperpage\" >";
+	$userperpage = "<form action=\"\" method=\"get\" class=\"itemsperpage\" name=\"itemsperpage\" >";
 	if(isset($_GET['pmax'])){
 		if(is_numeric($_GET['pmax'])){
 			$userperpage .= "<input type=\"hidden\" value=\"".$_GET['pmax']."\" name=\"pmax\">";
@@ -163,6 +208,12 @@ function show_ttuserpages($winkelvol)
 		if(is_numeric($_GET['pmin'])){
 			$userperpage .= "<input type=\"hidden\" value=\"".$_GET['pmin']."\" name=\"pmin\">";
 		}
+	}
+	if(isset($_GET['multisorting'])){
+		$userperpage .= "<input type=\"hidden\" value=\"".$_GET['multisorting']."\" name=\"multisorting\">";
+	}
+	if(isset($_GET['multiorder'])){
+		$userperpage .= "<input type=\"hidden\" value=\"".$_GET['multiorder']."\" name=\"multiorder\">";
 	}
 	$userperpage .= __('Items per page:','ttstore');
 	$userperpage .= "<select name=\"ipp\" onchange=\"this.form.submit();\">";
@@ -232,6 +283,16 @@ function show_ttfilter($winkelvol)
 		$min_price = $min_price;
 		$max_pricecur = $max_price;
 	}
+	if(isset($_GET['multisorting'])){
+		$multisorting = "&multisorting=".$_GET['multisorting'];
+	} else {
+		$multisorting = "";
+	}
+	if(isset($_GET['multiorder'])){
+		$multiorder = "&multiorder=".$_GET['multiorder'];
+	} else {
+		$multiorder = "";
+	}
 	$filter = "<style>#demo-frame > div.demo { padding: 10px !important; };</style>";
 	$filter .= "<script type='text/javascript'>
 	jQuery(document).ready(function($) {  
@@ -244,7 +305,7 @@ function show_ttfilter($winkelvol)
 				slide: function( event, ui ) {
 					$( \"#amount\" ).val( \"".$price_cur."\" + ui.values[ 0 ] + \" - \u20AC\" + ui.values[ 1 ] );
 				}, change: function(event, ui) { 
-					location.href = '?ipp=".$ipp."&tsp=0&pmin=' + ui.values[0] + '&pmax=' + ui.values[1] ; 
+					location.href = '?ipp=".$ipp."".$multisorting."".$multiorder."&tsp=0&pmin=' + ui.values[0] + '&pmax=' + ui.values[1] ; 
 	     			}
 			});
 			$( \"#amount\" ).val( \"".$price_cur."\" + $( \"#slider-range\" ).slider( \"values\", 0 ) +
@@ -358,6 +419,16 @@ function show_ttpages($winkelvol)
 				$currentpage = "0";
 				$nextpage = $currentpage + $multi_val->multipageamount;
 			}
+			if(isset($_GET['multisorting'])){
+				$multisorting = "&multisorting=".$_GET['multisorting'];
+			} else {
+				$multisorting = "";
+			}
+			if(isset($_GET['multiorder'])){
+				$multiorder = "&multiorder=".$_GET['multiorder'];
+			} else {
+				$multiorder = "";
+			}
 			if(isset($_GET['pmin']) && isset($_GET['pmax']) && is_numeric($_GET['pmin']) && is_numeric($_GET['pmax'])){
 				$min_price = "&pmin=".$_GET['pmin'];
 				$max_pricecur = "&pmax=".$_GET['pmax'];
@@ -369,24 +440,24 @@ function show_ttpages($winkelvol)
 				$pagetext ="";
 				if ($currentpage != 0) { // Don't show back link if current page is first page.
 					$back_page = $currentpage - "1";
-					$pagetext = "<a class=\"ttbackpage\" href=\"?ipp=".$itemsperpage."&tsp=".$back_page."".$min_price."".$max_pricecur."\">".__('back','ttstore')."</a>\n";			
+					$pagetext = "<a class=\"ttbackpage\" href=\"?ipp=".$itemsperpage."&tsp=".$back_page."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">".__('back','ttstore')."</a>\n";			
 				}
 				for ($i=0; $i <= $pages; $i++){
 					if ($i == $currentpage){
 						$pagetext .= "<b>$i</b> \n"; // If current page don't give link, just text.
 					}else{
 						if ($currentpage <= $i-5){
-							$pagetext .= "<a class=\"ttmorethan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$min_price."".$max_pricecur."\">$i</a> \n";
+							$pagetext .= "<a class=\"ttmorethan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
 						} else if ($currentpage >= $i+5){ 
-							$pagetext .= "<a class=\"ttlessthan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$min_price."".$max_pricecur."\">$i</a> \n";
+							$pagetext .= "<a class=\"ttlessthan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
 						} else {
-							$pagetext .= "<a class=\"ttinbetween\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$min_price."".$max_pricecur."\">$i</a> \n";
+							$pagetext .= "<a class=\"ttinbetween\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
 						}
 					}
 				}
 				if ($currentpage < $pages ) { // If last page don't give next link.
 					$next_page = $currentpage + "1";
-					$pagetext .= "<a class=\"ttnextpage\" href=\"?ipp=".$itemsperpage."&tsp=".$next_page."".$min_price."".$max_pricecur."\">".__('next','ttstore')."</a>\n";
+					$pagetext .= "<a class=\"ttnextpage\" href=\"?ipp=".$itemsperpage."&tsp=".$next_page."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">".__('next','ttstore')."</a>\n";
 				}
 			}
 		}
@@ -539,11 +610,19 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$width= $multi_val->laywidth;
 		}
-		$multisorting = $multi_val->multisorting;
-		if(isset($multisorting) && $multisorting=="categorie"){
-			$multisorting = $ttstorecattable.".".$multisorting;
+		if(isset($_GET['multisorting'])){
+			$multisorting = $_GET['multisorting'];
+		} else {
+			$multisorting = $multi_val->multisorting;
+			if(isset($multisorting) && $multisorting=="categorie"){
+				$multisorting = $ttstorecattable.".".$multisorting;
+			}
 		}
-		$multiorder = $multi_val->multiorder;
+		if(isset($_GET['multiorder'])){
+			$multiorder = $_GET['multiorder'];
+		} else {
+			$multiorder = $multi_val->multiorder;
+		}
 		$widthtitle = $width-6;
 		$widthmore = $width-10;
 		$storename = create_slug($multi_val->multiname);
@@ -711,6 +790,12 @@ function show_items($usedhow, $winkelvol, $searching)
 		echo $storeitems; 
 	}
 	
+}
+add_shortcode('user_sort', 'display_store_usersort_short');
+function display_store_usersort_short($store)
+{
+	extract(shortcode_atts(array("store" => '0'), $store));
+	return show_ttusersort($store);
 }
 add_shortcode('user_pages', 'display_store_userpages_short');
 function display_store_userpages_short($store)

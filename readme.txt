@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: tradetracker, store, productfeed, affiliate, daisycon, zanox, cleafs, tradedoubler, paidonresults, M4N, xml productfeed
 Requires at least: 2.0.1
 Tested up to: 4
-Stable tag: 4.5.54
+Stable tag: 4.5.55
 
 A plugin that lets you import an XML productfeed from TradeTracker. 
 
@@ -41,6 +41,10 @@ You can find als FAQs here: http://wpaffiliatefeed.com/category/frequently-asked
 3. Here you select which products you want to show on your site
 
 == Changelog ==
+= 4.5.55 =
+- Added a sorting option for the price for visitors on your site
+- Gave the page selection and the price sorter selection a class so you can style it in css
+
 = 4.5.53 =
 - Fixed small mistake that removed the price from the slider
 

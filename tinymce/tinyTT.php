@@ -37,6 +37,11 @@ function TTtinymce() {
 		if(store) {
 			output += 'store="'+store+'"';
 		}
+		output += ']';
+		output += '[user_sort ';
+		if(store) {
+			output += 'store="'+store+'"';
+		}
 		output += ']<div class="cleared"></div>';
 		output += '[display_multi ';
 		if(store) {

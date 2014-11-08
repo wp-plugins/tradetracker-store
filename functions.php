@@ -189,7 +189,7 @@ function premium_updater(){
 								unset($search_array[$key]);
 							}
 							update_option('Tradetracker_premiumupdate', $search_array );
-						} else {				
+						}elseif(is_numeric($response['body'])){				
 							$update = get_option('Tradetracker_premiumupdate');
 							$filename = $foldercache.''.$api.'.php';
 							if (file_exists($filename)) {
