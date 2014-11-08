@@ -266,6 +266,8 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 function tradetracker_store_uninstall()
 {
 	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	define('PRO_TABLE_PREFIX', $pro_table_prefix);
 	global $ttstoretable;
 	global $ttstorelayouttable;
 	global $ttstoremultitable;
@@ -273,10 +275,13 @@ function tradetracker_store_uninstall()
 	global $ttstorexmltable;
 	global $ttstorecattable;
 	global $ttstoreextratable;
+	$ttstoreproviderlogotable = PRO_TABLE_PREFIX."providerlogo";
 	wp_clear_scheduled_hook('xml_update');
 	if(get_option("Tradetracker_removeproducts")=="1"){
 		$structure = "drop table if exists $ttstoretable";
 		$wpdb->query($structure);
+		$structure9 = "drop table if exists $ttstoreproviderlogotable";
+		$wpdb->query($structure9); 
 	}
 	if(get_option("Tradetracker_removelayout")=="1"){
 		$structure2 = "drop table if exists $ttstorelayouttable";

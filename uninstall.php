@@ -9,6 +9,7 @@
 	$ttstorexmltable = PRO_TABLE_PREFIX."xml";
 	$ttstorecattable = PRO_TABLE_PREFIX."cat";
 	$ttstoreextratable = PRO_TABLE_PREFIX."extra";
+	$ttstoreproviderlogotable = PRO_TABLE_PREFIX."providerlogo";
 	$ttstorestatstable = PRO_TABLE_PREFIX."stats";
 	wp_clear_scheduled_hook('xml_update');
 	$structure = "drop table if exists $ttstoretable";
@@ -27,6 +28,8 @@
 	$wpdb->query($structure7); 
 	$structure8 = "drop table if exists $ttstorestatstable";
 	$wpdb->query($structure8); 
+	$structure9 = "drop table if exists $ttstoreproviderlogotable";
+	$wpdb->query($structure9); 
 	delete_option("TTnewcategory", "1" );
 	delete_option("Tradetracker_xml");
 	delete_option("Tradetracker_xmlname");
