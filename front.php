@@ -447,9 +447,17 @@ function show_ttpages($winkelvol)
 						$pagetext .= "<b>$i</b> \n"; // If current page don't give link, just text.
 					}else{
 						if ($currentpage <= $i-5){
-							$pagetext .= "<a class=\"ttmorethan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
-						} else if ($currentpage >= $i+5){ 
-							$pagetext .= "<a class=\"ttlessthan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
+							if($i==$pages){
+								$pagetext .= "<a class=\"ttmorethan5 lastpage\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
+							} else {
+								$pagetext .= "<a class=\"ttmorethan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
+							}
+						} else if ($currentpage >= $i+5){
+							if($i == "0"){
+								$pagetext .= "<a class=\"ttlessthan5 firstpage\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
+							} else { 
+								$pagetext .= "<a class=\"ttlessthan5\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
+							}
 						} else {
 							$pagetext .= "<a class=\"ttinbetween\" href=\"?ipp=".$itemsperpage."&tsp=".$i."".$multisorting."".$multiorder."".$min_price."".$max_pricecur."\">$i</a> \n";
 						}
