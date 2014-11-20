@@ -93,6 +93,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 			if(get_option("Tradetracker_debugemail")==1){
 				$message = "Hi,". "\r\n" ."";
 				$message .= "". "\r\n" ."You receive this message because you are using the TradeTracker-Store plugin. It just tried to import the XML feed(s) but encountered an error.". "\r\n" ."";
+				$message .= "". "\r\n" ."More information about this can be found here: http://wpaffiliatefeed.com/624/frequently-asked-questions/my-import-gives-an-error/.". "\r\n" ."";
 				$message .= "". "\r\n" ."The following XML splits are giving an error or are empty. So it could be there are no items imported from that feed.". "\r\n" ."";
 				$message .= $errorfile;
 				$message .= "". "\r\n" ."". "\r\n" ."To disable this email go to ".get_bloginfo('url')."/wp-admin/admin.php?page=tt-store&option=pluginsettings and select no for the option Get email when import fails:";
