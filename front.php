@@ -250,6 +250,7 @@ function show_ttfilter($winkelvol)
 	global $ttstoretable;
 	$max_price = $wpdb->get_var( "SELECT multimaxprice FROM $ttstoremultitable where id='".$winkelvol."';"  );
 	$min_price = $wpdb->get_var( "SELECT multiminprice FROM $ttstoremultitable where id='".$winkelvol."';"  );
+	$max_items = $wpdb->get_var( "SELECT multiitems FROM $ttstoremultitable where id='".$winkelvol."';"  );
 	$min_pricecur = $min_price;
 	$price_cur = $wpdb->get_var( "SELECT multicurrency FROM $ttstoremultitable where id='".$winkelvol."';"  );
 	if ($price_cur == ""){
@@ -266,10 +267,10 @@ function show_ttfilter($winkelvol)
 		if(is_numeric($_GET['ipp'])){
 			$ipp = $_GET['ipp'];
 		} else {
-			$ipp = "10";
+			$ipp = $max_items;
 		}
 	} else {
-		$ipp = "10";
+		$ipp = $max_items;
 	}
 	if(isset($_GET['pmin']) && isset($_GET['pmax'])){
 		if(is_numeric($_GET['pmin']) && is_numeric($_GET['pmax'])){
