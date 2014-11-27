@@ -79,6 +79,39 @@ function store() {
 			$db_multicurrency_val = $multi_val->multicurrency;
 		}
 
+	} elseif(isset($_GET['copyid'])) {
+		$multi=$wpdb->get_results("SELECT buynow, multixmlfeed, multisorting, multiorder,multimaxprice,multiminprice, multicurrency, multiproductpage, multiname, multilayout, multiamount, multipageamount, multilightbox, categories FROM ".$ttstoremultitable." where id='".$_GET['copyid']."'");
+		foreach ($multi as $multi_val){
+			$Tradetracker_buynow_val = $multi_val->buynow;
+			$db_buynow_val = $multi_val->buynow;
+			$Tradetracker_multiname_val = $multi_val->multiname;
+			$db_multiname_val = $multi_val->multiname;
+			$Tradetracker_multisorting_val = $multi_val->multisorting;
+			$db_multisorting_val = $multi_val->multisorting;
+			$Tradetracker_multiorder_val = $multi_val->multiorder;
+			$db_multiorder_val = $multi_val->multiorder;
+			$Tradetracker_multixmlfeed_val = $multi_val->multixmlfeed;
+			$db_multixmlfeed_val = $multi_val->multixmlfeed;
+			$Tradetracker_multilayout_val = $multi_val->multilayout;
+			$db_multilayout_val = $multi_val->multilayout;
+			$Tradetracker_multiamount_val = $multi_val->multiamount;
+			$db_multiamount_val = $multi_val->multiamount;
+			$Tradetracker_multipageamount_val = $multi_val->multipageamount;
+			$db_multipageamount_val = $multi_val->multipageamount;
+			$Tradetracker_multilightbox_val = $multi_val->multilightbox;
+			$db_multilightbox_val = $multi_val->multilightbox;
+			$Tradetracker_categories_val = $multi_val->categories;
+			$db_categories_val = $multi_val->categories;
+			$Tradetracker_multiproductpage_val = $multi_val->multiproductpage;
+			$db_multiproductpage_val = $multi_val->multiproductpage;
+
+			$Tradetracker_multimaxprice_val = $multi_val->multimaxprice;
+			$db_multimaxprice_val = $multi_val->multimaxprice;
+			$Tradetracker_multiminprice_val = $multi_val->multiminprice;
+			$db_multiminprice_val = $multi_val->multiminprice;
+			$Tradetracker_multicurrency_val = $multi_val->multicurrency;
+			$db_multicurrency_val = $multi_val->multicurrency;
+		}
 	}
 	//see if form has been submitted
 	if( isset($_POST[ $ttstoresubmit ]) && $_POST[ $ttstoresubmit ] == 'Y' ) {
@@ -241,6 +274,9 @@ function store() {
 				<td>
 					<strong><?php _e('Delete','ttstore'); ?></strong>
 				</td>
+				<td>
+					<strong><?php _e('Copy','ttstore'); ?></strong>
+				</td>
 			</tr>
 <?php
 		$storeedit=$wpdb->get_results("SELECT ".$ttstoremultitable.".id, layname, multisorting, multiorder, multilayout, multiname, multiamount, multilightbox, multixmlfeed, buynow FROM ".$ttstoremultitable.", ".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout = ".$ttstorelayouttable.".id");
@@ -279,6 +315,9 @@ function store() {
 				</td>
 				<td>
 					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&delete=".$store_val->id."\">".__('Delete','ttstore')."</a>"; } ?>
+				</td>
+				<td>
+					<?php if($store_val->id>"1"){ echo "<a href=\"admin.php?page=tt-store&option=store&function=new&copyid=".$store_val->id."\">".__('Copy','ttstore')."</a>"; } ?>
 				</td>
 			</tr>
 			
