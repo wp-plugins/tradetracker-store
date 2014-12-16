@@ -294,11 +294,17 @@ function ttstoreerrordetect($show) {
 	}
 }
 function ttstoreheader() {
+	global $ttstorexmltable;
+	global $wpdb;
 	$update = "";
 	if(isset($_GET['update']) && $_GET['update']=="yes"){
-		if(!isset($_GET['xmlfilecount'])){
-			update_option("xmlfilecount", "0" );
-		}
+	$Tradetracker_xml = $wpdb->get_results("select id, xmlfeed, xmlprovider from ".$ttstorexmltable."", ARRAY_A);
+	$xmlfilecount = get_option("xmlfilecount");
+	if ($xmlfilecount !="0" && $xmlfilecount <= count($Tradetracker_xml)){
+
+	} else {
+		update_option("xmlfilecount", "0");
+	}
 		xml_updater();
 		$update = __('Update Finished:','ttstore');
 	}

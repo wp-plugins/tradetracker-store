@@ -1,4 +1,39 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.54"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$tttable = $pro_table_prefix."store";
+	$tttableextra = $pro_table_prefix."extra";
+	$tttablecat = $pro_table_prefix."cat";
+	$ttstoreitemtable = $pro_table_prefix."item";
+	$res = $wpdb->get_results("SHOW INDEX FROM `$tttablecat` WHERE `Key_name` LIKE 'productID_%' or `Key_name` LIKE 'categorieid_%'");
+	if ( $res ){
+		foreach ( $res as $row ){
+   			$wpdb->query("DROP INDEX `{$row->Key_name}` ON `{$row->Table}`");
+		}
+	}
+	$res1 = $wpdb->get_results("SHOW INDEX FROM `$tttable` WHERE `Key_name` LIKE 'productID_%' or `Key_name` LIKE 'name_%'");
+	if ( $res1 ){
+		foreach ( $res1 as $row ){
+   			$wpdb->query("DROP INDEX `{$row->Key_name}` ON `{$row->Table}`");
+		}
+	}
+	$res2 = $wpdb->get_results("SHOW INDEX FROM `$tttableextra` WHERE `Key_name` LIKE 'productID_%'");
+	if ( $res2 ){
+		foreach ( $res2 as $row ){
+   			$wpdb->query("DROP INDEX `{$row->Key_name}` ON `{$row->Table}`");
+		}
+	}
+	$res3 = $wpdb->get_results("SHOW INDEX FROM `$ttstoreitemtable` WHERE `Key_name` LIKE 'productID_%'");
+	if ( $res3 ){
+		foreach ( $res3 as $row ){
+   			$wpdb->query("DROP INDEX `{$row->Key_name}` ON `{$row->Table}`");
+		}
+	}
+	update_option("TTstoreversion", "4.5.60" );
+}
+
+
 if (get_option("TTstoreversion") == "4.5.51"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

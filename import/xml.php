@@ -9,7 +9,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	global $ttstorexmltable;
 	global $ttstorecattable;
 	global $foldersplits;
-	update_option("xmldatabasecount", "0" );
+	//update_option("xmldatabasecount", "0" );
 	//prepare database 
 	$xmlfilecount = get_option("xmlfilecount");
 	if ($xmlfeedID == "0" && isset($_GET['xmlfeedID'])){
@@ -64,6 +64,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	$basefilename = "TTStoreXML";
 	//$filenum = "0"; // start chunk file number at 1
 	if(!is_writable($foldersplits)){
+		echo "I cannot write to the folder";
 		exit;
 	}
 	
@@ -83,6 +84,20 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 		$recordnum = "0";
 		$processed = "0";
 		$filenum = "0";
+		$directory = dir($foldersplits); 
+		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty))){  
+			if ($item != '.' && $item != '..'){  
+				$files = glob($foldersplits."/*xml");
+				if(count($files) > 0){	
+					if (is_array($files)) {
+						foreach($files as $filedel){
+							unlink($filedel); 
+						}
+					}
+				}
+			}  
+		}
+		$directory->close();
 		$value($xmlfeedid, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
 		fill_database1($xmlfilecount, $xmlcronjob);
 
