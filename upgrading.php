@@ -6,6 +6,10 @@ if (get_option("TTstoreversion") == "4.5.54"){
 	$tttableextra = $pro_table_prefix."extra";
 	$tttablecat = $pro_table_prefix."cat";
 	$ttstoreitemtable = $pro_table_prefix."item";
+	$wpdb->query("TRUNCATE TABLE `$tttable`");
+	$wpdb->query("TRUNCATE TABLE `$tttableextra`");
+	$wpdb->query("TRUNCATE TABLE `$tttablecat`");
+	$wpdb->query("TRUNCATE TABLE `$ttstoreitemtable`");
 	$res = $wpdb->get_results("SHOW INDEX FROM `$tttablecat` WHERE `Key_name` LIKE 'productID_%' or `Key_name` LIKE 'categorieid_%'");
 	if ( $res ){
 		foreach ( $res as $row ){
@@ -29,6 +33,11 @@ if (get_option("TTstoreversion") == "4.5.54"){
 		foreach ( $res3 as $row ){
    			$wpdb->query("DROP INDEX `{$row->Key_name}` ON `{$row->Table}`");
 		}
+	}
+	if (!wp_next_scheduled('xmlscheduler1')) {
+		wp_clear_scheduled_hook('xmlscheduler');
+	} else {
+		wp_clear_scheduled_hook('xmlscheduler1');
 	}
 	update_option("TTstoreversion", "4.5.60" );
 }
