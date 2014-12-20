@@ -205,7 +205,6 @@ function store() {
         			$currentpage["categories"]=$Tradetracker_categories_val;
 				$wpdb->insert( $ttstoremultitable, $currentpage);
 				$multiid = $wpdb->insert_id;
-				echo "ik doe dit";
 				$wpdb->print_error();
 			}
 			//put an settings updated message on the screen

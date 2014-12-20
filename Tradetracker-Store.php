@@ -2,7 +2,7 @@
 /*
 Plugin Name: Tradetracker-Store
 Plugin URI: http://wpaffiliatefeed.com
-Version: 4.5.60
+Version: 4.5.61
 Description: A Plugin that will add a TradeTracker affiliate feed to your site with several options to choose from.
 Author: Robert Braam
 Author URI: http://wpaffiliatefeed.com
@@ -107,7 +107,7 @@ function runxmlupdater() {
 function tradetracker_store_install()
 {
 global $wpdb;
-update_option("TTstoreversion", "4.5.60" );
+update_option("TTstoreversion", "4.5.61" );
 $ttstoretable = PRO_TABLE_PREFIX."store";
 $ttstorelayouttable = PRO_TABLE_PREFIX."layout";
 $ttstoremultitable = PRO_TABLE_PREFIX."multi";
@@ -131,6 +131,7 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 	UNIQUE KEY id (id),
 	INDEX (productID)
     );";
+	$wpdb->query($structure);
 	$wpdb->query("ALTER TABLE `".$ttstoretable."` ENGINE = MYISAM");
 	$wpdb->query("ALTER TABLE `".$ttstoretable."` ADD FULLTEXT (`name` ,`description`)");
 	
@@ -176,6 +177,8 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 	multixmlfeed VARCHAR(10) NOT NULL,
 	multiproductpage VARCHAR(1) NOT NULL,
 	multimaxprice int(6) NOT NULL DEFAULT '0',
+	multiminprice int(6) NOT NULL DEFAULT '0',
+	multicurrency TEXT(8) NOT NULL DEFAULT '0',
 	categories longtext NOT NULL,
 	buynow TEXT NOT NULL,
 	UNIQUE KEY id (id)
@@ -194,7 +197,7 @@ if($wpdb->get_var("SHOW TABLES LIKE '$ttstoretable'") != $ttstoretable) {
 	$currentpagemulti["buynow"]="Buy Now";
 	$wpdb->insert( $ttstoremultitable, $currentpagemulti);
 
-	$wpdb->query($structure);
+	
 	update_option("TTnewcategory", "1" );
 	update_option("Tradetracker_debugemail", "1" );
 	update_option("Tradetracker_xmlupdate", "00:00:01");
