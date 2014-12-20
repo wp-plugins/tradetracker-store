@@ -17,7 +17,6 @@ if (get_option("TTstoreversion") == "4.5.54"){
 	$wpdb->query("TRUNCATE TABLE `$tttable`");
 	$wpdb->query("TRUNCATE TABLE `$tttableextra`");
 	$wpdb->query("TRUNCATE TABLE `$tttablecat`");
-	$wpdb->query("TRUNCATE TABLE `$ttstoreitemtable`");
 	$res = $wpdb->get_results("SHOW INDEX FROM `$tttablecat` WHERE `Key_name` LIKE 'productID_%' or `Key_name` LIKE 'categorieid_%'");
 	if ( $res ){
 		foreach ( $res as $row ){
