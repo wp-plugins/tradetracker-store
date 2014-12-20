@@ -1,4 +1,30 @@
 <?php
+if (get_option("TTstoreversion") == "4.5.61"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstoremultitable = $pro_table_prefix."multi";
+    	$structuremulti = "CREATE TABLE IF NOT EXISTS $ttstoremultitable (
+	id INT(9) NOT NULL AUTO_INCREMENT,
+	multiname VARCHAR(100) NOT NULL,
+	multisorting VARCHAR(100) NOT NULL DEFAULT 'rand()',
+	multiorder VARCHAR(4) NOT NULL DEFAULT 'asc',
+	multilayout INT(10) NOT NULL,
+	multiitems VARCHAR(10000) NOT NULL,
+	multipageamount int(3) NOT NULL DEFAULT '0',
+	multiamount int(3) NOT NULL,
+	multilightbox VARCHAR(1) NOT NULL,
+	multixmlfeed VARCHAR(10) NOT NULL,
+	multiproductpage VARCHAR(1) NOT NULL,
+	multimaxprice int(6) NOT NULL DEFAULT '0',
+	multiminprice int(6) NOT NULL DEFAULT '0',
+	multicurrency TEXT(8) NOT NULL,
+	categories longtext NOT NULL,
+	buynow TEXT NOT NULL,
+	UNIQUE KEY id (id)
+    	);";
+    	$wpdb->query($structuremulti);
+	update_option("TTstoreversion", "4.5.62" );
+}
 if (get_option("TTstoreversion") == "4.5.60"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
