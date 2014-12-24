@@ -73,7 +73,7 @@ function ttsearch(){
 	</tr>
 	<tr>
 		<td colspan="2">
-			<?php _e('<br>This is only interesting if you have created a search option on your site (more information can be found <a href="http://codex.wordpress.org/Creating_a_Search_Page">here</a>) <br>You could use the following shortcode or code for your theme to show items related to the keyword the user searched on:<br>Shortcode: [display_search]<br>Or in your theme file: display_search_items();', 'ttstore'); ?>
+			<?php _e('<br>This is only interesting if you have created a search option on your site (more information can be found <a href="http://codex.wordpress.org/Creating_a_Search_Page">here</a> and <a href="http://wpaffiliatefeed.com/634/frequently-asked-questions/create-search-results-page/">in the FAQ</a>) <br>You could use the following shortcode or code for your theme to show items related to the keyword the user searched on:<br>Shortcode: [display_search]<br>Or in your theme file: display_search_items();', 'ttstore'); ?>
 		</td>
 	</td>
 			</table>
