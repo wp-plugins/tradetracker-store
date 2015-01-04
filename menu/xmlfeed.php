@@ -22,6 +22,58 @@ function xmlfeed(){
 		$savedmessage = __("Feed deleted", "ttstore");
 		$saved = "<div id=\"ttstoreboxsaved\"><strong>".$savedmessage."</strong></div>";
 	}
+	if(isset($_GET['test'])){
+		global $folderhome;
+		$error = "";
+		$xmlfeed=$wpdb->get_row("SELECT xmlfeed, xmlname, xmlprovider, id FROM ".$ttstorexmltable." where id=".$_GET['test']." order by xmlname");
+		$xmlfile = $xmlfeed->xmlfeed;
+		$xmlstring = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+		$xmlstring.=''."\n";
+		$xmlstring.="<$xmldatadelimiter>\n";
+		$newfile = "splits/".$basefilename."-".$filenum.".xml";
+		$exportfile = fopen($folderhome."/$newfile","w");
+		if (get_option('Tradetracker_importtool')=="1"){
+			$handle = fopen($xmlfile,"r");
+		} else if (get_option('Tradetracker_importtool')=="2") {
+			$ch = curl_init($xmlfile);
+			$fp = fopen($folderhome."/cache/cache.xml", "w");
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$data = curl_exec($ch);
+			curl_close($ch);
+			fwrite($fp, $data); 
+			fclose($fp);
+			$handle = fopen($folderhome."/cache/cache.xml","r");
+		} else if (get_option('Tradetracker_importtool')=="3") {
+			$ch = curl_init($xmlfile);
+			$fp = fopen($folderhome."/cache/cache.xml", "w");
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_FILE, $fp);
+			curl_exec($ch);
+			curl_close($ch);
+			fclose($fp);
+			$handle = fopen($folderhome."/cache/cache.xml","r");
+		}
+		if ($handle) {
+			while (!feof($handle)) {
+    				$buffer = stream_get_line($handle, 10000);
+				echo "<br><a href=\"admin.php?page=tt-store&option=xmlfeed\">Back</a>";
+				echo "<br><strong>XMLlink:</strong> ".$xmlfile;
+				echo "<br><strong>XMLname:</strong> ".$xmlfeed->xmlname;
+				echo "<br><strong>Showing first 10.000 characters from the feed:</strong>";
+				echo "<br>";
+				echo "<pre>";
+				echo htmlentities($buffer);
+				echo "</pre>";
+				echo "<br><a href=\"admin.php?page=tt-store&option=xmlfeed\">Back</a>";
+				exit();
+			}
+		} else {
+			echo "<br>error or something, no idea what is going on";
+			echo "<br><a href=\"admin.php?page=tt-store&option=xmlfeed\">Back</a>";
+		}
+	}
 
 	//see if form has been submitted
 	if( isset($_POST[ $ttstoresubmit ]) && $_POST[ $ttstoresubmit ] == 'Y' ) {
@@ -118,6 +170,9 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 				<td>
 					<strong><?php _e("Delete","ttstore"); ?></strong>
 				</td>
+				<td>
+					<strong><?php _e("Test","ttstore"); ?></strong>
+				</td>
 			</tr>
 				<?php
 
@@ -133,6 +188,8 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 						echo "<a href=\"admin.php?page=tt-store&option=xmlfeed&edit=".$xml->id."\">".__("Edit","ttstore")."</a>";
 						echo "</td><td>";
 						echo "<a href=\"admin.php?page=tt-store&option=xmlfeed&delete=".$xml->id."\">".__("Delete","ttstore")."</a>";
+						echo "</td><td>";
+						echo "<a href=\"admin.php?page=tt-store&option=xmlfeed&test=".$xml->id."\">".__("Test","ttstore")."</a>";
 						echo "</td></tr>";				
 					}
 					echo "<td colspan=\"5\"><hr></td></tr></table>";
