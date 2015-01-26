@@ -64,7 +64,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	$basefilename = "TTStoreXML";
 	//$filenum = "0"; // start chunk file number at 1
 	if(!is_writable($foldersplits)){
-		echo "I cannot write to the folder";
+		echo "I cannot write to the folder. Please see the debug settings to find out more.";
 		exit;
 	}
 	
