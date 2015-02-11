@@ -26,6 +26,36 @@ function parse_recursive(SimpleXMLElement $element, $level = 0)
 		}
 	}
 }
+function str2bytes($value) {
+// only string
+$unit_byte = preg_replace('/[^a-zA-Z]/', '', $value);
+$unit_byte = strtolower($unit_byte);
+// only number (allow decimal point)
+$num_val = preg_replace('/\D\.\D/', '', $value);
+switch ($unit_byte) {
+case 'p': // petabyte
+case 'pb':
+$num_val *= 1024;
+case 't': // terabyte
+case 'tb':
+$num_val *= 1024;
+case 'g': // gigabyte
+case 'gb':
+$num_val *= 1024;
+case 'm': // megabyte
+case 'mb':
+$num_val *= 1024;
+case 'k': // kilobyte
+case 'kb':
+$num_val *= 1024;
+case 'b': // byte
+return $num_val *= 1;
+break; // make sure
+default:
+return FALSE;
+}
+return FALSE;
+} 
 function convert($size)
  {
     $unit=array('b','kb','mb','gb','tb','pb');
@@ -89,13 +119,27 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	} else {
 		$xmlfeednumber = 1;
 	}
-	$xmlfeed = $wpdb->get_results("select xmlname FROM ".$ttstorexmltable."", ARRAY_N);
+	if ($xmlcronjob == "1"){
+		$xmlfeed = $wpdb->get_results("select xmlname FROM ".$ttstorexmltable." where autoimport = '1'" , ARRAY_N);
+	} else {
+		$xmlfeed = $wpdb->get_results("select xmlname FROM ".$ttstorexmltable."" , ARRAY_N);
+	}
 	//$xmlfeed = get_option("Tradetracker_xmlname");	
 	//$keys = array_keys($xmlfeed);
 	//$key = $keys[$xmlfeedid];
 	//$xmlfeed = $xmlfeed[$key];
-	echo "<br /><strong>Importing: </strong>".$xmlfeed[$xmlfeednumber][0];
-	echo "<br /><strong>File: </strong>".$files[$xmldatabasecount];
+	if ($xmlcronjob == "0"){
+		$feednumercount = $xmlfeednumber;
+		echo "<br /><strong>Feeds Completed: </strong> ".$feednumercount."/".count($xmlfeed)."";
+		$scale = "4";
+		$percent = (100/count($xmlfeed))*$feednumercount;
+		echo "<style>.percentbar { background:#CCCCCC; border:1px solid #666666; height:10px; }.percentbar div { background: #28B8C0; height: 10px; }</style>";	
+		echo "<div class=\"percentbar\" style=\"width:".round(100 * $scale)."px;\">";
+		echo "<div style=\"width:".round($percent * $scale)."px;\"></div>";
+		echo "</div>".round($percent,'2')."%"; 
+		echo "<br /><strong>Currently Importing: </strong>".$xmlfeed[$xmlfeednumber][0];
+		//echo "<br /><strong>File: </strong>".$files[$xmldatabasecount];
+	}
 		$ttmemoryusage = get_option("Tradetracker_memoryusage");
 		$ttmemoryusage .= "<br/><strong>Importing:</strong>".$xmlfeed[$xmlfeednumber][0];
 		update_option( "Tradetracker_memoryusage", $ttmemoryusage );
@@ -103,6 +147,14 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	if (is_array($files)) {
 		tt_log_me("TT Database: Files is array");
 		for ( $i="0"; ($i <= 2 && $i <count($files)); $i++) {
+			if ($xmlcronjob == "0"){
+				$scale = "4";
+				$percent = (100/count($files))*$xmldatabasecount;
+				echo "<style>.percentbar { background:#CCCCCC; border:1px solid #666666; height:10px; }.percentbar div { background: #28B8C0; height: 10px; }</style>";	
+				echo "<div class=\"percentbar\" style=\"width:".round(100 * $scale)."px;\">";
+				echo "<div style=\"width:".round($percent * $scale)."px;\"></div>";
+				echo "</div>".round($percent,'2')."%";
+			} 
 			$filename = $files[$xmldatabasecount];
 			if($filename != ""){
 				$products = simplexml_load_file($filename);
@@ -119,7 +171,6 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 						update_option( "Tradetracker_importerror", $errorfile );
 					}
 					libxml_clear_errors();
-					echo " - Error";
 					tt_log_me("TT Database: Error 1");
 				}else if ($products->body->p == "The requested product feed could not be generated:"){
 					$errorxml = libxml_get_last_error();
@@ -128,10 +179,8 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 					$errorfile .= "". "\n" ."Error: Tradetracker cannot create the productfeed. The feed itself is empty";
 					libxml_clear_errors();
 					update_option( "Tradetracker_importerror", $errorfile );
-					echo " - Error";
 					tt_log_me("TT Database: Error 2");
 				} else {
-					echo " - Done";
 					tt_log_me("TT Database: No error");
 					foreach($products as $product) // loop through our items
 					{
@@ -220,6 +269,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 					}
 				} 
 				$xmldatabasecount++;
+				update_option("xmldatabasecount", $xmldatabasecount );
 			}
 		}
 	}
@@ -239,7 +289,24 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 		$autoload = 'no';
 		add_option( $option_name, $newvalue, $deprecated, $autoload );
 	}
-	echo "<br /><strong>Memory Usage after database import:</strong>".convert(memory_get_peak_usage());
+	if ($xmlcronjob == "0"){
+		echo "<br /><strong>Memory Usage:</strong>";
+		$scale = "4";
+		$percent = (100/str2bytes(ini_get('memory_limit')))*memory_get_peak_usage();
+		if ($percent > 90){
+			echo "<style>.amountbar { background:#CCCCCC; border:1px solid #666666; height:10px; }.amountbar div { background: #c03028; height: 10px; }</style>";	
+		} elseif ($percent <= 90 && $percent > 50) {
+			echo "<style>.amountbar { background:#CCCCCC; border:1px solid #666666; height:10px; }.amountbar div { background: #c07c28; height: 10px; }</style>";	
+		} else {
+			echo "<style>.amountbar { background:#CCCCCC; border:1px solid #666666; height:10px; }.amountbar div { background: #28B8C0; height: 10px; }</style>";	
+		}
+		echo "<div class=\"amountbar\" style=\"width:".round(100 * $scale)."px;\">";
+		echo "<div style=\"width:".round($percent * $scale)."px;\"></div>";
+		echo "</div>"; 
+		echo convert(memory_get_peak_usage());
+		echo "/".convert(str2bytes(ini_get('memory_limit')));
+		echo "<br /><strong>Items imported:</strong><br />".$item_count;
+	}
 	$ttmemoryusage = get_option("Tradetracker_memoryusage");
 	$ttmemoryusage .= "<br/><strong>Memory Usage before import:</strong>".convert(memory_get_peak_usage())."<p>";
 	update_option( "Tradetracker_memoryusage", $ttmemoryusage );

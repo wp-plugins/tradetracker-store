@@ -1,4 +1,16 @@
 <?php
+
+if (get_option("TTstoreversion") == "4.5.62"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstorexmltable = $pro_table_prefix."xml";
+	$ttstoretable = $pro_table_prefix."store";
+	$ttstoreextratable = $pro_table_prefix."extra";
+	$ttstorecattable = $pro_table_prefix."cat";
+	$wpdb->query("ALTER TABLE `".$ttstorexmltable."` ADD `autoimport` INT(1) NOT NULL DEFAULT '1'");
+	update_option("TTstoreversion", "4.6" );
+}
+
 if (get_option("TTstoreversion") == "4.5.61"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

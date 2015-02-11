@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-24 16:58-0000\n"
-"PO-Revision-Date: 2014-12-24 16:58-0000\n"
+"POT-Creation-Date: 2015-02-11 21:40-0000\n"
+"PO-Revision-Date: 2015-02-11 21:40-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -34,6 +34,7 @@ msgstr ""
 #: ../menu/pluginsettings.php:325 ../menu/pluginsettings.php:337
 #: ../menu/pluginsettings.php:349 ../menu/pluginsettings.php:361
 #: ../menu/store.php:310 ../menu/store.php:449 ../menu/store.php:633
+#: ../menu/xmlfeed.php:203 ../menu/xmlfeed.php:254 ../menu/xmlfeed.php:275
 #: ../menu/xmloption.php:145
 msgid "Yes"
 msgstr ""
@@ -77,6 +78,7 @@ msgstr ""
 #: ../menu/pluginsettings.php:327 ../menu/pluginsettings.php:339
 #: ../menu/pluginsettings.php:351 ../menu/pluginsettings.php:363
 #: ../menu/store.php:310 ../menu/store.php:451 ../menu/store.php:640
+#: ../menu/xmlfeed.php:205 ../menu/xmlfeed.php:255 ../menu/xmlfeed.php:276
 #: ../menu/xmloption.php:147
 msgid "No"
 msgstr ""
@@ -209,7 +211,7 @@ msgstr ""
 msgid "More info"
 msgstr ""
 
-#: ../upgrading.php:116 ../import/database.php:233 ../import/xml.php:33
+#: ../upgrading.php:128 ../import/database.php:283 ../import/xml.php:49
 #, php-format
 msgid "Database filled with %1$s new items on %2$s"
 msgstr ""
@@ -231,7 +233,7 @@ msgid "Store Name"
 msgstr ""
 
 #: ../menu/itemselect.php:51 ../menu/layout.php:286 ../menu/store.php:271
-#: ../menu/store.php:313 ../menu/xmlfeed.php:116 ../menu/xmlfeed.php:133
+#: ../menu/store.php:313 ../menu/xmlfeed.php:173 ../menu/xmlfeed.php:196
 msgid "Edit"
 msgstr ""
 
@@ -240,7 +242,7 @@ msgid "Select Item"
 msgstr ""
 
 #: ../menu/itemselect.php:57 ../menu/itemselect.php:60 ../menu/store.php:274
-#: ../menu/store.php:316 ../menu/xmlfeed.php:119 ../menu/xmlfeed.php:135
+#: ../menu/store.php:316 ../menu/xmlfeed.php:176 ../menu/xmlfeed.php:198
 msgid "Delete"
 msgstr ""
 
@@ -550,10 +552,8 @@ msgid ""
 "store&option=premium\">premium content</a> you are even able to add XML "
 "feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML "
 "Feed a name so you can recognize it<br>You need to register on <a href="
-"\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;"
-"r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href="
-"\"http://tc.tradetracker.net/?c=27&amp;m=39673&amp;a=48684&amp;r=&amp;u=%2Fnl"
-"%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>"
+"\"http://tc.tradetracker.net/?c=27&amp;m=39677&amp;a=48684&amp;"
+"r=register&amp;u=\" target=\"_blank\">TradeTracker</a></p>"
 msgstr ""
 
 #: ../menu/menu.php:79
@@ -1163,27 +1163,41 @@ msgstr ""
 msgid "Feed deleted"
 msgstr ""
 
-#: ../menu/xmlfeed.php:77
+#: ../menu/xmlfeed.php:134
 msgid "Feed added, click Update Items when all feeds are added"
 msgstr ""
 
-#: ../menu/xmlfeed.php:92
+#: ../menu/xmlfeed.php:149
 msgid "Add or Edit XML feeds."
 msgstr ""
 
-#: ../menu/xmlfeed.php:107 ../menu/xmlfeed.php:144
+#: ../menu/xmlfeed.php:164 ../menu/xmlfeed.php:216
 msgid "Link to XML"
 msgstr ""
 
-#: ../menu/xmlfeed.php:110 ../menu/xmlfeed.php:147
+#: ../menu/xmlfeed.php:167 ../menu/xmlfeed.php:219
 msgid "XML Name"
 msgstr ""
 
-#: ../menu/xmlfeed.php:113 ../menu/xmlfeed.php:150
+#: ../menu/xmlfeed.php:170 ../menu/xmlfeed.php:222
 msgid "XML Provider"
 msgstr ""
 
-#: ../menu/xmlfeed.php:208
+#: ../menu/xmlfeed.php:179 ../menu/xmlfeed.php:200
+msgid "Test"
+msgstr ""
+
+#: ../menu/xmlfeed.php:182 ../menu/xmlfeed.php:225
+msgid "Auto Update"
+msgstr ""
+
+#: ../menu/xmlfeed.php:210
+msgid ""
+"This only applies to the automatic daily import of the feeds. Manual import "
+"will still import all feeds"
+msgstr ""
+
+#: ../menu/xmlfeed.php:292
 msgid "Update Items"
 msgstr ""
 

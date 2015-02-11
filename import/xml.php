@@ -1,5 +1,5 @@
 <?php
-function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
+function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") {
 	//load all needed variables
 	global $wpdb;
 	global $processed;
@@ -15,23 +15,38 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 	if ($xmlfeedID == "0" && isset($_GET['xmlfeedID'])){
 		$xmlfeedID = $_GET['xmlfeedID'];
 	}
-	if ($xmlfilecount == "0" && !isset($_GET['xmlfilecount'])){
+	if ($xmlfilecount == "-1" && !isset($_GET['xmlfilecount'])){
 		premium_updater();
 		news_updater();
+		$xmlfilecount = "0";
+		if ($xmlcronjob == "1"){
+			$loadxmlfeed = $wpdb->get_results("select id from ".$ttstorexmltable." where autoimport = '0'");
+			if ( $loadxmlfeed ){
+				foreach ( $loadxmlfeed as $post ){
+					$emptytable = "delete from ".$ttstoretable." where xmlfeed=".$post->id."";
+					$wpdb->query($emptytable);
+				}
+				$emptyextratable = "DELETE FROM ".$ttstoreextratable." WHERE productID NOT IN (SELECT ".$ttstoretable.".productID FROM ".$ttstoretable.")";
+				$wpdb->query($emptyextratable);
+				$emptycattable = "DELETE FROM ".$ttstorecattable." WHERE productID NOT IN (SELECT ".$ttstoretable.".productID FROM ".$ttstoretable.")";
+				$wpdb->query($emptycattable);
+			} else {
+				$wpdb->query("TRUNCATE TABLE `$ttstoretable`");
+				$wpdb->query("TRUNCATE TABLE `$ttstoreextratable`");
+				$wpdb->query("TRUNCATE TABLE `$ttstorecattable`");
+			}
+		} else {
+			$wpdb->query("TRUNCATE TABLE `$ttstoretable`");
+			$wpdb->query("TRUNCATE TABLE `$ttstoreextratable`");
+			$wpdb->query("TRUNCATE TABLE `$ttstorecattable`");
+		}
 		delete_option("Tradetracker_importerror");
 		delete_option("Tradetracker_memoryusage");	
 		delete_option("Tradetracker_xml_extra");
-		$emptytable = "TRUNCATE TABLE `$ttstoretable`";
-		$emptyextratable = "TRUNCATE TABLE `$ttstoreextratable`";
-		$emptycattable = "TRUNCATE TABLE `$ttstorecattable`";
-		$wpdb->query($emptytable);
-		$wpdb->query($emptyextratable);
-		$wpdb->query($emptycattable);
 		$item_count = $wpdb->get_var("SELECT COUNT(*) FROM $ttstoretable;");
 		$currentupdate = date('Y-m-d H:i:s');
 		$option_name = 'Tradetracker_xml_update' ;
-		$newvalue = sprintf(__('Database filled with %1$s new items on %2$s','ttstore'), $item_count, $currentupdate);
-
+		$newvalue = sprintf(__('Database filled with %1$s new items on %2$s','ttstore'), $item_count, $currentupdate);			
 		if ( get_option( $option_name ) != $newvalue ) {
 			update_option( $option_name, $newvalue );
 		} else {
@@ -43,7 +58,7 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 		while ((FALSE !== ($item = $directory->read())) && ( ! isset($directory_not_empty)))
 		{  
 			if ($item != '.' && $item != '..')
-       			{  
+      				{  
 				$files = glob($foldersplits."/*xml");
 				if(count($files) > 0)
 				{
@@ -58,20 +73,22 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 		// Close the directory  
 		$directory->close(); 
 	} 
-
-
 	//prepare cache file
 	$basefilename = "TTStoreXML";
 	//$filenum = "0"; // start chunk file number at 1
 	if(!is_writable($foldersplits)){
-		echo "I cannot write to the folder. Please see the debug settings to find out more.";
+		echo "I cannot write to the folder. Please see the <a href=\"admin.php?page=tt-store&option=ttdebug\">debug settings</a> to find out more.";
 		exit;
 	}
 	
 	//get xml details from database
 	$Tradetracker_xml = get_option("Tradetracker_xml");
 	$Tradetracker_xmlname = get_option("Tradetracker_xmlname");
-	$loadxmlfeeds = $wpdb->get_results("select id, xmlfeed, xmlprovider from ".$ttstorexmltable."", ARRAY_A);
+	if ($xmlcronjob == "1"){
+		$loadxmlfeeds = $wpdb->get_results("select id, xmlfeed, xmlprovider from ".$ttstorexmltable." where autoimport = '1'", ARRAY_A);
+	} else {
+		$loadxmlfeeds = $wpdb->get_results("select id, xmlfeed, xmlprovider from ".$ttstorexmltable."", ARRAY_A);
+	}
 	//check if splits directory is empty else empty it
 	if ($xmlfilecount <= count($loadxmlfeeds)-1){
 		echo "<br /><strong>Memory Usage before import:</strong>".convert(memory_get_peak_usage());
@@ -98,11 +115,12 @@ function xml_updater($xmlfilecount = "0", $xmlfeedID = "0", $xmlcronjob = "0") {
 			}  
 		}
 		$directory->close();
+		update_option("xmlfilecount", $xmlfilecount );
 		$value($xmlfeedid, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
 		fill_database1($xmlfilecount, $xmlcronjob);
 
 	} else {
-		update_option("xmlfilecount", "0" );
+		update_option("xmlfilecount", "-1" );
 		$errorfile = get_option("Tradetracker_importerror");
 		if(!empty($errorfile)){
 			if(get_option("Tradetracker_debugemail")==1){

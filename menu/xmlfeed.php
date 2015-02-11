@@ -82,18 +82,21 @@ function xmlfeed(){
 			$Tradetracker_xml_val = $_POST['xmlfeed'];
 			$Tradetracker_xmlconv_val = $_POST['xmlfeedconv'];
 			$Tradetracker_xmlname_val = $_POST['xmlname'];	
+			$Tradetracker_autoimport_val = $_POST['autoimport'];
 			if(!empty($Tradetracker_xml_val)){
 				$wpdb->update( 
 					''.$ttstorexmltable.'', 
 					array( 
 						'xmlfeed' => ''.$Tradetracker_xml_val.'',	
 						'xmlprovider' => ''.$Tradetracker_xmlconv_val.'',
+						'autoimport' => ''.$Tradetracker_autoimport_val.'',
 						'xmlname' => ''.$Tradetracker_xmlname_val.''
 					), 
 					array( 'id' => ''.$Tradetracker_xmlid_val.'' ), 
 					array( 
 						'%s',
 						'%s',
+						'%d',
 						'%s'
 					), 
 					array( '%d' ) 
@@ -112,6 +115,7 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 			$Tradetracker_xml_val = $_POST['xmlfeed'];
 			$Tradetracker_xmlconv_val = $_POST['xmlfeedconv'];
 			$Tradetracker_xmlname_val = $_POST['xmlname'];
+			$Tradetracker_autoimport_val = $_POST['autoimport'];
 			if(!empty($Tradetracker_xml_val)){
 	       	 		$currentpage["xmlfeed"]=$Tradetracker_xml_val;
        		 		$currentpage["xmlprovider"]=$Tradetracker_xmlconv_val;
@@ -120,6 +124,7 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
        		 		$currentpage["xmlimage"]= " ";
        		 		$currentpage["xmldescription"]= " ";
        		 		$currentpage["xmlprice"]= " ";
+       		 		$currentpage["autoimport"]=$Tradetracker_autoimport_val;
        		 		$wpdb->insert( $ttstorexmltable, $currentpage);
 				$multiid = $wpdb->insert_id;
 			}
@@ -151,7 +156,7 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 		<div id="ttstoreboxoptions" style="max-height:<?php echo $adminheight; ?>px;">
 			<table width="<?php echo $adminwidth-15; ?>">
 			<?php
-				$xmlfeed=$wpdb->get_results("SELECT xmlfeed, xmlname, xmlprovider, id FROM ".$ttstorexmltable." order by xmlname");
+				$xmlfeed=$wpdb->get_results("SELECT xmlfeed, xmlname, xmlprovider, autoimport, id FROM ".$ttstorexmltable." order by xmlname");
 				if(count($xmlfeed)>0){
 			?>
 			<tr>
@@ -173,6 +178,9 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 				<td>
 					<strong><?php _e("Test","ttstore"); ?></strong>
 				</td>
+				<td>
+					<strong><?php _e("Auto Update","ttstore"); ?></strong>
+				</td>
 			</tr>
 				<?php
 
@@ -190,9 +198,16 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 						echo "<a href=\"admin.php?page=tt-store&option=xmlfeed&delete=".$xml->id."\">".__("Delete","ttstore")."</a>";
 						echo "</td><td>";
 						echo "<a href=\"admin.php?page=tt-store&option=xmlfeed&test=".$xml->id."\">".__("Test","ttstore")."</a>";
+						echo "</td><td>";
+						if($xml->autoimport == "1"){
+							echo _e('Yes','ttstore');
+						} else {
+							echo _e('No','ttstore');
+							echo "*";
+						}
 						echo "</td></tr>";				
 					}
-					echo "<td colspan=\"5\"><hr></td></tr></table>";
+					echo "<td colspan=\"7\"><hr></td></tr><tr><td colspan=\"7\"><font style=\"font-size:10px\"><font color=\"red\"><strong>*</strong></font> ".__("This only applies to the automatic daily import of the feeds. Manual import will still import all feeds","ttstore")."</font></td></tr><tr><td colspan=\"7\"><hr></td></tr></table>";
 				}
 					?>
 				<table width="<?php echo $adminwidth-15; ?>">
@@ -206,10 +221,13 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 					<td>
 						<strong><?php _e("XML Provider","ttstore"); ?></strong>
 					</td>
+					<td>
+						<strong><?php _e("Auto Update","ttstore"); ?></strong>
+					</td>
 				</tr>
 				<?php
 				if(isset($TTedit)&&!empty($TTedit)){
-					$oldfeed = $wpdb->get_row("SELECT xmlfeed, xmlname, xmlprovider, id FROM ".$ttstorexmltable." where id='$TTedit'");
+					$oldfeed = $wpdb->get_row("SELECT xmlfeed, xmlname, xmlprovider, id, autoimport FROM ".$ttstorexmltable." where id='$TTedit'");
 					echo "<tr><td>";
 					echo "<input type=\"text\" name=\"xmlfeed\" value=\"".$oldfeed->xmlfeed."\" size=\"50\">";
 					echo "</td><td>";
@@ -231,7 +249,11 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 						}
 						echo "</select>";
 					}
-
+					echo "</td><td>";
+				?>
+					<input type="radio" name="autoimport" <?php if($oldfeed->autoimport==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore');?>
+					<input type="radio" name="autoimport" <?php if($oldfeed->autoimport==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore');?><font color="red"><strong>*</strong></font>
+				<?php
 				} else {
 					echo "<tr><td>";
 					echo "<input type=\"text\" name=\"xmlfeed\" value=\"\" size=\"50\">";
@@ -248,6 +270,11 @@ window.location = "admin.php?page=tt-store&option=xmlfeed"
 						}
 						echo "</select>";
 					}
+					echo "</td><td>";
+				?>
+					<input type="radio" name="autoimport" checked value="1"> <?php _e('Yes','ttstore');?>
+					<input type="radio" name="autoimport" value="0"> <?php _e('No','ttstore');?><font color="red"><strong>*</strong></font>
+				<?php
 
 				}
 					?>			

@@ -71,7 +71,7 @@ $menuarray = array( array( 'Title' => __("Add/Edit XMLFeeds","ttstore"),
                       'Pricecheck' => "Free", 
                       'Price' => __("Free","ttstore"), 
                       'Shortdesc' => __("Add new or edit existing XML feeds here.","ttstore"), 
-                      'Longdesc' => __("<h3>Adding or editing XMLFeeds</h3><p>This will give you the following options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML Feed a name so you can recognize it<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=1065&amp;m=64910&amp;a=66047&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker UK</a> or <a href=\"http://tc.tradetracker.net/?c=27&amp;m=39673&amp;a=48684&amp;r=&amp;u=%2Fnl%2Fpublisher%2Fregister\" target=\"_blank\">Tradetracker NL</a></p>","ttstore"), 
+                      'Longdesc' => __("<h3>Adding or editing XMLFeeds</h3><p>This will give you the following options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-store&option=premium\">premium content</a> you are even able to add XML feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML Feed a name so you can recognize it<br>You need to register on <a href=\"http://tc.tradetracker.net/?c=27&amp;m=39677&amp;a=48684&amp;r=register&amp;u=\" target=\"_blank\">TradeTracker</a></p>","ttstore"), 
                       'Name' => "xmlfeedmore",
                       'Link' => "xmlfeed",		
                       'Vink' => $tradetracker_xml_done

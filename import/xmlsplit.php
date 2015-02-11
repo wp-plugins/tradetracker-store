@@ -80,7 +80,7 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 				$recordnum=0;
 				$filenum++;
 				fclose($exportfile);
-				$newfile = "splits/".$basefilename."-".$filenum.".xml";
+				$newfile = "splits/".$basefilename."-".sprintf("%09s", $filenum).".xml";
 				$exportfile = fopen($folderhome."/$newfile","w");
 				fwrite($exportfile, $xmlstring);
 			}
@@ -152,7 +152,7 @@ function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recor
 				$recordnum=0;
 				$filenum++;
 				fclose($exportfile);
-				$newfile = "splits/".$basefilename."-".$filenum.".xml";
+				$newfile = "splits/".$basefilename."-".sprintf("%09s", $filenum).".xml";
 				$exportfile = fopen($folderhome."/$newfile","w");
 				fwrite($exportfile, $xmlstring);
 			}
