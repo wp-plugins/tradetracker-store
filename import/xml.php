@@ -18,7 +18,6 @@ function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") 
 	if ($xmlfilecount == "-1" && !isset($_GET['xmlfilecount'])){
 		premium_updater();
 		news_updater();
-		$xmlfilecount = "0";
 		if ($xmlcronjob == "1"){
 			$loadxmlfeed = $wpdb->get_results("select id from ".$ttstorexmltable." where autoimport = '0'");
 			if ( $loadxmlfeed ){
@@ -40,6 +39,7 @@ function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") 
 			$wpdb->query("TRUNCATE TABLE `$ttstoreextratable`");
 			$wpdb->query("TRUNCATE TABLE `$ttstorecattable`");
 		}
+		$xmlfilecount = "0";
 		delete_option("Tradetracker_importerror");
 		delete_option("Tradetracker_memoryusage");	
 		delete_option("Tradetracker_xml_extra");
