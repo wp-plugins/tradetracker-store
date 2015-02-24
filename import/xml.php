@@ -15,20 +15,24 @@ function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") 
 	if ($xmlfeedID == "0" && isset($_GET['xmlfeedID'])){
 		$xmlfeedID = $_GET['xmlfeedID'];
 	}
-	if ($xmlfilecount == "-1" && !isset($_GET['xmlfilecount'])){
+	if (($xmlfilecount == "-1" && !isset($_GET['xmlfilecount'])) || $xmlfilecount == "-2"){
 		premium_updater();
 		news_updater();
+		update_option("xmlfilecount", "-2" );
 		if ($xmlcronjob == "1"){
-			$loadxmlfeed = $wpdb->get_results("select id from ".$ttstorexmltable." where autoimport = '0'");
-			if ( $loadxmlfeed ){
-				foreach ( $loadxmlfeed as $post ){
-					$emptytable = "delete from ".$ttstoretable." where xmlfeed=".$post->id."";
-					$wpdb->query($emptytable);
+			$autoimport_count = $wpdb->get_var( "select count(id) from ".$ttstorexmltable." where autoimport = '0'" );
+			if( $autoimport_count ) {
+				$loadxmlfeed = $wpdb->get_results("select id from ".$ttstorexmltable." where autoimport = '1'");
+				if ( $loadxmlfeed ){
+					foreach ( $loadxmlfeed as $post ){
+						$emptytable = "delete from ".$ttstoretable." where xmlfeed=".$post->id."";
+						$wpdb->query($emptytable);
+					}
+					$emptyextratable = "DELETE FROM ".$ttstoreextratable." WHERE productID NOT IN (SELECT ".$ttstoretable.".productID FROM ".$ttstoretable.")";
+					$wpdb->query($emptyextratable);
+					$emptycattable = "DELETE FROM ".$ttstorecattable." WHERE productID NOT IN (SELECT ".$ttstoretable.".productID FROM ".$ttstoretable.")";
+					$wpdb->query($emptycattable);
 				}
-				$emptyextratable = "DELETE FROM ".$ttstoreextratable." WHERE productID NOT IN (SELECT ".$ttstoretable.".productID FROM ".$ttstoretable.")";
-				$wpdb->query($emptyextratable);
-				$emptycattable = "DELETE FROM ".$ttstorecattable." WHERE productID NOT IN (SELECT ".$ttstoretable.".productID FROM ".$ttstoretable.")";
-				$wpdb->query($emptycattable);
 			} else {
 				$wpdb->query("TRUNCATE TABLE `$ttstoretable`");
 				$wpdb->query("TRUNCATE TABLE `$ttstoreextratable`");
@@ -40,6 +44,7 @@ function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") 
 			$wpdb->query("TRUNCATE TABLE `$ttstorecattable`");
 		}
 		$xmlfilecount = "0";
+		update_option("xmlfilecount", "0" );
 		delete_option("Tradetracker_importerror");
 		delete_option("Tradetracker_memoryusage");	
 		delete_option("Tradetracker_xml_extra");
