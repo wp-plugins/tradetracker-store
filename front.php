@@ -60,7 +60,7 @@ function header_css_style() {
 	global $ttstorelayouttable;
 	global $ttstoremultitable;
 	$style .= "<style type=\"text/css\" media=\"screen\">";
-	$multi=$wpdb->get_results("SELECT multiname, laywidth, layfont, laycolortitle, laycolorbuttonfont, laycolorbutton, laycolorborder, laycolorfooter, laycolorimagebg, laycolorfont FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id");
+	$multi=$wpdb->get_results("SELECT multiname, laywidth, layfont, layfontsize, laycolortitle, laycolorbuttonfont, laycolorbutton, laycolorborder, laycolorfooter, laycolorimagebg, laycolorfont FROM ".$ttstoremultitable.",".$ttstorelayouttable." where ".$ttstoremultitable.".multilayout=".$ttstorelayouttable.".id");
 	foreach ($multi as $multi_val){
 		$i="1";
 		if( $multi_val->laywidth == "" ){
@@ -73,6 +73,12 @@ function header_css_style() {
 		} else {
 			$font= $multi_val->layfont;
 		}
+		if( $multi_val->layfontsize == "" ){
+			$fontsize= "10";
+		} else {
+			$fontsize= $multi_val->layfontsize;
+		}
+		$fontsizetitle = $fontsize+2;
 		$widthtitle = $width-6;
 		$widthmore = $width-10;
 		if( $multi_val->laycolortitle == "" ){
@@ -112,21 +118,21 @@ function header_css_style() {
 		}
 		$storename = create_slug($multi_val->multiname);
 		$style .= "\n.".$storename."store-outerbox{width:".$width."px;color:".$colorfont.";font-family:".$font.";float:left;margin:0px 15px 15px 0;min-height:353px;border:solid 1px ".$colorborder.";position:relative;}";
-		$style .= "\n.".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:11px;padding:3px;font-weight:bold;text-align:center;}";
+		$style .= "\n.".$storename."store-titel{width:".$widthtitle."px;background-color:".$colortitle.";color:".$colorfont.";float:left;position:relative;height:30px;line-height:15px;font-size:".$fontsizetitle."px;padding:3px;font-weight:bold;text-align:center;}";
 		$style .= "\n.".$storename."store-image{width:".$width."px;height:180px;padding:0px;overflow:hidden;margin: auto;background-color:".$colorimagebg.";}";
 		$style .= "\n.".$storename."store-image img{display: block;border:0px;margin: auto;}";
 		$style .= "\n.".$storename."store-footer{width:".$width."px;background-color:".$colorfooter.";float:left;position:relative;min-height:137px;}";
-		$style .= "\n.".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:10px;overflow:auto;}";
+		$style .= "\n.".$storename."store-description{width:".$widthtitle."px;color:".$colorfont.";position:relative;top:5px;left:5px;height:90px;line-height:14px;font-size:".$fontsize."px;overflow:auto;}";
 		$style .= "\n.".$storename."store-more{min-height:20px; width:".$widthtitle."px;position: relative;float: left;margin-top:10px;margin-left:5px;margin-bottom: 5px;}";
 		$style .= "\n.".$storename."store-more img{margin:0px !important;}";
-		$style .= "\n.".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: 12px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
+		$style .= "\n.".$storename."store-price {border: 0 solid #65B9C1;color: #4E4E4E !important;float: right;font-size: ".$fontsizetitle."px !important;font-weight: bold !important;height: 30px !important;position: relative;text-align: center !important;width: 80px !important;}";
 		$style .= "\n.".$storename."store-price table {height:29px;width:79px;background-color: ".$colorfooter." !important; border: 1px none !important;border-collapse: inherit !important;float: right;margin: 1px 0 1px 1px;text-align: center !important;}";
 		$style .= "\n.".$storename."store-price table tr {padding: 1px !important;}";
 		$style .= "\n.".$storename."store-price table tr td {padding: 1px !important;}";
 		$style .= "\n.".$storename."store-price table td, table th, table tr {border: 1px solid #CCCCCC;padding: 0 !important;}";
-		$style .= "\n.".$storename."store-price table td.euros {font-size: 12px !important;letter-spacing: -1px !important; }";
+		$style .= "\n.".$storename."store-price table td.euros {font-size: ".$fontsizetitle."px !important;letter-spacing: -1px !important; }";
 		$style .= "\n.".$storename."store-price {background-color: ".$colorborder." !important;}";
-		$style .= "\n.".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: ".$colorbuttonfont.";cursor: pointer;display: block;float: left;font-size: 12px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
+		$style .= "\n.".$storename."buttons a, .".$storename."buttons button {background-color: ".$colorbutton.";border: 1px solid ".$colorbutton.";bottom: 0;color: ".$colorbuttonfont.";cursor: pointer;display: block;float: left;font-size: ".$fontsize."px;font-weight: bold;margin-top: 0;padding: 5px 10px 5px 7px;position: relative;text-decoration: none;width: 100px;}";
 		$style .= "\n.".$storename."buttons button {overflow: visible;padding: 4px 10px 3px 7px;width: auto;}";
 		$style .= "\n.".$storename."buttons button[type] {line-height: 17px;padding: 5px 10px 5px 7px;}";
 		$style .= "\n.".$storename.":first-child + html button[type] {padding: 4px 10px 3px 7px;}";

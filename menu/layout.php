@@ -353,7 +353,7 @@ function layout() {
 		</td>
 		<td>
 			<input type="text" name="<?php echo $Tradetracker_font_name; ?>" class="target" id="layoutfont" value="<?php if(isset($Tradetracker_font_val)){ echo $Tradetracker_font_val;} ?>" size="20" <?php if($readonlylock == "yes"){echo "readonly";} ?>>
-			<a href="http://www.fonttester.com/help/list_of_web_safe_fonts.html" target="_blank">WebSafe Fonts</a>
+			<a href="http://www.w3schools.com/cssref/css_websafe_fonts.asp" target="_blank">WebSafe Fonts</a>
 		</td>
 	</tr>
 
