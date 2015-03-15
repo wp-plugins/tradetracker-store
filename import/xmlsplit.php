@@ -69,6 +69,16 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 			if(preg_match('/<URL>(.+?)\<\/URL>/is', $buffer, $matches)){
 				$buffer = str_replace($matches[0], "<productURL>".$matches[1]."</productURL>", $buffer);
 			}
+			if(preg_match('/<categories>(.+?)\<\/categories>/is', $buffer, $matches)){
+				if(preg_match('/<category>(.+?)\<\/category>/is', $matches[0], $matchess)){
+					$buffer = str_replace($matches[0], "<categories><category path=\"".$matchess[1]."\">".$matchess[1]."</category></categories>", $buffer);
+				}
+			}
+			if(preg_match('/<categoryPath>(.+?)\<\/categoryPath>/is', $buffer, $matches)){
+				if(preg_match('/<value>(.+?)\<\/value>/is', $matches[0], $matchess)){
+					$buffer = str_replace($matches[0], "<categories><category path=\"".$matchess[1]."\">".$matchess[1]."</category></categories>", $buffer);
+				}
+			}
 			fwrite($exportfile, $buffer);
 			if(preg_match('/<product>/i', $buffer)){
 				fwrite($exportfile,"<xmlfile>$xmlfeedID</xmlfile></product>");
