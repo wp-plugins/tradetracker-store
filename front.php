@@ -172,7 +172,7 @@ function show_ttusersort($winkelvol)
 		}
 	}
 	$userperpage .= "<input type=\"hidden\" value=\"price\" name=\"multisorting\">";
-	$userperpage .= __('Sort:','ttstore');
+	$userperpage .= __('Sort: ','ttstore');
 	$userperpage .= "<select name=\"multiorder\" onchange=\"this.form.submit();\">";
 	$userperpage .= "<option name=\"\"> </option>";
 	$userperpage .= "<option name=\"desc\""; 
@@ -196,7 +196,7 @@ function show_ttusersort($winkelvol)
 function show_ttuserpages($winkelvol)
 {
 	if(isset($_GET['ipp'])){
-		if(is_numeric($_GET['ipp'])){
+		if(is_numeric($_GET['ipp']) && $_GET['ipp'] > "0"){
 			$itemsperpage = $_GET['ipp'];
 		} else {
 			$itemsperpage = "0";
@@ -221,7 +221,7 @@ function show_ttuserpages($winkelvol)
 	if(isset($_GET['multiorder'])){
 		$userperpage .= "<input type=\"hidden\" value=\"".$_GET['multiorder']."\" name=\"multiorder\">";
 	}
-	$userperpage .= __('Items per page:','ttstore');
+	$userperpage .= __('Items per page: ','ttstore');
 	$userperpage .= "<select name=\"ipp\" onchange=\"this.form.submit();\">";
 	$userperpage .= "<option name=\"\"> </option>";
 	$userperpage .= "<option name=\"10\""; 
@@ -270,7 +270,7 @@ function show_ttfilter($winkelvol)
 		$max_price = round($max_price+1);
 	}
 	if(isset($_GET['ipp'])){
-		if(is_numeric($_GET['ipp'])){
+		if(is_numeric($_GET['ipp']) && $_GET['ipp'] > "0" ){
 			$ipp = $_GET['ipp'];
 		} else {
 			$ipp = $max_items;
@@ -390,7 +390,7 @@ function show_ttpages($winkelvol)
 			$priceselect = "";
 		}
 
-		if($multi_val->multipageamount > "0" || (isset($_GET['ipp']) && is_numeric($_GET['ipp']) )){
+		if($multi_val->multipageamount > "0" || (isset($_GET['ipp']) && is_numeric($_GET['ipp']) && $_GET['ipp']>"0" )){
 			if ($Tradetracker_productid == "0") 
 			{
 				if ($multi_val->multiamount == "") {
@@ -564,7 +564,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$buynow= $multi_val->buynow;
 		}
-		if($multi_val->multipageamount > "0" || (isset($_GET['ipp']) && is_numeric($_GET['ipp']))){
+		if($multi_val->multipageamount > "0" || (isset($_GET['ipp']) && is_numeric($_GET['ipp']) && $_GET['ipp']>"0")){
 			if (!isset($Tradetracker_productid) || $Tradetracker_productid == null) 
 			{
 				if ($multi_val->multiamount == "") {
