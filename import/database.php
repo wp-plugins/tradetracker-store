@@ -310,6 +310,10 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	$ttmemoryusage = get_option("Tradetracker_memoryusage");
 	$ttmemoryusage .= "<br/><strong>Memory Usage before import:</strong>".convert(memory_get_peak_usage())."<p>";
 	update_option( "Tradetracker_memoryusage", $ttmemoryusage );
+	wp_clear_scheduled_hook('xml_updater_check');
+	if (!wp_next_scheduled('xml_updater_check')) {
+		wp_schedule_single_event(time()+700, 'xml_updater_check');
+	}
 	if ($xmldatabasecount < count($files)){
 		update_option("xmldatabasecount", $xmldatabasecount );
 		if($xmlcronjob=="0"){

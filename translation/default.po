@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-08 20:01-0000\n"
-"PO-Revision-Date: 2015-04-08 20:01-0000\n"
+"POT-Creation-Date: 2015-04-19 09:18-0000\n"
+"PO-Revision-Date: 2015-04-19 09:18-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr ""
 #: ../menu/pluginsettings.php:349 ../menu/pluginsettings.php:361
 #: ../menu/store.php:310 ../menu/store.php:449 ../menu/store.php:633
 #: ../menu/xmlfeed.php:203 ../menu/xmlfeed.php:254 ../menu/xmlfeed.php:275
-#: ../menu/xmloption.php:145
+#: ../menu/xmloption.php:163
 msgid "Yes"
 msgstr ""
 
@@ -79,7 +79,7 @@ msgstr ""
 #: ../menu/pluginsettings.php:351 ../menu/pluginsettings.php:363
 #: ../menu/store.php:310 ../menu/store.php:451 ../menu/store.php:640
 #: ../menu/xmlfeed.php:205 ../menu/xmlfeed.php:255 ../menu/xmlfeed.php:276
-#: ../menu/xmloption.php:147
+#: ../menu/xmloption.php:165
 msgid "No"
 msgstr ""
 
@@ -265,7 +265,7 @@ msgstr ""
 
 #: ../menu/itemselect.php:155 ../menu/layout.php:174
 #: ../menu/pluginsettings.php:110 ../menu/premium.php:25 ../menu/search.php:28
-#: ../menu/store.php:220 ../menu/xmloption.php:64
+#: ../menu/store.php:220 ../menu/xmloption.php:72
 msgid "Settings saved"
 msgstr ""
 
@@ -1201,71 +1201,85 @@ msgstr ""
 msgid "Update Items"
 msgstr ""
 
-#: ../menu/xmloption.php:76
+#: ../menu/xmloption.php:84
 msgid "Change XML options."
 msgstr ""
 
-#: ../menu/xmloption.php:87
+#: ../menu/xmloption.php:95
 msgid "Which extra fields would you like to use?"
 msgstr ""
 
-#: ../menu/xmloption.php:88
+#: ../menu/xmloption.php:96
 msgid "Which extra fields?:"
 msgstr ""
 
-#: ../menu/xmloption.php:130
+#: ../menu/xmloption.php:138
 msgid "When should it update?, standard is 00:00:00"
 msgstr ""
 
-#: ../menu/xmloption.php:131
+#: ../menu/xmloption.php:139
 msgid "Update time:"
 msgstr ""
 
-#: ../menu/xmloption.php:135
+#: ../menu/xmloption.php:143
 msgid "Time has to be in hh:mm:ss"
 msgstr ""
 
-#: ../menu/xmloption.php:140
-msgid "Do you like to use fill in your own currency or get it from the XML?"
+#: ../menu/xmloption.php:148
+msgid "How many feeds should it import every 10 minutes"
 msgstr ""
 
-#: ../menu/xmloption.php:141
-msgid "Use your own currency symbol:"
-msgstr ""
-
-#: ../menu/xmloption.php:152
-msgid "Do you like to have the currency before or after the price?"
+#: ../menu/xmloption.php:149
+msgid "Feeds per update:"
 msgstr ""
 
 #: ../menu/xmloption.php:153
-msgid "Location of the currency:"
+msgid ""
+"0 if you want it to go through all feeds, else it will import x amount of "
+"feeds every 10 minutes till all feeds are imported"
 msgstr ""
 
-#: ../menu/xmloption.php:157
-msgid "After the price"
+#: ../menu/xmloption.php:158
+msgid "Do you like to use fill in your own currency or get it from the XML?"
 msgstr ""
 
 #: ../menu/xmloption.php:159
-msgid "Before the price"
+msgid "Use your own currency symbol:"
 msgstr ""
 
-#: ../menu/xmloption.php:167
-msgid "Adjust Currency:"
+#: ../menu/xmloption.php:170
+msgid "Do you like to have the currency before or after the price?"
 msgstr ""
 
-#: ../menu/xmloption.php:172
-msgid "Current currency in the XML?"
+#: ../menu/xmloption.php:171
+msgid "Location of the currency:"
 msgstr ""
 
-#: ../menu/xmloption.php:173
-msgid "XML Currency:"
+#: ../menu/xmloption.php:175
+msgid "After the price"
 msgstr ""
 
 #: ../menu/xmloption.php:177
+msgid "Before the price"
+msgstr ""
+
+#: ../menu/xmloption.php:185
+msgid "Adjust Currency:"
+msgstr ""
+
+#: ../menu/xmloption.php:190
+msgid "Current currency in the XML?"
+msgstr ""
+
+#: ../menu/xmloption.php:191
+msgid "XML Currency:"
+msgstr ""
+
+#: ../menu/xmloption.php:195
 msgid "What would you like to show instead of the XML currency?"
 msgstr ""
 
-#: ../menu/xmloption.php:178
+#: ../menu/xmloption.php:196
 msgid "New Currency:"
 msgstr ""
 

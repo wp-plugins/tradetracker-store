@@ -95,6 +95,7 @@ function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") 
 		$loadxmlfeeds = $wpdb->get_results("select id, xmlfeed, xmlprovider from ".$ttstorexmltable."", ARRAY_A);
 	}
 	//check if splits directory is empty else empty it
+	$runs = "0";
 	if ($xmlfilecount <= count($loadxmlfeeds)-1){
 		echo "<br /><strong>Memory Usage before import:</strong>".convert(memory_get_peak_usage());
 		$ttmemoryusage = get_option("Tradetracker_memoryusage");
@@ -123,7 +124,15 @@ function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") 
 		update_option("xmlfilecount", $xmlfilecount );
 		$value($xmlfeedid, $basefilename, $key,$filenum,$recordnum,$processed,'products', 'itemXMLtag');
 		fill_database1($xmlfilecount, $xmlcronjob);
-
+		if($xmlcronjob == "1"){
+			$runs++;
+			$feedperupdate = get_option("Tradetracker_xmlfeedsperupdate");
+			if(isset($feedperupdate) && $feedperupdate > "0"){
+				if($runs == $feedperupdate){
+					exit();
+				}
+			}
+		}
 	} else {
 		update_option("xmlfilecount", "-1" );
 		$errorfile = get_option("Tradetracker_importerror");

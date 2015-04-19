@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-08 20:01-0000\n"
-"PO-Revision-Date: 2015-04-08 20:01-0000\n"
+"POT-Creation-Date: 2015-04-19 09:19-0000\n"
+"PO-Revision-Date: 2015-04-19 09:19-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -36,7 +36,7 @@ msgstr "allow_url_fopen ingeschakeld:"
 #: ../menu/pluginsettings.php:349 ../menu/pluginsettings.php:361
 #: ../menu/store.php:310 ../menu/store.php:449 ../menu/store.php:633
 #: ../menu/xmlfeed.php:203 ../menu/xmlfeed.php:254 ../menu/xmlfeed.php:275
-#: ../menu/xmloption.php:145
+#: ../menu/xmloption.php:163
 msgid "Yes"
 msgstr "Ja"
 
@@ -82,7 +82,7 @@ msgstr "Simplexml geinstalleerd:"
 #: ../menu/pluginsettings.php:351 ../menu/pluginsettings.php:363
 #: ../menu/store.php:310 ../menu/store.php:451 ../menu/store.php:640
 #: ../menu/xmlfeed.php:205 ../menu/xmlfeed.php:255 ../menu/xmlfeed.php:276
-#: ../menu/xmloption.php:147
+#: ../menu/xmloption.php:165
 msgid "No"
 msgstr "Nee"
 
@@ -274,7 +274,7 @@ msgstr "items niet meer in een feed"
 
 #: ../menu/itemselect.php:155 ../menu/layout.php:174
 #: ../menu/pluginsettings.php:110 ../menu/premium.php:25 ../menu/search.php:28
-#: ../menu/store.php:220 ../menu/xmloption.php:64
+#: ../menu/store.php:220 ../menu/xmloption.php:72
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
 
@@ -1292,72 +1292,88 @@ msgstr ""
 msgid "Update Items"
 msgstr "Update Items"
 
-#: ../menu/xmloption.php:76
+#: ../menu/xmloption.php:84
 msgid "Change XML options."
 msgstr "Verander XML opties."
 
-#: ../menu/xmloption.php:87
+#: ../menu/xmloption.php:95
 msgid "Which extra fields would you like to use?"
 msgstr "Welke extra velden wilt u tonen?"
 
-#: ../menu/xmloption.php:88
+#: ../menu/xmloption.php:96
 msgid "Which extra fields?:"
 msgstr "Welke extra velden?:"
 
-#: ../menu/xmloption.php:130
+#: ../menu/xmloption.php:138
 msgid "When should it update?, standard is 00:00:00"
 msgstr "Wanneer moet de feed updaten?, standaard is 00:00:00"
 
-#: ../menu/xmloption.php:131
+#: ../menu/xmloption.php:139
 msgid "Update time:"
 msgstr "Update tijd:"
 
-#: ../menu/xmloption.php:135
+#: ../menu/xmloption.php:143
 msgid "Time has to be in hh:mm:ss"
 msgstr "Tijd moet ingevuld worden als hh:mm:ss"
 
-#: ../menu/xmloption.php:140
+#: ../menu/xmloption.php:148
+msgid "How many feeds should it import every 10 minutes"
+msgstr "Hoeveel feeds zou het elke 10 minuten moeten importeren"
+
+#: ../menu/xmloption.php:149
+msgid "Feeds per update:"
+msgstr "Feeds per update:"
+
+#: ../menu/xmloption.php:153
+msgid ""
+"0 if you want it to go through all feeds, else it will import x amount of "
+"feeds every 10 minutes till all feeds are imported"
+msgstr ""
+"0 als je alle feeds mteen wil importeren, anders zal het x feeds per 10 "
+"minuten importeren tot alle feeds geimporteerd zijn"
+
+#: ../menu/xmloption.php:158
 msgid "Do you like to use fill in your own currency or get it from the XML?"
 msgstr ""
 "Wilt u uw eigen ingevulde valuta gebruiken of het van de XML feed gebruiken?"
 
-#: ../menu/xmloption.php:141
+#: ../menu/xmloption.php:159
 msgid "Use your own currency symbol:"
 msgstr "Gebruik uw eigen gekozen valuta sybool:"
 
-#: ../menu/xmloption.php:152
+#: ../menu/xmloption.php:170
 msgid "Do you like to have the currency before or after the price?"
 msgstr "Wilt u de valuta voor of achter de prijs?"
 
-#: ../menu/xmloption.php:153
+#: ../menu/xmloption.php:171
 msgid "Location of the currency:"
 msgstr "Locatie van de valuta:"
 
-#: ../menu/xmloption.php:157
+#: ../menu/xmloption.php:175
 msgid "After the price"
 msgstr "Achter de prijs"
 
-#: ../menu/xmloption.php:159
+#: ../menu/xmloption.php:177
 msgid "Before the price"
 msgstr "Voor de prijs"
 
-#: ../menu/xmloption.php:167
+#: ../menu/xmloption.php:185
 msgid "Adjust Currency:"
 msgstr "Pas Valuta aan:"
 
-#: ../menu/xmloption.php:172
+#: ../menu/xmloption.php:190
 msgid "Current currency in the XML?"
 msgstr "Huidige valutue in de XML?"
 
-#: ../menu/xmloption.php:173
+#: ../menu/xmloption.php:191
 msgid "XML Currency:"
 msgstr "Valuta van de XML:"
 
-#: ../menu/xmloption.php:177
+#: ../menu/xmloption.php:195
 msgid "What would you like to show instead of the XML currency?"
 msgstr "Wat wilt u tonen inplaats van de valuta uit de XML feed?"
 
-#: ../menu/xmloption.php:178
+#: ../menu/xmloption.php:196
 msgid "New Currency:"
 msgstr "Nieuwe Valuta:"
 

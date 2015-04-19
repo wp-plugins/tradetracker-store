@@ -8,6 +8,9 @@ function xmloption(){
 	global $ttstoreextratable;
 
 	//variables for this function
+
+
+	$Tradetracker_xmlfeedsperupdate_name = 'Tradetracker_xmlfeedsperupdate';
 	$Tradetracker_xmlupdate_name = 'Tradetracker_xmlupdate';
 	$Tradetracker_currency_name = 'Tradetracker_currency';
 	$Tradetracker_currencyloc_name = 'Tradetracker_currencyloc';
@@ -15,6 +18,7 @@ function xmloption(){
 	$Tradetracker_extra_name = 'Tradetracker_extra';
 
 	//filling variables from database
+	$Tradetracker_xmlfeedsperupdate_val = get_option( $Tradetracker_xmlfeedsperupdate_name );
 	$Tradetracker_xmlupdate_val = get_option( $Tradetracker_xmlupdate_name );
 	$Tradetracker_currency_val = get_option( $Tradetracker_currency_name );
 	$Tradetracker_currencyloc_val = get_option( $Tradetracker_currencyloc_name );
@@ -26,6 +30,7 @@ function xmloption(){
 	if( isset($_POST[ $ttstoresubmit ]) && $_POST[ $ttstoresubmit ] == 'Y' ) {
 
 		//get posted data
+		$Tradetracker_xmlfeedsperupdate_val = $_POST[ $Tradetracker_xmlfeedsperupdate_name ];
 		$Tradetracker_xmlupdate_val = $_POST[ $Tradetracker_xmlupdate_name ];
 		$Tradetracker_currency_val = $_POST[ $Tradetracker_currency_name ];
 		$Tradetracker_currencyloc_val = $_POST[ $Tradetracker_currencyloc_name ];
@@ -46,6 +51,9 @@ function xmloption(){
 		if ( get_option("Tradetracker_xmlupdate")  != $Tradetracker_xmlupdate_val) {
 			update_option( $Tradetracker_xmlupdate_name, $Tradetracker_xmlupdate_val );
 			wp_clear_scheduled_hook('xmlscheduler');
+		}
+		if ( get_option("Tradetracker_xmlfeedsperupdate")  != $Tradetracker_xmlfeedsperupdate_val) {
+			update_option( $Tradetracker_xmlfeedsperupdate_name, $Tradetracker_xmlfeedsperupdate_val );
 		}
 		if ( get_option("Tradetracker_currency")  != $Tradetracker_currency_val) {
 			update_option( $Tradetracker_currency_name, $Tradetracker_currency_val );
@@ -133,6 +141,16 @@ function xmloption(){
 					</td>
 					<td>
 						<input type="text" name="<?php echo $Tradetracker_xmlupdate_name; ?>" value="<?php if($Tradetracker_xmlupdate_val==""){ echo "00:00:00"; } else { echo $Tradetracker_xmlupdate_val;} ?>" size="20"> <?php _e('Time has to be in hh:mm:ss','ttstore'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="tradetrackerupdate" title="<?php _e('How many feeds should it import every 10 minutes','ttstore'); ?>" class="info">
+							<?php _e("Feeds per update:", 'ttstore' ); ?> 
+						</label>
+					</td>
+					<td>
+						<input type="text" name="<?php echo $Tradetracker_xmlfeedsperupdate_name; ?>" value="<?php if($Tradetracker_xmlfeedsperupdate_val==""){ echo "0"; } else { echo $Tradetracker_xmlfeedsperupdate_val;} ?>" size="20"> <?php _e('0 if you want it to go through all feeds, else it will import x amount of feeds every 10 minutes till all feeds are imported','ttstore'); ?>
 					</td>
 				</tr>
 		<tr>
