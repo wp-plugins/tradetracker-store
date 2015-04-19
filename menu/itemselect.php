@@ -134,7 +134,7 @@ function itemselect() {
 		$Tradetracker_items = $_POST['item'];
 		$query = "DELETE FROM `".$ttstoreitemtable."` WHERE `".$ttstoreitemtable."`.`storeID` = ".$multiid."";
 		$wpdb->query($query);
-		if($_POST['itemsother']!="")
+		if(isset($_POST['itemsother']) && $_POST['itemsother']!="")
 		{
 			$itemsother = explode(",",$_POST['itemsother']);
 			$Tradetracker_items = array_merge($Tradetracker_items, $itemsother);
@@ -143,8 +143,8 @@ function itemselect() {
 			$wpdb->insert( 
 				$ttstoreitemtable, 
 				array( 
-					storeID => $multiid, 
-					productID => $itemoverview 
+					'storeID' => $multiid, 
+					'productID' => $itemoverview 
 				), 
 				array( 
 					'%d', 
@@ -219,7 +219,7 @@ function itemselect() {
 		$countquery=$wpdb->get_results("SELECT * FROM (".$ttstoretable.", ".$ttstorecattable.") left join ".$ttstoreextratable." on (".$ttstoreextratable.".`productID` = ".$ttstoretable.".`productID`) and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword'  IN BOOLEAN MODE) or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
 	} else {
 		$searchlink = "";
-		if($_GET['selected']=="yes"){
+		if(isset($_GET['selected']) && $_GET['selected']=="yes"){
 			$products = '"' . implode('","', $productID) . '"';;
 			$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where (".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect.") and ".$ttstoretable.".productID IN (".$products.") group by ".$ttstoretable.".productID");
 		} else {
@@ -378,7 +378,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 	$keyword = $_GET['search'];
 	$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword'  IN BOOLEAN MODE) or `extravalue` LIKE '%$keyword%') ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID ORDER BY ".$order." ASC  LIMIT ".$currentpage.", ".$limit."");
 } else {
-	if($_GET['selected']=="yes"){
+	if(isset($_GET['selected']) && $_GET['selected']=="yes"){
 		$products = '"' . implode('","', $productID) . '"';;
 		$visits=$wpdb->get_results("SELECT ".$ttstoretable.".*, ".$ttstorecattable.".categorieid, ".$ttstorecattable.".categorie FROM ".$ttstoretable.", ".$ttstorecattable." where (".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." ) and ".$ttstoretable.".productID IN (".$products.") group by ".$ttstoretable.".productID ORDER BY ".$order." ASC");
 	} else {
@@ -387,7 +387,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 }
 	echo "<table width=\"<?php echo $adminwidth-15; ?>\" border=\"0\" style=\"border-width: 0px;padding:0px;border-spacing:0px;\">";
 		echo "<tr><td width=\"20\">";
-			if($_GET['selected']==""){
+			if(!isset($_GET['selected']) || $_GET['selected']==""){
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."&order=".$order."&selected=yes\">"; _e('Selected', 'ttstore'); echo "</a></b>";
 			} else {
 			echo "<b><a href=\"admin.php?page=tt-store&option=itemselect&limit=".$limit."&function=select".$searchlink."&multiid=".$multiid."\">"; _e('Selected', 'ttstore'); echo "</a></b>";
@@ -417,7 +417,7 @@ if(isset($_GET['search']) && $_GET['search']!=""){
 				}
 				$array2 .= ",".$product->productID."";
 				echo "<tr style=\"".$tdbgcolor.";\"><td>";
-			if($_GET['selected']=="yes"){
+			if(isset($_GET['selected']) && $_GET['selected']=="yes"){
 				if(!empty($productID) && in_array($product->productID, $productID, true))
 				{
 					echo "<input type=\"checkbox\" checked=\"yes\" name=\"item[]\" value=".$product->productID." /></td><td>";
