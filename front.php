@@ -183,7 +183,7 @@ function show_ttusersort($winkelvol)
 	$userperpage .= __('price (high to low)','ttstore');
 	$userperpage .= "</option>";
 	$userperpage .= "<option name=\"asc\""; 
-	if($multiorder == "desc"){ 
+	if($multiorder == "asc"){ 
 		$userperpage .= "selected"; 
 	} 
 	$userperpage .= " value =\"asc\">";

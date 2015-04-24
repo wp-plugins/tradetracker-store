@@ -216,17 +216,17 @@ function itemselect() {
 	if(isset($_GET['search']) && $_GET['search'] !=""){
 		$keyword = $_GET['search'];
 		$searchlink = "&search=".$keyword;
-		$countquery=$wpdb->get_results("SELECT * FROM (".$ttstoretable.", ".$ttstorecattable.") left join ".$ttstoreextratable." on (".$ttstoreextratable.".`productID` = ".$ttstoretable.".`productID`) and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword'  IN BOOLEAN MODE) or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." group by ".$ttstoretable.".productID");
+		$countquery=$wpdb->get_row("SELECT COUNT(DISTINCT ".$ttstoretable.".productID) as cnt FROM (".$ttstoretable.", ".$ttstorecattable.") left join ".$ttstoreextratable." on (".$ttstoreextratable.".`productID` = ".$ttstoretable.".`productID`) and ".$ttstoreextratable.".`extravalue` LIKE '%$keyword%' where ".$ttstorecattable.".productID = ".$ttstoretable.".productID and (MATCH(name,description) AGAINST ('$keyword'  IN BOOLEAN MODE) or ".$ttstoreextratable.".`extravalue` != null) ".$searchcategorieselect." ".$searchxmlfeed." ");
 	} else {
 		$searchlink = "";
 		if(isset($_GET['selected']) && $_GET['selected']=="yes"){
 			$products = '"' . implode('","', $productID) . '"';;
-			$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where (".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect.") and ".$ttstoretable.".productID IN (".$products.") group by ".$ttstoretable.".productID");
+			$countquery=$wpdb->get_row("SELECT COUNT(DISTINCT ".$ttstoretable.".productID) as cnt FROM ".$ttstoretable.", ".$ttstorecattable." where (".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect.") and ".$ttstoretable.".productID IN (".$products.") ");
 		} else {
-			$countquery=$wpdb->get_results("SELECT * FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect." group by ".$ttstoretable.".productID");
+			$countquery=$wpdb->get_row("SELECT COUNT(DISTINCT ".$ttstoretable.".productID) as cnt FROM ".$ttstoretable.", ".$ttstorecattable." where ".$ttstorecattable.".productID = ".$ttstoretable.".productID ".$multixmlfeed." ".$categorieselect."");
 		}
 	}
-	$numrows = $wpdb->num_rows;
+	$numrows = $countquery->cnt;
 	$pages = intval($numrows/$limit); // Number of results pages.
 	if ($numrows%$limit) 
 	{
