@@ -18,7 +18,7 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 	$xmlstring = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 	$xmlstring.=''."\n";
 	$xmlstring.="<$xmldatadelimiter>\n";
-	$newfile = "splits/".$basefilename."-".$filenum.".xml";
+	$newfile = "splits/".$basefilename."-".sprintf("%09s", $filenum).".xml";
 	$exportfile = fopen($folderhome."/$newfile","w");
 	if (get_option('Tradetracker_importtool')=="1"){
 		$handle = fopen($xmlfile,"r");
@@ -86,13 +86,19 @@ function tradetracker( $xmlfeedID, $basefilename, $xmlfile, $filenum, $recordnum
 				fwrite($exportfile,"<xmlfile>$xmlfeedID</xmlfile></product>");
 			}
 			if ($recordnum>$chunksize) {
-				fwrite($exportfile, "</$xmldatadelimiter>");
-				$recordnum=0;
-				$filenum++;
-				fclose($exportfile);
-				$newfile = "splits/".$basefilename."-".sprintf("%09s", $filenum).".xml";
-				$exportfile = fopen($folderhome."/$newfile","w");
-				fwrite($exportfile, $xmlstring);
+				if(preg_match('/<\/'.$xmldatadelimiter.'>/i', $buffer)){
+					$recordnum=0;
+					$filenum++;
+					fclose($exportfile);
+				} else {
+					fwrite($exportfile, "</$xmldatadelimiter>");
+					$recordnum=0;
+					$filenum++;
+					fclose($exportfile);
+					$newfile = "splits/".$basefilename."-".sprintf("%09s", $filenum).".xml";
+					$exportfile = fopen($folderhome."/$newfile","w");
+					fwrite($exportfile, $xmlstring);
+				}
 			}
 			if ($filenum>5000) {
 				die();
@@ -108,7 +114,7 @@ function tradetrackerdaily($xmlfeedID, $basefilename, $xmlfile, $filenum, $recor
 	$recordnum = 1; 
 	GLOBAL $processed;
 	global $folderhome;
-	$newfile = "splits/".$basefilename."-".$filenum.".xml";
+	$newfile = "splits/".$basefilename."-".sprintf("%09s", $filenum).".xml";
 	$exportfile = fopen($folderhome."/$newfile","w");
 	$xmldatadelimiter = "productFeed";
 	$xmlstring =''."\n";

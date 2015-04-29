@@ -333,7 +333,7 @@ function ttstoreheader() {
 	if(!empty($errorfile)){
 		$oldvalue = array("\n", "Feedname:", "Splitfile:");
 		$newvalue = array("<br>", "<strong>Feedname:</strong>", "<strong>Splitfile:</strong>");
-		$osmessage =  __('<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported.</strong>','ttstore');
+		$osmessage =  __('<strong>The following XML splits gave an error or were empty during the last import. So they are possibly not imported. More information about this can be found <a href="http://wpaffiliatefeed.com/624/frequently-asked-questions/my-import-gives-an-error/">here</a> </strong>','ttstore');
 		$osmessage .= str_replace($oldvalue,$newvalue,$errorfile);
 		echo "<div class='error'>".$osmessage." <a href=\"admin.php?page=tt-store&errordel=yes\">Close</a></div>";
 	}
