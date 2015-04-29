@@ -1,0 +1,1414 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TTstore\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-19 09:19-0000\n"
+"PO-Revision-Date: 2015-04-19 09:19-0000\n"
+"Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../debug.php:21 ../menu/menu.php:148
+msgid "Debug"
+msgstr "Debug"
+
+#: ../debug.php:31
+msgid "Needed to import XML Feed"
+msgstr "Nodig om XML Feed te importeren"
+
+#: ../debug.php:36 ../debug.php:42
+msgid "allow_url_fopen enabled:"
+msgstr "allow_url_fopen ingeschakeld:"
+
+#: ../debug.php:38 ../debug.php:51 ../debug.php:94 ../debug.php:100
+#: ../menu/itemselect.php:448 ../menu/itemselect.php:495
+#: ../menu/pluginsettings.php:141 ../menu/pluginsettings.php:205
+#: ../menu/pluginsettings.php:234 ../menu/pluginsettings.php:264
+#: ../menu/pluginsettings.php:296 ../menu/pluginsettings.php:313
+#: ../menu/pluginsettings.php:325 ../menu/pluginsettings.php:337
+#: ../menu/pluginsettings.php:349 ../menu/pluginsettings.php:361
+#: ../menu/store.php:310 ../menu/store.php:449 ../menu/store.php:633
+#: ../menu/xmlfeed.php:203 ../menu/xmlfeed.php:254 ../menu/xmlfeed.php:275
+#: ../menu/xmloption.php:163
+msgid "Yes"
+msgstr "Ja"
+
+#: ../debug.php:44 ../debug.php:57
+msgid ""
+"No, please change the import method <a href=\"admin.php?page=tt-"
+"store&option=pluginsettings\">here</a>"
+msgstr ""
+"Nee, graag de import methode <a href=\"admin.php?page=tt-"
+"store&option=pluginsettings\">hier</a> veranderen"
+
+#: ../debug.php:49 ../debug.php:55
+msgid "Curl enabled:"
+msgstr "Curl ingeschakeld:"
+
+#: ../debug.php:62
+msgid "Needed to write XML file"
+msgstr "Nodig om een XML bestand te maken"
+
+#: ../debug.php:65 ../debug.php:73
+#, php-format
+msgid "%s is writable."
+msgstr "%s is schrijfbaar"
+
+#: ../debug.php:69 ../debug.php:77
+#, php-format
+msgid "%s is not writable. Please CHMOD 777 it."
+msgstr "%s is niet schrijfbaar. Graag CHMOD 777 op deze map toepassen"
+
+#: ../debug.php:82
+msgid "Needed to write XML to database"
+msgstr "Nodig om XML bestand naar database te schrijven"
+
+#: ../debug.php:87 ../debug.php:92 ../debug.php:98
+msgid "Simplexml installed:"
+msgstr "Simplexml geinstalleerd:"
+
+#: ../debug.php:89 ../menu/itemselect.php:450 ../menu/itemselect.php:497
+#: ../menu/pluginsettings.php:143 ../menu/pluginsettings.php:207
+#: ../menu/pluginsettings.php:236 ../menu/pluginsettings.php:266
+#: ../menu/pluginsettings.php:298 ../menu/pluginsettings.php:315
+#: ../menu/pluginsettings.php:327 ../menu/pluginsettings.php:339
+#: ../menu/pluginsettings.php:351 ../menu/pluginsettings.php:363
+#: ../menu/store.php:310 ../menu/store.php:451 ../menu/store.php:640
+#: ../menu/xmlfeed.php:205 ../menu/xmlfeed.php:255 ../menu/xmlfeed.php:276
+#: ../menu/xmloption.php:165
+msgid "No"
+msgstr "Nee"
+
+#: ../debug.php:106 ../debug.php:112
+msgid "Your active theme"
+msgstr "Uw actieve thema"
+
+#: ../debug.php:114
+msgid "Has the wp_head in the header.php"
+msgstr "heeft de wp_head in de header.php"
+
+#: ../debug.php:117
+msgid "Last MySQL upgrade:"
+msgstr "Laatste MySQL upgrade:"
+
+#: ../debug.php:122
+msgid "Database Table overview: Items"
+msgstr "Database tabel overzicht: Items"
+
+#: ../debug.php:126 ../debug.php:143 ../debug.php:160 ../debug.php:177
+#: ../debug.php:195 ../debug.php:212 ../debug.php:229
+msgid "Field"
+msgstr "Veld"
+
+#: ../debug.php:128 ../debug.php:145 ../debug.php:162 ../debug.php:179
+#: ../debug.php:197 ../debug.php:214 ../debug.php:231
+msgid "Type"
+msgstr "Type"
+
+#: ../debug.php:139
+msgid "Database Table overview: Store"
+msgstr "Database tabel overzicht: Store"
+
+#: ../debug.php:156
+msgid "Database Table overview: Extra"
+msgstr "Database tabel overzicht: Extra"
+
+#: ../debug.php:173
+msgid "Database Table overview: Layout"
+msgstr "Database tabel overzicht: Layout"
+
+#: ../debug.php:191
+msgid "Database Table overview: Item"
+msgstr "Database tabel overzicht: Item"
+
+#: ../debug.php:208
+msgid "Database Table overview: XML"
+msgstr "Database tabel overzicht: XML"
+
+#: ../debug.php:225
+msgid "Database Table overview: CAT"
+msgstr "Database tabel overzicht: CAT"
+
+#: ../debug.php:242
+msgid "Memory usage last import"
+msgstr "Geheugen gebruik bij laatste import"
+
+#: ../debug.php:289
+msgid ""
+"Error detected in TradeTracker Store plugin, please see <a href=admin.php?"
+"page=tt-store&option=debug>debug page</a>"
+msgstr ""
+"Foutmelding gedetecteerd in TradeTracker Store plugin, ga naar de <a "
+"href=admin.php?page=tt-store&option=debug>debug pagina</a> voor meer "
+"informatie"
+
+#: ../debug.php:309
+msgid "Update Finished:"
+msgstr "Update uitgevoerd:"
+
+#: ../debug.php:317
+msgid "Update has started in the background:"
+msgstr "Update is gestart op de achtergrond:"
+
+#: ../debug.php:329
+msgid "Update now"
+msgstr "Update nu"
+
+#: ../debug.php:330
+msgid "run update in background"
+msgstr "voer update op de achtergrond uit"
+
+#: ../debug.php:331
+msgid "or"
+msgstr "of"
+
+#: ../debug.php:336
+msgid ""
+"<strong>The following XML splits gave an error or were empty during the last "
+"import. So they are possibly not imported.</strong>"
+msgstr ""
+"<strong>De volgende XML delen gaven een foutmelding of waren leeg tijdens de "
+"laatste import. Mogelijk zijn er geen items van geimporteerd</strong>"
+
+#: ../debug.php:366
+msgid ""
+"Is missing the call to <?php wp_head(); ?> which should appear directly "
+"before </head>"
+msgstr ""
+"Mist de code <?php wp_head(); ?> welke direct voor </head> zou moeten staan."
+
+#: ../front.php:36
+msgid "No XML filled in yet please change the settings first."
+msgstr "Er is nog geen XML feed ingevuld. Graag dit verhelpen in de settings"
+
+#: ../front.php:175
+msgid "Sort: "
+msgstr "Sortering: "
+
+#: ../front.php:183
+msgid "price (high to low)"
+msgstr "prijs (hoog naar laag)"
+
+#: ../front.php:190
+msgid "price (low to high)"
+msgstr "prijs (laag naar hoog)"
+
+#: ../front.php:224
+msgid "Items per page: "
+msgstr "Items per pagina: "
+
+#: ../front.php:327
+msgid "Price range:"
+msgstr "Prijs:"
+
+#: ../front.php:450
+msgid "back"
+msgstr "vorige"
+
+#: ../front.php:475
+msgid "next"
+msgstr "volgende"
+
+#: ../front.php:683
+msgid "More info"
+msgstr "Meer informatie"
+
+#: ../upgrading.php:128 ../import/database.php:283 ../import/xml.php:54
+#, php-format
+msgid "Database filled with %1$s new items on %2$s"
+msgstr "Database gevuld met %1$s nieuwe items op %2$s"
+
+#: ../menu/itemselect.php:18
+msgid "deleted all items"
+msgstr "Alle items verwijderd"
+
+#: ../menu/itemselect.php:27
+msgid "deleted the items"
+msgstr "Gekozen items verwijderd"
+
+#: ../menu/itemselect.php:37
+msgid "Select items for which store"
+msgstr "Selecteer items voor welke winkel"
+
+#: ../menu/itemselect.php:48 ../menu/store.php:247
+msgid "Store Name"
+msgstr "Winkel naam"
+
+#: ../menu/itemselect.php:51 ../menu/layout.php:286 ../menu/store.php:271
+#: ../menu/store.php:313 ../menu/xmlfeed.php:173 ../menu/xmlfeed.php:196
+msgid "Edit"
+msgstr "Aanpassen"
+
+#: ../menu/itemselect.php:54
+msgid "Select Item"
+msgstr "Selecteer Item"
+
+#: ../menu/itemselect.php:57 ../menu/itemselect.php:60 ../menu/store.php:274
+#: ../menu/store.php:316 ../menu/xmlfeed.php:176 ../menu/xmlfeed.php:198
+msgid "Delete"
+msgstr "Verwijder"
+
+#: ../menu/itemselect.php:89 ../menu/store.php:346
+msgid "Edit Store"
+msgstr "Pas winkel aan"
+
+#: ../menu/itemselect.php:93
+msgid "Select Items"
+msgstr "Selecteer items"
+
+#: ../menu/itemselect.php:97
+#, php-format
+msgid "All %d selected Item(s)"
+msgstr "Alle %d geselecteerde item(s)"
+
+#: ../menu/itemselect.php:102
+msgid "items no longer in a feed"
+msgstr "items niet meer in een feed"
+
+#: ../menu/itemselect.php:155 ../menu/layout.php:174
+#: ../menu/pluginsettings.php:110 ../menu/premium.php:25 ../menu/search.php:28
+#: ../menu/store.php:220 ../menu/xmloption.php:72
+msgid "Settings saved"
+msgstr "Instellingen opgeslagen"
+
+#: ../menu/itemselect.php:342
+msgid "Select the items you want to show"
+msgstr "Selecteer de items die u wilt tonen"
+
+#: ../menu/itemselect.php:364
+msgid "Showing products"
+msgstr "Toon product"
+
+#: ../menu/itemselect.php:364 ../menu/itemselect.php:367
+msgid "of"
+msgstr "van"
+
+#: ../menu/itemselect.php:367
+msgid "Page"
+msgstr "Pagina"
+
+#: ../menu/itemselect.php:372
+msgid "Results per-page:"
+msgstr "Resultaten per pagina:"
+
+#: ../menu/itemselect.php:391 ../menu/itemselect.php:393
+msgid "Selected"
+msgstr "Geselecteerd"
+
+#: ../menu/itemselect.php:396
+msgid "ProductID"
+msgstr "ProductID"
+
+#: ../menu/itemselect.php:398
+msgid "Product name"
+msgstr "Product naam"
+
+#: ../menu/itemselect.php:400
+msgid "XMLFeed"
+msgstr "XMLFeed"
+
+#: ../menu/itemselect.php:402
+msgid "Price"
+msgstr "Prijs"
+
+#: ../menu/itemselect.php:404
+msgid "Currency"
+msgstr "Valuta"
+
+#: ../menu/itemselect.php:406
+msgid "Extra's"
+msgstr "Extra's"
+
+#: ../menu/itemselect.php:518
+msgid "Select"
+msgstr "Selecteer"
+
+#: ../menu/itemselect.php:518
+msgid "All"
+msgstr "Alle"
+
+#: ../menu/itemselect.php:518
+msgid "None"
+msgstr "Geen"
+
+#: ../menu/layout.php:87 ../menu/layout.php:91 ../menu/layout.php:95
+#: ../menu/layout.php:99 ../menu/layout.php:103 ../menu/layout.php:107
+#: ../menu/layout.php:111 ../menu/layout.php:115 ../menu/layout.php:119
+msgid "Empty fields filled with default value"
+msgstr "Lege velden zijn gevuld met standaard waarde"
+
+#: ../menu/layout.php:193
+msgid "Would you like to edit or add a layout?"
+msgstr "Wilt u de layout aanpassen of een nieuwe toevoegen?"
+
+#: ../menu/layout.php:207
+msgid "Colors:"
+msgstr "Kleuren:"
+
+#: ../menu/layout.php:212
+msgid "Name"
+msgstr "Naam"
+
+#: ../menu/layout.php:215
+msgid "Width"
+msgstr "Breedte"
+
+#: ../menu/layout.php:218 ../menu/layout.php:233
+msgid "Font"
+msgstr "Lettertype"
+
+#: ../menu/layout.php:221
+msgid "Fontsize"
+msgstr "Lettertype grootte"
+
+#: ../menu/layout.php:224
+msgid "Title"
+msgstr "Titel"
+
+#: ../menu/layout.php:227
+msgid "Image"
+msgstr "Afbeelding"
+
+#: ../menu/layout.php:230
+msgid "Footer"
+msgstr "Footer"
+
+#: ../menu/layout.php:236
+msgid "Border"
+msgstr "Rand"
+
+#: ../menu/layout.php:239
+msgid "Button"
+msgstr "Knop"
+
+#: ../menu/layout.php:242
+msgid "Button font"
+msgstr "Knop lettertype"
+
+#: ../menu/layout.php:295 ../menu/store.php:330
+msgid "Add New"
+msgstr "Voeg nieuwe toe"
+
+#: ../menu/layout.php:312
+msgid "Edit layout"
+msgstr "Pas layout aan"
+
+#: ../menu/layout.php:312
+msgid "Create layout"
+msgstr "Creeer layout"
+
+#: ../menu/layout.php:327
+msgid "Fill in the name for the layout."
+msgstr "Vul de naam in voor de layout."
+
+#: ../menu/layout.php:328
+msgid "Name for Layout:"
+msgstr "Layoutnaam:"
+
+#: ../menu/layout.php:338
+msgid "Fill in which width you want 1 item to have."
+msgstr "Vul in hoe breed 1 item moet zijn."
+
+#: ../menu/layout.php:339
+msgid "Store width:"
+msgstr "Winkel breedte:"
+
+#: ../menu/layout.php:350
+msgid "Fill in which font you want to use. Standard font is Verdana."
+msgstr ""
+"Vul in welk lettertype u wilt gebruiken. Standaar lettertype is Verdana."
+
+#: ../menu/layout.php:351
+msgid "Font:"
+msgstr "Lettertype:"
+
+#: ../menu/layout.php:362
+msgid "Fill in which size the font should be. Standard is 10"
+msgstr "Vul in hoe groot de letters moeten zijn. Standaard is 10."
+
+#: ../menu/layout.php:363
+msgid "Fontsize:"
+msgstr "Lettertype grootte:"
+
+#: ../menu/layout.php:373
+msgid "What color would you like to use for your title background."
+msgstr "Welke kleur wilt u gebruiken voor uw titels achtergrond"
+
+#: ../menu/layout.php:374
+msgid "Title background color:"
+msgstr "Titel achtergrond kleur:"
+
+#: ../menu/layout.php:379
+msgid "(use hex code including #. Like: #000000)"
+msgstr "(Gebruik de hex code inclusief #. Bijv: #000000)"
+
+#: ../menu/layout.php:385
+msgid "What color would you like to use for your image background."
+msgstr "Welke kleur wilt u gebruiken voor de achtergrond van de afbeelding."
+
+#: ../menu/layout.php:386
+msgid "Image background color:"
+msgstr "Afbeelding achtergrond kleur:"
+
+#: ../menu/layout.php:396
+msgid "What color would you like to use for your footer background."
+msgstr "Welke kleur wilt u gebruiken voor de footers achtergrond."
+
+#: ../menu/layout.php:397
+msgid "Footer background color:"
+msgstr "Footer achtergrond kleur:"
+
+#: ../menu/layout.php:406
+msgid "What color would you like to use for the border."
+msgstr "Welke kleur wilt u gebruiken voor de rand."
+
+#: ../menu/layout.php:407
+msgid "Border color:"
+msgstr "Rand kleur:"
+
+#: ../menu/layout.php:416
+msgid "What color would you like to use for the button."
+msgstr "Welke kleur wilt u gebruiken voor de knop."
+
+#: ../menu/layout.php:417
+msgid "Button color:"
+msgstr "Knop kleur:"
+
+#: ../menu/layout.php:426
+msgid "What font color would you like to use for the button."
+msgstr "Welke kleur wilt u gebruiken voor de letters op de knop."
+
+#: ../menu/layout.php:427
+msgid "Button Font color:"
+msgstr "Lettertype van knop kleur:"
+
+#: ../menu/layout.php:436
+msgid "What font color would you like to use."
+msgstr "Welke kleur wilt u gebruiken voor de letters."
+
+#: ../menu/layout.php:437
+msgid "Font color:"
+msgstr "Lettertype kleur:"
+
+#: ../menu/layout.php:455 ../menu/store.php:654
+msgid "Create"
+msgstr "Maak"
+
+#: ../menu/menu.php:54
+msgid "Productfeed has been entered"
+msgstr "Productfeed is toegevoegd"
+
+#: ../menu/menu.php:54
+msgid "No productfeed has been entered"
+msgstr "Er is geen productfeed toegevoegd"
+
+#: ../menu/menu.php:55
+msgid "You created at least one layout"
+msgstr "U heeft op zijn minst 1 layout gecreeerd"
+
+#: ../menu/menu.php:55
+msgid "You did not create a layout yet. You can only use the basic layout now"
+msgstr ""
+"U heeft nog geen layout gecreeerd. U kunt nu alleen de basic layout gebruiken"
+
+#: ../menu/menu.php:56
+msgid "You created at least one store"
+msgstr "U heeft op zijn minst 1 winkel gemaakt"
+
+#: ../menu/menu.php:56
+msgid "You did not create a store yet. You can only use the basic store now"
+msgstr ""
+"U heeft nog geen winkel gecreeerd. U kunt nu alleen de basic winkel gebruiken"
+
+#: ../menu/menu.php:58
+msgid "Errors in the plugin"
+msgstr "Foutmeldingen in de plugin"
+
+#: ../menu/menu.php:60
+msgid "No errors in the plugin"
+msgstr "Geen foutmeldingen in de plugin"
+
+#: ../menu/menu.php:63
+msgid "No premium content enabled"
+msgstr "Geen premium content geactiveerd"
+
+#: ../menu/menu.php:65
+msgid "Premium content has been enabled"
+msgstr "Premium content is geactiveerd"
+
+#: ../menu/menu.php:69
+msgid "Add/Edit XMLFeeds"
+msgstr "Voeg of pas XML Feed aan"
+
+#: ../menu/menu.php:72 ../menu/menu.php:82 ../menu/menu.php:92
+#: ../menu/menu.php:102 ../menu/menu.php:112 ../menu/menu.php:122
+#: ../menu/menu.php:132 ../menu/menu.php:151
+msgid "Free"
+msgstr "Gratis"
+
+#: ../menu/menu.php:73
+msgid "Add new or edit existing XML feeds here."
+msgstr "Voeg hier nieuwe of pas huidige XML feed aan."
+
+#: ../menu/menu.php:74
+msgid ""
+"<h3>Adding or editing XMLFeeds</h3><p>This will give you the following "
+"options:<br>- Adding several XML feeds. With <a href=\"admin.php?page=tt-"
+"store&option=premium\">premium content</a> you are even able to add XML "
+"feeds from other affiliatenetworks than TradeTracker<br>- Giving your XML "
+"Feed a name so you can recognize it<br>You need to register on <a href="
+"\"http://tc.tradetracker.net/?c=27&amp;m=39677&amp;a=48684&amp;"
+"r=register&amp;u=\" target=\"_blank\">TradeTracker</a></p>"
+msgstr ""
+"<h3>Voeg of pas XMLFeeds aan</h3><p>Dit geeft u de volgende opties:<br>- "
+"Toevoegen van meerdere XML feeds. Met <a href=\"admin.php?page=tt-"
+"store&option=premium\">premium content</a> kan u zelfs andere netweren dan "
+"Tradetracker toevoegen<br>- Je XML Feed een naam geven zodat je het kan "
+"herkennen<br> U moet registreren op <a href=\"http://tc.tradetracker.net/?"
+"c=27&amp;m=39677&amp;a=48684&amp;r=register&amp;u=\" target=\"_blank"
+"\">TradeTracker</a>"
+
+#: ../menu/menu.php:79
+msgid "Change XMLFeed options"
+msgstr "Verander XMLFeed opties"
+
+#: ../menu/menu.php:83
+msgid "Adjust XMLFeed options like import time and extra field selection."
+msgstr ""
+"Verander XMLFeed opties zoals importeer tijd en selecteer de extre velden."
+
+#: ../menu/menu.php:84
+msgid ""
+"<h3>Changing XML Options</h3><p>This will give you the following options:"
+"<br>- Select the extra fields you like to use<br>- What time the XML feed "
+"should update<br>- Adjust currency symbol<br>- Location of the currency</p>"
+msgstr ""
+"<h3>Verander XML Opties</h3><p>Dit geeft u de volgende opties:<br>- "
+"Selecteer welke extra velden u wilt gebruiken<br>- Welke tijd de XML feed "
+"moet updaten<br>- Verander de valuta symbool<br>- Plaats van de valuta</p>"
+
+#: ../menu/menu.php:89
+msgid "Add/Edit Layouts"
+msgstr "Voeg of pas layouts aan"
+
+#: ../menu/menu.php:93
+msgid "This will give you the abillity to add and edit the layout."
+msgstr "Dit geeft u de mogelijkheid om layouts toe te voegen of aan te passen."
+
+#: ../menu/menu.php:94
+msgid ""
+"<h3>Adding or Editing Layouts</h3><p>You can adjust the following layout "
+"settings:<br>- Adjust the width of an item box<br>- Adjust the font<br>- "
+"Adjust the fontsize<br>- Adjust the background of the image, footer and "
+"title<br>- Adjust the border color<br>- Adjust the font color<br>- Adjust "
+"the button font color<br><strong>Important: The basic layout can never be "
+"editted</strong></p>"
+msgstr ""
+"<h3>Aanpassen of layout toevoegen</h3><p>U kunt de volgende instellingen "
+"aanpassen:<br>- Pas de breedte aan van een item box<br>- Pas lettertype "
+"aan<br>- Pas lettertype grootte aan<br>- Pas achtergrond kleur van "
+"afbeelding, footer en titel aan<br>- Pas rand kleur aan<br>- Pas lettertype "
+"kleur aan<br>- Pas kleur van lettertype op knop aan<br><strong>Belangrijk: "
+"De basic layout kan nooit worden aangepast</strong></p>"
+
+#: ../menu/menu.php:99
+msgid "Add/Edit Stores"
+msgstr "Voeg of pas winkels aan"
+
+#: ../menu/menu.php:103
+msgid ""
+"Here you can create different stores. This will give you the abbility to use "
+"different settings for every store."
+msgstr ""
+"Hier kan u verschillende winkels creeeren. Dit geeft u de mogelijkheid om "
+"verschillende instellingen te kiezen."
+
+#: ../menu/menu.php:104
+msgid ""
+"<h3>Adding or Editing Stores</h3><p>You can adjust the following store "
+"settings:<br>- Adjust on which fields the items are sorted<br>- Select the "
+"layout to use for a store<br>- Select which feed you want to use for a "
+"store<br>- Select which categories you would like to show in the store<br>- "
+"Adjust the text on the button<br>- Choose the amount of items that should be "
+"shown<br>- Choose to use lightbox<br><strong>Important: The basic store can "
+"never be editted</strong></p>"
+msgstr ""
+"<h3>Aanpassen of creeeren van winkels</h3><p>U kunt de volgende winkel "
+"instellingen aanpassen:<br>- Aanpassen op welk veld items gesorteerd "
+"zijn<br>- Selecteren welke layout gebruikt moet worden voor deze winkel<br>- "
+"Selecteer welke feed u wilt gebruiken voor uw winkel<br>- Selecteer welke "
+"categorie u wilt tonen in de winkel<br>- Pas de tekst op de knop<br>- Kies "
+"het aantal items dat getoond moeten worden<br>- Kies om lightbox te "
+"gebruiken<br><strong>Belangrijk: The basic store kan nooit worden aangepast</"
+"strong></p>"
+
+#: ../menu/menu.php:109
+msgid "Item Selection"
+msgstr "Item Selectie"
+
+#: ../menu/menu.php:113
+msgid "Here you can select the items you would like to show."
+msgstr "Selecteer hier de items die u wilt tonen."
+
+#: ../menu/menu.php:114
+msgid ""
+"<h3>Item selection</h3><p>This will give you the following options:<br>- "
+"Select all items you would like to show on the site.<br>- <strong>If you "
+"don't select any item it will display all items in the selected feed/"
+"category</strong></p>"
+msgstr ""
+"<h3>Item selectie</h3><p>Dit geeft u de volgende opties:<br>- Selecteer alle "
+"items die u wilt tonen op de site.<br>- <strong>Als u geen items selecteerd "
+"zal het elke item in de geselecteerde feed/categorie tonen</strong></p>"
+
+#: ../menu/menu.php:119
+msgid "Search Settings"
+msgstr "Zoek Instellingen"
+
+#: ../menu/menu.php:123
+msgid "Here you can set the settings for the search results."
+msgstr "Hier kunt u de instellingen aanpassen voor de zoek resultaten."
+
+#: ../menu/menu.php:124
+msgid ""
+"<h3>Search Settings</h3><p>This will show options on you wordpress search "
+"results page</p>"
+msgstr ""
+"<h3>Zoek instellingen</h3><p>Dit zal u de opties tonen op uw Wordpress zoek "
+"resultaten pagina</p>"
+
+#: ../menu/menu.php:129
+msgid "Plugin Settings"
+msgstr "Plugin Instellingen"
+
+#: ../menu/menu.php:133
+msgid "Here you can set the settings for the plugin itself."
+msgstr "Hier kunt u de instellingen van de plugin zelf aanpassen."
+
+#: ../menu/menu.php:134
+msgid ""
+"<h3>Plugin Settings</h3><p>This will give you the following options:<br>- "
+"Get an email when import fails<br>- Decide if you want to import extra "
+"fields. If you don't use extra fields it is better to disable them.<br>- "
+"Decide how high the admin menu can be<br>- Select which options should be "
+"removed when plugin is deactivated. (when you remove the plugin all settings "
+"will be also removed)</p>"
+msgstr ""
+"<h3>Plugin instellingen</h3><p>Dit geeft u de volgende opties:<br>- Krijg "
+"een email wanneer een import faalt<br>- Kies of u extra velden wilt "
+"importeren. Als u geen extra velden gebruikt kunt u het beter uitzetten."
+"<br>- Kies hoe hoog het admin menu moet zijn<br>- Selecteer welke opties "
+"moeten worden verwijderd wanneer plugin wordt uitgezet. (Wanner u de plugin "
+"verwijderd worden alle instellingen verwijderd)</p>"
+
+#: ../menu/menu.php:139
+msgid "Premium Addons"
+msgstr "Premium Addons"
+
+#: ../menu/menu.php:141
+msgid "4,99 each"
+msgstr "4,99 elk"
+
+#: ../menu/menu.php:142
+msgid "Here you can see what addons are available."
+msgstr "Hier kunt u zien welke addons beschikbaar zijn."
+
+#: ../menu/menu.php:143
+msgid ""
+"<h3>Premium Addons</h3><p>You can buy the following productfeed addons:<br>- "
+"Daisycon productfeed<br>- Zanox productfeed<br>- Cleafs productfeed<br>- "
+"Tradedoubler productfeed<br>- Paidonresult productfeed<br>- M4n "
+"productfeed<br>- Bol productfeed<br>- Belboon productfeed<br>- "
+"Affiliatewindow productfeed<br>- Avangate productfeed</p><br><p>You can buy "
+"the following function addons:<br>- Add a productpage</p>"
+msgstr ""
+"<h3>Premium Addons</h3><p>U kunt hier de volgende productfeed addons kopen:"
+"<br>- Daisycon productfeed<br>- Zanox productfeed<br>- Cleafs "
+"productfeed<br>- Tradedoubler productfeed<br>- Paidonresult productfeed<br>- "
+"M4n productfeed<br>- Bol productfeed<br>- Belboon productfeed<br>- "
+"Affiliatewindow productfeed<br>- Avangate productfeed</p><br><p>U kunt de "
+"volgende functie addons kopen:<br>- Voeg een productpage toe</p>"
+
+#: ../menu/menu.php:152
+msgid "This will tell you if there are any errors in the plugin."
+msgstr "Dit zal u vertellen of er foutmeldingen zijn in de plugin."
+
+#: ../menu/menu.php:153
+msgid ""
+"<h3>Debugging</h3><p>You can see if the following is working properly:<br>- "
+"Splits and Cache folder is writable<br>- Curl function enabled<br>- "
+"Simplexml function enabled<br>- wp_head enabled in your theme</p>"
+msgstr ""
+"<h3>Debugging</h3><p>U kunt hier zien of de volgende dingen correct werken:"
+"<br>- Splits en Cache map is schrijfbaar<br>- Curl functie beschikbaar<br>- "
+"Simplexml functie beschikbaar<br>- wp_head enabled in uw theme</p>"
+
+#: ../menu/menu.php:207
+msgid "Learn More"
+msgstr "Lees Meer"
+
+#: ../menu/menu.php:208
+msgid "Settings"
+msgstr "Instellingen"
+
+#: ../menu/menu.php:240
+msgid "Donate"
+msgstr "Donatie"
+
+#: ../menu/menu.php:242
+msgid ""
+"This plugin is made in my spare time. If you really like this plugin and it "
+"helped to improve the income of your site and you are willing to show me "
+"some of the gratitude:"
+msgstr ""
+"Deze plugin is gemaakt in mijn vrije tijd. Als deze plugin het makkelijker "
+"gemaakt heeft om geld te verdienen met uw affiliate site en u wilt me graag "
+"bedanken:"
+
+#: ../menu/menu.php:250
+msgid "Like this on facebook"
+msgstr "Like dit op Facebook"
+
+#: ../menu/menu.php:254
+msgid "Sites using this plugin"
+msgstr "Sites die gebruik maken van de plugin"
+
+#: ../menu/menu.php:273
+msgid "Your Site here?"
+msgstr "Uw Site hier?"
+
+#: ../menu/menu.php:275
+msgid "if you want Your site here please use Tt Store Feedback and let me know"
+msgstr "Als u wilt dat uw site hier komt te staan neem dan contact met me op"
+
+#: ../menu/menu.php:277
+msgid "Rate the plugin"
+msgstr "Geef een waardering"
+
+#: ../menu/menu.php:279
+msgid ""
+"if you like this plugin please go to <a href=\"http://wordpress.org/extend/"
+"plugins/tradetracker-store/\" target=\"_blank\">here</a> and give it a "
+"rating and vote for yes if the plugin works."
+msgstr ""
+"Als u deze plugin handig vind ga dan alsjeblieft naar <a href=\"http://"
+"wordpress.org/extend/plugins/tradetracker-store/\" target=\"_blank\">deze "
+"pagina</a> en vul een rating in."
+
+#: ../menu/menu.php:281
+msgid "News"
+msgstr "Nieuws"
+
+#: ../menu/pluginsettings.php:123
+msgid "Change plugin options."
+msgstr "Verander plugin opties."
+
+#: ../menu/pluginsettings.php:134
+msgid "Do you want to use new category structure."
+msgstr "Wilt u het nieuwe categorie structuur gebruiken:"
+
+#: ../menu/pluginsettings.php:135
+msgid "Do you want to use new category structure:"
+msgstr "Wilt u het nieuwe categorie structuur gebruiken:"
+
+#: ../menu/pluginsettings.php:137
+msgid ""
+"If you change this you will have to manually reselect all categories for all "
+"your stores."
+msgstr ""
+"Als je dit aanpast zul je voor elke winkel opnieuw de categorieen moeten "
+"selecteren."
+
+#: ../menu/pluginsettings.php:154
+msgid "Choose the theme of the price slider."
+msgstr "Kies de template voor de prijs schuifbalk."
+
+#: ../menu/pluginsettings.php:155
+msgid "Choose the theme of the price slider:"
+msgstr "Kies de template voor de prijs schuifbalk:"
+
+#: ../menu/pluginsettings.php:157
+msgid ""
+"You can preview them by going to Gallery on http://jqueryui.com/themeroller/."
+msgstr ""
+"Je kan een voorbeeld bekijken door op Gallery te klikken op http://jqueryui."
+"com/themeroller/."
+
+#: ../menu/pluginsettings.php:198
+msgid "If you want to create your own CSS file."
+msgstr "Als u een eigen css bestand wilt gebruiken"
+
+#: ../menu/pluginsettings.php:199
+msgid "Do you want to use a CSS file.:"
+msgstr "Wilt u een css bestand gebruiken:"
+
+#: ../menu/pluginsettings.php:201
+msgid ""
+"If you enable this you won't be able to use add/delete layout. You can "
+"however use your own css file."
+msgstr ""
+"Als u dit aanzet zal de add/delete layout geen invloed meer hebben. U kan "
+"dan wel uw eigen css bestand gebruiken."
+
+#: ../menu/pluginsettings.php:212
+msgid "Where is the CSS file located"
+msgstr "Waar is het CSS bestand opgeslagen"
+
+#: ../menu/pluginsettings.php:213
+msgid "Full url to the CSS file:"
+msgstr "Volledige url naar het CSS bestand:"
+
+#: ../menu/pluginsettings.php:219
+#, php-format
+msgid ""
+"Make sure this is not saved in the plugins folder. Cause that will be "
+"overwritten with an update. For an example go to <a href=\"%s\" target="
+"\"_blank\">here</a>"
+msgstr ""
+"Wees zeker dat dit niet opgeslagen is in de plugin map. Dit bestand wordt "
+"namelijk overschreven bij een update. Om een voorbeeld te zien gaat u naar "
+"<a href=\"%s\" target=\"_blank\">hier</a>"
+
+#: ../menu/pluginsettings.php:229
+msgid "Do you like to get an email when XML feeds are not imported?"
+msgstr "Wilt u een email krijgen wanneer de XML feed niet geimporteerd is?"
+
+#: ../menu/pluginsettings.php:230
+msgid "Get email when import fails:"
+msgstr "Krijg een email wanneer de import faalt:"
+
+#: ../menu/pluginsettings.php:241
+msgid "Which tool should be used to import XML?"
+msgstr "Welke methode moet er gebruikt worden om de XML te importeren?"
+
+#: ../menu/pluginsettings.php:242
+msgid "Which import tool:"
+msgstr "Welke importeer methode:"
+
+#: ../menu/pluginsettings.php:247
+msgid "Fopen (most reliable)"
+msgstr "Fopen (Stabielste optie)"
+
+#: ../menu/pluginsettings.php:251
+msgid "Curl/Fwrite (can run out of memory)"
+msgstr "Curl/Fwrite (Kan tegen geheugen limiet aanlopen)"
+
+#: ../menu/pluginsettings.php:253
+msgid "Curl (sometimes causes issues)"
+msgstr "Curl (kan soms problemen veroorzaken met importeren)"
+
+#: ../menu/pluginsettings.php:259
+msgid ""
+"Load the extra fields in the database, if you don't use extra fields it is "
+"smarter to disable them here"
+msgstr ""
+"Laad de extra velden in de database, als u geen extra velden gebruikt is het "
+"slimmer om dit uit te zetten"
+
+#: ../menu/pluginsettings.php:260
+msgid "Import extra fields:"
+msgstr "Importeer extra velden:"
+
+#: ../menu/pluginsettings.php:266
+msgid "(Can prevent timeouts, But then you cannot show extra fields)"
+msgstr "(Kan timeouts voorkomen, maar dan kunt u geen extra velden tonen)"
+
+#: ../menu/pluginsettings.php:271
+msgid "What height should the admin menu be?, standard is 460"
+msgstr "Welke hoogte zou het admin menu moeten zijn, standaard is 460"
+
+#: ../menu/pluginsettings.php:272
+msgid "Admin menu height:"
+msgstr "Admin menu hoogte:"
+
+#: ../menu/pluginsettings.php:281
+msgid "What width should the admin menu be?, standard is 1000"
+msgstr "Welke breedte zou het admin menu moeten zijn, standaard is 1000"
+
+#: ../menu/pluginsettings.php:282
+msgid "Admin menu width:"
+msgstr "Admin menu breedte:"
+
+#: ../menu/pluginsettings.php:291
+msgid "Show url to plugin website in the source of the site"
+msgstr "Toon de url naar plugins website in de bron van de site"
+
+#: ../menu/pluginsettings.php:292
+msgid "Show url to plugin website in the source:"
+msgstr "Toon de url naar de plugins website in uw bron:"
+
+#: ../menu/pluginsettings.php:304
+msgid "What should happen when you deactivate the plugin:"
+msgstr "Wat zou moeten gebeuren als u de plugin uitzet:"
+
+#: ../menu/pluginsettings.php:308
+msgid "Should all layouts be removed"
+msgstr "Zouden alle layouts moeten worden verwijderd"
+
+#: ../menu/pluginsettings.php:309
+msgid "Remove all layouts:"
+msgstr "Verwijder alle layouts:"
+
+#: ../menu/pluginsettings.php:320
+msgid "Should all stores be removed"
+msgstr "Zouden alle winkels moeten worden verwijderd"
+
+#: ../menu/pluginsettings.php:321
+msgid "Remove all stores:"
+msgstr "Verwijder alle winkels:"
+
+#: ../menu/pluginsettings.php:332
+msgid "Should all products be removed"
+msgstr "Zouden alle producten moeten worden verwijderd"
+
+#: ../menu/pluginsettings.php:333
+msgid "Remove all products:"
+msgstr "Verwijder alle producten:"
+
+#: ../menu/pluginsettings.php:344
+msgid "Should all XML settings be removed"
+msgstr "Zouden alle XML instellingen verwijderd moeten worden"
+
+#: ../menu/pluginsettings.php:345
+msgid "Remove all XML settings:"
+msgstr "Verwijder alle XML instellingen:"
+
+#: ../menu/pluginsettings.php:356
+msgid "Should all other settings be removed"
+msgstr "Zouden alle andere instellingen verwijderd moeten worden"
+
+#: ../menu/pluginsettings.php:357
+msgid "Remove all other settings:"
+msgstr "Verwijder alle andere instellingen:"
+
+#: ../menu/premium.php:37
+msgid "Insert the addon apikeys."
+msgstr "Vul in de addon APIKeys"
+
+#: ../menu/premium.php:46
+msgid "Add extra productfeed providers"
+msgstr "Voeg extra productfeed aanbieders toe"
+
+#: ../menu/premium.php:53 ../menu/premium.php:83
+msgid "Accepted"
+msgstr "Geaccepteerd"
+
+#: ../menu/premium.php:55 ../menu/premium.php:57 ../menu/premium.php:85
+#: ../menu/premium.php:87
+#, php-format
+msgid "buy an APIKey for %1$s <a href=\"%2$s\" target=\"_blank\">here</a>"
+msgstr "Koop een APIKey voor %1$s <a href=\"%2$s\" target=\"_blank\">hier</a>"
+
+#: ../menu/premium.php:63 ../menu/premium.php:93
+#, php-format
+msgid "If you bought an API key to use %s please fill it in here."
+msgstr ""
+"Als u een API key gekocht hebt om %s te gebruiken kunt u dat hier invullen"
+
+#: ../menu/premium.php:64 ../menu/premium.php:94
+#, php-format
+msgid "%s APIKey:"
+msgstr "%s APIKey:"
+
+#: ../menu/premium.php:76
+msgid "Add extra functions"
+msgstr "Voeg extra functies toe"
+
+#: ../menu/search.php:40
+msgid "Search Settings."
+msgstr "Zoek Instellingen."
+
+#: ../menu/search.php:51
+msgid "Use the same settings as used for this store."
+msgstr "Gebruik dezelfde instellingen als deze winkel."
+
+#: ../menu/search.php:52
+msgid "Use same setting as this Store:"
+msgstr "Gebruik zelfde instellingen als deze winkel:"
+
+#: ../menu/search.php:76
+msgid ""
+"<br>This is only interesting if you have created a search option on your "
+"site (more information can be found <a href=\"http://codex.wordpress.org/"
+"Creating_a_Search_Page\">here</a> and <a href=\"http://wpaffiliatefeed."
+"com/634/frequently-asked-questions/create-search-results-page/\">in the FAQ</"
+"a>) <br>You could use the following shortcode or code for your theme to show "
+"items related to the keyword the user searched on:<br>Shortcode: "
+"[display_search]<br>Or in your theme file: display_search_items();"
+msgstr ""
+"<br>Dit is alleen interessant als u een zoek optie heeft gecreeerd op uw "
+"site. (meer informatie kan <a href=\"http://codex.wordpress.org/"
+"Creating_a_Search_Page\">hier</a> en <a href=\"http://wpaffiliatefeed."
+"com/634/frequently-asked-questions/create-search-results-page/\">in de faq</"
+"a> gevonden worden) <br>U kunt de volgende shortcode of php code gebruiken "
+"in uw thema om items te tonen aan de hand van uw zoekwoord <br>Shortcode: "
+"[display_search]<br>Of in uw theme bestand: display_search_items();"
+
+#: ../menu/store.php:233
+msgid "Would you like to edit or add a store?"
+msgstr "Wilt u de winkel aanpassen of een nieuwe toevoegen?"
+
+#: ../menu/store.php:244
+msgid "ID"
+msgstr "ID"
+
+#: ../menu/store.php:250
+msgid "Sorting"
+msgstr "Sortering"
+
+#: ../menu/store.php:253
+msgid "Order"
+msgstr "Volgorde"
+
+#: ../menu/store.php:256
+msgid "Layout"
+msgstr "Layout"
+
+#: ../menu/store.php:259
+msgid "Feed"
+msgstr "Feed"
+
+#: ../menu/store.php:262
+msgid "Button Text"
+msgstr "Tekst op knop"
+
+#: ../menu/store.php:265
+msgid "Items"
+msgstr "Items"
+
+#: ../menu/store.php:268
+msgid "Lightbox"
+msgstr "Lightbox:"
+
+#: ../menu/store.php:277 ../menu/store.php:319
+msgid "Copy"
+msgstr "Kopieer"
+
+#: ../menu/store.php:301
+msgid "All Feeds"
+msgstr "Alle Feeds"
+
+#: ../menu/store.php:346
+msgid "Create Store"
+msgstr "Maak winkel"
+
+#: ../menu/store.php:360
+msgid "Fill in the name for the store."
+msgstr "Vul de naam in voor de winkel."
+
+#: ../menu/store.php:361
+msgid "Name for Store:"
+msgstr "Naam voor winkel"
+
+#: ../menu/store.php:367
+msgid "This cannot start with a number"
+msgstr "Dit mag niet starten met een nummer"
+
+#: ../menu/store.php:372
+msgid "It will sort the items on this field."
+msgstr "Het zal de items sorteren op dit veld."
+
+#: ../menu/store.php:373
+msgid "Order by this field:"
+msgstr "Sorteren op welk veld:"
+
+#: ../menu/store.php:394
+msgid "How should it be ordered."
+msgstr "Hoe moet het worden gesorteerd."
+
+#: ../menu/store.php:395
+msgid "Descending or Ascending:"
+msgstr "Oplopend of aflopend:"
+
+#: ../menu/store.php:416
+msgid "Which layout would you like to use."
+msgstr "Welke layout wilt u gebruiken."
+
+#: ../menu/store.php:417
+msgid "Layout:"
+msgstr "Layout:"
+
+#: ../menu/store.php:444
+msgid "Do you like to use a product page?"
+msgstr "Wilt u een productpagina gebruiken?"
+
+#: ../menu/store.php:445
+msgid "Use a productpage:"
+msgstr "Gebruik een productpagina:"
+
+#: ../menu/store.php:465
+msgid "Which feed would you like to use."
+msgstr "Welke feed wilt u gebruiken?"
+
+#: ../menu/store.php:466
+msgid "Feed:"
+msgstr "Feed:"
+
+#: ../menu/store.php:473 ../menu/store.php:475
+msgid "All feeds"
+msgstr "Alle feeds"
+
+#: ../menu/store.php:501
+msgid "Which categories would you like to use?"
+msgstr "Welke extra categorieen wilt u gebruiken?"
+
+#: ../menu/store.php:502
+msgid "Which categories?:"
+msgstr "Welke categorieen?:"
+
+#: ../menu/store.php:507
+msgid ""
+"You changed the XML Feed, You need to save first before you can select any "
+"category."
+msgstr ""
+"U heeft de XML feed aangepast, u moet het eerst opslaan voor dat u een "
+"categorie kan aanpassen."
+
+#: ../menu/store.php:550
+msgid "What text would you like to use on the button (standard is Buy now)."
+msgstr "Welke tekst wilt u gebruiken voor de knop (standaard is Buy now)."
+
+#: ../menu/store.php:551
+msgid "Text on button:"
+msgstr "Text op de knop:"
+
+#: ../menu/store.php:560
+msgid "How much items would you like to show."
+msgstr "Hoeveel items wilt u tonen:"
+
+#: ../menu/store.php:561
+msgid "Amount of items:"
+msgstr "Hoeveelheid items:"
+
+#: ../menu/store.php:566
+msgid "use 0 if you don't want a limit at all"
+msgstr "Gebruik 0 als u geen limiet wilt gebruiken"
+
+#: ../menu/store.php:571
+msgid "How much items would you like to show on one page."
+msgstr "Hoeveel items wilt u tonen op een pagina."
+
+#: ../menu/store.php:572
+msgid "Amount of items on a single page:"
+msgstr "Hoeveelheid items op 1 losse pagina:"
+
+#: ../menu/store.php:577
+msgid "Use 0 if you want to show all items on 1 page"
+msgstr "Gebruik 0 als u alle items op 1 pagina wilt tonen"
+
+#: ../menu/store.php:582
+msgid "Min price shown in slider."
+msgstr "Min prijs voor de prijs selectie."
+
+#: ../menu/store.php:583
+msgid "Min price shown for slider:"
+msgstr "Min prijs voor de prijs selectie:"
+
+#: ../menu/store.php:588 ../menu/store.php:599
+msgid "use 0 if you don't want a pricelimit at all"
+msgstr "Gebruik 0 als u geen prijs limiet wilt gebruiken"
+
+#: ../menu/store.php:593
+msgid "Max price shown in slider."
+msgstr "Max prijs voor de prijs selectie."
+
+#: ../menu/store.php:594
+msgid "Max price shown for slider:"
+msgstr "Max prijs voor de prijs selectie:"
+
+#: ../menu/store.php:604
+msgid "Which currency should the price filter show."
+msgstr "Welke munteenheeid moet de prijsfilter tonen."
+
+#: ../menu/store.php:605
+msgid "Which currency for pricefilter:"
+msgstr "Welke munteendheid voor de prijsfilter:"
+
+#: ../menu/store.php:628
+msgid ""
+"Do you want to use lightbox for the images? You will need an extra plugin "
+"for that"
+msgstr ""
+"Wilt u lightbox gebruiken voor de afbeeldingen? U heeft daar een extra "
+"plugin voor nodig"
+
+#: ../menu/store.php:629
+msgid "Use Lightbox:"
+msgstr "Lightbox Gebruiken:"
+
+#: ../menu/store.php:633
+msgid "You will need this plugin"
+msgstr "u heeft deze plugin nodig"
+
+#: ../menu/xmlfeed.php:22
+msgid "Feed deleted"
+msgstr "Feed verwijderd"
+
+#: ../menu/xmlfeed.php:134
+msgid "Feed added, click Update Items when all feeds are added"
+msgstr ""
+"Feed opgeslagen, klik op update items wanneer u alle feeds toegevoegd heeft"
+
+#: ../menu/xmlfeed.php:149
+msgid "Add or Edit XML feeds."
+msgstr "Voeg of pas XML feed aan"
+
+#: ../menu/xmlfeed.php:164 ../menu/xmlfeed.php:216
+msgid "Link to XML"
+msgstr "Link naar XML"
+
+#: ../menu/xmlfeed.php:167 ../menu/xmlfeed.php:219
+msgid "XML Name"
+msgstr "XML Naam"
+
+#: ../menu/xmlfeed.php:170 ../menu/xmlfeed.php:222
+msgid "XML Provider"
+msgstr "XML Aanbieder"
+
+#: ../menu/xmlfeed.php:179 ../menu/xmlfeed.php:200
+msgid "Test"
+msgstr "Test"
+
+#: ../menu/xmlfeed.php:182 ../menu/xmlfeed.php:225
+msgid "Auto Update"
+msgstr "Auto Update"
+
+#: ../menu/xmlfeed.php:210
+msgid ""
+"This only applies to the automatic daily import of the feeds. Manual import "
+"will still import all feeds"
+msgstr ""
+"Dit geld alleen voor de automatische dagelijkse import van de feed. "
+"Handmatig importeren importeert nog steeds alle feeds "
+
+#: ../menu/xmlfeed.php:292
+msgid "Update Items"
+msgstr "Update Items"
+
+#: ../menu/xmloption.php:84
+msgid "Change XML options."
+msgstr "Verander XML opties."
+
+#: ../menu/xmloption.php:95
+msgid "Which extra fields would you like to use?"
+msgstr "Welke extra velden wilt u tonen?"
+
+#: ../menu/xmloption.php:96
+msgid "Which extra fields?:"
+msgstr "Welke extra velden?:"
+
+#: ../menu/xmloption.php:138
+msgid "When should it update?, standard is 00:00:00"
+msgstr "Wanneer moet de feed updaten?, standaard is 00:00:00"
+
+#: ../menu/xmloption.php:139
+msgid "Update time:"
+msgstr "Update tijd:"
+
+#: ../menu/xmloption.php:143
+msgid "Time has to be in hh:mm:ss"
+msgstr "Tijd moet ingevuld worden als hh:mm:ss"
+
+#: ../menu/xmloption.php:148
+msgid "How many feeds should it import every 10 minutes"
+msgstr "Hoeveel feeds zou het elke 10 minuten moeten importeren"
+
+#: ../menu/xmloption.php:149
+msgid "Feeds per update:"
+msgstr "Feeds per update:"
+
+#: ../menu/xmloption.php:153
+msgid ""
+"0 if you want it to go through all feeds, else it will import x amount of "
+"feeds every 10 minutes till all feeds are imported"
+msgstr ""
+"0 als je alle feeds mteen wil importeren, anders zal het x feeds per 10 "
+"minuten importeren tot alle feeds geimporteerd zijn"
+
+#: ../menu/xmloption.php:158
+msgid "Do you like to use fill in your own currency or get it from the XML?"
+msgstr ""
+"Wilt u uw eigen ingevulde valuta gebruiken of het van de XML feed gebruiken?"
+
+#: ../menu/xmloption.php:159
+msgid "Use your own currency symbol:"
+msgstr "Gebruik uw eigen gekozen valuta sybool:"
+
+#: ../menu/xmloption.php:170
+msgid "Do you like to have the currency before or after the price?"
+msgstr "Wilt u de valuta voor of achter de prijs?"
+
+#: ../menu/xmloption.php:171
+msgid "Location of the currency:"
+msgstr "Locatie van de valuta:"
+
+#: ../menu/xmloption.php:175
+msgid "After the price"
+msgstr "Achter de prijs"
+
+#: ../menu/xmloption.php:177
+msgid "Before the price"
+msgstr "Voor de prijs"
+
+#: ../menu/xmloption.php:185
+msgid "Adjust Currency:"
+msgstr "Pas Valuta aan:"
+
+#: ../menu/xmloption.php:190
+msgid "Current currency in the XML?"
+msgstr "Huidige valutue in de XML?"
+
+#: ../menu/xmloption.php:191
+msgid "XML Currency:"
+msgstr "Valuta van de XML:"
+
+#: ../menu/xmloption.php:195
+msgid "What would you like to show instead of the XML currency?"
+msgstr "Wat wilt u tonen inplaats van de valuta uit de XML feed?"
+
+#: ../menu/xmloption.php:196
+msgid "New Currency:"
+msgstr "Nieuwe Valuta:"
+
+#: ../tinymce/tinyTT.php:72
+msgid "Which Store:"
+msgstr "Welke winkel:"
+
+#: ../widget/widget.php:7
+msgid "Select the items to show in the widget"
+msgstr "Selecteer de items die u wilt tonen in de widget"
+
+#: ../widget/widget.php:57
+msgid "Which store would you like to show:"
+msgstr "Welke winkel wilt u tonen:"
+
+#: ../widget/widget.php:71
+msgid ""
+"Make sure this store will only show one item. Either by limiting the amount "
+"of items <a href=\"admin.php?page=tt-store&option=store\">here</a> or by "
+"only selecting one item <a href=\"admin.php?page=tt-store&option=itemselect"
+"\">here</a>"
+msgstr ""
+"Zorg er voor dat deze winkel maar 1 item toont. Dit kunt u doen door <a href="
+"\"admin.php?page=tt-store&option=store\">hier</a> een limiet in te stellen "
+"of door maar 1 item te selecteren <a href=\"admin.php?page=tt-"
+"store&option=itemselect\">hier</a>"
+
+#, fuzzy
+#~ msgid "settings saved."
+#~ msgstr "Instellingen opgeslagen"
+
+#~ msgid ""
+#~ "Error detected in TradeTracker Store plugin, please see <a href=\\\"admin."
+#~ "php?page=tt-store&option=debug\\\">debug page</a>"
+#~ msgstr ""
+#~ "Foutmelding gedetecteerd in TradeTracker Store plugin, ga naar de <a href="
+#~ "\\\"admin.php?page=tt-store&option=debug\\\">debug pagina</a> voor meer "
+#~ "informatie"
