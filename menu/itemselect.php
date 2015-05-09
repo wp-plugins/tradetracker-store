@@ -132,8 +132,10 @@ function itemselect() {
 		$multiid = $_GET['multiid'];
 	if( isset($_POST[ $ttstoresubmit ]) && $_POST[ $ttstoresubmit ] == 'Y' ) {
 		$Tradetracker_items = $_POST['item'];
-		$query = "DELETE FROM `".$ttstoreitemtable."` WHERE `".$ttstoreitemtable."`.`storeID` = ".$multiid."";
-		$wpdb->query($query);
+		if(isset($Tradetracker_items) && $Tradetracker_items != ""){
+			$query = "DELETE FROM `".$ttstoreitemtable."` WHERE `".$ttstoreitemtable."`.`storeID` = ".$multiid."";
+			$wpdb->query($query);
+		}
 		if(isset($_POST['itemsother']) && $_POST['itemsother']!="")
 		{
 			$itemsother = explode(",",$_POST['itemsother']);
