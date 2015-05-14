@@ -65,6 +65,7 @@ function convert($size)
 function fill_database1($xmlfeedid, $xmlcronjob)
 {
 	global $wpdb;
+	global $ttstorexmltable;
 	if(!isset($wpdb) || empty($wpdb)){
 		tt_log_me("TT Database: wpdb not loaded");
 	}
@@ -131,6 +132,8 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	if ($xmlcronjob == "0"){
 		$feednumercount = $xmlfeednumber;
 		echo "<br /><strong>Feeds Completed: </strong> ".$feednumercount."/".count($xmlfeed)."";
+		$feedsimported = sprintf(__('<strong>Feeds Completed: </strong> %1$s / %2$s','ttstore'), $feednumercount, count($xmlfeed));
+		update_option( "Tradetracker_feedsimported", $feedsimported );
 		$scale = "4";
 		$percent = (100/count($xmlfeed))*$feednumercount;
 		echo "<style>.percentbar { background:#CCCCCC; border:1px solid #666666; height:10px; }.percentbar div { background: #28B8C0; height: 10px; }</style>";	
@@ -276,7 +279,7 @@ function fill_database1($xmlfeedid, $xmlcronjob)
 	//$extrafieldarray = array_unique(explode(",",$extrafieldarray));
 	//$remove_null_number = true;
 	//$extrafieldarray = remove_array_empty_values($extrafieldarray, $remove_null_number);
-
+	
 	$item_count = $wpdb->get_var("SELECT COUNT(*) FROM $ttstoretable;");
 	$currentupdate = date('Y-m-d H:i:s');
 	$option_name = 'Tradetracker_xml_update' ;

@@ -314,6 +314,7 @@ function ttstoreheader() {
 	if(isset($_GET['bgupdate']) && $_GET['bgupdate']=="yes"){
 		wp_clear_scheduled_hook('xmlscheduler');
 		update_option( 'Tradetracker_xml_update' , '' );
+		update_option( 'Tradetracker_feedsimported' , '' );
 		$update = __('Update has started in the background:','ttstore');
 	}
 	if(isset($_GET['database']) && $_GET['database']=="yes"){
@@ -328,7 +329,7 @@ function ttstoreheader() {
 	}
 	$updatetext = __('Update now','ttstore');
 	$updatebgtext = __('run update in background','ttstore');
-	echo "<div class=\"updated\"><p><strong>".$update." ".get_option("Tradetracker_xml_update")." <a href=\"admin.php?page=tt-store&update=yes\">".$updatetext."</a> ".__('or', 'ttstore')." <a href=\"admin.php?page=tt-store&bgupdate=yes\">".$updatebgtext."</a></strong></p></div>";
+	echo "<div class=\"updated\"><p><strong>".$update." ".get_option("Tradetracker_xml_update")." | ".get_option("Tradetracker_feedsimported")." <a href=\"admin.php?page=tt-store&update=yes\">".$updatetext."</a> ".__('or', 'ttstore')." <a href=\"admin.php?page=tt-store&bgupdate=yes\">".$updatebgtext."</a></strong></p></div>";
 	$errorfile = get_option("Tradetracker_importerror");
 	if(!empty($errorfile)){
 		$oldvalue = array("\n", "Feedname:", "Splitfile:");

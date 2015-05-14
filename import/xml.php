@@ -96,6 +96,9 @@ function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") 
 	}
 	//check if splits directory is empty else empty it
 	$runs = "0";
+	$feedsimported = sprintf(__('<strong>Feeds Completed: </strong> %1$s / %2$s','ttstore'), $runs, count($loadxmlfeeds));
+	update_option( "Tradetracker_feedsimported", $feedsimported );
+
 	if ($xmlfilecount <= count($loadxmlfeeds)-1){
 		echo "<br /><strong>Memory Usage before import:</strong>".convert(memory_get_peak_usage());
 		$ttmemoryusage = get_option("Tradetracker_memoryusage");
@@ -134,6 +137,8 @@ function xml_updater($xmlfilecount = "-1", $xmlfeedID = "0", $xmlcronjob = "0") 
 			}
 		}
 	} else {
+		$feedsimported = sprintf(__('<strong>Feeds Completed: </strong> %1$s / %2$s','ttstore'), count($loadxmlfeeds), count($loadxmlfeeds));
+		update_option( "Tradetracker_feedsimported", $feedsimported );
 		update_option("xmlfilecount", "-1" );
 		$errorfile = get_option("Tradetracker_importerror");
 		if(!empty($errorfile)){

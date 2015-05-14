@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-29 21:25-0000\n"
-"PO-Revision-Date: 2015-04-29 21:25-0000\n"
+"POT-Creation-Date: 2015-05-14 20:30-0000\n"
+"PO-Revision-Date: 2015-05-14 20:30-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgid "allow_url_fopen enabled:"
 msgstr ""
 
 #: ../debug.php:38 ../debug.php:51 ../debug.php:94 ../debug.php:100
-#: ../menu/itemselect.php:448 ../menu/itemselect.php:495
+#: ../menu/itemselect.php:450 ../menu/itemselect.php:497
 #: ../menu/pluginsettings.php:141 ../menu/pluginsettings.php:205
 #: ../menu/pluginsettings.php:234 ../menu/pluginsettings.php:264
 #: ../menu/pluginsettings.php:296 ../menu/pluginsettings.php:313
@@ -71,7 +71,7 @@ msgstr ""
 msgid "Simplexml installed:"
 msgstr ""
 
-#: ../debug.php:89 ../menu/itemselect.php:450 ../menu/itemselect.php:497
+#: ../debug.php:89 ../menu/itemselect.php:452 ../menu/itemselect.php:499
 #: ../menu/pluginsettings.php:143 ../menu/pluginsettings.php:207
 #: ../menu/pluginsettings.php:236 ../menu/pluginsettings.php:266
 #: ../menu/pluginsettings.php:298 ../menu/pluginsettings.php:315
@@ -147,23 +147,23 @@ msgstr ""
 msgid "Update Finished:"
 msgstr ""
 
-#: ../debug.php:317
+#: ../debug.php:318
 msgid "Update has started in the background:"
 msgstr ""
 
-#: ../debug.php:329
+#: ../debug.php:330
 msgid "Update now"
 msgstr ""
 
-#: ../debug.php:330
+#: ../debug.php:331
 msgid "run update in background"
 msgstr ""
 
-#: ../debug.php:331
+#: ../debug.php:332
 msgid "or"
 msgstr ""
 
-#: ../debug.php:336
+#: ../debug.php:337
 msgid ""
 "<strong>The following XML splits gave an error or were empty during the last "
 "import. So they are possibly not imported. More information about this can "
@@ -171,7 +171,7 @@ msgid ""
 "my-import-gives-an-error/\">here</a> </strong>"
 msgstr ""
 
-#: ../debug.php:366
+#: ../debug.php:367
 msgid ""
 "Is missing the call to <?php wp_head(); ?> which should appear directly "
 "before </head>"
@@ -213,9 +213,14 @@ msgstr ""
 msgid "More info"
 msgstr ""
 
-#: ../upgrading.php:128 ../import/database.php:283 ../import/xml.php:54
+#: ../upgrading.php:128 ../import/database.php:286 ../import/xml.php:54
 #, php-format
 msgid "Database filled with %1$s new items on %2$s"
+msgstr ""
+
+#: ../import/database.php:135 ../import/xml.php:99 ../import/xml.php:140
+#, php-format
+msgid "<strong>Feeds Completed: </strong> %1$s / %2$s"
 msgstr ""
 
 #: ../menu/itemselect.php:18
@@ -265,69 +270,69 @@ msgstr ""
 msgid "items no longer in a feed"
 msgstr ""
 
-#: ../menu/itemselect.php:155 ../menu/layout.php:174
+#: ../menu/itemselect.php:157 ../menu/layout.php:174
 #: ../menu/pluginsettings.php:110 ../menu/premium.php:25 ../menu/search.php:28
 #: ../menu/store.php:220 ../menu/xmloption.php:72
 msgid "Settings saved"
 msgstr ""
 
-#: ../menu/itemselect.php:342
+#: ../menu/itemselect.php:344
 msgid "Select the items you want to show"
 msgstr ""
 
-#: ../menu/itemselect.php:364
+#: ../menu/itemselect.php:366
 msgid "Showing products"
 msgstr ""
 
-#: ../menu/itemselect.php:364 ../menu/itemselect.php:367
+#: ../menu/itemselect.php:366 ../menu/itemselect.php:369
 msgid "of"
 msgstr ""
 
-#: ../menu/itemselect.php:367
+#: ../menu/itemselect.php:369
 msgid "Page"
 msgstr ""
 
-#: ../menu/itemselect.php:372
+#: ../menu/itemselect.php:374
 msgid "Results per-page:"
 msgstr ""
 
-#: ../menu/itemselect.php:391 ../menu/itemselect.php:393
+#: ../menu/itemselect.php:393 ../menu/itemselect.php:395
 msgid "Selected"
 msgstr ""
 
-#: ../menu/itemselect.php:396
+#: ../menu/itemselect.php:398
 msgid "ProductID"
 msgstr ""
 
-#: ../menu/itemselect.php:398
+#: ../menu/itemselect.php:400
 msgid "Product name"
 msgstr ""
 
-#: ../menu/itemselect.php:400
+#: ../menu/itemselect.php:402
 msgid "XMLFeed"
 msgstr ""
 
-#: ../menu/itemselect.php:402
+#: ../menu/itemselect.php:404
 msgid "Price"
 msgstr ""
 
-#: ../menu/itemselect.php:404
+#: ../menu/itemselect.php:406
 msgid "Currency"
 msgstr ""
 
-#: ../menu/itemselect.php:406
+#: ../menu/itemselect.php:408
 msgid "Extra's"
 msgstr ""
 
-#: ../menu/itemselect.php:518
+#: ../menu/itemselect.php:520
 msgid "Select"
 msgstr ""
 
-#: ../menu/itemselect.php:518
+#: ../menu/itemselect.php:520
 msgid "All"
 msgstr ""
 
-#: ../menu/itemselect.php:518
+#: ../menu/itemselect.php:520
 msgid "None"
 msgstr ""
 
