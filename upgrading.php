@@ -1,4 +1,39 @@
 <?php
+if (get_option("TTstoreversion") == "4.6"){
+	global $wpdb;
+	$pro_table_prefix=$wpdb->prefix.'tradetracker_';
+	$ttstorexmltable = $pro_table_prefix."xml";
+	$ttstoretable = $pro_table_prefix."store";
+	$ttstoreextratable = $pro_table_prefix."extra";
+	$ttstorecattable = $pro_table_prefix."cat";
+	update_option("xmlfilecount", "-2" );
+	$autoimport_count = $wpdb->get_var( "select count(id) from ".$ttstorexmltable." where autoimport = '0'" );
+	if( $autoimport_count ) {
+		$loadxmlfeed = $wpdb->get_results("select id from ".$ttstorexmltable." where autoimport = '1'");
+		if ( $loadxmlfeed ){
+			foreach ( $loadxmlfeed as $post ){
+				$emptytable = "delete from ".$ttstoretable." where xmlfeed=".$post->id."";
+				$wpdb->query($emptytable);
+			}
+			$emptyextratable = "DELETE FROM ".$ttstoreextratable." WHERE productID NOT IN (SELECT ".$ttstoretable.".productID FROM ".$ttstoretable.")";
+			$wpdb->query($emptyextratable);
+			$emptycattable = "DELETE FROM ".$ttstorecattable." WHERE productID NOT IN (SELECT ".$ttstoretable.".productID FROM ".$ttstoretable.")";
+			$wpdb->query($emptycattable);
+		}
+	} else {
+		$wpdb->query("TRUNCATE TABLE `$ttstoretable`");
+		$wpdb->query("TRUNCATE TABLE `$ttstoreextratable`");
+		$wpdb->query("TRUNCATE TABLE `$ttstorecattable`");
+	}
+	$wpdb->query("ALTER TABLE `".$ttstoretable."` ADD INDEX(`price`)");
+	if (!wp_next_scheduled('xmlscheduler1')) {
+		wp_clear_scheduled_hook('xmlscheduler');
+	} else {
+		wp_clear_scheduled_hook('xmlscheduler1');
+	}
+	update_option("TTstoreversion", "4.6.12" );
+}
+
 
 if (get_option("TTstoreversion") == "4.5.62"){
 	global $wpdb;
