@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TTstore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-14 20:31-0000\n"
-"PO-Revision-Date: 2015-05-14 20:31-0000\n"
+"POT-Creation-Date: 2015-05-22 22:43-0000\n"
+"PO-Revision-Date: 2015-05-22 22:43-0000\n"
 "Last-Translator: Robert <info@wpaffiliatefeed.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -29,14 +29,14 @@ msgstr "allow_url_fopen ingeschakeld:"
 
 #: ../debug.php:38 ../debug.php:51 ../debug.php:94 ../debug.php:100
 #: ../menu/itemselect.php:450 ../menu/itemselect.php:497
-#: ../menu/pluginsettings.php:141 ../menu/pluginsettings.php:205
-#: ../menu/pluginsettings.php:234 ../menu/pluginsettings.php:264
-#: ../menu/pluginsettings.php:296 ../menu/pluginsettings.php:313
-#: ../menu/pluginsettings.php:325 ../menu/pluginsettings.php:337
-#: ../menu/pluginsettings.php:349 ../menu/pluginsettings.php:361
-#: ../menu/store.php:310 ../menu/store.php:449 ../menu/store.php:633
-#: ../menu/xmlfeed.php:203 ../menu/xmlfeed.php:254 ../menu/xmlfeed.php:275
-#: ../menu/xmloption.php:163
+#: ../menu/pluginsettings.php:147 ../menu/pluginsettings.php:211
+#: ../menu/pluginsettings.php:240 ../menu/pluginsettings.php:252
+#: ../menu/pluginsettings.php:282 ../menu/pluginsettings.php:314
+#: ../menu/pluginsettings.php:331 ../menu/pluginsettings.php:343
+#: ../menu/pluginsettings.php:355 ../menu/pluginsettings.php:367
+#: ../menu/pluginsettings.php:379 ../menu/store.php:310 ../menu/store.php:449
+#: ../menu/store.php:633 ../menu/xmlfeed.php:203 ../menu/xmlfeed.php:254
+#: ../menu/xmlfeed.php:275 ../menu/xmloption.php:163
 msgid "Yes"
 msgstr "Ja"
 
@@ -75,14 +75,14 @@ msgid "Simplexml installed:"
 msgstr "Simplexml geinstalleerd:"
 
 #: ../debug.php:89 ../menu/itemselect.php:452 ../menu/itemselect.php:499
-#: ../menu/pluginsettings.php:143 ../menu/pluginsettings.php:207
-#: ../menu/pluginsettings.php:236 ../menu/pluginsettings.php:266
-#: ../menu/pluginsettings.php:298 ../menu/pluginsettings.php:315
-#: ../menu/pluginsettings.php:327 ../menu/pluginsettings.php:339
-#: ../menu/pluginsettings.php:351 ../menu/pluginsettings.php:363
-#: ../menu/store.php:310 ../menu/store.php:451 ../menu/store.php:640
-#: ../menu/xmlfeed.php:205 ../menu/xmlfeed.php:255 ../menu/xmlfeed.php:276
-#: ../menu/xmloption.php:165
+#: ../menu/pluginsettings.php:149 ../menu/pluginsettings.php:213
+#: ../menu/pluginsettings.php:242 ../menu/pluginsettings.php:254
+#: ../menu/pluginsettings.php:284 ../menu/pluginsettings.php:316
+#: ../menu/pluginsettings.php:333 ../menu/pluginsettings.php:345
+#: ../menu/pluginsettings.php:357 ../menu/pluginsettings.php:369
+#: ../menu/pluginsettings.php:381 ../menu/store.php:310 ../menu/store.php:451
+#: ../menu/store.php:640 ../menu/xmlfeed.php:205 ../menu/xmlfeed.php:255
+#: ../menu/xmlfeed.php:276 ../menu/xmloption.php:165
 msgid "No"
 msgstr "Nee"
 
@@ -170,7 +170,6 @@ msgid "or"
 msgstr "of"
 
 #: ../debug.php:337
-#, fuzzy
 msgid ""
 "<strong>The following XML splits gave an error or were empty during the last "
 "import. So they are possibly not imported. More information about this can "
@@ -225,7 +224,7 @@ msgstr "volgende"
 msgid "More info"
 msgstr "Meer informatie"
 
-#: ../upgrading.php:128 ../import/database.php:286 ../import/xml.php:54
+#: ../upgrading.php:168 ../import/database.php:286 ../import/xml.php:54
 #, php-format
 msgid "Database filled with %1$s new items on %2$s"
 msgstr "Database gevuld met %1$s nieuwe items op %2$s"
@@ -283,7 +282,7 @@ msgid "items no longer in a feed"
 msgstr "items niet meer in een feed"
 
 #: ../menu/itemselect.php:157 ../menu/layout.php:174
-#: ../menu/pluginsettings.php:110 ../menu/premium.php:25 ../menu/search.php:28
+#: ../menu/pluginsettings.php:116 ../menu/premium.php:25 ../menu/search.php:28
 #: ../menu/store.php:220 ../menu/xmloption.php:72
 msgid "Settings saved"
 msgstr "Instellingen opgeslagen"
@@ -816,19 +815,19 @@ msgstr ""
 msgid "News"
 msgstr "Nieuws"
 
-#: ../menu/pluginsettings.php:123
+#: ../menu/pluginsettings.php:129
 msgid "Change plugin options."
 msgstr "Verander plugin opties."
 
-#: ../menu/pluginsettings.php:134
+#: ../menu/pluginsettings.php:140
 msgid "Do you want to use new category structure."
 msgstr "Wilt u het nieuwe categorie structuur gebruiken:"
 
-#: ../menu/pluginsettings.php:135
+#: ../menu/pluginsettings.php:141
 msgid "Do you want to use new category structure:"
 msgstr "Wilt u het nieuwe categorie structuur gebruiken:"
 
-#: ../menu/pluginsettings.php:137
+#: ../menu/pluginsettings.php:143
 msgid ""
 "If you change this you will have to manually reselect all categories for all "
 "your stores."
@@ -836,30 +835,30 @@ msgstr ""
 "Als je dit aanpast zul je voor elke winkel opnieuw de categorieen moeten "
 "selecteren."
 
-#: ../menu/pluginsettings.php:154
+#: ../menu/pluginsettings.php:160
 msgid "Choose the theme of the price slider."
 msgstr "Kies de template voor de prijs schuifbalk."
 
-#: ../menu/pluginsettings.php:155
+#: ../menu/pluginsettings.php:161
 msgid "Choose the theme of the price slider:"
 msgstr "Kies de template voor de prijs schuifbalk:"
 
-#: ../menu/pluginsettings.php:157
+#: ../menu/pluginsettings.php:163
 msgid ""
 "You can preview them by going to Gallery on http://jqueryui.com/themeroller/."
 msgstr ""
 "Je kan een voorbeeld bekijken door op Gallery te klikken op http://jqueryui."
 "com/themeroller/."
 
-#: ../menu/pluginsettings.php:198
+#: ../menu/pluginsettings.php:204
 msgid "If you want to create your own CSS file."
 msgstr "Als u een eigen css bestand wilt gebruiken"
 
-#: ../menu/pluginsettings.php:199
+#: ../menu/pluginsettings.php:205
 msgid "Do you want to use a CSS file.:"
 msgstr "Wilt u een css bestand gebruiken:"
 
-#: ../menu/pluginsettings.php:201
+#: ../menu/pluginsettings.php:207
 msgid ""
 "If you enable this you won't be able to use add/delete layout. You can "
 "however use your own css file."
@@ -867,15 +866,15 @@ msgstr ""
 "Als u dit aanzet zal de add/delete layout geen invloed meer hebben. U kan "
 "dan wel uw eigen css bestand gebruiken."
 
-#: ../menu/pluginsettings.php:212
+#: ../menu/pluginsettings.php:218
 msgid "Where is the CSS file located"
 msgstr "Waar is het CSS bestand opgeslagen"
 
-#: ../menu/pluginsettings.php:213
+#: ../menu/pluginsettings.php:219
 msgid "Full url to the CSS file:"
 msgstr "Volledige url naar het CSS bestand:"
 
-#: ../menu/pluginsettings.php:219
+#: ../menu/pluginsettings.php:225
 #, php-format
 msgid ""
 "Make sure this is not saved in the plugins folder. Cause that will be "
@@ -886,35 +885,43 @@ msgstr ""
 "namelijk overschreven bij een update. Om een voorbeeld te zien gaat u naar "
 "<a href=\"%s\" target=\"_blank\">hier</a>"
 
-#: ../menu/pluginsettings.php:229
+#: ../menu/pluginsettings.php:235
 msgid "Do you like to get an email when XML feeds are not imported?"
 msgstr "Wilt u een email krijgen wanneer de XML feed niet geimporteerd is?"
 
-#: ../menu/pluginsettings.php:230
+#: ../menu/pluginsettings.php:236
 msgid "Get email when import fails:"
 msgstr "Krijg een email wanneer de import faalt:"
 
-#: ../menu/pluginsettings.php:241
+#: ../menu/pluginsettings.php:247
+msgid "Would you like to show a link in the lightbox?"
+msgstr "Wilt u een link tonen in de lightbox popup?"
+
+#: ../menu/pluginsettings.php:248
+msgid "Product link in lightbox:"
+msgstr "Product link in ligthbox:"
+
+#: ../menu/pluginsettings.php:259
 msgid "Which tool should be used to import XML?"
 msgstr "Welke methode moet er gebruikt worden om de XML te importeren?"
 
-#: ../menu/pluginsettings.php:242
+#: ../menu/pluginsettings.php:260
 msgid "Which import tool:"
 msgstr "Welke importeer methode:"
 
-#: ../menu/pluginsettings.php:247
+#: ../menu/pluginsettings.php:265
 msgid "Fopen (most reliable)"
 msgstr "Fopen (Stabielste optie)"
 
-#: ../menu/pluginsettings.php:251
+#: ../menu/pluginsettings.php:269
 msgid "Curl/Fwrite (can run out of memory)"
 msgstr "Curl/Fwrite (Kan tegen geheugen limiet aanlopen)"
 
-#: ../menu/pluginsettings.php:253
+#: ../menu/pluginsettings.php:271
 msgid "Curl (sometimes causes issues)"
 msgstr "Curl (kan soms problemen veroorzaken met importeren)"
 
-#: ../menu/pluginsettings.php:259
+#: ../menu/pluginsettings.php:277
 msgid ""
 "Load the extra fields in the database, if you don't use extra fields it is "
 "smarter to disable them here"
@@ -922,79 +929,79 @@ msgstr ""
 "Laad de extra velden in de database, als u geen extra velden gebruikt is het "
 "slimmer om dit uit te zetten"
 
-#: ../menu/pluginsettings.php:260
+#: ../menu/pluginsettings.php:278
 msgid "Import extra fields:"
 msgstr "Importeer extra velden:"
 
-#: ../menu/pluginsettings.php:266
+#: ../menu/pluginsettings.php:284
 msgid "(Can prevent timeouts, But then you cannot show extra fields)"
 msgstr "(Kan timeouts voorkomen, maar dan kunt u geen extra velden tonen)"
 
-#: ../menu/pluginsettings.php:271
+#: ../menu/pluginsettings.php:289
 msgid "What height should the admin menu be?, standard is 460"
 msgstr "Welke hoogte zou het admin menu moeten zijn, standaard is 460"
 
-#: ../menu/pluginsettings.php:272
+#: ../menu/pluginsettings.php:290
 msgid "Admin menu height:"
 msgstr "Admin menu hoogte:"
 
-#: ../menu/pluginsettings.php:281
+#: ../menu/pluginsettings.php:299
 msgid "What width should the admin menu be?, standard is 1000"
 msgstr "Welke breedte zou het admin menu moeten zijn, standaard is 1000"
 
-#: ../menu/pluginsettings.php:282
+#: ../menu/pluginsettings.php:300
 msgid "Admin menu width:"
 msgstr "Admin menu breedte:"
 
-#: ../menu/pluginsettings.php:291
+#: ../menu/pluginsettings.php:309
 msgid "Show url to plugin website in the source of the site"
 msgstr "Toon de url naar plugins website in de bron van de site"
 
-#: ../menu/pluginsettings.php:292
+#: ../menu/pluginsettings.php:310
 msgid "Show url to plugin website in the source:"
 msgstr "Toon de url naar de plugins website in uw bron:"
 
-#: ../menu/pluginsettings.php:304
+#: ../menu/pluginsettings.php:322
 msgid "What should happen when you deactivate the plugin:"
 msgstr "Wat zou moeten gebeuren als u de plugin uitzet:"
 
-#: ../menu/pluginsettings.php:308
+#: ../menu/pluginsettings.php:326
 msgid "Should all layouts be removed"
 msgstr "Zouden alle layouts moeten worden verwijderd"
 
-#: ../menu/pluginsettings.php:309
+#: ../menu/pluginsettings.php:327
 msgid "Remove all layouts:"
 msgstr "Verwijder alle layouts:"
 
-#: ../menu/pluginsettings.php:320
+#: ../menu/pluginsettings.php:338
 msgid "Should all stores be removed"
 msgstr "Zouden alle winkels moeten worden verwijderd"
 
-#: ../menu/pluginsettings.php:321
+#: ../menu/pluginsettings.php:339
 msgid "Remove all stores:"
 msgstr "Verwijder alle winkels:"
 
-#: ../menu/pluginsettings.php:332
+#: ../menu/pluginsettings.php:350
 msgid "Should all products be removed"
 msgstr "Zouden alle producten moeten worden verwijderd"
 
-#: ../menu/pluginsettings.php:333
+#: ../menu/pluginsettings.php:351
 msgid "Remove all products:"
 msgstr "Verwijder alle producten:"
 
-#: ../menu/pluginsettings.php:344
+#: ../menu/pluginsettings.php:362
 msgid "Should all XML settings be removed"
 msgstr "Zouden alle XML instellingen verwijderd moeten worden"
 
-#: ../menu/pluginsettings.php:345
+#: ../menu/pluginsettings.php:363
 msgid "Remove all XML settings:"
 msgstr "Verwijder alle XML instellingen:"
 
-#: ../menu/pluginsettings.php:356
+#: ../menu/pluginsettings.php:374
 msgid "Should all other settings be removed"
 msgstr "Zouden alle andere instellingen verwijderd moeten worden"
 
-#: ../menu/pluginsettings.php:357
+#: ../menu/pluginsettings.php:375
 msgid "Remove all other settings:"
 msgstr "Verwijder alle andere instellingen:"
 

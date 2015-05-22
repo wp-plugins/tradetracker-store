@@ -1,4 +1,9 @@
 <?php
+if (get_option("TTstoreversion") == "4.6.12"){
+	update_option("Tradetracker_fancylink", "0");
+	update_option("TTstoreversion", "4.6.14" );
+}
+
 if (get_option("TTstoreversion") == "4.6"){
 	global $wpdb;
 	$pro_table_prefix=$wpdb->prefix.'tradetracker_';

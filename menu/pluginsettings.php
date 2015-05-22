@@ -6,6 +6,7 @@ function pluginsettings(){
 	global $ttstorehidden;
 
 	//variables for this function
+	$Tradetracker_fancylink_name = 'Tradetracker_fancylink';
 	$Tradetracker_debugemail_name = 'Tradetracker_debugemail';
 	$Tradetracker_importtool_name = 'Tradetracker_importtool';
 	$Tradetracker_loadextra_name = 'Tradetracker_loadextra';
@@ -24,6 +25,7 @@ function pluginsettings(){
 
 
 	//filling variables from database
+	$Tradetracker_fancylink_val = get_option( $Tradetracker_fancylink_name );
 	$Tradetracker_debugemail_val = get_option( $Tradetracker_debugemail_name );
 	$Tradetracker_importtool_val = get_option( $Tradetracker_importtool_name );
 	$Tradetracker_loadextra_val = get_option( $Tradetracker_loadextra_name );
@@ -44,6 +46,7 @@ function pluginsettings(){
 
 	//see if form has been submitted
 	if( isset($_POST[ $ttstoresubmit ]) && $_POST[ $ttstoresubmit ] == 'Y' ) {
+		$Tradetracker_fancylink_val = $_POST[ $Tradetracker_fancylink_name ];
 		$Tradetracker_debugemail_val = $_POST[ $Tradetracker_debugemail_name ];
 		$Tradetracker_importtool_val = $_POST[ $Tradetracker_importtool_name ];
 		$Tradetracker_loadextra_val = $_POST[ $Tradetracker_loadextra_name ];
@@ -60,6 +63,9 @@ function pluginsettings(){
 		$Tradetracker_TTnewcategory_val = $_POST[ $Tradetracker_TTnewcategory_name ];
 		$Tradetracker_slidertheme_val = $_POST[ $Tradetracker_slidertheme_name ];
 
+		if ( get_option("Tradetracker_fancylink")  != $Tradetracker_fancylink_val) {
+			update_option( $Tradetracker_fancylink_name, $Tradetracker_fancylink_val );
+		}
 		if ( get_option("Tradetracker_debugemail")  != $Tradetracker_debugemail_val) {
 			update_option( $Tradetracker_debugemail_name, $Tradetracker_debugemail_val );
 		}
@@ -234,6 +240,18 @@ function pluginsettings(){
 						<input type="radio" name="<?php echo $Tradetracker_debugemail_name; ?>" <?php if($Tradetracker_debugemail_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore');?>
 						<br>
 						<input type="radio" name="<?php echo $Tradetracker_debugemail_name; ?>" <?php if($Tradetracker_debugemail_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore');?>
+					</td>
+				</tr>
+				<tr>
+					<td width="400px">
+						<label for="tradetrackerfancylink" title="<?php _e('Would you like to show a link in the lightbox?', 'ttstore');?>" class="info">
+							<?php _e("Product link in lightbox:", 'ttstore' ); ?> 
+						</label>
+					</td>
+					<td>
+						<input type="radio" name="<?php echo $Tradetracker_fancylink_name; ?>" <?php if($Tradetracker_fancylink_val==1) {echo "checked";} ?> value="1"> <?php _e('Yes','ttstore');?>
+						<br>
+						<input type="radio" name="<?php echo $Tradetracker_fancylink_name; ?>" <?php if($Tradetracker_fancylink_val==0){echo "checked";} ?> value="0"> <?php _e('No','ttstore');?>
 					</td>
 				</tr>
 				<tr>

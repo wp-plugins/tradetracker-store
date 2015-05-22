@@ -748,13 +748,20 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 		$ttextraquery = "";
 		}
+
+		$fancylink = get_option("Tradetracker_fancylink");
 		if($uselightbox==1){
 			$image = $imageURL;
 			$target = "";	
 			$rel = "";
 			$imagerel = "rel=\"lightbox[store]\"";
-			$alt = "alt=\"".$productname." <br/>".$price." <br/> <a href='".$producturl."' target='_blank'>".$buynow."</a>\"";
-			$title = "title=\"".$productname." <br/>".$price." <br/> <a href='".$producturl."' target='_blank'>".$buynow."</a>\"";
+			if($fancylink ==1){
+				$alt = "alt=\"".$productname." <br/>".$price." <br/> <a href='".$producturl."' target='_blank'>".$buynow."</a>\"";
+				$title = "title=\"".$productname." <br/>".$price." <br/> <a href='".$producturl."' target='_blank'>".$buynow."</a>\"";
+			} else {
+				$alt = "alt=\"".$productname."\"";
+				$title = "title=\"".$productname."\"";
+			}
 		} else {
 			$image = $producturl;
 			$target = $urltarget;
@@ -808,7 +815,7 @@ function show_items($usedhow, $winkelvol, $searching)
 		echo $storeitems; 
 	}
 	
-}
+	}
 add_shortcode('user_sort', 'display_store_usersort_short');
 function display_store_usersort_short($store)
 {
