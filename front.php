@@ -713,17 +713,6 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 			$imageURL = $product->imageURL;
 		}
-		if($uselightbox==1){
-			$image = $imageURL;
-			$target = "";	
-			$rel = "";
-			$imagerel = "rel=\"lightbox[store]\"";
-		} else {
-			$image = $producturl;
-			$target = $urltarget;
-			$imagerel = "";
-		}
-
 		$productname = html_entity_decode($product->name, ENT_QUOTES,'UTF-8');
 		$productname = str_replace("&", "&amp;", $productname);
 		$productdescription = $product->description;
@@ -759,6 +748,20 @@ function show_items($usedhow, $winkelvol, $searching)
 		} else {
 		$ttextraquery = "";
 		}
+		if($uselightbox==1){
+			$image = $imageURL;
+			$target = "";	
+			$rel = "";
+			$imagerel = "rel=\"lightbox[store]\"";
+			$alt = "alt=\"".$productname." <br/>".$price." <br/> <a href='".$producturl."' target='_blank'>".$buynow."</a>\"";
+			$title = "title=\"".$productname." <br/>".$price." <br/> <a href='".$producturl."' target='_blank'>".$buynow."</a>\"";
+		} else {
+			$image = $producturl;
+			$target = $urltarget;
+			$imagerel = "";
+			$alt = "alt=\"".$productname."\"";
+			$title = "title=\"".$productname."\"";
+		}
 		$storeitems .= "<div class=\"".$storename."store-outerbox store-outerbox\">
 				<div class=\"".$storename."store-titel store-titel\">
 					".$productname."
@@ -766,7 +769,7 @@ function show_items($usedhow, $winkelvol, $searching)
 				".$logo."
 				<div class=\"".$storename."store-image store-image\">
 					<a href=\"".$image."\" ".$rel." ".$imagerel." ".$target.">
-						<img src=\"".$imageURL."\" alt=\"".$productname."\" title=\"".$productname."\" style=\"max-width:".$width."px;max-height:180px;width:auto;height:auto;\"/>
+						<img src=\"".$imageURL."\" ".$alt." ".$title." style=\"max-width:".$width."px;max-height:180px;width:auto;height:auto;\"/>
 					</a>
 				</div>
 				<div class=\"".$storename."store-footer store-footer\">
